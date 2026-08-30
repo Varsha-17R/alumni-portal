@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Alumni Portal - Events</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #222;
+        }
+
+        /* =========================
+           TOP NAVBAR
+           ========================= */
+
+        .navbar {
+            height: 65px;
+            background: #2563eb;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 30px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .logout {
+            background: white;
+            color: #2563eb;
+
+            border: none;
+            padding: 10px 18px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .logout:hover {
+            background: #f1f5f9;
+        }
+
+        /* =========================
+           MAIN CONTAINER
+           ========================= */
+
+        .container {
+            display: flex;
+
+            min-height: calc(100vh - 65px);
+        }
+
+        /* =========================
+           SIDEBAR
+           ========================= */
+
+        .sidebar {
+            width: 230px;
+
+            background: white;
+
+            padding: 25px 15px;
+
+            box-shadow:
+                    2px 0 8px rgba(0,0,0,0.08);
+        }
+
+        .sidebar h3 {
+            margin-bottom: 20px;
+
+            color: #333;
+            font-size: 20px;
+        }
+
+        .menu-item {
+            display: block;
+
+            padding: 13px 15px;
+
+            margin-bottom: 8px;
+
+            color: #444;
+
+            text-decoration: none;
+
+            border-radius: 6px;
+
+            transition: 0.2s;
+        }
+
+        .menu-item:hover {
+            background: #e8f0ff;
+            color: #2563eb;
+        }
+
+        .menu-item.active {
+            background: #e8f0ff;
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        /* =========================
+           MAIN CONTENT
+           ========================= */
+
+        .main {
+            flex: 1;
+
+            padding: 35px;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            color: #222;
+
+            margin-bottom: 8px;
+
+            font-size: 30px;
+        }
+
+        .page-header p {
+            color: #666;
+
+            font-size: 15px;
+        }
+
+        /* =========================
+           SEARCH SECTION
+           ========================= */
+
+        .search-section {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                    0 3px 10px rgba(0,0,0,0.08);
+
+            margin-bottom: 30px;
+        }
+
+        .search-section h2 {
+            margin-bottom: 18px;
+
+            font-size: 21px;
+        }
+
+        .search-row {
+            display: flex;
+
+            gap: 10px;
+        }
+
+        .search-input {
+            flex: 1;
+
+            height: 45px;
+
+            padding: 0 14px;
+
+            border: 1px solid #ccd5e0;
+
+            border-radius: 6px;
+
+            font-size: 14px;
+
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: #2563eb;
+        }
+
+        .search-btn,
+        .clear-btn {
+            height: 45px;
+
+            padding: 0 22px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+        .search-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        .search-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .clear-btn {
+            background: #64748b;
+            color: white;
+        }
+
+        .clear-btn:hover {
+            background: #475569;
+        }
+
+        /* =========================
+           EVENTS HEADER
+           ========================= */
+
+        .events-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 18px;
+        }
+
+        .events-header h2 {
+            font-size: 22px;
+        }
+
+        #eventCount {
+            color: #666;
+
+            font-size: 14px;
+        }
+
+        /* =========================
+           EVENTS GRID
+           ========================= */
+
+        .events-container {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fill, minmax(360px, 1fr));
+
+            gap: 20px;
+        }
+
+        /* =========================
+           EVENT CARD
+           ========================= */
+
+        .event-card {
+            background: white;
+
+            padding: 22px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                    0 3px 10px rgba(0,0,0,0.08);
+
+            transition: 0.2s;
+        }
+
+        .event-card:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                    0 6px 16px rgba(0,0,0,0.10);
+        }
+
+        .event-card h3 {
+            color: #2563eb;
+
+            font-size: 20px;
+
+            margin-bottom: 12px;
+        }
+
+        .description {
+            color: #555;
+
+            line-height: 1.5;
+
+            margin-bottom: 18px;
+        }
+
+        .event-info {
+            color: #444;
+
+            line-height: 1.9;
+
+            font-size: 14px;
+
+            margin-bottom: 18px;
+        }
+
+        .event-info strong {
+            color: #222;
+        }
+
+        /* =========================
+           BUTTONS
+           ========================= */
+
+        .button-row {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 8px;
+        }
+
+        .button-row button {
+            border: none;
+
+            border-radius: 6px;
+
+            height: 42px;
+
+            color: white;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+            font-size: 13px;
+        }
+
+        .details-btn {
+            background: #2563eb;
+        }
+
+        .details-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .register-btn {
+            background: #16a34a;
+        }
+
+        .register-btn:hover {
+            background: #15803d;
+        }
+
+        .participants-btn {
+            background: #0891b2;
+        }
+
+        .participants-btn:hover {
+            background: #0e7490;
+        }
+
+        /* =========================
+           EMPTY MESSAGE
+           ========================= */
+
+        .empty-message {
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 10px;
+
+            text-align: center;
+
+            color: #666;
+
+            box-shadow:
+                    0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        /* =========================
+           MODAL
+           ========================= */
+
+        .modal {
+            display: none;
+
+            position: fixed;
+
+            z-index: 1000;
+
+            left: 0;
+            top: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background:
+                    rgba(0,0,0,0.55);
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+
+            width: 520px;
+
+            max-width: 95%;
+
+            max-height: 80vh;
+
+            overflow-y: auto;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                    0 10px 30px rgba(0,0,0,0.25);
+        }
+
+        .modal-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            color: #2563eb;
+
+            font-size: 22px;
+        }
+
+        .close-btn {
+            font-size: 28px;
+
+            color: #666;
+
+            cursor: pointer;
+
+            line-height: 1;
+        }
+
+        .close-btn:hover {
+            color: #222;
+        }
+
+        .modal-body p {
+            margin-bottom: 15px;
+
+            line-height: 1.6;
+
+            color: #444;
+        }
+
+        .modal-body strong {
+            color: #222;
+        }
+
+        /* =========================
+           PARTICIPANT
+           ========================= */
+
+        .participant {
+            padding: 14px;
+
+            margin-bottom: 10px;
+
+            background: #f8fafc;
+
+            border-left: 4px solid #2563eb;
+
+            border-radius: 6px;
+        }
+
+        .participant strong {
+            color: #2563eb;
+
+            font-size: 16px;
+        }
+
+        .participant small {
+            color: #666;
+
+            line-height: 1.6;
+        }
+
+        /* =========================
+           RESPONSIVE
+           ========================= */
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                width: 180px;
+            }
+
+            .main {
+                padding: 25px;
+            }
+
+            .events-container {
+                grid-template-columns: 1fr;
+            }
+
+            .button-row {
+                grid-template-columns: 1fr;
+            }
+
+            .search-row {
+                flex-direction: column;
+            }
+
+            .search-btn,
+            .clear-btn {
+                width: 100%;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- =========================
+     NAVBAR
+     ========================= -->
+
+<div class="navbar">
+
+    <div class="logo">
+        🎓 Alumni Portal
+    </div>
+
+    <form action="/logout" method="post">
+
+        <button
+                type="submit"
+                class="logout">
+
+            Logout
+
+        </button>
+
+    </form>
+
+</div>
+
+
+<!-- =========================
+     CONTAINER
+     ========================= -->
+
+<div class="container">
+
+    <!-- =========================
+         SIDEBAR
+         ========================= -->
+
+    <div class="sidebar">
+
+        <h3>Menu</h3>
+
+        <a href="/dashboard.html"
+           class="menu-item">
+
+            🏠 Dashboard
+
+        </a>
+
+        <a href="/profile.html"
+           class="menu-item">
+
+            👤 My Profile
+
+        </a>
+
+        <a href="/alumni.html"
+           class="menu-item">
+
+            🎓 Alumni
+
+        </a>
+
+        <a href="/mentorship.html"
+           class="menu-item">
+
+            🤝 Mentorship
+
+        </a>
+
+        <a href="/jobs.html"
+           class="menu-item">
+
+            💼 Jobs
+
+        </a>
+
+        <a href="/applications.html"
+           class="menu-item">
+
+            📄 Applications
+
+        </a>
+
+        <a href="/events.html"
+           class="menu-item active">
+
+            📅 Events
+
+        </a>
+
+        <a href="/messages.html"
+           class="menu-item">
+
+            💬 Messages
+
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN
+         ========================= -->
+
+    <div class="main">
+
+        <div class="page-header">
+
+            <h1>
+                Events 📅
+            </h1>
+
+            <p>
+                Discover upcoming alumni events,
+                workshops and networking opportunities.
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             SEARCH
+             ========================= -->
+
+        <div class="search-section">
+
+            <h2>
+                🔍 Search Events
+            </h2>
+
+            <div class="search-row">
+
+                <input
+                        type="text"
+                        id="searchInput"
+                        class="search-input"
+                        placeholder="Search by event title"
+                        onkeydown="handleSearchKey(event)">
+
+                <button
+                        class="search-btn"
+                        onclick="searchEvents()">
+
+                    Search
+
+                </button>
+
+                <button
+                        class="clear-btn"
+                        onclick="clearSearch()">
+
+                    Clear
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             EVENTS HEADER
+             ========================= -->
+
+        <div class="events-header">
+
+            <h2>
+                Upcoming Events
+            </h2>
+
+            <span id="eventCount">
+                0 events
+            </span>
+
+        </div>
+
+
+        <!-- =========================
+             EVENTS
+             ========================= -->
+
+        <div
+                id="eventsContainer"
+                class="events-container">
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     EVENT DETAILS MODAL
+     ===================================================== -->
+
+<div
+        id="detailsModal"
+        class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2 id="modalTitle">
+                Event Details
+            </h2>
+
+            <span
+                    class="close-btn"
+                    onclick="closeDetailsModal()">
+
+                &times;
+
+            </span>
+
+        </div>
+
+        <div
+                id="modalBody"
+                class="modal-body">
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     PARTICIPANTS MODAL
+     ===================================================== -->
+
+<div
+        id="participantsModal"
+        class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>
+                Event Participants
+            </h2>
+
+            <span
+                    class="close-btn"
+                    onclick="closeParticipantsModal()">
+
+                &times;
+
+            </span>
+
+        </div>
+
+        <div
+                id="participantsBody"
+                class="modal-body">
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* =====================================================
+       GLOBAL VARIABLES
+       ===================================================== */
+
+    const API_BASE = "/api";
+
+    let events = [];
+
+    let currentUser = null;
+
+
+    /* =====================================================
+       GET LOGGED-IN EMAIL
+       ===================================================== */
+
+    function getLoggedInEmail() {
+
+        let email =
+            sessionStorage.getItem("loggedInEmail");
+
+        if (email && email.trim() !== "") {
+
+            return email.trim();
+
+        }
+
+
+        email =
+            localStorage.getItem("loggedInEmail");
+
+        if (email && email.trim() !== "") {
+
+            sessionStorage.setItem(
+                "loggedInEmail",
+                email.trim()
+            );
+
+            return email.trim();
+
+        }
+
+
+        const sessionUser =
+            sessionStorage.getItem("currentUser");
+
+        if (sessionUser) {
+
+            try {
+
+                const user =
+                    JSON.parse(sessionUser);
+
+                if (user.email) {
+
+                    return user.email;
+
+                }
+
+            } catch (error) {
+
+                console.log(
+                    "Invalid session user"
+                );
+
+            }
+
+        }
+
+
+        const localUser =
+            localStorage.getItem("currentUser");
+
+        if (localUser) {
+
+            try {
+
+                const user =
+                    JSON.parse(localUser);
+
+                if (user.email) {
+
+                    return user.email;
+
+                }
+
+            } catch (error) {
+
+                console.log(
+                    "Invalid local user"
+                );
+
+            }
+
+        }
+
+
+        return null;
+    }
+
+
+    /* =====================================================
+       LOAD CURRENT USER
+       ===================================================== */
+
+    async function loadCurrentUser() {
+
+        const email =
+            getLoggedInEmail();
+
+        if (!email) {
+
+            console.log(
+                "No logged-in email found."
+            );
+
+            return null;
+
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE}/users/email/${encodeURIComponent(email)}`
+                );
+
+
+            if (!response.ok) {
+
+                console.error(
+                    "Could not find user:",
+                    response.status
+                );
+
+                return null;
+
+            }
+
+
+            const user =
+                await response.json();
+
+
+            currentUser = user;
+
+
+            sessionStorage.setItem(
+                "currentUser",
+                JSON.stringify(user)
+            );
+
+
+            localStorage.setItem(
+                "currentUser",
+                JSON.stringify(user)
+            );
+
+
+            return user;
+
+        } catch (error) {
+
+            console.error(
+                "Error loading user:",
+                error
+            );
+
+            return null;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       LOAD EVENTS
+       ===================================================== */
+
+    async function loadEvents() {
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE}/events`
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Failed to load events"
+                );
+
+            }
+
+
+            events =
+                await response.json();
+
+
+            displayEvents(events);
+
+
+            document.getElementById(
+                "searchInput"
+            ).value = "";
+
+
+        } catch (error) {
+
+            console.error(error);
+
+
+            document.getElementById(
+                "eventsContainer"
+            ).innerHTML = `
+
+                <div class="empty-message">
+
+                    Unable to load events.
+
+                </div>
+
+            `;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       DISPLAY EVENTS
+       ===================================================== */
+
+    function displayEvents(eventList) {
+
+        const container =
+            document.getElementById(
+                "eventsContainer"
+            );
+
+
+        const count =
+            document.getElementById(
+                "eventCount"
+            );
+
+
+        count.textContent =
+            `${eventList.length} event${
+                eventList.length !== 1
+                    ? "s"
+                    : ""
+            }`;
+
+
+        if (!eventList ||
+            eventList.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="empty-message">
+
+                    No events found.
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        container.innerHTML =
+            eventList.map(event => `
+
+                <div class="event-card">
+
+                    <h3>
+                        ${escapeHtml(event.title)}
+                    </h3>
+
+
+                    <div class="description">
+
+                        ${escapeHtml(
+                event.description || ""
+            )}
+
+                    </div>
+
+
+                    <div class="event-info">
+
+                        <div>
+                            📅
+                            <strong>Date:</strong>
+                            ${escapeHtml(
+                event.date || "-"
+            )}
+                        </div>
+
+
+                        <div>
+                            ⏰
+                            <strong>Time:</strong>
+                            ${escapeHtml(
+                event.time || "-"
+            )}
+                        </div>
+
+
+                        <div>
+                            📍
+                            <strong>Location:</strong>
+                            ${escapeHtml(
+                event.location || "-"
+            )}
+                        </div>
+
+
+                        <div>
+                            👤
+                            <strong>Organizer:</strong>
+                            ${escapeHtml(
+                event.organizer || "-"
+            )}
+                        </div>
+
+                    </div>
+
+
+                    <div class="button-row">
+
+                        <button
+                                class="details-btn"
+                                onclick="showDetails(${event.id})">
+
+                            View Details
+
+                        </button>
+
+
+                        <button
+                                class="register-btn"
+                                onclick="registerForEvent(${event.id})">
+
+                            Register
+
+                        </button>
+
+
+                        <button
+                                class="participants-btn"
+                                onclick="showParticipants(${event.id})">
+
+                            👥 Participants
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `).join("");
+
+    }
+
+
+    /* =====================================================
+       SEARCH EVENTS
+       ===================================================== */
+
+    async function searchEvents() {
+
+        const title =
+            document.getElementById(
+                "searchInput"
+            ).value.trim();
+
+
+        if (!title) {
+
+            loadEvents();
+
+            return;
+
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE}/events/search/title?title=${encodeURIComponent(title)}`
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Search failed"
+                );
+
+            }
+
+
+            const result =
+                await response.json();
+
+
+            events = result;
+
+            displayEvents(result);
+
+
+        } catch (error) {
+
+            console.error(error);
+
+
+            alert(
+                "Unable to search events."
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       CLEAR SEARCH
+       ===================================================== */
+
+    function clearSearch() {
+
+        document.getElementById(
+            "searchInput"
+        ).value = "";
+
+
+        loadEvents();
+
+    }
+
+
+    /* =====================================================
+       SEARCH WITH ENTER
+       ===================================================== */
+
+    function handleSearchKey(event) {
+
+        if (event.key === "Enter") {
+
+            searchEvents();
+
+        }
+
+    }
+
+
+    /* =====================================================
+       REGISTER FOR EVENT
+       ===================================================== */
+
+    async function registerForEvent(eventId) {
+
+        const email =
+            getLoggedInEmail();
+
+
+        if (!email) {
+
+            alert(
+                "Please login first to register for an event."
+            );
+
+            window.location.href =
+                "/login.html";
+
+            return;
+
+        }
+
+
+        let user =
+            currentUser;
+
+
+        if (!user || !user.id) {
+
+            user =
+                await loadCurrentUser();
+
+        }
+
+
+        if (!user || !user.id) {
+
+            alert(
+                "User information could not be loaded. Please login again."
+            );
+
+            return;
+
+        }
+
+
+        const event =
+            events.find(
+                e =>
+                    Number(e.id) ===
+                    Number(eventId)
+            );
+
+
+        if (!event) {
+
+            alert(
+                "Event not found."
+            );
+
+            return;
+
+        }
+
+
+        const registration = {
+
+            event: {
+                id: event.id
+            },
+
+            student: {
+                id: user.id
+            }
+
+        };
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE}/event-registrations`,
+                    {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(
+                                registration
+                            )
+
+                    }
+                );
+
+
+            const responseText =
+                await response.text();
+
+
+            if (response.status === 409) {
+
+                alert(
+                    responseText ||
+                    "You have already registered for this event."
+                );
+
+                return;
+
+            }
+
+
+            if (!response.ok) {
+
+                console.error(
+                    "Registration failed:",
+                    responseText
+                );
+
+                alert(
+                    "Registration failed. Please try again."
+                );
+
+                return;
+
+            }
+
+
+            alert(
+                "Successfully registered for the event! 🎉"
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Registration error:",
+                error
+            );
+
+
+            alert(
+                "Unable to register for the event."
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       SHOW EVENT DETAILS
+       ===================================================== */
+
+    function showDetails(eventId) {
+
+        const event =
+            events.find(
+                e =>
+                    Number(e.id) ===
+                    Number(eventId)
+            );
+
+
+        if (!event) {
+
+            return;
+
+        }
+
+
+        document.getElementById(
+            "modalTitle"
+        ).textContent =
+            event.title;
+
+
+        document.getElementById(
+            "modalBody"
+        ).innerHTML = `
+
+            <p>
+
+                <strong>
+                    Description:
+                </strong>
+
+                <br>
+
+                ${escapeHtml(
+            event.description || "-"
+        )}
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    📅 Date:
+                </strong>
+
+                ${escapeHtml(
+            event.date || "-"
+        )}
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    ⏰ Time:
+                </strong>
+
+                ${escapeHtml(
+            event.time || "-"
+        )}
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    📍 Location:
+                </strong>
+
+                ${escapeHtml(
+            event.location || "-"
+        )}
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    👤 Organizer:
+                </strong>
+
+                ${escapeHtml(
+            event.organizer || "-"
+        )}
+
+            </p>
+
+        `;
+
+
+        document.getElementById(
+            "detailsModal"
+        ).style.display = "flex";
+
+    }
+
+
+    /* =====================================================
+       CLOSE DETAILS MODAL
+       ===================================================== */
+
+    function closeDetailsModal() {
+
+        document.getElementById(
+            "detailsModal"
+        ).style.display = "none";
+
+    }
+
+
+    /* =====================================================
+       SHOW PARTICIPANTS
+       ===================================================== */
+
+    async function showParticipants(eventId) {
+
+        const modal =
+            document.getElementById(
+                "participantsModal"
+            );
+
+
+        const body =
+            document.getElementById(
+                "participantsBody"
+            );
+
+
+        body.innerHTML = `
+
+            <p>
+                Loading participants...
+            </p>
+
+        `;
+
+
+        modal.style.display = "flex";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE}/event-registrations/event/${eventId}`
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Unable to load participants"
+                );
+
+            }
+
+
+            const registrations =
+                await response.json();
+
+
+            if (
+                !registrations ||
+                registrations.length === 0
+            ) {
+
+                body.innerHTML = `
+
+                    <p>
+                        No participants yet.
+                    </p>
+
+                `;
+
+                return;
+
+            }
+
+
+            body.innerHTML =
+                registrations.map(
+                    registration => {
+
+                        const student =
+                            registration.student;
+
+
+                        return `
+
+                            <div class="participant">
+
+                                <strong>
+
+                                    ${escapeHtml(
+                            student?.name ||
+                            "Unknown User"
+                        )}
+
+                                </strong>
+
+                                <br>
+
+                                <small>
+
+                                    ${escapeHtml(
+                            student?.email ||
+                            ""
+                        )}
+
+                                </small>
+
+                                <br>
+
+                                <small>
+
+                                    Status:
+                                    ${escapeHtml(
+                            registration.status ||
+                            ""
+                        )}
+
+                                </small>
+
+                            </div>
+
+                        `;
+
+                    }
+
+                ).join("");
+
+
+        } catch (error) {
+
+            console.error(error);
+
+
+            body.innerHTML = `
+
+                <p>
+                    Unable to load participants.
+                </p>
+
+            `;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       CLOSE PARTICIPANTS MODAL
+       ===================================================== */
+
+    function closeParticipantsModal() {
+
+        document.getElementById(
+            "participantsModal"
+        ).style.display = "none";
+
+    }
+
+
+    /* =====================================================
+       ESCAPE HTML
+       ===================================================== */
+
+    function escapeHtml(value) {
+
+        if (
+            value === null ||
+            value === undefined
+        ) {
+
+            return "";
+
+        }
+
+
+        return String(value)
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+    /* =====================================================
+       CLOSE MODAL WHEN CLICKING OUTSIDE
+       ===================================================== */
+
+    window.onclick =
+        function(event) {
+
+            const detailsModal =
+                document.getElementById(
+                    "detailsModal"
+                );
+
+
+            const participantsModal =
+                document.getElementById(
+                    "participantsModal"
+                );
+
+
+            if (
+                event.target ===
+                detailsModal
+            ) {
+
+                detailsModal.style.display =
+                    "none";
+
+            }
+
+
+            if (
+                event.target ===
+                participantsModal
+            ) {
+
+                participantsModal.style.display =
+                    "none";
+
+            }
+
+        };
+
+
+    /* =====================================================
+       PAGE LOAD
+       ===================================================== */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        async function() {
+
+            await loadCurrentUser();
+
+            await loadEvents();
+
+        }
+    );
+
+</script>
+
+</body>
+</html>

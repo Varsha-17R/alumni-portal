@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Messages - Alumni Portal</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #222;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            height: 72px;
+            background: #2864e8;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 35px;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .logout {
+            background: white;
+            color: #2864e8;
+
+            border: none;
+            padding: 12px 25px;
+
+            border-radius: 6px;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .logout:hover {
+            background: #f0f0f0;
+        }
+
+        /* =========================
+           LAYOUT
+        ========================= */
+
+        .layout {
+            display: flex;
+            min-height: calc(100vh - 72px);
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            width: 260px;
+            background: white;
+
+            padding: 30px 15px;
+
+            box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+        }
+
+        .sidebar h2 {
+            margin-bottom: 30px;
+        }
+
+        .menu {
+            display: block;
+
+            text-decoration: none;
+
+            color: #333;
+
+            padding: 15px 20px;
+
+            margin-bottom: 8px;
+
+            border-radius: 8px;
+
+            font-size: 17px;
+        }
+
+        .menu:hover {
+            background: #eef3ff;
+            color: #2864e8;
+        }
+
+        .menu.active {
+            background: #eef3ff;
+            color: #2864e8;
+            font-weight: bold;
+        }
+
+        /* =========================
+           CONTENT
+        ========================= */
+
+        .content {
+            flex: 1;
+            padding: 45px;
+        }
+
+        .content h1 {
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        /* =========================
+           CARD
+        ========================= */
+
+        .card {
+            background: white;
+
+            border-radius: 12px;
+
+            padding: 30px;
+
+            margin-bottom: 30px;
+
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            margin-bottom: 25px;
+        }
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-weight: bold;
+
+            color: #173f7a;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+
+            padding: 14px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 6px;
+
+            font-size: 16px;
+
+            outline: none;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #2864e8;
+
+            box-shadow: 0 0 0 2px rgba(40,100,232,0.1);
+        }
+
+        textarea {
+            min-height: 120px;
+
+            resize: vertical;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .button-row {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 10px;
+        }
+
+        .send-button {
+            background: #2864e8;
+
+            color: white;
+
+            border: none;
+
+            padding: 13px 25px;
+
+            border-radius: 6px;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .send-button:hover {
+            background: #1d54ca;
+        }
+
+        .clear-button {
+            background: #64748b;
+
+            color: white;
+
+            border: none;
+
+            padding: 13px 25px;
+
+            border-radius: 6px;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .clear-button:hover {
+            background: #475569;
+        }
+
+        .refresh-button {
+            background: #eef3ff;
+
+            color: #2864e8;
+
+            border: none;
+
+            padding: 10px 18px;
+
+            border-radius: 6px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .refresh-button:hover {
+            background: #dce7ff;
+        }
+
+        /* =========================
+           SECTION HEADER
+        ========================= */
+
+        .section-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            margin-bottom: 0;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #eef3f9;
+
+            text-align: left;
+
+            padding: 15px;
+
+            font-size: 15px;
+        }
+
+        td {
+            padding: 15px;
+
+            border-bottom: 1px solid #ddd;
+
+            font-size: 15px;
+        }
+
+        tr:hover {
+            background: #f8faff;
+        }
+
+        /* =========================
+           MESSAGE STATUS
+        ========================= */
+
+        .alert {
+            display: none;
+
+            padding: 14px 18px;
+
+            border-radius: 6px;
+
+            margin-bottom: 20px;
+
+            font-weight: bold;
+        }
+
+        .success {
+            background: #e8f5e9;
+
+            color: #1b7d2b;
+
+            border: 1px solid #c8e6c9;
+        }
+
+        .error {
+            background: #ffebee;
+
+            color: #c62828;
+
+            border: 1px solid #ffcdd2;
+        }
+
+        .message {
+            text-align: center;
+
+            padding: 30px;
+
+            color: #666;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+                width: 210px;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .header {
+                padding: 0 18px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .section-header {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<div class="header">
+
+    <div class="logo">
+        🎓 Alumni Portal
+    </div>
+
+    <button class="logout" onclick="logout()">
+        Logout
+    </button>
+
+</div>
+
+
+<!-- =========================
+     LAYOUT
+========================= -->
+
+<div class="layout">
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <div class="sidebar">
+
+        <h2>Menu</h2>
+
+        <a href="/dashboard.html" class="menu">
+            🏠 Dashboard
+        </a>
+
+        <a href="/profile.html" class="menu">
+            👤 My Profile
+        </a>
+
+        <a href="/alumni.html" class="menu">
+            🎓 Alumni
+        </a>
+
+        <a href="/mentorship.html" class="menu">
+            🤝 Mentorship
+        </a>
+
+        <a href="/jobs.html" class="menu">
+            💼 Jobs
+        </a>
+
+        <a href="/events.html" class="menu">
+            🗓️ Events
+        </a>
+
+        <a href="/messages.html" class="menu active">
+            💬 Messages
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <div class="content">
+
+        <h1>💬 Messages</h1>
+
+        <p class="subtitle">
+            Connect and communicate with other members of the alumni network.
+        </p>
+
+
+        <!-- =========================
+             ALERTS
+        ========================= -->
+
+        <div id="successMessage" class="alert success"></div>
+
+        <div id="errorMessage" class="alert error"></div>
+
+
+        <!-- =========================
+             SEND MESSAGE
+        ========================= -->
+
+        <div class="card">
+
+            <h2>✉️ Send New Message</h2>
+
+            <form id="messageForm">
+
+                <div class="form-group">
+
+                    <label for="receiverId">
+                        Receiver User ID
+                    </label>
+
+                    <input
+                            type="number"
+                            id="receiverId"
+                            placeholder="Enter receiver user ID"
+                            required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="messageContent">
+                        Message
+                    </label>
+
+                    <textarea
+                            id="messageContent"
+                            placeholder="Write your message..."
+                            required></textarea>
+
+                </div>
+
+
+                <div class="button-row">
+
+                    <button
+                            type="submit"
+                            class="send-button">
+
+                        Send Message
+
+                    </button>
+
+
+                    <button
+                            type="button"
+                            class="clear-button"
+                            onclick="clearForm()">
+
+                        Clear
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- =========================
+             RECEIVED MESSAGES
+        ========================= -->
+
+        <div class="card">
+
+            <div class="section-header">
+
+                <h2>📥 Received Messages</h2>
+
+                <button
+                        class="refresh-button"
+                        onclick="loadReceivedMessages()">
+
+                    🔄 Refresh
+
+                </button>
+
+            </div>
+
+
+            <div id="receivedMessages">
+
+                <div class="message">
+                    Loading messages...
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             SENT MESSAGES
+        ========================= -->
+
+        <div class="card">
+
+            <div class="section-header">
+
+                <h2>📤 Sent Messages</h2>
+
+                <button
+                        class="refresh-button"
+                        onclick="loadSentMessages()">
+
+                    🔄 Refresh
+
+                </button>
+
+            </div>
+
+
+            <div id="sentMessages">
+
+                <div class="message">
+                    Loading messages...
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* =========================================================
+       GLOBAL CURRENT USER
+    ========================================================= */
+
+    let currentUser = null;
+
+
+    /* =========================================================
+       SHOW SUCCESS MESSAGE
+    ========================================================= */
+
+    function showSuccess(message) {
+
+        const success = document.getElementById("successMessage");
+        const error = document.getElementById("errorMessage");
+
+        error.style.display = "none";
+
+        success.innerText = message;
+
+        success.style.display = "block";
+
+    }
+
+
+    /* =========================================================
+       SHOW ERROR MESSAGE
+    ========================================================= */
+
+    function showError(message) {
+
+        const success = document.getElementById("successMessage");
+        const error = document.getElementById("errorMessage");
+
+        success.style.display = "none";
+
+        error.innerText = message;
+
+        error.style.display = "block";
+
+    }
+
+
+    /* =========================================================
+       HIDE ALERTS
+    ========================================================= */
+
+    function hideAlerts() {
+
+        document.getElementById("successMessage").style.display = "none";
+
+        document.getElementById("errorMessage").style.display = "none";
+
+    }
+
+
+    /* =========================================================
+       GET CURRENT LOGGED-IN USER
+    ========================================================= */
+
+    async function loadCurrentUser() {
+
+        try {
+
+            const response = await fetch("/api/users/me");
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Unable to identify logged-in user"
+                );
+
+            }
+
+            currentUser = await response.json();
+
+            console.log("Current user:", currentUser);
+
+            // Load messages after current user is known
+            loadReceivedMessages();
+            loadSentMessages();
+
+        } catch (error) {
+
+            console.error(error);
+
+            showError(
+                "Unable to load your user information. Please login again."
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       SEND MESSAGE
+    ========================================================= */
+
+    document
+        .getElementById("messageForm")
+        .addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+            hideAlerts();
+
+            if (!currentUser) {
+
+                showError(
+                    "User information is not available. Please login again."
+                );
+
+                return;
+
+            }
+
+
+            const receiverId =
+                document.getElementById("receiverId").value;
+
+            const content =
+                document.getElementById("messageContent").value.trim();
+
+
+            if (!receiverId || !content) {
+
+                showError(
+                    "Please enter receiver ID and message."
+                );
+
+                return;
+
+            }
+
+
+            // Prevent sending message to yourself
+            if (Number(receiverId) === Number(currentUser.id)) {
+
+                showError(
+                    "You cannot send a message to yourself."
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * Message object expected by Spring Boot:
+             *
+             * {
+             *     sender: { id: 1 },
+             *     receiver: { id: 2 },
+             *     content: "Hello"
+             * }
+             */
+
+            const messageData = {
+                receiver: {
+                    id: Number(receiverId)
+                },
+                content: content
+            };
+
+
+            try {
+
+                const response = await fetch(
+                    "/api/messages",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify(messageData)
+                    }
+                );
+
+
+                if (!response.ok) {
+
+                    let errorText = "";
+
+                    try {
+
+                        errorText = await response.text();
+
+                    } catch (e) {
+
+                        errorText = "";
+
+                    }
+
+                    console.error(
+                        "Server error:",
+                        response.status,
+                        errorText
+                    );
+
+                    throw new Error(
+                        "Unable to send message"
+                    );
+
+                }
+
+
+                const savedMessage =
+                    await response.json();
+
+                console.log(
+                    "Message sent:",
+                    savedMessage
+                );
+
+
+                showSuccess(
+                    "Message sent successfully! ✅"
+                );
+
+
+                clearForm();
+
+
+                // Refresh sent messages
+                loadSentMessages();
+
+            } catch (error) {
+
+                console.error(
+                    "Error sending message:",
+                    error
+                );
+
+                showError(
+                    "Unable to send message. Please check the receiver ID and try again."
+                );
+
+            }
+
+        });
+
+
+    /* =========================================================
+       LOAD RECEIVED MESSAGES
+    ========================================================= */
+
+    async function loadReceivedMessages() {
+
+        const container =
+            document.getElementById("receivedMessages");
+
+
+        if (!currentUser) {
+
+            container.innerHTML = `
+            <div class="message">
+                Loading user information...
+            </div>
+        `;
+
+            return;
+
+        }
+
+
+        try {
+
+            const response = await fetch(
+                `/api/messages/received/${currentUser.id}`
+            );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Failed to load received messages"
+                );
+
+            }
+
+
+            const messages =
+                await response.json();
+
+
+            if (!messages || messages.length === 0) {
+
+                container.innerHTML = `
+                <div class="message">
+                    No received messages yet.
+                </div>
+            `;
+
+                return;
+
+            }
+
+
+            let table = `
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>From</th>
+
+                            <th>Email</th>
+
+                            <th>Message</th>
+
+                            <th>Date & Time</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+        `;
+
+
+            messages.forEach(message => {
+
+                const sender =
+                    message.sender || {};
+
+
+                table += `
+
+                <tr>
+
+                    <td>
+                        ${message.id ?? "-"}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(sender.name || "-")}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(sender.email || "-")}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(message.content || "-")}
+                    </td>
+
+                    <td>
+                        ${formatDate(message.sentAt)}
+                    </td>
+
+                </tr>
+
+            `;
+
+            });
+
+
+            table += `
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        `;
+
+
+            container.innerHTML = table;
+
+
+        } catch (error) {
+
+            console.error(
+                "Error loading received messages:",
+                error
+            );
+
+
+            container.innerHTML = `
+
+            <div class="message">
+
+                Unable to load received messages.
+
+            </div>
+
+        `;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       LOAD SENT MESSAGES
+    ========================================================= */
+
+    async function loadSentMessages() {
+
+        const container =
+            document.getElementById("sentMessages");
+
+
+        if (!currentUser) {
+
+            container.innerHTML = `
+            <div class="message">
+                Loading user information...
+            </div>
+        `;
+
+            return;
+
+        }
+
+
+        try {
+
+            const response = await fetch(
+                `/api/messages/sent/${currentUser.id}`
+            );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Failed to load sent messages"
+                );
+
+            }
+
+
+            const messages =
+                await response.json();
+
+
+            if (!messages || messages.length === 0) {
+
+                container.innerHTML = `
+                <div class="message">
+                    No sent messages yet.
+                </div>
+            `;
+
+                return;
+
+            }
+
+
+            let table = `
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>To</th>
+
+                            <th>Email</th>
+
+                            <th>Message</th>
+
+                            <th>Date & Time</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+        `;
+
+
+            messages.forEach(message => {
+
+                const receiver =
+                    message.receiver || {};
+
+
+                table += `
+
+                <tr>
+
+                    <td>
+                        ${message.id ?? "-"}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(receiver.name || "-")}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(receiver.email || "-")}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(message.content || "-")}
+                    </td>
+
+                    <td>
+                        ${formatDate(message.sentAt)}
+                    </td>
+
+                </tr>
+
+            `;
+
+            });
+
+
+            table += `
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        `;
+
+
+            container.innerHTML = table;
+
+
+        } catch (error) {
+
+            console.error(
+                "Error loading sent messages:",
+                error
+            );
+
+
+            container.innerHTML = `
+
+            <div class="message">
+
+                Unable to load sent messages.
+
+            </div>
+
+        `;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       CLEAR FORM
+    ========================================================= */
+
+    function clearForm() {
+
+        document
+            .getElementById("receiverId")
+            .value = "";
+
+        document
+            .getElementById("messageContent")
+            .value = "";
+
+    }
+
+
+    /* =========================================================
+       FORMAT DATE
+    ========================================================= */
+
+    function formatDate(dateValue) {
+
+        if (!dateValue) {
+            return "-";
+        }
+
+        try {
+
+            const date =
+                new Date(dateValue);
+
+            return date.toLocaleString();
+
+        } catch (error) {
+
+            return dateValue;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       ESCAPE HTML
+       Prevents message content from being interpreted as HTML
+    ========================================================= */
+
+    function escapeHtml(value) {
+
+        if (value === null || value === undefined) {
+
+            return "";
+
+        }
+
+        return String(value)
+
+            .replace(/&/g, "&amp;")
+
+            .replace(/</g, "&lt;")
+
+            .replace(/>/g, "&gt;")
+
+            .replace(/"/g, "&quot;")
+
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* =========================================================
+       LOGOUT
+    ========================================================= */
+
+    function logout() {
+
+        window.location.href = "/logout";
+
+    }
+
+
+    /* =========================================================
+       PAGE LOAD
+    ========================================================= */
+
+    loadCurrentUser();
+
+</script>
+
+</body>
+
+</html>

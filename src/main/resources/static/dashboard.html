@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - Alumni Portal</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #222;
+        }
+
+        /* HEADER */
+        .header {
+            height: 72px;
+            background: #2864e8;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 35px;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .logout {
+            background: white;
+            color: #2864e8;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .logout:hover {
+            background: #f0f0f0;
+        }
+
+        /* MAIN LAYOUT */
+        .layout {
+            display: flex;
+            min-height: calc(100vh - 72px);
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 260px;
+            min-width: 260px;
+            background: white;
+            padding: 30px 15px;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+        }
+
+        .sidebar h2 {
+            margin-bottom: 25px;
+            color: #222;
+        }
+
+        .menu {
+            display: block;
+            text-decoration: none;
+            color: #333;
+
+            padding: 15px 20px;
+            margin-bottom: 8px;
+
+            border-radius: 8px;
+            font-size: 17px;
+        }
+
+        .menu:hover {
+            background: #eef3ff;
+            color: #2864e8;
+        }
+
+        .menu.active {
+            background: #eef3ff;
+            color: #2864e8;
+            font-weight: bold;
+        }
+
+        /* CONTENT */
+        .content {
+            flex: 1;
+            padding: 45px;
+            min-width: 0;
+        }
+
+        .content h1 {
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        /* STATISTICS */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 28px;
+
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+
+            transition: transform 0.2s ease,
+            box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 16px rgba(0,0,0,0.12);
+        }
+
+        .card-icon {
+            font-size: 30px;
+            margin-bottom: 12px;
+        }
+
+        .card h2 {
+            color: #2864e8;
+            font-size: 30px;
+            margin-bottom: 7px;
+        }
+
+        .card p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* USERS */
+        .users-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 22px;
+        }
+
+        .section-header h2 {
+            font-size: 23px;
+        }
+
+        .refresh-button {
+            background: #eef3ff;
+            color: #2864e8;
+            border: none;
+
+            padding: 10px 18px;
+            border-radius: 6px;
+
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .refresh-button:hover {
+            background: #dce7ff;
+        }
+
+        /* TABLE */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        th {
+            background: #eef3f9;
+            text-align: left;
+            padding: 15px;
+            font-size: 15px;
+            color: #333;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            font-size: 15px;
+        }
+
+        tr:hover {
+            background: #f8faff;
+        }
+
+        .role {
+            color: #2864e8;
+            font-weight: bold;
+        }
+
+        .message {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+        }
+
+        .error-message {
+            color: #c62828;
+            background: #ffebee;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1000px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .sidebar {
+                width: 210px;
+                min-width: 210px;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .header {
+                padding: 0 20px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                min-width: 100%;
+                padding: 15px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .content h1 {
+                font-size: 28px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+
+    <div class="logo">
+        🎓 Alumni Portal
+    </div>
+
+    <form action="/logout" method="post">
+
+        <button class="logout" type="submit">
+            Logout
+        </button>
+
+    </form>
+
+</div>
+
+
+<!-- LAYOUT -->
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <h2>Menu</h2>
+
+        <a href="/dashboard.html" class="menu active">
+            🏠 Dashboard
+        </a>
+
+        <a href="/profile.html" class="menu">
+            👤 My Profile
+        </a>
+
+        <a href="/alumni.html" class="menu">
+            🎓 Alumni
+        </a>
+
+        <a href="/mentorship.html" class="menu">
+            🤝 Mentorship
+        </a>
+
+        <a href="/jobs.html" class="menu">
+            💼 Jobs
+        </a>
+
+        <!-- FIXED EVENTS LINK -->
+        <a href="/events.html" class="menu">
+            📅 Events
+        </a>
+
+        <!-- FIXED MESSAGES LINK -->
+        <a href="/messages.html" class="menu">
+            💬 Messages
+        </a>
+
+        <a href="/applications.html" class="menu">
+            📄 Applications
+        </a>
+
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+    <div class="content">
+
+        <h1>
+            Welcome to Alumni Portal 👋
+        </h1>
+
+        <p class="subtitle">
+            Connect with alumni, find mentors and explore opportunities.
+        </p>
+
+
+        <!-- STATISTICS -->
+        <div class="cards">
+
+            <div class="card">
+
+                <div class="card-icon">
+                    👥
+                </div>
+
+                <h2 id="userCount">
+                    0
+                </h2>
+
+                <p>
+                    Registered Users
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    🤝
+                </div>
+
+                <h2 id="mentorCount">
+                    0
+                </h2>
+
+                <p>
+                    Mentors
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    💼
+                </div>
+
+                <h2 id="jobCount">
+                    0
+                </h2>
+
+                <p>
+                    Job Opportunities
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- USERS -->
+        <div class="users-section">
+
+            <div class="section-header">
+
+                <h2>
+                    Registered Users
+                </h2>
+
+                <button
+                        class="refresh-button"
+                        onclick="loadUsers()">
+
+                    🔄 Refresh
+
+                </button>
+
+            </div>
+
+
+            <div id="userContent">
+
+                <div class="message">
+                    Loading users...
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    async function loadUsers() {
+
+        const userContent =
+            document.getElementById("userContent");
+
+        try {
+
+            userContent.innerHTML = `
+                <div class="message">
+                    Loading users...
+                </div>
+            `;
+
+            const response =
+                await fetch("/api/users");
+
+            if (!response.ok) {
+                throw new Error("Failed to load users");
+            }
+
+            const users =
+                await response.json();
+
+
+            /* USER COUNT */
+
+            document
+                .getElementById("userCount")
+                .textContent = users.length;
+
+
+            /* MENTOR COUNT */
+
+            const mentors =
+                users.filter(user =>
+                    user.role &&
+                    user.role.toUpperCase() === "ALUMNI"
+                );
+
+            document
+                .getElementById("mentorCount")
+                .textContent = mentors.length;
+
+
+            /* NO USERS */
+
+            if (!users || users.length === 0) {
+
+                userContent.innerHTML = `
+                    <div class="message">
+                        No registered users found.
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            /* TABLE */
+
+            let table = `
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Role</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+            `;
+
+
+            users.forEach(user => {
+
+                table += `
+
+                    <tr>
+
+                        <td>
+                            ${user.id ?? "-"}
+                        </td>
+
+                        <td>
+                            ${escapeHtml(user.name || "-")}
+                        </td>
+
+                        <td>
+                            ${escapeHtml(user.email || "-")}
+                        </td>
+
+                        <td>
+                            ${escapeHtml(user.phone || "-")}
+                        </td>
+
+                        <td class="role">
+                            ${escapeHtml(user.role || "-")}
+                        </td>
+
+                    </tr>
+
+                `;
+
+            });
+
+
+            table += `
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            `;
+
+            userContent.innerHTML = table;
+
+
+        } catch (error) {
+
+            console.error(
+                "Error loading users:",
+                error
+            );
+
+            document
+                .getElementById("userCount")
+                .textContent = "0";
+
+            document
+                .getElementById("mentorCount")
+                .textContent = "0";
+
+            userContent.innerHTML = `
+
+                <div class="error-message">
+
+                    Unable to load registered users.
+                    Please make sure the backend is running.
+
+                </div>
+
+            `;
+        }
+    }
+
+
+    async function loadJobs() {
+
+        try {
+
+            const response =
+                await fetch("/api/jobs");
+
+            if (!response.ok) {
+                throw new Error("Failed to load jobs");
+            }
+
+            const jobs =
+                await response.json();
+
+            document
+                .getElementById("jobCount")
+                .textContent = jobs.length;
+
+        } catch (error) {
+
+            console.error(
+                "Error loading jobs:",
+                error
+            );
+
+            document
+                .getElementById("jobCount")
+                .textContent = "0";
+        }
+    }
+
+
+    function escapeHtml(value) {
+
+        if (
+            value === null ||
+            value === undefined
+        ) {
+            return "";
+        }
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+
+    /* INITIALIZE */
+
+    loadUsers();
+    loadJobs();
+
+</script>
+
+</body>
+</html>

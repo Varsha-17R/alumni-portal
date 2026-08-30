@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Register - Alumni Portal</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+
+            font-family:
+                    Arial,
+                    Helvetica,
+                    sans-serif;
+
+            background: #f4f6f9;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 20px;
+        }
+
+
+        /* ================= REGISTER CONTAINER ================= */
+
+        .register-container {
+
+            width: 460px;
+
+            background: white;
+
+            padding: 40px 45px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                    0 8px 30px
+                    rgba(0, 0, 0, 0.10);
+
+            text-align: center;
+        }
+
+
+        /* ================= LOGO ================= */
+
+        .logo {
+
+            font-size: 46px;
+
+            margin-bottom: 8px;
+        }
+
+
+        /* ================= TITLE ================= */
+
+        h1 {
+
+            margin: 0;
+
+            color: #13294b;
+
+            font-size: 32px;
+        }
+
+
+        .subtitle {
+
+            color: #60758b;
+
+            font-size: 16px;
+
+            margin-top: 10px;
+
+            margin-bottom: 25px;
+
+            line-height: 1.4;
+        }
+
+
+        /* ================= FORM ================= */
+
+        .form-group {
+
+            text-align: left;
+
+            margin-bottom: 17px;
+        }
+
+
+        label {
+
+            display: block;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            color: #17365d;
+
+            margin-bottom: 7px;
+        }
+
+
+        input,
+        select {
+
+            width: 100%;
+
+            height: 48px;
+
+            padding: 0 13px;
+
+            border: 1px solid #cbd3dc;
+
+            border-radius: 7px;
+
+            font-size: 16px;
+
+            outline: none;
+
+            background: white;
+
+            transition: 0.2s;
+        }
+
+
+        input:focus,
+        select:focus {
+
+            border-color: #2864e8;
+
+            box-shadow:
+                    0 0 0 2px
+                    rgba(40, 100, 232, 0.10);
+        }
+
+
+        /* ================= REGISTER BUTTON ================= */
+
+        .register-button {
+
+            width: 100%;
+
+            height: 50px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: #2864e8;
+
+            color: white;
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            margin-top: 5px;
+
+            transition: 0.2s;
+        }
+
+
+        .register-button:hover {
+
+            background: #1f56d1;
+
+            transform: translateY(-1px);
+        }
+
+
+        .register-button:disabled {
+
+            background: #8ba9e8;
+
+            cursor: not-allowed;
+
+            transform: none;
+        }
+
+
+        /* ================= MESSAGE ================= */
+
+        .message {
+
+            display: none;
+
+            padding: 10px;
+
+            border-radius: 6px;
+
+            margin-bottom: 18px;
+
+            font-size: 14px;
+
+            text-align: left;
+
+            line-height: 1.4;
+        }
+
+
+        .success {
+
+            display: block;
+
+            color: #2e7d32;
+
+            background: #e8f5e9;
+
+            border: 1px solid #c8e6c9;
+        }
+
+
+        .error {
+
+            display: block;
+
+            color: #d32f2f;
+
+            background: #ffebee;
+
+            border: 1px solid #ffcdd2;
+        }
+
+
+        /* ================= LOGIN LINK ================= */
+
+        .login-link {
+
+            margin-top: 22px;
+
+            color: #60758b;
+
+            font-size: 15px;
+        }
+
+
+        .login-link a {
+
+            color: #2864e8;
+
+            font-weight: bold;
+
+            text-decoration: none;
+        }
+
+
+        .login-link a:hover {
+
+            text-decoration: underline;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 500px) {
+
+            .register-container {
+
+                width: 100%;
+
+                padding: 30px 25px;
+            }
+
+
+            h1 {
+
+                font-size: 28px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="register-container">
+
+
+    <!-- =====================================================
+         LOGO
+    ====================================================== -->
+
+    <div class="logo">
+        🎓
+    </div>
+
+
+    <!-- =====================================================
+         TITLE
+    ====================================================== -->
+
+    <h1>
+        Create Account
+    </h1>
+
+
+    <div class="subtitle">
+
+        Join the Alumni Networking
+        &amp; Mentorship Portal
+
+    </div>
+
+
+    <!-- =====================================================
+         MESSAGE
+    ====================================================== -->
+
+    <div
+            id="message"
+            class="message">
+
+    </div>
+
+
+    <!-- =====================================================
+         REGISTRATION FORM
+    ====================================================== -->
+
+    <form
+            id="registerForm">
+
+
+        <!-- NAME -->
+
+        <div class="form-group">
+
+            <label for="name">
+                Full Name
+            </label>
+
+
+            <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter your full name"
+                    required
+                    autocomplete="name">
+
+        </div>
+
+
+        <!-- EMAIL -->
+
+        <div class="form-group">
+
+            <label for="email">
+                Email
+            </label>
+
+
+            <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                    autocomplete="email">
+
+        </div>
+
+
+        <!-- PHONE -->
+
+        <div class="form-group">
+
+            <label for="phone">
+                Phone Number
+            </label>
+
+
+            <input
+                    type="tel"
+                    id="phone"
+                    placeholder="Enter your 10-digit phone number"
+                    pattern="[0-9]{10}"
+                    maxlength="10"
+                    inputmode="numeric"
+                    required
+                    autocomplete="tel">
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="form-group">
+
+            <label for="password">
+                Password
+            </label>
+
+
+            <input
+                    type="password"
+                    id="password"
+                    placeholder="Create a password"
+                    minlength="6"
+                    required
+                    autocomplete="new-password">
+
+        </div>
+
+
+        <!-- CONFIRM PASSWORD -->
+
+        <div class="form-group">
+
+            <label for="confirmPassword">
+                Confirm Password
+            </label>
+
+
+            <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm your password"
+                    minlength="6"
+                    required
+                    autocomplete="new-password">
+
+        </div>
+
+
+        <!-- ROLE -->
+
+        <div class="form-group">
+
+            <label for="role">
+                Account Type
+            </label>
+
+
+            <select
+                    id="role"
+                    required>
+
+                <option value="">
+                    Select account type
+                </option>
+
+
+                <option value="STUDENT">
+                    Student
+                </option>
+
+
+                <option value="ALUMNI">
+                    Alumni
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- REGISTER -->
+
+        <button
+                type="submit"
+                id="registerButton"
+                class="register-button">
+
+            Create Account
+
+        </button>
+
+
+    </form>
+
+
+    <!-- =====================================================
+         LOGIN LINK
+    ====================================================== -->
+
+    <div class="login-link">
+
+        Already have an account?
+
+        <a href="/login.html">
+            Sign in here
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+    // =========================================================
+    // ELEMENTS
+    // =========================================================
+
+    const form =
+        document.getElementById(
+            "registerForm"
+        );
+
+
+    const message =
+        document.getElementById(
+            "message"
+        );
+
+
+    const registerButton =
+        document.getElementById(
+            "registerButton"
+        );
+
+
+    // =========================================================
+    // SHOW MESSAGE
+    // =========================================================
+
+    function showMessage(
+        text,
+        type
+    ) {
+
+
+        message.textContent =
+            text;
+
+
+        message.className =
+            "message " + type;
+
+
+        message.style.display =
+            "block";
+
+    }
+
+
+    // =========================================================
+    // REGISTRATION
+    // =========================================================
+
+    form.addEventListener(
+        "submit",
+        async function(event) {
+
+
+            event.preventDefault();
+
+
+            // -------------------------------------------------
+            // GET FORM VALUES
+            // -------------------------------------------------
+
+            const name =
+                document
+                    .getElementById("name")
+                    .value
+                    .trim();
+
+
+            const email =
+                document
+                    .getElementById("email")
+                    .value
+                    .trim()
+                    .toLowerCase();
+
+
+            const phone =
+                document
+                    .getElementById("phone")
+                    .value
+                    .trim();
+
+
+            const password =
+                document
+                    .getElementById("password")
+                    .value;
+
+
+            const confirmPassword =
+                document
+                    .getElementById("confirmPassword")
+                    .value;
+
+
+            const role =
+                document
+                    .getElementById("role")
+                    .value;
+
+
+            // -------------------------------------------------
+            // VALIDATION
+            // -------------------------------------------------
+
+            if (
+                !name ||
+                !email ||
+                !phone ||
+                !password ||
+                !confirmPassword ||
+                !role
+            ) {
+
+                showMessage(
+                    "Please fill in all fields.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            // -------------------------------------------------
+            // NAME VALIDATION
+            // -------------------------------------------------
+
+            if (name.length < 2) {
+
+                showMessage(
+                    "Please enter a valid name.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            // -------------------------------------------------
+            // EMAIL VALIDATION
+            // -------------------------------------------------
+
+            const emailPattern =
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+            if (
+                !emailPattern.test(email)
+            ) {
+
+                showMessage(
+                    "Please enter a valid email address.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            // -------------------------------------------------
+            // PHONE VALIDATION
+            // -------------------------------------------------
+
+            if (
+                !/^[0-9]{10}$/.test(phone)
+            ) {
+
+                showMessage(
+                    "Please enter a valid 10-digit phone number.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            // -------------------------------------------------
+            // PASSWORD VALIDATION
+            // -------------------------------------------------
+
+            if (
+                password.length < 6
+            ) {
+
+                showMessage(
+                    "Password must contain at least 6 characters.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            // -------------------------------------------------
+            // CONFIRM PASSWORD
+            // -------------------------------------------------
+
+            if (
+                password !== confirmPassword
+            ) {
+
+                showMessage(
+                    "Passwords do not match.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            // -------------------------------------------------
+            // ROLE VALIDATION
+            // -------------------------------------------------
+
+            if (
+                role !== "STUDENT" &&
+                role !== "ALUMNI"
+            ) {
+
+                showMessage(
+                    "Please select Student or Alumni.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            // =================================================
+            // USER DATA
+            // =================================================
+
+            const userData = {
+
+                name: name,
+
+                email: email,
+
+                password: password,
+
+                phone: phone,
+
+                role: role
+
+            };
+
+
+            try {
+
+
+                // -------------------------------------------------
+                // DISABLE BUTTON
+                // -------------------------------------------------
+
+                registerButton.disabled =
+                    true;
+
+
+                registerButton.textContent =
+                    "Creating Account...";
+
+
+                // -------------------------------------------------
+                // SEND TO BACKEND
+                // -------------------------------------------------
+
+                const response =
+                    await fetch(
+                        "/api/users",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    userData
+                                )
+
+                        }
+                    );
+
+
+                // -------------------------------------------------
+                // READ RESPONSE
+                // -------------------------------------------------
+
+                const responseText =
+                    await response.text();
+
+
+                // -------------------------------------------------
+                // ERROR
+                // -------------------------------------------------
+
+                if (!response.ok) {
+
+
+                    let errorMessage =
+                        "Registration failed.";
+
+
+                    if (
+                        response.status === 409
+                    ) {
+
+                        errorMessage =
+                            "This email is already registered.";
+
+                    } else if (
+                        responseText
+                    ) {
+
+                        /*
+                         * Try to extract Spring Boot
+                         * error message.
+                         */
+
+                        try {
+
+                            const errorData =
+                                JSON.parse(
+                                    responseText
+                                );
+
+
+                            errorMessage =
+                                errorData.message ||
+                                errorData.error ||
+                                responseText;
+
+                        } catch {
+
+                            errorMessage =
+                                responseText;
+
+                        }
+
+                    }
+
+
+                    throw new Error(
+                        errorMessage
+                    );
+
+                }
+
+
+                // =================================================
+                // SUCCESS
+                // =================================================
+
+                showMessage(
+                    "Registration successful! Redirecting to login...",
+                    "success"
+                );
+
+
+                // Clear form
+
+                form.reset();
+
+
+                /*
+                 * Clear any previous login information.
+                 */
+
+                sessionStorage.removeItem(
+                    "loggedInEmail"
+                );
+
+
+                sessionStorage.removeItem(
+                    "currentUser"
+                );
+
+
+                localStorage.removeItem(
+                    "loggedInEmail"
+                );
+
+
+                localStorage.removeItem(
+                    "currentUser"
+                );
+
+
+                // Redirect to login
+
+                setTimeout(
+                    function() {
+
+                        window.location.href =
+                            "/login.html";
+
+                    },
+                    1500
+                );
+
+
+            } catch (error) {
+
+
+                console.error(
+                    "Registration error:",
+                    error
+                );
+
+
+                showMessage(
+                    error.message ||
+                    "Unable to register. Please try again.",
+                    "error"
+                );
+
+
+            } finally {
+
+
+                registerButton.disabled =
+                    false;
+
+
+                registerButton.textContent =
+                    "Create Account";
+
+            }
+
+        }
+    );
+
+
+</script>
+
+
+</body>
+
+</html>

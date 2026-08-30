@@ -1,0 +1,2707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Jobs - Alumni Portal</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+            background: #f4f6f9;
+            color: #222;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .header {
+            height: 65px;
+
+            background: #2563eb;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 30px;
+        }
+
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+
+        .logout-btn {
+            background: white;
+
+            color: #2563eb;
+
+            border: none;
+
+            padding: 10px 18px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+
+        .logout-btn:hover {
+            background: #e8f0ff;
+        }
+
+
+        /* ================= LAYOUT ================= */
+
+        .layout {
+            display: flex;
+
+            min-height: calc(100vh - 65px);
+        }
+
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            width: 230px;
+
+            background: white;
+
+            padding: 25px 15px;
+
+            box-shadow:
+                    2px 0 8px rgba(0,0,0,0.08);
+        }
+
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+
+            color: #333;
+        }
+
+
+        .menu-item {
+            display: block;
+
+            padding: 13px 15px;
+
+            margin-bottom: 8px;
+
+            color: #444;
+
+            text-decoration: none;
+
+            border-radius: 6px;
+        }
+
+
+        .menu-item:hover {
+            background: #e8f0ff;
+
+            color: #2563eb;
+        }
+
+
+        .menu-item.active {
+            background: #e8f0ff;
+
+            color: #2563eb;
+
+            font-weight: bold;
+        }
+
+
+        /* ================= CONTENT ================= */
+
+        .content {
+            flex: 1;
+
+            padding: 35px;
+
+            max-width: 1500px;
+        }
+
+
+        .page-title {
+            color: #222;
+
+            margin-bottom: 8px;
+        }
+
+
+        .subtitle {
+            color: #666;
+
+            margin-bottom: 25px;
+        }
+
+
+        /* ================= USER INFO ================= */
+
+        .user-info {
+            background: #e8f0ff;
+
+            color: #2563eb;
+
+            padding: 13px 15px;
+
+            border-radius: 7px;
+
+            margin-bottom: 20px;
+
+            font-weight: bold;
+        }
+
+
+        /* ================= MESSAGE ================= */
+
+        #message {
+            margin-bottom: 15px;
+        }
+
+
+        .success {
+            background: #e6f7eb;
+
+            color: #18743a;
+
+            padding: 12px;
+
+            border-radius: 6px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .error {
+            background: #ffe5e5;
+
+            color: #b42318;
+
+            padding: 12px;
+
+            border-radius: 6px;
+
+            margin-bottom: 15px;
+        }
+
+
+        /* ================= CARD ================= */
+
+        .card {
+            background: white;
+
+            border-radius: 10px;
+
+            padding: 25px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                    0 3px 10px rgba(0,0,0,0.08);
+        }
+
+
+        .card h2 {
+            margin-bottom: 20px;
+
+            color: #222;
+        }
+
+
+        /* ================= SEARCH ================= */
+
+        .search-container {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr 1fr auto auto;
+
+            gap: 10px;
+        }
+
+
+        .search-container input {
+            height: 44px;
+
+            border: 1px solid #ccd4df;
+
+            border-radius: 6px;
+
+            padding: 0 12px;
+
+            font-size: 14px;
+
+            outline: none;
+        }
+
+
+        .search-container input:focus {
+            border-color: #2563eb;
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .btn {
+            border: none;
+
+            padding: 10px 17px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+
+        .btn-primary {
+            background: #2563eb;
+
+            color: white;
+        }
+
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+
+        .btn-secondary {
+            background: #64748b;
+
+            color: white;
+        }
+
+
+        .btn-secondary:hover {
+            background: #475569;
+        }
+
+
+        .btn-danger {
+            background: #dc2626;
+
+            color: white;
+        }
+
+
+        .btn-danger:hover {
+            background: #b91c1c;
+        }
+
+
+        .btn-success {
+            background: #16a34a;
+
+            color: white;
+        }
+
+
+        .btn-success:hover {
+            background: #15803d;
+        }
+
+
+        .view-btn {
+            background: #2563eb;
+
+            color: white;
+
+            border: none;
+
+            padding: 10px 16px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+            margin-top: 10px;
+        }
+
+
+        .view-btn:hover {
+            background: #1d4ed8;
+        }
+
+
+        .apply-btn {
+            background: #16a34a;
+
+            color: white;
+
+            border: none;
+
+            padding: 10px 16px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+            margin-top: 10px;
+        }
+
+
+        .apply-btn:hover {
+            background: #15803d;
+        }
+
+
+        /* ================= FORM ================= */
+
+        .form-row {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 15px;
+        }
+
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-weight: bold;
+
+            color: #333;
+        }
+
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+
+            width: 100%;
+
+            border: 1px solid #ccd4df;
+
+            border-radius: 6px;
+
+            padding: 11px;
+
+            font-size: 14px;
+
+            outline: none;
+        }
+
+
+        .form-group input,
+        .form-group select {
+            height: 44px;
+        }
+
+
+        .form-group textarea {
+            min-height: 110px;
+
+            resize: vertical;
+        }
+
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+
+            border-color: #2563eb;
+
+            box-shadow:
+                    0 0 0 2px rgba(37,99,235,0.08);
+        }
+
+
+        /* ================= JOB GRID ================= */
+
+        .jobs-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(330px, 1fr));
+
+            gap: 20px;
+        }
+
+
+        /* ================= JOB CARD ================= */
+
+        .job-card {
+
+            border: 1px solid #dfe4ea;
+
+            border-radius: 10px;
+
+            padding: 20px;
+
+            background: #fafbfd;
+
+            transition: 0.2s;
+        }
+
+
+        .job-card:hover {
+
+            box-shadow:
+                    0 4px 12px rgba(0,0,0,0.08);
+
+            transform: translateY(-2px);
+        }
+
+
+        .job-title {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            gap: 10px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .job-title h3 {
+
+            font-size: 20px;
+
+            color: #17365d;
+        }
+
+
+        .job-card p {
+
+            margin: 8px 0;
+
+            color: #43566d;
+
+            line-height: 1.5;
+        }
+
+
+        .job-type {
+
+            display: inline-block;
+
+            background: #e8efff;
+
+            color: #2563eb;
+
+            padding: 5px 10px;
+
+            border-radius: 15px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            white-space: nowrap;
+        }
+
+
+        .posted-by {
+
+            margin-top: 15px;
+
+            padding-top: 12px;
+
+            border-top: 1px solid #e1e5eb;
+
+            color: #555;
+
+            font-size: 14px;
+        }
+
+
+        .job-buttons {
+
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+            margin-top: 12px;
+        }
+
+
+        /* ================= APPLIED ================= */
+
+        .applied-box {
+
+            margin-top: 10px;
+
+            padding: 10px 14px;
+
+            background: #e8f5e9;
+
+            color: #2e7d32;
+
+            border-radius: 6px;
+
+            font-weight: bold;
+        }
+
+
+        .applied-status {
+
+            font-size: 13px;
+
+            margin-top: 4px;
+
+            font-weight: normal;
+        }
+
+
+        /* ================= EMPTY / LOADING ================= */
+
+        .empty {
+
+            text-align: center;
+
+            padding: 25px;
+
+            color: #64748b;
+        }
+
+
+        .loading {
+
+            text-align: center;
+
+            padding: 20px;
+
+            color: #64748b;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1100px) {
+
+            .search-container {
+
+                grid-template-columns:
+                    1fr 1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 750px) {
+
+            .sidebar {
+
+                width: 180px;
+            }
+
+
+            .content {
+
+                padding: 20px;
+            }
+
+
+            .form-row {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .search-container {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .jobs-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<div class="header">
+
+    <div class="logo">
+        🎓 Alumni Portal
+    </div>
+
+
+    <form action="/logout" method="post">
+
+        <button
+                type="submit"
+                class="logout-btn"
+                onclick="clearLoginSession()">
+
+            Logout
+
+        </button>
+
+    </form>
+
+</div>
+
+
+<!-- =========================================================
+     LAYOUT
+========================================================= -->
+
+<div class="layout">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <div class="sidebar">
+
+        <h2>Menu</h2>
+
+
+        <a href="/dashboard.html"
+           class="menu-item">
+
+            🏠 Dashboard
+
+        </a>
+
+
+        <a href="/profile.html"
+           class="menu-item">
+
+            👤 My Profile
+
+        </a>
+
+
+        <a href="/alumni.html"
+           class="menu-item">
+
+            🎓 Alumni
+
+        </a>
+
+
+        <a href="/mentorship.html"
+           class="menu-item">
+
+            🤝 Mentorship
+
+        </a>
+
+
+        <a href="/jobs.html"
+           class="menu-item active">
+
+            💼 Jobs
+
+        </a>
+
+
+        <a href="/applications.html"
+           class="menu-item">
+
+            📄 Applications
+
+        </a>
+
+
+        <a href="/events.html"
+           class="menu-item">
+
+            📅 Events
+
+        </a>
+
+
+        <a href="/messages.html"
+           class="menu-item">
+
+            💬 Messages
+
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <div class="content">
+
+
+        <h1 class="page-title">
+            Job Opportunities 💼
+        </h1>
+
+
+        <p class="subtitle">
+            Explore career opportunities shared by alumni.
+        </p>
+
+
+        <!-- CURRENT USER -->
+
+        <div
+                class="user-info"
+                id="userInfo">
+
+            Loading user information...
+
+        </div>
+
+
+        <!-- MESSAGE -->
+
+        <div id="message"></div>
+
+
+        <!-- =====================================================
+             SEARCH JOBS
+        ====================================================== -->
+
+        <div class="card">
+
+            <h2>
+                🔍 Search Jobs
+            </h2>
+
+
+            <div class="search-container">
+
+
+                <input
+                        type="text"
+                        id="searchTitle"
+                        placeholder="Job title">
+
+
+                <input
+                        type="text"
+                        id="searchLocation"
+                        placeholder="Location">
+
+
+                <input
+                        type="text"
+                        id="searchCompany"
+                        placeholder="Company">
+
+
+                <button
+                        class="btn btn-primary"
+                        onclick="searchJobs()">
+
+                    Search
+
+                </button>
+
+
+                <button
+                        class="btn btn-secondary"
+                        onclick="loadAllJobs()">
+
+                    Clear
+
+                </button>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             POST JOB
+             ALUMNI ONLY
+        ====================================================== -->
+
+        <div
+                class="card"
+                id="postJobSection"
+                style="display:none;">
+
+            <h2>
+                ➕ Post a Job
+            </h2>
+
+
+            <form
+                    id="jobForm"
+                    onsubmit="createJob(event)">
+
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Job Title
+                        </label>
+
+                        <input
+                                type="text"
+                                id="jobTitle"
+                                placeholder="Example: Software Developer"
+                                required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Company
+                        </label>
+
+                        <input
+                                type="text"
+                                id="company"
+                                placeholder="Example: Infosys"
+                                required>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Location
+                        </label>
+
+                        <input
+                                type="text"
+                                id="location"
+                                placeholder="Example: Bengaluru"
+                                required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Job Type
+                        </label>
+
+                        <select
+                                id="jobType"
+                                required>
+
+                            <option value="">
+                                Select Job Type
+                            </option>
+
+                            <option value="FULL-TIME">
+                                Full Time
+                            </option>
+
+                            <option value="PART-TIME">
+                                Part Time
+                            </option>
+
+                            <option value="INTERNSHIP">
+                                Internship
+                            </option>
+
+                            <option value="CONTRACT">
+                                Contract
+                            </option>
+
+                            <option value="REMOTE">
+                                Remote
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Skills
+                        </label>
+
+                        <input
+                                type="text"
+                                id="skills"
+                                placeholder="Example: Java, SQL, Spring Boot">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Salary
+                        </label>
+
+                        <input
+                                type="text"
+                                id="salary"
+                                placeholder="Example: ₹5 - ₹8 LPA">
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Job Description
+                    </label>
+
+                    <textarea
+                            id="description"
+                            placeholder="Enter job description"
+                            required></textarea>
+
+                </div>
+
+
+                <button
+                        type="submit"
+                        class="btn btn-primary">
+
+                    🚀 Post Job
+
+                </button>
+
+
+            </form>
+
+        </div>
+
+
+        <!-- =====================================================
+             AVAILABLE JOBS
+        ====================================================== -->
+
+        <div class="card">
+
+            <h2>
+                Available Jobs
+            </h2>
+
+
+            <div id="jobList">
+
+                <div class="loading">
+                    Loading jobs...
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             MY POSTED JOBS
+             ALUMNI ONLY
+        ====================================================== -->
+
+        <div
+                class="card"
+                id="myJobsSection"
+                style="display:none;">
+
+            <h2>
+                📋 My Posted Jobs
+            </h2>
+
+
+            <div id="myJobs">
+
+                <div class="loading">
+                    Loading your jobs...
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+    // =========================================================
+    // GLOBAL USER
+    // =========================================================
+
+    let currentUser = null;
+
+    let myApplications = [];
+
+
+    // =========================================================
+    // LOAD CURRENT USER
+    // =========================================================
+
+    async function loadCurrentUser() {
+
+
+        const loggedInEmail =
+            sessionStorage.getItem("loggedInEmail");
+
+
+        if (!loggedInEmail) {
+
+            window.location.href =
+                "/login.html";
+
+            return false;
+        }
+
+
+        try {
+
+
+            /*
+             * Get all registered users.
+             *
+             * We use the email stored after login
+             * to find the current user.
+             */
+
+            const response =
+                await fetch("/api/users");
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Unable to load users."
+                );
+            }
+
+
+            const users =
+                await response.json();
+
+
+            /*
+             * Find the currently logged-in user.
+             */
+
+            currentUser =
+                users.find(
+                    user =>
+                        user.email &&
+                        user.email.toLowerCase() ===
+                        loggedInEmail.toLowerCase()
+                );
+
+
+            if (!currentUser) {
+
+                document.getElementById(
+                    "userInfo"
+                ).innerHTML =
+
+                    "User not found. Please login again.";
+
+                return false;
+            }
+
+
+            console.log(
+                "Current user:",
+                currentUser
+            );
+
+
+            /*
+             * Display current user information.
+             */
+
+            document.getElementById(
+                "userInfo"
+            ).innerHTML =
+
+                `Logged in as:
+                <strong>
+                    ${escapeHtml(currentUser.name)}
+                </strong>
+                &nbsp; | &nbsp;
+                Role:
+                <strong>
+                    ${escapeHtml(currentUser.role)}
+                </strong>`;
+
+
+            /*
+             * =================================================
+             * ROLE BASED ACCESS
+             * =================================================
+             */
+
+            if (
+                currentUser.role &&
+                currentUser.role.toUpperCase() === "ALUMNI"
+            ) {
+
+
+                /*
+                 * Show Post Job.
+                 */
+
+                document.getElementById(
+                    "postJobSection"
+                ).style.display = "block";
+
+
+                /*
+                 * Show My Posted Jobs.
+                 */
+
+                document.getElementById(
+                    "myJobsSection"
+                ).style.display = "block";
+
+
+                /*
+                 * Load alumni's jobs.
+                 */
+
+                await loadMyJobs();
+
+
+            } else {
+
+
+                /*
+                 * Student cannot post jobs.
+                 */
+
+                document.getElementById(
+                    "postJobSection"
+                ).style.display = "none";
+
+
+                document.getElementById(
+                    "myJobsSection"
+                ).style.display = "none";
+
+            }
+
+
+            /*
+             * Load jobs for everyone.
+             */
+
+            await loadAllJobs();
+
+
+            /*
+             * Load applications only for students.
+             */
+
+            if (
+                currentUser.role &&
+                currentUser.role.toUpperCase() === "STUDENT"
+            ) {
+
+                await loadMyApplications();
+
+                /*
+                 * Reload jobs so Apply buttons
+                 * have the correct state.
+                 */
+
+                await loadAllJobs();
+
+            }
+
+
+            return true;
+
+
+        } catch (error) {
+
+
+            console.error(
+                "User loading error:",
+                error
+            );
+
+
+            showMessage(
+                "Unable to load user information.",
+                "error"
+            );
+
+
+            return false;
+
+        }
+
+    }
+
+
+    // =========================================================
+    // LOAD MY APPLICATIONS
+    // =========================================================
+
+    async function loadMyApplications() {
+
+
+        myApplications = [];
+
+
+        if (!currentUser) {
+            return;
+        }
+
+
+        if (
+            !currentUser.role ||
+            currentUser.role.toUpperCase() !== "STUDENT"
+        ) {
+
+            return;
+        }
+
+
+        try {
+
+
+            const response =
+                await fetch(
+                    `/api/applications/student/${currentUser.id}`
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Unable to load applications."
+                );
+            }
+
+
+            myApplications =
+                await response.json();
+
+
+        } catch (error) {
+
+
+            console.error(
+                "Application loading error:",
+                error
+            );
+
+
+            myApplications = [];
+
+        }
+
+    }
+
+
+    // =========================================================
+    // LOAD ALL JOBS
+    // =========================================================
+
+    async function loadAllJobs() {
+
+
+        try {
+
+
+            const response =
+                await fetch("/api/jobs");
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Failed to load jobs."
+                );
+            }
+
+
+            const jobs =
+                await response.json();
+
+
+            displayJobs(jobs);
+
+
+        } catch (error) {
+
+
+            console.error(
+                "Job loading error:",
+                error
+            );
+
+
+            document.getElementById(
+                "jobList"
+            ).innerHTML =
+
+                `<div class="error">
+                    Failed to load jobs.
+                </div>`;
+
+        }
+
+    }
+
+
+    // =========================================================
+    // DISPLAY JOBS
+    // =========================================================
+
+    function displayJobs(jobs) {
+
+
+        const container =
+            document.getElementById("jobList");
+
+
+        container.innerHTML = "";
+
+
+        if (
+            !jobs ||
+            jobs.length === 0
+        ) {
+
+
+            container.innerHTML =
+
+                `<div class="empty">
+                    No jobs available.
+                </div>`;
+
+
+            return;
+
+        }
+
+
+        const grid =
+            document.createElement("div");
+
+
+        grid.className =
+            "jobs-grid";
+
+
+        jobs.forEach(job => {
+
+
+            const card =
+                document.createElement("div");
+
+
+            card.className =
+                "job-card";
+
+
+            const postedByName =
+                job.postedBy
+                    ? job.postedBy.name
+                    : "Alumni";
+
+
+            const postedByEmail =
+                job.postedBy
+                    ? job.postedBy.email
+                    : "Not available";
+
+
+            let applicationHTML = "";
+
+
+            /*
+             * STUDENT
+             * Show Apply button.
+             */
+
+            if (
+                currentUser &&
+                currentUser.role &&
+                currentUser.role.toUpperCase() === "STUDENT"
+            ) {
+
+
+                const application =
+                    myApplications.find(
+                        app =>
+                            app.job &&
+                            app.job.id === job.id
+                    );
+
+
+                if (application) {
+
+
+                    applicationHTML = `
+
+                        <div class="applied-box">
+
+                            ✓ Applied
+
+                            <div class="applied-status">
+
+                                Status:
+                                ${escapeHtml(
+                        application.status ||
+                        "Pending"
+                    )}
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+
+                } else {
+
+
+                    applicationHTML = `
+
+                        <button
+                                class="apply-btn"
+                                onclick="applyForJob(${job.id})">
+
+                            Apply Now
+
+                        </button>
+
+                    `;
+
+                }
+
+            }
+
+
+            /*
+             * ALUMNI
+             * No Apply button.
+             */
+
+            card.innerHTML = `
+
+                <div class="job-title">
+
+                    <h3>
+                        💼
+                        ${escapeHtml(job.title)}
+                    </h3>
+
+                    ${
+                job.jobType
+                    ?
+                    `<span class="job-type">
+                            ${escapeHtml(job.jobType)}
+                        </span>`
+                    :
+                    ""
+            }
+
+                </div>
+
+
+                <p>
+                    <strong>Company:</strong>
+                    ${escapeHtml(job.company)}
+                </p>
+
+
+                <p>
+                    <strong>Location:</strong>
+                    ${escapeHtml(job.location)}
+                </p>
+
+
+                ${
+                job.skills
+                    ?
+                    `<p>
+                        <strong>Skills:</strong>
+                        ${escapeHtml(job.skills)}
+                    </p>`
+                    :
+                    ""
+            }
+
+
+                ${
+                job.salary
+                    ?
+                    `<p>
+                        <strong>Salary:</strong>
+                        ${escapeHtml(job.salary)}
+                    </p>`
+                    :
+                    ""
+            }
+
+
+                <p>
+                    <strong>Description:</strong>
+                    ${escapeHtml(job.description)}
+                </p>
+
+
+                <div class="posted-by">
+
+                    👤
+                    <strong>Posted By:</strong>
+                    ${escapeHtml(postedByName)}
+
+                    <br>
+
+                    📧
+                    ${escapeHtml(postedByEmail)}
+
+                </div>
+
+
+                <div class="job-buttons">
+
+                    <button
+                            class="view-btn"
+                            onclick="viewJob(${job.id})">
+
+                        View Details
+
+                    </button>
+
+
+                    ${applicationHTML}
+
+                </div>
+
+            `;
+
+
+            grid.appendChild(card);
+
+        });
+
+
+        container.appendChild(grid);
+
+    }
+
+
+    // =========================================================
+    // APPLY FOR JOB
+    // =========================================================
+
+    async function applyForJob(jobId) {
+
+
+        /*
+         * Only students can apply.
+         */
+
+        if (
+            !currentUser ||
+            !currentUser.role ||
+            currentUser.role.toUpperCase() !== "STUDENT"
+        ) {
+
+            alert(
+                "Only students can apply for jobs."
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * Check duplicate application.
+         */
+
+        const alreadyApplied =
+            myApplications.some(
+                app =>
+                    app.job &&
+                    app.job.id === jobId
+            );
+
+
+        if (alreadyApplied) {
+
+            alert(
+                "You have already applied for this job."
+            );
+
+            return;
+
+        }
+
+
+        const applicationData = {
+
+            job: {
+                id: jobId
+            },
+
+            student: {
+                id: currentUser.id
+            }
+
+        };
+
+
+        try {
+
+
+            const response =
+                await fetch(
+                    "/api/applications",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify(
+                                applicationData
+                            )
+
+                    }
+                );
+
+
+            if (!response.ok) {
+
+
+                const message =
+                    await response.text();
+
+
+                alert(
+                    "Unable to apply: " +
+                    message
+                );
+
+
+                return;
+
+            }
+
+
+            const application =
+                await response.json();
+
+
+            alert(
+                "Application submitted successfully! 🎉\n\n" +
+                "Status: " +
+                (application.status || "Pending")
+            );
+
+
+            await loadMyApplications();
+
+            await loadAllJobs();
+
+
+        } catch (error) {
+
+
+            console.error(
+                "Application error:",
+                error
+            );
+
+
+            alert(
+                "Something went wrong while applying for the job."
+            );
+
+        }
+
+    }
+
+
+    // =========================================================
+    // SEARCH JOBS
+    // =========================================================
+
+    async function searchJobs() {
+
+
+        const title =
+            document.getElementById(
+                "searchTitle"
+            ).value.trim();
+
+
+        const location =
+            document.getElementById(
+                "searchLocation"
+            ).value.trim();
+
+
+        const company =
+            document.getElementById(
+                "searchCompany"
+            ).value.trim();
+
+
+        /*
+         * If nothing entered,
+         * load all jobs.
+         */
+
+        if (
+            !title &&
+            !location &&
+            !company
+        ) {
+
+            await loadAllJobs();
+
+            return;
+
+        }
+
+
+        try {
+
+
+            let jobs = [];
+
+
+            /*
+             * If title is entered.
+             */
+
+            if (title) {
+
+
+                const response =
+                    await fetch(
+                        `/api/jobs/search/title?title=${encodeURIComponent(title)}`
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Title search failed."
+                    );
+
+                }
+
+
+                jobs =
+                    await response.json();
+
+            }
+
+
+            /*
+             * If location is entered,
+             * filter the current results.
+             */
+
+            if (location) {
+
+
+                const response =
+                    await fetch(
+                        `/api/jobs/search/location?location=${encodeURIComponent(location)}`
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Location search failed."
+                    );
+
+                }
+
+
+                const locationJobs =
+                    await response.json();
+
+
+                if (title) {
+
+
+                    const locationIds =
+                        new Set(
+                            locationJobs.map(
+                                job => job.id
+                            )
+                        );
+
+
+                    jobs =
+                        jobs.filter(
+                            job =>
+                                locationIds.has(
+                                    job.id
+                                )
+                        );
+
+
+                } else {
+
+
+                    jobs =
+                        locationJobs;
+
+                }
+
+            }
+
+
+            /*
+             * If company is entered,
+             * filter the current results.
+             */
+
+            if (company) {
+
+
+                const response =
+                    await fetch(
+                        `/api/jobs/search/company?company=${encodeURIComponent(company)}`
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Company search failed."
+                    );
+
+                }
+
+
+                const companyJobs =
+                    await response.json();
+
+
+                if (
+                    title ||
+                    location
+                ) {
+
+
+                    const companyIds =
+                        new Set(
+                            companyJobs.map(
+                                job => job.id
+                            )
+                        );
+
+
+                    jobs =
+                        jobs.filter(
+                            job =>
+                                companyIds.has(
+                                    job.id
+                                )
+                        );
+
+
+                } else {
+
+
+                    jobs =
+                        companyJobs;
+
+                }
+
+            }
+
+
+            displayJobs(jobs);
+
+
+        } catch (error) {
+
+
+            console.error(
+                "Search error:",
+                error
+            );
+
+
+            document.getElementById(
+                "jobList"
+            ).innerHTML =
+
+                `<div class="error">
+                    Unable to search jobs.
+                </div>`;
+
+        }
+
+    }
+
+
+    // =========================================================
+    // VIEW JOB DETAILS
+    // =========================================================
+
+    async function viewJob(jobId) {
+
+
+        try {
+
+
+            const response =
+                await fetch(
+                    `/api/jobs/${jobId}`
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Unable to load job details."
+                );
+
+            }
+
+
+            const job =
+                await response.json();
+
+
+            const postedBy =
+                job.postedBy
+                    ? job.postedBy.name
+                    : "Alumni";
+
+
+            alert(
+
+                "Job Details\n\n" +
+
+                "Title: " +
+                (job.title || "Not specified") +
+
+                "\n\n" +
+
+                "Company: " +
+                (job.company || "Not specified") +
+
+                "\n\n" +
+
+                "Location: " +
+                (job.location || "Not specified") +
+
+                "\n\n" +
+
+                "Salary: " +
+                (job.salary || "Not specified") +
+
+                "\n\n" +
+
+                "Job Type: " +
+                (job.jobType || "Not specified") +
+
+                "\n\n" +
+
+                "Skills: " +
+                (job.skills || "Not specified") +
+
+                "\n\n" +
+
+                "Posted By: " +
+                postedBy +
+
+                "\n\n" +
+
+                "Description: " +
+                (job.description || "Not specified")
+
+            );
+
+
+        } catch (error) {
+
+
+            console.error(
+                "View job error:",
+                error
+            );
+
+
+            alert(
+                "Unable to load job details."
+            );
+
+        }
+
+    }
+
+
+    // =========================================================
+    // CREATE JOB
+    // =========================================================
+
+    async function createJob(event) {
+
+
+        event.preventDefault();
+
+
+        /*
+         * Make sure user exists.
+         */
+
+        if (!currentUser) {
+
+            showMessage(
+                "User information is not available.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * Only ALUMNI can post jobs.
+         */
+
+        if (
+            !currentUser.role ||
+            currentUser.role.toUpperCase() !== "ALUMNI"
+        ) {
+
+            showMessage(
+                "Only alumni can post jobs.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * Collect form data.
+         *
+         * IMPORTANT:
+         * We do NOT send postedBy.
+         *
+         * The backend will assign the logged-in
+         * alumni as postedBy.
+         */
+
+        const jobData = {
+
+            title:
+                document.getElementById(
+                    "jobTitle"
+                ).value.trim(),
+
+            company:
+                document.getElementById(
+                    "company"
+                ).value.trim(),
+
+            location:
+                document.getElementById(
+                    "location"
+                ).value.trim(),
+
+            description:
+                document.getElementById(
+                    "description"
+                ).value.trim(),
+
+            skills:
+                document.getElementById(
+                    "skills"
+                ).value.trim(),
+
+            salary:
+                document.getElementById(
+                    "salary"
+                ).value.trim(),
+
+            jobType:
+            document.getElementById(
+                "jobType"
+            ).value
+
+        };
+
+
+        try {
+
+
+            /*
+             * Send current user's ID to backend.
+             *
+             * Backend will verify that the user is ALUMNI.
+             */
+
+            const response =
+                await fetch(
+                    `/api/jobs?userId=${currentUser.id}`,
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify(
+                                jobData
+                            )
+
+                    }
+                );
+
+
+            if (!response.ok) {
+
+
+                const errorText =
+                    await response.text();
+
+
+                throw new Error(
+                    errorText ||
+                    "Failed to create job."
+                );
+
+            }
+
+
+            showMessage(
+                "Job posted successfully! 🎉",
+                "success"
+            );
+
+
+            /*
+             * Clear form.
+             */
+
+            document.getElementById(
+                "jobForm"
+            ).reset();
+
+
+            /*
+             * Reload available jobs.
+             */
+
+            await loadAllJobs();
+
+
+            /*
+             * Reload alumni's jobs.
+             */
+
+            await loadMyJobs();
+
+
+        } catch (error) {
+
+
+            console.error(
+                "Create job error:",
+                error
+            );
+
+
+            showMessage(
+                "Unable to post job: " +
+                error.message,
+                "error"
+            );
+
+        }
+
+    }
+
+
+    // =========================================================
+    // LOAD MY JOBS
+    // =========================================================
+
+    async function loadMyJobs() {
+
+
+        if (!currentUser) {
+            return;
+        }
+
+
+        if (
+            !currentUser.role ||
+            currentUser.role.toUpperCase() !== "ALUMNI"
+        ) {
+
+            return;
+
+        }
+
+
+        try {
+
+
+            const response =
+                await fetch(
+                    `/api/jobs/user/${currentUser.id}`
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Failed to load your jobs."
+                );
+
+            }
+
+
+            const jobs =
+                await response.json();
+
+
+            displayMyJobs(jobs);
+
+
+        } catch (error) {
+
+
+            console.error(
+                "My jobs error:",
+                error
+            );
+
+
+            document.getElementById(
+                "myJobs"
+            ).innerHTML =
+
+                `<div class="error">
+                    Failed to load your posted jobs.
+                </div>`;
+
+        }
+
+    }
+
+
+    // =========================================================
+    // DISPLAY MY JOBS
+    // =========================================================
+
+    function displayMyJobs(jobs) {
+
+
+        const container =
+            document.getElementById(
+                "myJobs"
+            );
+
+
+        container.innerHTML = "";
+
+
+        if (
+            !jobs ||
+            jobs.length === 0
+        ) {
+
+
+            container.innerHTML =
+
+                `<div class="empty">
+                    You have not posted any jobs yet.
+                </div>`;
+
+
+            return;
+
+        }
+
+
+        jobs.forEach(job => {
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "job-card";
+
+
+            card.innerHTML = `
+
+                <div class="job-title">
+
+                    <h3>
+                        💼
+                        ${escapeHtml(job.title)}
+                    </h3>
+
+                    ${
+                job.jobType
+                    ?
+                    `<span class="job-type">
+                            ${escapeHtml(job.jobType)}
+                        </span>`
+                    :
+                    ""
+            }
+
+                </div>
+
+
+                <p>
+                    <strong>Company:</strong>
+                    ${escapeHtml(job.company)}
+                </p>
+
+
+                <p>
+                    <strong>Location:</strong>
+                    ${escapeHtml(job.location)}
+                </p>
+
+
+                ${
+                job.skills
+                    ?
+                    `<p>
+                        <strong>Skills:</strong>
+                        ${escapeHtml(job.skills)}
+                    </p>`
+                    :
+                    ""
+            }
+
+
+                ${
+                job.salary
+                    ?
+                    `<p>
+                        <strong>Salary:</strong>
+                        ${escapeHtml(job.salary)}
+                    </p>`
+                    :
+                    ""
+            }
+
+
+                <p>
+                    <strong>Description:</strong>
+                    ${escapeHtml(job.description)}
+                </p>
+
+
+                <button
+                        class="btn btn-danger"
+                        onclick="deleteJob(${job.id})">
+
+                    🗑️ Delete Job
+
+                </button>
+
+            `;
+
+
+            container.appendChild(
+                card
+            );
+
+        });
+
+    }
+
+
+    // =========================================================
+    // DELETE JOB
+    // =========================================================
+
+    async function deleteJob(jobId) {
+
+
+        if (!currentUser) {
+
+            return;
+
+        }
+
+
+        const confirmed =
+            confirm(
+                "Are you sure you want to delete this job?"
+            );
+
+
+        if (!confirmed) {
+
+            return;
+
+        }
+
+
+        try {
+
+
+            const response =
+                await fetch(
+                    `/api/jobs/${jobId}`,
+                    {
+                        method: "DELETE"
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Failed to delete job."
+                );
+
+            }
+
+
+            showMessage(
+                "Job deleted successfully.",
+                "success"
+            );
+
+
+            await loadAllJobs();
+
+            await loadMyJobs();
+
+
+        } catch (error) {
+
+
+            console.error(
+                "Delete job error:",
+                error
+            );
+
+
+            showMessage(
+                "Unable to delete job.",
+                "error"
+            );
+
+        }
+
+    }
+
+
+    // =========================================================
+    // SHOW MESSAGE
+    // =========================================================
+
+    function showMessage(
+        text,
+        type
+    ) {
+
+
+        const message =
+            document.getElementById(
+                "message"
+            );
+
+
+        message.className =
+            type;
+
+
+        message.textContent =
+            text;
+
+
+        setTimeout(
+            () => {
+
+                message.textContent =
+                    "";
+
+                message.className =
+                    "";
+
+            },
+            4000
+        );
+
+    }
+
+
+    // =========================================================
+    // ESCAPE HTML
+    // =========================================================
+
+    function escapeHtml(value) {
+
+
+        if (
+            value === null ||
+            value === undefined
+        ) {
+
+            return "";
+
+        }
+
+
+        return String(value)
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+    // =========================================================
+    // LOGOUT
+    // =========================================================
+
+    function clearLoginSession() {
+
+        sessionStorage.removeItem(
+            "loggedInEmail"
+        );
+
+    }
+
+
+    // =========================================================
+    // START PAGE
+    // =========================================================
+
+    loadCurrentUser();
+
+
+</script>
+
+
+</body>
+
+</html>

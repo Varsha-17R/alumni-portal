@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Alumni Portal - Login</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+
+            font-family:
+                    Arial,
+                    Helvetica,
+                    sans-serif;
+
+            background: #f4f6f9;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+        }
+
+
+        /* ================= LOGIN CONTAINER ================= */
+
+        .login-container {
+
+            width: 435px;
+
+            background: white;
+
+            padding: 45px 47px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                    0 8px 30px
+                    rgba(0, 0, 0, 0.10);
+
+            text-align: center;
+        }
+
+
+        /* ================= LOGO ================= */
+
+        .logo {
+
+            font-size: 48px;
+
+            margin-bottom: 10px;
+        }
+
+
+        /* ================= TITLE ================= */
+
+        h1 {
+
+            margin: 0;
+
+            color: #13294b;
+
+            font-size: 34px;
+        }
+
+
+        .subtitle {
+
+            color: #60758b;
+
+            font-size: 18px;
+
+            margin-top: 15px;
+
+            margin-bottom: 35px;
+
+            line-height: 1.4;
+        }
+
+
+        /* ================= FORM ================= */
+
+        .form-group {
+
+            text-align: left;
+
+            margin-bottom: 22px;
+        }
+
+
+        label {
+
+            display: block;
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            color: #17365d;
+
+            margin-bottom: 9px;
+        }
+
+
+        input {
+
+            width: 100%;
+
+            height: 54px;
+
+            padding: 0 15px;
+
+            border: 1px solid #cbd3dc;
+
+            border-radius: 7px;
+
+            font-size: 18px;
+
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+
+        input:focus {
+
+            border-color: #2864e8;
+
+            box-shadow:
+                    0 0 0 2px
+                    rgba(40, 100, 232, 0.10);
+        }
+
+
+        /* ================= LOGIN BUTTON ================= */
+
+        .login-button {
+
+            width: 100%;
+
+            height: 55px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: #2864e8;
+
+            color: white;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            margin-top: 3px;
+
+            transition: 0.2s;
+        }
+
+
+        .login-button:hover {
+
+            background: #1f56d1;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+
+            margin-top: 30px;
+
+            color: #60758b;
+
+            font-size: 16px;
+        }
+
+
+        /* ================= ERROR ================= */
+
+        .error {
+
+            color: #d32f2f;
+
+            background: #ffebee;
+
+            border: 1px solid #ffcdd2;
+
+            padding: 10px;
+
+            border-radius: 6px;
+
+            margin-bottom: 20px;
+
+            font-size: 15px;
+        }
+
+
+        /* ================= SUCCESS ================= */
+
+        .success {
+
+            color: #2e7d32;
+
+            background: #e8f5e9;
+
+            border: 1px solid #c8e6c9;
+
+            padding: 10px;
+
+            border-radius: 6px;
+
+            margin-bottom: 20px;
+
+            font-size: 15px;
+        }
+
+
+        /* ================= REGISTER LINK ================= */
+
+        .register-link {
+
+            margin-top: 20px;
+
+            color: #60758b;
+
+            font-size: 15px;
+        }
+
+
+        .register-link a {
+
+            color: #2864e8;
+
+            font-weight: bold;
+
+            text-decoration: none;
+        }
+
+
+        .register-link a:hover {
+
+            text-decoration: underline;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 500px) {
+
+            .login-container {
+
+                width: calc(100% - 30px);
+
+                padding: 35px 25px;
+            }
+
+
+            h1 {
+
+                font-size: 28px;
+            }
+
+
+            .subtitle {
+
+                font-size: 16px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="login-container">
+
+
+    <!-- LOGO -->
+
+    <div class="logo">
+        🎓
+    </div>
+
+
+    <!-- TITLE -->
+
+    <h1>
+        Alumni Portal
+    </h1>
+
+
+    <div class="subtitle">
+        Sign in to connect with your alumni network
+    </div>
+
+
+    <!-- =====================================================
+         ERROR MESSAGE
+         Spring Security redirects to ?error=true
+    ====================================================== -->
+
+    <div
+            id="errorMessage"
+            class="error"
+            style="display: none;">
+
+        Invalid email or password.
+        Please try again.
+
+    </div>
+
+
+    <!-- =====================================================
+         LOGOUT MESSAGE
+    ====================================================== -->
+
+    <div
+            id="logoutMessage"
+            class="success"
+            style="display: none;">
+
+        You have been logged out successfully.
+
+    </div>
+
+
+    <!-- =====================================================
+         LOGIN FORM
+    ====================================================== -->
+
+    <form
+            action="/login"
+            method="POST"
+            onsubmit="saveLoginEmail()">
+
+
+        <!-- EMAIL -->
+
+        <div class="form-group">
+
+            <label for="username">
+                Email
+            </label>
+
+
+            <input
+                    type="email"
+                    id="username"
+                    name="username"
+                    placeholder="Enter your email"
+                    required
+                    autocomplete="username">
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="form-group">
+
+            <label for="password">
+                Password
+            </label>
+
+
+            <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                    autocomplete="current-password">
+
+        </div>
+
+
+        <!-- LOGIN BUTTON -->
+
+        <button
+                type="submit"
+                class="login-button">
+
+            Sign In
+
+        </button>
+
+
+    </form>
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        Alumni Networking &amp;
+        Mentorship Portal
+
+    </div>
+
+
+    <!-- REGISTER -->
+
+    <div class="register-link">
+
+        Don't have an account?
+
+        <a href="/register.html">
+            Create an account
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+    // =========================================================
+    // SAVE LOGIN EMAIL
+    // =========================================================
+
+    function saveLoginEmail() {
+
+
+        const email =
+            document
+                .getElementById("username")
+                .value
+                .trim();
+
+
+        if (!email) {
+
+            return;
+
+        }
+
+
+        /*
+         * Save email in sessionStorage.
+         *
+         * Your Jobs page uses this to identify
+         * the currently logged-in user.
+         */
+
+        sessionStorage.setItem(
+            "loggedInEmail",
+            email
+        );
+
+
+        /*
+         * Also keep localStorage for modules
+         * that may need the email after refresh.
+         */
+
+        localStorage.setItem(
+            "loggedInEmail",
+            email
+        );
+
+
+        /*
+         * Save basic current user information.
+         */
+
+        const currentUser = {
+
+            email: email
+
+        };
+
+
+        sessionStorage.setItem(
+            "currentUser",
+            JSON.stringify(currentUser)
+        );
+
+
+        localStorage.setItem(
+            "currentUser",
+            JSON.stringify(currentUser)
+        );
+
+    }
+
+
+    // =========================================================
+    // SHOW LOGIN / LOGOUT MESSAGES
+    // =========================================================
+
+    function showMessages() {
+
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        /*
+         * Spring Security adds:
+         *
+         * ?error=true
+         *
+         * when authentication fails.
+         */
+
+        if (
+            params.get("error") === "true"
+        ) {
+
+            document.getElementById(
+                "errorMessage"
+            ).style.display = "block";
+
+        }
+
+
+        /*
+         * Spring Security redirects to:
+         *
+         * ?logout=true
+         *
+         * after logout.
+         */
+
+        if (
+            params.get("logout") === "true"
+        ) {
+
+            document.getElementById(
+                "logoutMessage"
+            ).style.display = "block";
+
+
+            /*
+             * Clear old login information.
+             */
+
+            sessionStorage.removeItem(
+                "loggedInEmail"
+            );
+
+            sessionStorage.removeItem(
+                "currentUser"
+            );
+
+
+            localStorage.removeItem(
+                "loggedInEmail"
+            );
+
+            localStorage.removeItem(
+                "currentUser"
+            );
+
+        }
+
+    }
+
+
+    // =========================================================
+    // PAGE LOAD
+    // =========================================================
+
+    showMessages();
+
+
+</script>
+
+
+</body>
+
+</html>
