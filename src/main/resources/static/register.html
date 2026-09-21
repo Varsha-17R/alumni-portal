@@ -1,708 +1,1349 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Register - Alumni Portal</title>
-
+    <title>Register | Alumni Portal</title>
 
     <style>
-
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
-
         body {
-            margin: 0;
-
-            font-family:
-                    Arial,
-                    Helvetica,
-                    sans-serif;
-
-            background: #f4f6f9;
-
+            font-family: "Segoe UI", Arial, sans-serif;
             min-height: 100vh;
+            color: #102544;
+            background:
+                    radial-gradient(circle at 15% 25%, rgba(76, 139, 218, 0.10), transparent 28%),
+                    radial-gradient(circle at 85% 75%, rgba(35, 102, 190, 0.12), transparent 30%),
+                    linear-gradient(135deg, #ffffff 0%, #f4f8ff 50%, #eaf2ff 100%);
+            overflow-x: hidden;
+        }
 
+        /* =====================================================
+           BACKGROUND DECORATION
+        ===================================================== */
+
+        .bg-circle {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .circle-one {
+            width: 430px;
+            height: 430px;
+            left: -270px;
+            top: -120px;
+            background: rgba(70, 125, 200, 0.08);
+        }
+
+        .circle-two {
+            width: 520px;
+            height: 520px;
+            right: -300px;
+            top: 40px;
+            border: 100px solid rgba(39, 91, 163, 0.16);
+        }
+
+        .circle-three {
+            width: 500px;
+            height: 500px;
+            right: -320px;
+            bottom: -250px;
+            background: rgba(72, 132, 210, 0.10);
+        }
+
+        .bottom-shape {
+            position: fixed;
+            width: 720px;
+            height: 220px;
+            left: -140px;
+            bottom: -120px;
+            background: linear-gradient(
+                    135deg,
+                    rgba(22, 69, 132, 0.90),
+                    rgba(55, 105, 175, 0.65)
+            );
+            border-radius: 50% 50% 0 0;
+            transform: rotate(-8deg);
+            z-index: 0;
+        }
+
+        .bottom-shape-two {
+            position: fixed;
+            width: 650px;
+            height: 160px;
+            left: -70px;
+            bottom: -100px;
+            background: rgba(116, 165, 225, 0.35);
+            border-radius: 50%;
+            transform: rotate(5deg);
+            z-index: 0;
+        }
+
+        /* =====================================================
+           MAIN CONTAINER
+        ===================================================== */
+
+        .page {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            width: 100%;
+            padding: 20px 7%;
+        }
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+            width: 100%;
             display: flex;
-
-            justify-content: center;
-
             align-items: center;
-
-            padding: 20px;
+            justify-content: space-between;
+            padding: 0 5px;
+            height: 75px;
         }
 
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
 
-        /* ================= REGISTER CONTAINER ================= */
+        .brand-logo {
+            width: 65px;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-        .register-container {
+        .brand-logo svg {
+            width: 62px;
+            height: 62px;
+        }
 
-            width: 460px;
+        .brand-text h1 {
+            font-size: 29px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #102544;
+        }
 
-            background: white;
+        .brand-text p {
+            margin-top: 3px;
+            color: #637b9f;
+            font-size: 12px;
+            letter-spacing: 2px;
+            font-weight: 500;
+        }
 
-            padding: 40px 45px;
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 38px;
+        }
 
-            border-radius: 15px;
+        .nav-links a {
+            text-decoration: none;
+            color: #122441;
+            font-size: 16px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
 
+        .nav-links a:hover {
+            color: #175bd1;
+        }
+
+        .login-btn {
+            border: 1.5px solid #1259d2;
+            border-radius: 28px;
+            padding: 11px 28px !important;
+            color: #1259d2 !important;
+            font-weight: 600 !important;
+        }
+
+        .login-btn:hover {
+            background: #1259d2;
+            color: white !important;
+        }
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .content {
+            min-height: calc(100vh - 95px);
+            display: grid;
+            grid-template-columns: 0.95fr 1fr;
+            gap: 60px;
+            align-items: center;
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        /* =====================================================
+           LEFT SECTION
+        ===================================================== */
+
+        .intro {
+            padding: 25px 20px 50px 45px;
+        }
+
+        .intro h2 {
+            font-size: clamp(42px, 4vw, 58px);
+            line-height: 1.05;
+            letter-spacing: -1.5px;
+            color: #102544;
+            margin-bottom: 22px;
+        }
+
+        .intro h2 span {
+            display: block;
+            color: #285ea9;
+        }
+
+        .intro-description {
+            max-width: 560px;
+            font-size: 19px;
+            line-height: 1.55;
+            color: #5d7294;
+            margin-bottom: 35px;
+        }
+
+        /* =====================================================
+           BENEFITS
+        ===================================================== */
+
+        .benefits {
+            display: flex;
+            flex-direction: column;
+            gap: 19px;
+        }
+
+        .benefit {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .benefit-icon {
+            width: 64px;
+            height: 64px;
+            min-width: 64px;
+            border-radius: 50%;
+            background: linear-gradient(
+                    145deg,
+                    #edf5ff,
+                    #e0ebfb
+            );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #1763ca;
+            box-shadow: 0 5px 15px rgba(45, 93, 155, 0.08);
+        }
+
+        .benefit-icon svg {
+            width: 31px;
+            height: 31px;
+        }
+
+        .benefit-text h3 {
+            font-size: 18px;
+            color: #122441;
+            margin-bottom: 4px;
+        }
+
+        .benefit-text p {
+            font-size: 15px;
+            color: #5d7294;
+        }
+
+        /* =====================================================
+           QUOTE
+        ===================================================== */
+
+        .quote {
+            margin-top: 30px;
+            margin-left: 40px;
+            color: #285da6;
+        }
+
+        .quote-main {
+            font-family: "Brush Script MT", "Segoe Script", cursive;
+            font-size: 38px;
+            line-height: 1.1;
+            transform: rotate(-3deg);
+        }
+
+        .quote-line {
+            width: 130px;
+            height: 2px;
+            background: #285da6;
+            margin: 8px 0 0 130px;
+            transform: rotate(-4deg);
+        }
+
+        .stronger {
+            margin-top: 35px;
+            font-size: 18px;
+            color: #6e83a3;
+            font-style: italic;
+        }
+
+        /* =====================================================
+           REGISTER CARD
+        ===================================================== */
+
+        .register-card {
+            width: 100%;
+            max-width: 640px;
+            justify-self: center;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 20px;
+            padding: 42px 60px;
             box-shadow:
-                    0 8px 30px
-                    rgba(0, 0, 0, 0.10);
-
-            text-align: center;
+                    0 20px 60px rgba(36, 78, 130, 0.14),
+                    0 4px 15px rgba(36, 78, 130, 0.05);
+            backdrop-filter: blur(10px);
         }
 
+        .card-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-        /* ================= LOGO ================= */
-
-        .logo {
-
-            font-size: 46px;
-
+        .card-header h2 {
+            font-size: 32px;
+            color: #112746;
             margin-bottom: 8px;
         }
 
-
-        /* ================= TITLE ================= */
-
-        h1 {
-
-            margin: 0;
-
-            color: #13294b;
-
-            font-size: 32px;
+        .card-header p {
+            font-size: 18px;
+            color: #63799b;
         }
 
-
-        .subtitle {
-
-            color: #60758b;
-
-            font-size: 16px;
-
-            margin-top: 10px;
-
-            margin-bottom: 25px;
-
-            line-height: 1.4;
-        }
-
-
-        /* ================= FORM ================= */
+        /* =====================================================
+           FORM
+        ===================================================== */
 
         .form-group {
-
-            text-align: left;
-
             margin-bottom: 17px;
         }
 
-
-        label {
-
-            display: block;
-
-            font-size: 16px;
-
-            font-weight: bold;
-
-            color: #17365d;
-
-            margin-bottom: 7px;
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 55px;
+            border: 1px solid #d5dfec;
+            border-radius: 11px;
+            background: #fff;
+            transition: 0.25s;
+            overflow: hidden;
         }
 
+        .input-wrapper:focus-within {
+            border-color: #3474d5;
+            box-shadow: 0 0 0 3px rgba(52, 116, 213, 0.10);
+        }
 
-        input,
-        select {
+        .input-icon {
+            width: 56px;
+            height: 100%;
+            min-width: 56px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #587292;
+            background: #f5f8fc;
+            border-right: 1px solid #edf1f6;
+        }
 
+        .input-icon svg {
+            width: 23px;
+            height: 23px;
+        }
+
+        .input-wrapper input,
+        .input-wrapper select {
             width: 100%;
-
-            height: 48px;
-
-            padding: 0 13px;
-
-            border: 1px solid #cbd3dc;
-
-            border-radius: 7px;
-
-            font-size: 16px;
-
+            height: 100%;
+            border: none;
             outline: none;
-
-            background: white;
-
-            transition: 0.2s;
+            padding: 0 15px;
+            color: #233b5e;
+            background: transparent;
+            font-size: 16px;
+            font-family: inherit;
         }
 
-
-        input:focus,
-        select:focus {
-
-            border-color: #2864e8;
-
-            box-shadow:
-                    0 0 0 2px
-                    rgba(40, 100, 232, 0.10);
+        .input-wrapper input::placeholder {
+            color: #7185a2;
         }
 
+        .input-wrapper select {
+            cursor: pointer;
+            color: #7185a2;
+        }
 
-        /* ================= REGISTER BUTTON ================= */
+        .input-wrapper select:valid {
+            color: #233b5e;
+        }
+
+        .password-toggle {
+            border: none;
+            background: transparent;
+            margin-right: 14px;
+            cursor: pointer;
+            color: #647993;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-toggle svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .field-help {
+            font-size: 13px;
+            color: #647b9b;
+            margin: 5px 0 0 64px;
+        }
+
+        /* =====================================================
+           REGISTER BUTTON
+        ===================================================== */
 
         .register-button {
-
             width: 100%;
-
-            height: 50px;
-
+            height: 57px;
             border: none;
-
-            border-radius: 7px;
-
-            background: #2864e8;
-
+            border-radius: 11px;
+            background: linear-gradient(
+                    135deg,
+                    #4675b6,
+                    #204ca0
+            );
             color: white;
-
             font-size: 18px;
-
-            font-weight: bold;
-
+            font-weight: 600;
             cursor: pointer;
-
-            margin-top: 5px;
-
-            transition: 0.2s;
+            margin-top: 10px;
+            transition: 0.3s;
+            box-shadow: 0 8px 20px rgba(34, 79, 156, 0.20);
         }
-
 
         .register-button:hover {
-
-            background: #1f56d1;
-
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(34, 79, 156, 0.28);
         }
 
-
         .register-button:disabled {
-
-            background: #8ba9e8;
-
+            opacity: 0.65;
             cursor: not-allowed;
-
             transform: none;
         }
 
+        .button-arrow {
+            margin-left: 12px;
+            font-size: 24px;
+            vertical-align: -2px;
+        }
 
-        /* ================= MESSAGE ================= */
+        /* =====================================================
+           OR
+        ===================================================== */
 
-        .message {
-
-            display: none;
-
-            padding: 10px;
-
-            border-radius: 6px;
-
-            margin-bottom: 18px;
-
+        .or-divider {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 25px 0;
+            color: #617695;
             font-size: 14px;
-
-            text-align: left;
-
-            line-height: 1.4;
         }
 
+        .or-divider::before,
+        .or-divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #d7e0ec;
+        }
 
-        .success {
+        .login-text {
+            text-align: center;
+            color: #647995;
+            font-size: 16px;
+        }
 
+        .login-text a {
             display: block;
-
-            color: #2e7d32;
-
-            background: #e8f5e9;
-
-            border: 1px solid #c8e6c9;
-        }
-
-
-        .error {
-
-            display: block;
-
-            color: #d32f2f;
-
-            background: #ffebee;
-
-            border: 1px solid #ffcdd2;
-        }
-
-
-        /* ================= LOGIN LINK ================= */
-
-        .login-link {
-
-            margin-top: 22px;
-
-            color: #60758b;
-
-            font-size: 15px;
-        }
-
-
-        .login-link a {
-
-            color: #2864e8;
-
-            font-weight: bold;
-
+            margin-top: 8px;
+            color: #095bd1;
+            font-weight: 600;
             text-decoration: none;
+            font-size: 17px;
         }
 
-
-        .login-link a:hover {
-
+        .login-text a:hover {
             text-decoration: underline;
         }
 
+        /* =====================================================
+           MESSAGE
+        ===================================================== */
 
-        /* ================= MOBILE ================= */
-
-        @media (max-width: 500px) {
-
-            .register-container {
-
-                width: 100%;
-
-                padding: 30px 25px;
-            }
-
-
-            h1 {
-
-                font-size: 28px;
-            }
-
+        .message {
+            display: none;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            font-size: 14px;
+            text-align: center;
         }
 
+        .message.success {
+            display: block;
+            background: #e9f8ef;
+            color: #207344;
+            border: 1px solid #bde8cc;
+        }
+
+        .message.error {
+            display: block;
+            background: #fff0f0;
+            color: #b42318;
+            border: 1px solid #f3c4c4;
+        }
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 1050px) {
+
+            .page {
+                padding: 20px 4%;
+            }
+
+            .content {
+                grid-template-columns: 1fr;
+                gap: 35px;
+            }
+
+            .intro {
+                padding: 30px 20px;
+                text-align: center;
+            }
+
+            .intro-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .benefits {
+                max-width: 550px;
+                margin: auto;
+                text-align: left;
+            }
+
+            .quote {
+                margin-left: 0;
+            }
+
+            .quote-line {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .stronger {
+                display: none;
+            }
+
+            .register-card {
+                margin-bottom: 50px;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                height: auto;
+                padding: 10px 0;
+            }
+
+            .brand-text h1 {
+                font-size: 22px;
+            }
+
+            .brand-text p {
+                font-size: 9px;
+            }
+
+            .brand-logo {
+                width: 50px;
+                height: 50px;
+            }
+
+            .brand-logo svg {
+                width: 50px;
+                height: 50px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a:not(.login-btn) {
+                display: none;
+            }
+
+            .login-btn {
+                padding: 9px 20px !important;
+            }
+
+            .intro h2 {
+                font-size: 40px;
+            }
+
+            .intro-description {
+                font-size: 16px;
+            }
+
+            .register-card {
+                padding: 30px 20px;
+                border-radius: 17px;
+            }
+
+            .card-header h2 {
+                font-size: 27px;
+            }
+
+            .card-header p {
+                font-size: 15px;
+            }
+
+            .benefit-icon {
+                width: 55px;
+                height: 55px;
+                min-width: 55px;
+            }
+
+            .benefit-text h3 {
+                font-size: 16px;
+            }
+
+            .benefit-text p {
+                font-size: 13px;
+            }
+        }
     </style>
-
 </head>
-
 
 <body>
 
+<!-- Background Decorations -->
+<div class="bg-circle circle-one"></div>
+<div class="bg-circle circle-two"></div>
+<div class="bg-circle circle-three"></div>
+<div class="bottom-shape"></div>
+<div class="bottom-shape-two"></div>
 
-<div class="register-container">
+
+<div class="page">
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <header class="navbar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+
+                <!-- Graduation Logo -->
+                <svg viewBox="0 0 100 100"
+                     fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+
+                    <path d="M50 8L91 29L50 50L9 29L50 8Z"
+                          fill="#102544"/>
+
+                    <path d="M25 39V55C25 55 34 69 50 69C66 69 75 55 75 55V39"
+                          fill="#102544"/>
+
+                    <path d="M16 31V49"
+                          stroke="#102544"
+                          stroke-width="5"
+                          stroke-linecap="round"/>
+
+                    <circle cx="50" cy="54" r="13"
+                            fill="#2F6BC0"/>
+
+                    <circle cx="30" cy="72" r="9"
+                            fill="#102544"/>
+
+                    <circle cx="70" cy="72" r="9"
+                            fill="#102544"/>
+
+                    <path d="M13 94C13 82 20 76 30 76C40 76 47 82 47 94"
+                          fill="#102544"/>
+
+                    <path d="M53 94C53 82 60 76 70 76C80 76 87 82 87 94"
+                          fill="#102544"/>
+
+                </svg>
+
+            </div>
+
+            <div class="brand-text">
+                <h1>Alumni Portal</h1>
+                <p>CONNECT · GROW · GIVE BACK</p>
+            </div>
+
+        </div>
+
+
+        <nav class="nav-links">
+
+            <a href="index.html">Home</a>
+
+            <a href="about.html">About</a>
+
+            <a href="events.html">Events</a>
+
+            <a href="contact.html">Contact</a>
+
+            <a href="login.html" class="login-btn">
+                Login
+            </a>
+
+        </nav>
+
+    </header>
 
 
     <!-- =====================================================
-         LOGO
+         MAIN CONTENT
     ====================================================== -->
 
-    <div class="logo">
-        🎓
-    </div>
+    <main class="content">
 
+        <!-- =================================================
+             LEFT SIDE
+        ================================================== -->
 
-    <!-- =====================================================
-         TITLE
-    ====================================================== -->
+        <section class="intro">
 
-    <h1>
-        Create Account
-    </h1>
+            <h2>
+                Join Our
+                <span>Alumni Community</span>
+            </h2>
 
+            <p class="intro-description">
+                Register to connect with fellow alumni, explore
+                opportunities, and stay updated with the latest
+                news and events.
+            </p>
 
-    <div class="subtitle">
 
-        Join the Alumni Networking
-        &amp; Mentorship Portal
+            <!-- BENEFITS -->
 
-    </div>
+            <div class="benefits">
 
+                <!-- Reconnect -->
 
-    <!-- =====================================================
-         MESSAGE
-    ====================================================== -->
+                <div class="benefit">
 
-    <div
-            id="message"
-            class="message">
+                    <div class="benefit-icon">
 
-    </div>
+                        <svg viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="1.8">
 
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
 
-    <!-- =====================================================
-         REGISTRATION FORM
-    ====================================================== -->
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
 
-    <form
-            id="registerForm">
+                        </svg>
 
+                    </div>
 
-        <!-- NAME -->
+                    <div class="benefit-text">
 
-        <div class="form-group">
+                        <h3>Reconnect</h3>
 
-            <label for="name">
-                Full Name
-            </label>
+                        <p>
+                            Find and connect with alumni
+                        </p>
 
+                    </div>
 
-            <input
-                    type="text"
-                    id="name"
-                    placeholder="Enter your full name"
-                    required
-                    autocomplete="name">
+                </div>
 
-        </div>
 
+                <!-- Opportunities -->
 
-        <!-- EMAIL -->
+                <div class="benefit">
 
-        <div class="form-group">
+                    <div class="benefit-icon">
 
-            <label for="email">
-                Email
-            </label>
+                        <svg viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="1.8">
 
+                            <rect x="3" y="7" width="18" height="13" rx="2"/>
+                            <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                            <path d="M3 12h18"/>
+                            <path d="M10 12v2h4v-2"/>
 
-            <input
-                    type="email"
-                    id="email"
-                    placeholder="Enter your email"
-                    required
-                    autocomplete="email">
+                        </svg>
 
-        </div>
+                    </div>
 
+                    <div class="benefit-text">
 
-        <!-- PHONE -->
+                        <h3>Opportunities</h3>
 
-        <div class="form-group">
+                        <p>
+                            Explore career and mentorship opportunities
+                        </p>
 
-            <label for="phone">
-                Phone Number
-            </label>
+                    </div>
 
+                </div>
 
-            <input
-                    type="tel"
-                    id="phone"
-                    placeholder="Enter your 10-digit phone number"
-                    pattern="[0-9]{10}"
-                    maxlength="10"
-                    inputmode="numeric"
-                    required
-                    autocomplete="tel">
 
-        </div>
+                <!-- Stay Updated -->
 
+                <div class="benefit">
 
-        <!-- PASSWORD -->
+                    <div class="benefit-icon">
 
-        <div class="form-group">
+                        <svg viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="1.8">
 
-            <label for="password">
-                Password
-            </label>
+                            <rect x="3" y="4" width="18" height="17" rx="2"/>
+                            <path d="M8 2v4"/>
+                            <path d="M16 2v4"/>
+                            <path d="M3 9h18"/>
+                            <path d="M8 13h2"/>
+                            <path d="M14 13h2"/>
+                            <path d="M8 17h2"/>
 
+                        </svg>
 
-            <input
-                    type="password"
-                    id="password"
-                    placeholder="Create a password"
-                    minlength="6"
-                    required
-                    autocomplete="new-password">
+                    </div>
 
-        </div>
+                    <div class="benefit-text">
 
+                        <h3>Stay Updated</h3>
 
-        <!-- CONFIRM PASSWORD -->
+                        <p>
+                            Get notified about events and news
+                        </p>
 
-        <div class="form-group">
+                    </div>
 
-            <label for="confirmPassword">
-                Confirm Password
-            </label>
+                </div>
 
 
-            <input
-                    type="password"
-                    id="confirmPassword"
-                    placeholder="Confirm your password"
-                    minlength="6"
-                    required
-                    autocomplete="new-password">
+                <!-- Give Back -->
 
-        </div>
+                <div class="benefit">
 
+                    <div class="benefit-icon">
 
-        <!-- ROLE -->
+                        <svg viewBox="0 0 24 24"
+                             fill="currentColor">
 
-        <div class="form-group">
+                            <path d="M12 21s-7-4.35-9.5-9.2C.4 7.7
+                            3.1 4 6.8 4c2.1 0 4 1.2 5.2 3
+                            1.2-1.8 3.1-3 5.2-3
+                            3.7 0 6.4 3.7 4.3 7.8
+                            C19 16.65 12 21 12 21z"/>
 
-            <label for="role">
-                Account Type
-            </label>
+                        </svg>
 
+                    </div>
 
-            <select
-                    id="role"
-                    required>
+                    <div class="benefit-text">
 
-                <option value="">
-                    Select account type
-                </option>
+                        <h3>Give Back</h3>
 
+                        <p>
+                            Support and contribute to your alma mater
+                        </p>
 
-                <option value="STUDENT">
-                    Student
-                </option>
+                    </div>
 
+                </div>
 
-                <option value="ALUMNI">
-                    Alumni
-                </option>
+            </div>
 
-            </select>
 
-        </div>
+            <!-- QUOTE -->
 
+            <div class="quote">
 
-        <!-- REGISTER -->
+                <div class="quote-main">
+                    Once a Student<br>
+                    Always a Part
+                </div>
 
-        <button
-                type="submit"
-                id="registerButton"
-                class="register-button">
+                <div class="quote-line"></div>
 
-            Create Account
+            </div>
 
-        </button>
+            <div class="stronger">
+                “Stronger<br>
+                Together”
+            </div>
 
+        </section>
 
-    </form>
 
+        <!-- =================================================
+             REGISTRATION CARD
+        ================================================== -->
 
-    <!-- =====================================================
-         LOGIN LINK
-    ====================================================== -->
+        <section class="register-card">
 
-    <div class="login-link">
+            <div class="card-header">
 
-        Already have an account?
+                <h2>Create an Account</h2>
 
-        <a href="/login.html">
-            Sign in here
-        </a>
+                <p>
+                    Be a part of our growing alumni network
+                </p>
 
-    </div>
+            </div>
 
+
+            <!-- Message -->
+
+            <div id="message" class="message"></div>
+
+
+            <form id="registerForm">
+
+                <!-- FULL NAME -->
+
+                <div class="form-group">
+
+                    <div class="input-wrapper">
+
+                        <div class="input-icon">
+
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="1.8">
+
+                                <circle cx="12" cy="7" r="4"/>
+                                <path d="M4 21v-2a6 6 0 0 1 12 0v2"/>
+
+                            </svg>
+
+                        </div>
+
+                        <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                placeholder="Full Name"
+                                required
+                        >
+
+                    </div>
+
+                    <p class="field-help">
+                        Enter your full name
+                    </p>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <div class="input-wrapper">
+
+                        <div class="input-icon">
+
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="1.8">
+
+                                <rect x="3" y="5" width="18" height="14" rx="2"/>
+                                <path d="M3 7l9 6 9-6"/>
+
+                            </svg>
+
+                        </div>
+
+                        <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Email Address"
+                                required
+                        >
+
+                    </div>
+
+                    <p class="field-help">
+                        Enter a valid email address
+                    </p>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <div class="input-wrapper">
+
+                        <div class="input-icon">
+
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="1.8">
+
+                                <rect x="5" y="10" width="14" height="11" rx="2"/>
+                                <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+
+                            </svg>
+
+                        </div>
+
+                        <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Password"
+                                minlength="6"
+                                required
+                        >
+
+                        <button
+                                type="button"
+                                class="password-toggle"
+                                onclick="togglePassword()"
+                                aria-label="Show password"
+                        >
+
+                            <svg id="eyeIcon"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="1.8">
+
+                                <path d="M2 12s3.5-7 10-7
+                                         10 7 10 7-3.5 7-10 7
+                                         S2 12 2 12z"/>
+
+                                <circle cx="12" cy="12" r="3"/>
+
+                            </svg>
+
+                        </button>
+
+                    </div>
+
+                    <p class="field-help">
+                        Create a secure password (min 6 characters)
+                    </p>
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="form-group">
+
+                    <div class="input-wrapper">
+
+                        <div class="input-icon">
+
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="1.8">
+
+                                <path d="M22 16.92v3
+                                         a2 2 0 0 1-2.18 2
+                                         19.8 19.8 0 0 1-8.63-3.07
+                                         19.5 19.5 0 0 1-6-6
+                                         A19.8 19.8 0 0 1 2.12 4.18
+                                         2 2 0 0 1 4.11 2h3
+                                         a2 2 0 0 1 2 1.72
+                                         12.8 12.8 0 0 0 .7 2.81
+                                         2 2 0 0 1-.45 2.11L8.09 9.91
+                                         a16 16 0 0 0 6 6l1.27-1.27
+                                         a2 2 0 0 1 2.11-.45
+                                         12.8 12.8 0 0 0 2.81.7
+                                         A2 2 0 0 1 22 16.92z"/>
+
+                            </svg>
+
+                        </div>
+
+                        <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                placeholder="Phone Number"
+                                required
+                        >
+
+                    </div>
+
+                    <p class="field-help">
+                        Enter your contact number
+                    </p>
+
+                </div>
+
+
+                <!-- ROLE -->
+
+                <div class="form-group">
+
+                    <div class="input-wrapper">
+
+                        <div class="input-icon">
+
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="1.8">
+
+                                <path d="M22 10L12 5 2 10l10 5 10-5z"/>
+                                <path d="M6 12v5c3 2 9 2 12 0v-5"/>
+                                <path d="M22 10v6"/>
+
+                            </svg>
+
+                        </div>
+
+                        <select
+                                id="role"
+                                name="role"
+                                required
+                        >
+
+                            <option value="" disabled selected>
+                                Select Role
+                            </option>
+
+                            <option value="STUDENT">
+                                Student
+                            </option>
+
+                            <option value="ALUMNI">
+                                Alumni
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <p class="field-help">
+                        Choose your role
+                    </p>
+
+                </div>
+
+
+                <!-- REGISTER BUTTON -->
+
+                <button
+                        type="submit"
+                        class="register-button"
+                        id="registerButton"
+                >
+
+                    Register
+
+                    <span class="button-arrow">
+                        ›
+                    </span>
+
+                </button>
+
+            </form>
+
+
+            <!-- OR -->
+
+            <div class="or-divider">
+                <span>OR</span>
+            </div>
+
+
+            <!-- LOGIN -->
+
+            <div class="login-text">
+
+                Already have an account?
+
+                <a href="login.html">
+                    Login here
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
 
 </div>
 
 
 <script>
 
+    /* =====================================================
+       PASSWORD VISIBILITY
+    ===================================================== */
 
-    // =========================================================
-    // ELEMENTS
-    // =========================================================
+    function togglePassword() {
 
-    const form =
-        document.getElementById(
-            "registerForm"
-        );
+        const password =
+            document.getElementById("password");
 
+        const eyeIcon =
+            document.getElementById("eyeIcon");
 
-    const message =
-        document.getElementById(
-            "message"
-        );
+        if (password.type === "password") {
 
+            password.type = "text";
 
-    const registerButton =
-        document.getElementById(
-            "registerButton"
-        );
+            eyeIcon.innerHTML = `
+                <path d="M2 12s3.5-7 10-7
+                         10 7 10 7-3.5 7-10 7
+                         S2 12 2 12z"/>
 
+                <circle cx="12" cy="12" r="3"/>
 
-    // =========================================================
-    // SHOW MESSAGE
-    // =========================================================
+                <path d="M3 3l18 18"/>
+            `;
 
-    function showMessage(
-        text,
-        type
-    ) {
+        } else {
 
+            password.type = "password";
 
-        message.textContent =
-            text;
+            eyeIcon.innerHTML = `
+                <path d="M2 12s3.5-7 10-7
+                         10 7 10 7-3.5 7-10 7
+                         S2 12 2 12z"/>
 
+                <circle cx="12" cy="12" r="3"/>
+            `;
 
-        message.className =
-            "message " + type;
-
-
-        message.style.display =
-            "block";
+        }
 
     }
 
 
-    // =========================================================
-    // REGISTRATION
-    // =========================================================
+    /* =====================================================
+       SHOW MESSAGE
+    ===================================================== */
 
-    form.addEventListener(
-        "submit",
-        async function(event) {
+    function showMessage(message, type) {
 
+        const messageBox =
+            document.getElementById("message");
+
+        messageBox.textContent = message;
+
+        messageBox.className =
+            "message " + type;
+
+    }
+
+
+    /* =====================================================
+       REGISTER FORM
+    ===================================================== */
+
+    document
+        .getElementById("registerForm")
+        .addEventListener("submit", async function(event) {
 
             event.preventDefault();
 
-
-            // -------------------------------------------------
-            // GET FORM VALUES
-            // -------------------------------------------------
+            const button =
+                document.getElementById("registerButton");
 
             const name =
-                document
-                    .getElementById("name")
-                    .value
-                    .trim();
-
+                document.getElementById("name").value.trim();
 
             const email =
-                document
-                    .getElementById("email")
-                    .value
-                    .trim()
-                    .toLowerCase();
-
-
-            const phone =
-                document
-                    .getElementById("phone")
-                    .value
-                    .trim();
-
+                document.getElementById("email").value.trim();
 
             const password =
-                document
-                    .getElementById("password")
-                    .value;
+                document.getElementById("password").value;
 
-
-            const confirmPassword =
-                document
-                    .getElementById("confirmPassword")
-                    .value;
-
+            const phone =
+                document.getElementById("phone").value.trim();
 
             const role =
-                document
-                    .getElementById("role")
-                    .value;
+                document.getElementById("role").value;
 
 
-            // -------------------------------------------------
-            // VALIDATION
-            // -------------------------------------------------
+            /* ---------------------------------------------
+               BASIC VALIDATION
+            --------------------------------------------- */
 
-            if (
-                !name ||
-                !email ||
-                !phone ||
-                !password ||
-                !confirmPassword ||
-                !role
-            ) {
+            if (!name) {
 
                 showMessage(
-                    "Please fill in all fields.",
+                    "Please enter your full name.",
                     "error"
                 );
 
                 return;
-
             }
 
 
-            // -------------------------------------------------
-            // NAME VALIDATION
-            // -------------------------------------------------
-
-            if (name.length < 2) {
+            if (!email) {
 
                 showMessage(
-                    "Please enter a valid name.",
+                    "Please enter your email address.",
                     "error"
                 );
 
                 return;
-
             }
 
 
-            // -------------------------------------------------
-            // EMAIL VALIDATION
-            // -------------------------------------------------
-
-            const emailPattern =
-                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-
-            if (
-                !emailPattern.test(email)
-            ) {
-
-                showMessage(
-                    "Please enter a valid email address.",
-                    "error"
-                );
-
-                return;
-
-            }
-
-
-            // -------------------------------------------------
-            // PHONE VALIDATION
-            // -------------------------------------------------
-
-            if (
-                !/^[0-9]{10}$/.test(phone)
-            ) {
-
-                showMessage(
-                    "Please enter a valid 10-digit phone number.",
-                    "error"
-                );
-
-                return;
-
-            }
-
-
-            // -------------------------------------------------
-            // PASSWORD VALIDATION
-            // -------------------------------------------------
-
-            if (
-                password.length < 6
-            ) {
+            if (password.length < 6) {
 
                 showMessage(
                     "Password must contain at least 6 characters.",
@@ -710,50 +1351,44 @@
                 );
 
                 return;
-
             }
 
 
-            // -------------------------------------------------
-            // CONFIRM PASSWORD
-            // -------------------------------------------------
-
-            if (
-                password !== confirmPassword
-            ) {
+            if (!phone) {
 
                 showMessage(
-                    "Passwords do not match.",
+                    "Please enter your phone number.",
                     "error"
                 );
 
                 return;
-
             }
 
 
-            // -------------------------------------------------
-            // ROLE VALIDATION
-            // -------------------------------------------------
-
-            if (
-                role !== "STUDENT" &&
-                role !== "ALUMNI"
-            ) {
+            if (!role) {
 
                 showMessage(
-                    "Please select Student or Alumni.",
+                    "Please select your role.",
                     "error"
                 );
 
                 return;
-
             }
 
 
-            // =================================================
-            // USER DATA
-            // =================================================
+            /* ---------------------------------------------
+               DISABLE BUTTON
+            --------------------------------------------- */
+
+            button.disabled = true;
+
+            button.innerHTML =
+                "Creating Account...";
+
+
+            /* ---------------------------------------------
+               USER OBJECT
+            --------------------------------------------- */
 
             const userData = {
 
@@ -772,198 +1407,137 @@
 
             try {
 
-
-                // -------------------------------------------------
-                // DISABLE BUTTON
-                // -------------------------------------------------
-
-                registerButton.disabled =
-                    true;
-
-
-                registerButton.textContent =
-                    "Creating Account...";
-
-
-                // -------------------------------------------------
-                // SEND TO BACKEND
-                // -------------------------------------------------
+                /* -----------------------------------------
+                   SPRING BOOT API
+                ----------------------------------------- */
 
                 const response =
                     await fetch(
-                        "/api/users",
+                        "http://localhost:8080/api/users",
                         {
-
                             method: "POST",
 
                             headers: {
-
                                 "Content-Type":
                                     "application/json"
-
                             },
 
                             body:
-                                JSON.stringify(
-                                    userData
-                                )
-
+                                JSON.stringify(userData)
                         }
                     );
 
 
-                // -------------------------------------------------
-                // READ RESPONSE
-                // -------------------------------------------------
+                /* -----------------------------------------
+                   SUCCESS
+                ----------------------------------------- */
 
-                const responseText =
-                    await response.text();
+                if (response.ok) {
 
-
-                // -------------------------------------------------
-                // ERROR
-                // -------------------------------------------------
-
-                if (!response.ok) {
-
-
-                    let errorMessage =
-                        "Registration failed.";
-
-
-                    if (
-                        response.status === 409
-                    ) {
-
-                        errorMessage =
-                            "This email is already registered.";
-
-                    } else if (
-                        responseText
-                    ) {
-
-                        /*
-                         * Try to extract Spring Boot
-                         * error message.
-                         */
-
-                        try {
-
-                            const errorData =
-                                JSON.parse(
-                                    responseText
-                                );
-
-
-                            errorMessage =
-                                errorData.message ||
-                                errorData.error ||
-                                responseText;
-
-                        } catch {
-
-                            errorMessage =
-                                responseText;
-
-                        }
-
-                    }
-
-
-                    throw new Error(
-                        errorMessage
+                    showMessage(
+                        "Registration successful! Welcome to Alumni Portal.",
+                        "success"
                     );
+
+                    document
+                        .getElementById("registerForm")
+                        .reset();
+
+
+                    button.innerHTML =
+                        "Registration Successful ✓";
+
+
+                    /*
+                     * Redirect to login after 2 seconds
+                     */
+
+                    setTimeout(function() {
+
+                        window.location.href =
+                            "login.html";
+
+                    }, 2000);
 
                 }
 
 
-                // =================================================
-                // SUCCESS
-                // =================================================
+                /* -----------------------------------------
+                   DUPLICATE EMAIL
+                ----------------------------------------- */
 
-                showMessage(
-                    "Registration successful! Redirecting to login...",
-                    "success"
-                );
+                else if (response.status === 409) {
 
+                    showMessage(
+                        "This email address is already registered.",
+                        "error"
+                    );
 
-                // Clear form
+                    button.disabled = false;
 
-                form.reset();
+                    button.innerHTML =
+                        'Register <span class="button-arrow">›</span>';
 
-
-                /*
-                 * Clear any previous login information.
-                 */
-
-                sessionStorage.removeItem(
-                    "loggedInEmail"
-                );
+                }
 
 
-                sessionStorage.removeItem(
-                    "currentUser"
-                );
+                /* -----------------------------------------
+                   OTHER ERROR
+                ----------------------------------------- */
 
+                else {
 
-                localStorage.removeItem(
-                    "loggedInEmail"
-                );
+                    let errorMessage =
+                        "Registration failed. Please try again.";
 
+                    try {
 
-                localStorage.removeItem(
-                    "currentUser"
-                );
+                        const errorData =
+                            await response.json();
 
+                        if (errorData.message) {
+                            errorMessage =
+                                errorData.message;
+                        }
 
-                // Redirect to login
+                    } catch (e) {
+                        // Ignore JSON parsing error
+                    }
 
-                setTimeout(
-                    function() {
+                    showMessage(
+                        errorMessage,
+                        "error"
+                    );
 
-                        window.location.href =
-                            "/login.html";
+                    button.disabled = false;
 
-                    },
-                    1500
-                );
+                    button.innerHTML =
+                        'Register <span class="button-arrow">›</span>';
+                }
 
 
             } catch (error) {
 
-
                 console.error(
-                    "Registration error:",
+                    "Registration Error:",
                     error
                 );
 
-
                 showMessage(
-                    error.message ||
-                    "Unable to register. Please try again.",
+                    "Unable to connect to the server. Please make sure Spring Boot is running.",
                     "error"
                 );
 
+                button.disabled = false;
 
-            } finally {
-
-
-                registerButton.disabled =
-                    false;
-
-
-                registerButton.textContent =
-                    "Create Account";
+                button.innerHTML =
+                    'Register <span class="button-arrow">›</span>';
 
             }
 
-        }
-    );
-
+        });
 
 </script>
 
-
 </body>
-
 </html>

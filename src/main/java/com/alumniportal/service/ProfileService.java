@@ -5,7 +5,9 @@ import com.alumniportal.entity.User;
 import com.alumniportal.repository.ProfileRepository;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -135,7 +137,94 @@ public class ProfileService {
                 updatedProfile.getLocation()
         );
 
+        /*
+         * IMPORTANT:
+         * We intentionally do NOT update the photo here.
+         *
+         * Photo is managed separately through:
+         * POST   /api/profiles/{id}/photo
+         * GET    /api/profiles/{id}/photo
+         * DELETE /api/profiles/{id}/photo
+         */
+
         return profileRepository.save(existingProfile);
+    }
+
+    // =========================================================
+    // UPLOAD PROFILE PHOTO
+    // =========================================================
+
+    public Profile uploadPhoto(
+            Long id,
+            MultipartFile file) throws IOException {
+
+        Profile profile =
+                profileRepository.findById(id)
+                        .orElse(null);
+
+        if (profile == null) {
+            return null;
+        }
+
+        if (file == null || file.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Please select an image"
+            );
+        }
+
+        // Maximum file size: 5 MB
+        if (file.getSize() > 5 * 1024 * 1024) {
+            throw new IllegalArgumentException(
+                    "Image size must be less than 5 MB"
+            );
+        }
+
+        String contentType = file.getContentType();
+
+        if (contentType == null ||
+                !contentType.startsWith("image/")) {
+
+            throw new IllegalArgumentException(
+                    "Only image files are allowed"
+            );
+        }
+
+        profile.setPhoto(file.getBytes());
+        profile.setPhotoContentType(contentType);
+
+        return profileRepository.save(profile);
+    }
+
+    // =========================================================
+    // GET PROFILE PHOTO
+    // =========================================================
+
+    public Profile getProfilePhoto(Long id) {
+
+        return profileRepository.findById(id)
+                .orElse(null);
+    }
+
+    // =========================================================
+    // DELETE PROFILE PHOTO
+    // =========================================================
+
+    public boolean deletePhoto(Long id) {
+
+        Profile profile =
+                profileRepository.findById(id)
+                        .orElse(null);
+
+        if (profile == null) {
+            return false;
+        }
+
+        profile.setPhoto(null);
+        profile.setPhotoContentType(null);
+
+        profileRepository.save(profile);
+
+        return true;
     }
 
     // =========================================================

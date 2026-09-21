@@ -1,1303 +1,629 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Messages - Alumni Portal</title>
-
+    <title>Messages - AlumniConnect</title>
     <style>
+        *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif}
+        body{background:#f3f6fb;color:#172b4d}
+        button,input,textarea{font:inherit}
+        button{cursor:pointer}
+        .navbar{height:68px;background:#fff;border-bottom:1px solid #e5eaf2;display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:20}
+        .brand{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:800;color:#174ea6}
+        .brand-icon{width:36px;height:36px;border-radius:10px;background:#2563eb;color:#fff;display:grid;place-items:center;font-weight:800}
+        .nav-right{display:flex;align-items:center;gap:20px}
+        .nav-link{text-decoration:none;color:#526581;font-weight:600}
+        .nav-link:hover{color:#2563eb}
+        .nav-avatar,.sidebar-avatar{border-radius:50%;background:#e8f0fe;color:#2563eb;display:grid;place-items:center;font-weight:800}
+        .nav-avatar{width:40px;height:40px}
+        .layout{display:flex;min-height:calc(100vh - 68px)}
+        .sidebar{width:230px;background:#fff;border-right:1px solid #e5eaf2;padding:24px 14px;position:fixed;top:68px;bottom:0;overflow:auto}
+        .sidebar-profile{text-align:center;padding:10px 8px 24px;border-bottom:1px solid #edf1f6;margin-bottom:18px}
+        .sidebar-avatar{width:58px;height:58px;margin:0 auto 10px;font-size:20px}
+        .sidebar-name{font-weight:800;color:#172b4d}
+        .sidebar-role{font-size:13px;color:#718096;margin-top:4px}
+        .sidebar-menu{display:flex;flex-direction:column;gap:5px}
+        .sidebar-menu a{text-decoration:none;color:#53657d;padding:12px 14px;border-radius:10px;font-weight:600;display:flex;align-items:center;gap:10px}
+        .sidebar-menu a:hover,.sidebar-menu a.active{background:#eaf2ff;color:#2563eb}
+        .main{margin-left:230px;width:calc(100% - 230px);padding:32px;max-width:1500px}
+        .page-heading{margin-bottom:24px}
+        .page-heading h1{font-size:30px;margin-bottom:7px}
+        .subtitle{color:#718096}
+        .alert{display:none;padding:13px 16px;border-radius:10px;margin-bottom:18px;font-weight:600}
+        .success{background:#e8f7ee;color:#17663a;border:1px solid #bce8cc}
+        .error{background:#fff0f0;color:#a12626;border:1px solid #f4c3c3}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
+        .messaging-shell{background:#fff;border:1px solid #e1e7ef;border-radius:18px;box-shadow:0 8px 28px rgba(20,45,80,.06);overflow:hidden;display:grid;grid-template-columns:340px 1fr;min-height:650px}
+        .conversation-panel{border-right:1px solid #e5eaf2;background:#fff}
+        .panel-head{padding:22px;border-bottom:1px solid #edf1f6}
+        .panel-head h2{font-size:19px;margin-bottom:5px}
+        .panel-head p{font-size:13px;color:#7a8798}
+        .search-box{margin-top:16px;position:relative}
+        .search-box span{position:absolute;left:13px;top:11px;color:#8a97a8}
+        .search-box input{width:100%;padding:11px 12px 11px 38px;border:1px solid #d9e1eb;border-radius:10px;outline:none;background:#f8fafc}
+        .search-box input:focus{border-color:#6d9dfc;background:#fff}
+        .recipient-list{max-height:530px;overflow:auto}
+        .recipient{padding:15px 18px;display:flex;gap:12px;align-items:center;border-bottom:1px solid #f0f3f7;cursor:pointer}
+        .recipient:hover{background:#f7faff}
+        .recipient.selected{background:#edf4ff}
+        .person-avatar{width:44px;height:44px;min-width:44px;border-radius:50%;background:#e8f0fe;color:#2563eb;display:grid;place-items:center;font-weight:800}
+        .person-info{min-width:0;flex:1}
+        .person-name{font-weight:750;color:#243b5a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .person-meta{font-size:12px;color:#8491a3;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .empty-list{padding:30px 20px;text-align:center;color:#8390a3;font-size:14px}
+
+        .chat-panel{display:flex;flex-direction:column;min-width:0}
+        .chat-head{padding:18px 22px;border-bottom:1px solid #e5eaf2;display:flex;align-items:center;justify-content:space-between}
+        .chat-person{display:flex;align-items:center;gap:12px}
+        .chat-name{font-weight:800}
+        .chat-status{font-size:12px;color:#7d8a9c;margin-top:3px}
+        .refresh-btn{border:1px solid #d9e1eb;background:#fff;color:#526581;padding:8px 12px;border-radius:9px}
+        .refresh-btn:hover{border-color:#2563eb;color:#2563eb}
+        .chat-body{flex:1;overflow:auto;padding:24px;background:#f8fafc;min-height:380px}
+        .welcome-chat{height:100%;min-height:350px;display:grid;place-items:center;text-align:center;color:#77869a}
+        .welcome-icon{width:72px;height:72px;border-radius:22px;background:#eaf2ff;color:#2563eb;display:grid;place-items:center;font-size:31px;margin:0 auto 15px}
+        .welcome-chat h3{color:#2d405e;margin-bottom:7px}
+        .message-row{display:flex;margin-bottom:14px}
+        .message-row.outgoing{justify-content:flex-end}
+        .bubble{max-width:min(70%,560px);padding:12px 15px;border-radius:16px;background:#fff;border:1px solid #e2e8f0;box-shadow:0 2px 5px rgba(20,45,80,.03)}
+        .outgoing .bubble{background:#2563eb;color:#fff;border-color:#2563eb;border-bottom-right-radius:5px}
+        .incoming .bubble{border-bottom-left-radius:5px}
+        .bubble-text{line-height:1.5;white-space:pre-wrap;word-break:break-word}
+        .bubble-time{font-size:10px;margin-top:6px;color:#8a97a8}
+        .outgoing .bubble-time{color:#dbe8ff}
+        .delete-msg{margin-top:7px;background:transparent;border:0;color:#d34b4b;font-size:11px}
+        .outgoing .delete-msg{color:#ffe1e1}
+        .chat-compose{border-top:1px solid #e5eaf2;padding:16px 20px;background:#fff}
+        .compose-target{font-size:12px;color:#7a8798;margin-bottom:9px}
+        .compose-area{display:flex;gap:10px;align-items:flex-end}
+        .compose-area textarea{flex:1;min-height:48px;max-height:130px;resize:vertical;border:1px solid #d8e0ea;border-radius:12px;padding:12px;outline:none}
+        .compose-area textarea:focus{border-color:#6d9dfc;box-shadow:0 0 0 3px #eaf2ff}
+        .send-btn{background:#2563eb;color:#fff;border:0;border-radius:11px;padding:12px 19px;font-weight:750}
+        .send-btn:hover{background:#1d4ed8}
+        .send-btn:disabled{opacity:.6;cursor:not-allowed}
+        .compose-actions{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+        .char-count{font-size:11px;color:#8a97a8}
+        .clear-btn{border:0;background:none;color:#6b7b91;font-size:12px}
+
+        .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+        .stat{background:#fff;border:1px solid #e3e9f1;border-radius:14px;padding:16px 18px;display:flex;align-items:center;gap:12px}
+        .stat-icon{width:42px;height:42px;border-radius:12px;background:#eaf2ff;color:#2563eb;display:grid;place-items:center}
+        .stat-value{font-size:21px;font-weight:800}.stat-label{font-size:12px;color:#7b899b;margin-top:2px}
+
+        @media(max-width:900px){
+            .sidebar{width:190px}.main{margin-left:190px;width:calc(100% - 190px);padding:22px}
+            .messaging-shell{grid-template-columns:280px 1fr}
+        }
+        @media(max-width:700px){
+            .navbar{padding:0 15px}.nav-link{display:none}.brand{font-size:18px}
+            .sidebar{display:none}.main{margin-left:0;width:100%;padding:18px}
+            .stats{grid-template-columns:1fr}
+            .messaging-shell{grid-template-columns:1fr;min-height:700px}
+            .conversation-panel{border-right:0;border-bottom:1px solid #e5eaf2}
+            .recipient-list{max-height:220px}
+            .chat-body{min-height:330px}
+            .bubble{max-width:85%}
         }
 
-        body {
-            background: #f4f6f9;
-            color: #222;
+        /* ================= ALUMNICONNECT SHARED DESIGN SYSTEM ================= */
+        .alumni-shared-theme{
+            --app-primary:#2563eb;
+            --app-primary-dark:#1d4ed8;
+            --app-primary-light:#eff6ff;
+            --app-bg:#f4f7fb;
+            --app-text:#172033;
+            --app-muted:#64748b;
+            --app-border:#e2e8f0;
+            --app-white:#ffffff;
+            font-family:"Segoe UI",Arial,Helvetica,sans-serif !important;
+            background:
+                    radial-gradient(circle at 8% 10%,rgba(37,99,235,.12),transparent 25%),
+                    radial-gradient(circle at 92% 12%,rgba(59,130,246,.10),transparent 23%),
+                    radial-gradient(circle at 82% 90%,rgba(96,165,250,.10),transparent 28%),
+                    linear-gradient(135deg,#f8fbff 0%,#eef5ff 48%,#f8fafc 100%) !important;
+            color:var(--app-text);
         }
-
-        /* =========================
-           HEADER
-        ========================= */
-
-        .header {
-            height: 72px;
-            background: #2864e8;
-            color: white;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 0 35px;
+        .alumni-shared-theme::before{
+            content:"";
+            position:fixed;
+            inset:0;
+            background-image:
+                    linear-gradient(rgba(37,99,235,.025) 1px,transparent 1px),
+                    linear-gradient(90deg,rgba(37,99,235,.025) 1px,transparent 1px);
+            background-size:45px 45px;
+            pointer-events:none;
+            z-index:-2;
         }
-
-        .logo {
-            font-size: 26px;
-            font-weight: bold;
+        .alumni-shared-theme .shared-user-photo,
+        .alumni-shared-theme .header-avatar,
+        .alumni-shared-theme .mini-avatar,
+        .alumni-shared-theme .nav-avatar,
+        .alumni-shared-theme .sidebar-avatar,
+        .alumni-shared-theme .chip-avatar,
+        .alumni-shared-theme .profile-chip .avatar{
+            overflow:hidden;
         }
-
-        .logout {
-            background: white;
-            color: #2864e8;
-
-            border: none;
-            padding: 12px 25px;
-
-            border-radius: 6px;
-
-            font-size: 15px;
-            font-weight: bold;
-
-            cursor: pointer;
+        .alumni-shared-theme .shared-user-photo img,
+        .alumni-shared-theme .header-avatar img,
+        .alumni-shared-theme .mini-avatar img,
+        .alumni-shared-theme .nav-avatar img,
+        .alumni-shared-theme .sidebar-avatar img,
+        .alumni-shared-theme .chip-avatar img,
+        .alumni-shared-theme .profile-chip .avatar img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            display:block;
         }
-
-        .logout:hover {
-            background: #f0f0f0;
+        .alumni-shared-theme .shared-user-photo{
+            width:38px;height:38px;border-radius:50%;
+            background:var(--app-primary-light);color:var(--app-primary);
+            display:grid;place-items:center;font-size:13px;font-weight:800;
+            border:2px solid #fff;box-shadow:0 2px 8px rgba(15,23,42,.10);
         }
-
-        /* =========================
-           LAYOUT
-        ========================= */
-
-        .layout {
-            display: flex;
-            min-height: calc(100vh - 72px);
+        .alumni-shared-theme .shared-user-photo img{border-radius:50%}
+        .alumni-shared-theme .shared-user-photo .photo-fallback{display:grid;place-items:center;width:100%;height:100%}
+        .alumni-shared-theme .header-avatar,
+        .alumni-shared-theme .mini-avatar,
+        .alumni-shared-theme .nav-avatar{
+            position:relative;
         }
-
-        /* =========================
-           SIDEBAR
-        ========================= */
-
-        .sidebar {
-            width: 260px;
-            background: white;
-
-            padding: 30px 15px;
-
-            box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+        .alumni-shared-theme .header-avatar img,
+        .alumni-shared-theme .mini-avatar img,
+        .alumni-shared-theme .nav-avatar img,
+        .alumni-shared-theme .sidebar-avatar img,
+        .alumni-shared-theme .chip-avatar img{border-radius:50%}
+        .alumni-shared-theme .header,
+        .alumni-shared-theme .top-header,
+        .alumni-shared-theme .topbar,
+        .alumni-shared-theme .navbar{
+            background:rgba(255,255,255,.94) !important;
+            backdrop-filter:blur(14px);
+            border-bottom:1px solid rgba(226,232,240,.95) !important;
+            box-shadow:0 4px 20px rgba(15,23,42,.04) !important;
         }
-
-        .sidebar h2 {
-            margin-bottom: 30px;
+        .alumni-shared-theme .logo,
+        .alumni-shared-theme .brand{
+            color:var(--app-primary) !important;
         }
-
-        .menu {
-            display: block;
-
-            text-decoration: none;
-
-            color: #333;
-
-            padding: 15px 20px;
-
-            margin-bottom: 8px;
-
-            border-radius: 8px;
-
-            font-size: 17px;
+        .alumni-shared-theme .logo-icon,
+        .alumni-shared-theme .brand-icon,
+        .alumni-shared-theme .logo-mark{
+            background:linear-gradient(135deg,var(--app-primary),#3b82f6) !important;
+            color:#fff !important;
         }
-
-        .menu:hover {
-            background: #eef3ff;
-            color: #2864e8;
+        .alumni-shared-theme .sidebar{
+            background:rgba(255,255,255,.96) !important;
+            border-right:1px solid var(--app-border) !important;
+            box-shadow:4px 0 20px rgba(15,23,42,.035) !important;
         }
-
-        .menu.active {
-            background: #eef3ff;
-            color: #2864e8;
-            font-weight: bold;
+        .alumni-shared-theme .sidebar a,
+        .alumni-shared-theme .menu-item,
+        .alumni-shared-theme .nav-item,
+        .alumni-shared-theme .menu,
+        .alumni-shared-theme .sidebar-menu a{
+            color:#52657f !important;
         }
-
-        /* =========================
-           CONTENT
-        ========================= */
-
-        .content {
-            flex: 1;
-            padding: 45px;
+        .alumni-shared-theme .sidebar a:hover,
+        .alumni-shared-theme .menu-item:hover,
+        .alumni-shared-theme .nav-item:hover,
+        .alumni-shared-theme .sidebar-menu a:hover{
+            background:#f1f6ff !important;color:var(--app-primary) !important;
         }
-
-        .content h1 {
-            font-size: 34px;
-            margin-bottom: 10px;
+        .alumni-shared-theme .sidebar a.active,
+        .alumni-shared-theme .menu-item.active,
+        .alumni-shared-theme .nav-item.active,
+        .alumni-shared-theme .sidebar-menu a.active{
+            background:#eaf2ff !important;color:var(--app-primary) !important;
+            border-left-color:var(--app-primary) !important;
         }
-
-        .subtitle {
-            color: #666;
-            font-size: 18px;
-            margin-bottom: 30px;
+        .alumni-shared-theme .card,
+        .alumni-shared-theme .applications-section,
+        .alumni-shared-theme .stat-card,
+        .alumni-shared-theme .messaging-shell,
+        .alumni-shared-theme .event-card,
+        .alumni-shared-theme .job-card,
+        .alumni-shared-theme .profile-card{
+            border-color:var(--app-border) !important;
+            box-shadow:0 5px 20px rgba(15,23,42,.045) !important;
         }
-
-        /* =========================
-           CARD
-        ========================= */
-
-        .card {
-            background: white;
-
-            border-radius: 12px;
-
-            padding: 30px;
-
-            margin-bottom: 30px;
-
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        .alumni-shared-theme button,
+        .alumni-shared-theme .btn{
+            transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
         }
-
-        .card h2 {
-            margin-bottom: 25px;
+        .alumni-shared-theme button:hover,
+        .alumni-shared-theme .btn:hover{
+            transform:translateY(-1px);
         }
-
-        /* =========================
-           FORM
-        ========================= */
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-
-            margin-bottom: 8px;
-
-            font-weight: bold;
-
-            color: #173f7a;
-        }
-
-        input,
-        textarea {
-            width: 100%;
-
-            padding: 14px;
-
-            border: 1px solid #cbd5e1;
-
-            border-radius: 6px;
-
-            font-size: 16px;
-
-            outline: none;
-        }
-
-        input:focus,
-        textarea:focus {
-            border-color: #2864e8;
-
-            box-shadow: 0 0 0 2px rgba(40,100,232,0.1);
-        }
-
-        textarea {
-            min-height: 120px;
-
-            resize: vertical;
-        }
-
-        /* =========================
-           BUTTONS
-        ========================= */
-
-        .button-row {
-            display: flex;
-
-            gap: 10px;
-
-            margin-top: 10px;
-        }
-
-        .send-button {
-            background: #2864e8;
-
-            color: white;
-
-            border: none;
-
-            padding: 13px 25px;
-
-            border-radius: 6px;
-
-            font-size: 15px;
-
-            font-weight: bold;
-
-            cursor: pointer;
-        }
-
-        .send-button:hover {
-            background: #1d54ca;
-        }
-
-        .clear-button {
-            background: #64748b;
-
-            color: white;
-
-            border: none;
-
-            padding: 13px 25px;
-
-            border-radius: 6px;
-
-            font-size: 15px;
-
-            font-weight: bold;
-
-            cursor: pointer;
-        }
-
-        .clear-button:hover {
-            background: #475569;
-        }
-
-        .refresh-button {
-            background: #eef3ff;
-
-            color: #2864e8;
-
-            border: none;
-
-            padding: 10px 18px;
-
-            border-radius: 6px;
-
-            font-weight: bold;
-
-            cursor: pointer;
-        }
-
-        .refresh-button:hover {
-            background: #dce7ff;
-        }
-
-        /* =========================
-           SECTION HEADER
-        ========================= */
-
-        .section-header {
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            margin-bottom: 20px;
-        }
-
-        .section-header h2 {
-            margin-bottom: 0;
-        }
-
-        /* =========================
-           TABLE
-        ========================= */
-
-        .table-container {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-
-            border-collapse: collapse;
-        }
-
-        th {
-            background: #eef3f9;
-
-            text-align: left;
-
-            padding: 15px;
-
-            font-size: 15px;
-        }
-
-        td {
-            padding: 15px;
-
-            border-bottom: 1px solid #ddd;
-
-            font-size: 15px;
-        }
-
-        tr:hover {
-            background: #f8faff;
-        }
-
-        /* =========================
-           MESSAGE STATUS
-        ========================= */
-
-        .alert {
-            display: none;
-
-            padding: 14px 18px;
-
-            border-radius: 6px;
-
-            margin-bottom: 20px;
-
-            font-weight: bold;
-        }
-
-        .success {
-            background: #e8f5e9;
-
-            color: #1b7d2b;
-
-            border: 1px solid #c8e6c9;
-        }
-
-        .error {
-            background: #ffebee;
-
-            color: #c62828;
-
-            border: 1px solid #ffcdd2;
-        }
-
-        .message {
-            text-align: center;
-
-            padding: 30px;
-
-            color: #666;
-        }
-
-        /* =========================
-           RESPONSIVE
-        ========================= */
-
-        @media (max-width: 900px) {
-
-            .sidebar {
-                width: 210px;
-            }
-
-            .content {
-                padding: 25px;
-            }
-
-        }
-
-        @media (max-width: 700px) {
-
-            .header {
-                padding: 0 18px;
-            }
-
-            .logo {
-                font-size: 20px;
-            }
-
-            .layout {
-                flex-direction: column;
-            }
-
-            .sidebar {
-                width: 100%;
-            }
-
-            .content {
-                padding: 20px;
-            }
-
-            .section-header {
-                flex-direction: column;
-
-                align-items: flex-start;
-
-                gap: 10px;
-            }
-
+        @media(max-width:800px){
+            .alumni-shared-theme .shared-user-photo{width:34px;height:34px}
         }
 
     </style>
-
 </head>
+<body class="alumni-shared-theme">
 
-<body>
+<header class="navbar">
+    <div class="brand"><div class="brand-icon">A</div> AlumniConnect</div>
+    <div class="nav-right">
+        <a class="nav-link" href="/dashboard.html">Home</a>
+        <a class="nav-link" href="/messages.html">Messages</a>
+        <div class="nav-avatar" id="navAvatar">U</div>
+    </div>
+</header>
 
-<!-- =========================
-     HEADER
-========================= -->
+<aside class="sidebar">
+    <div class="sidebar-profile">
+        <div class="sidebar-avatar" id="sidebarAvatar">U</div>
+        <div class="sidebar-name" id="sidebarName">User</div>
+        <div class="sidebar-role" id="sidebarRole">Member</div>
+    </div>
+    <nav class="sidebar-menu">
+        <a href="/dashboard.html">🏠 Dashboard</a>
+        <a href="/profile.html">👤 My Profile</a>
+        <a href="/alumni.html">👥 Alumni Network</a>
+        <a href="/mentorship.html">🎓 Mentorship</a>
+        <a href="/jobs.html">💼 Jobs</a>
+        <a href="/events.html">📅 Events</a>
+        <a href="/messages.html" class="active">💬 Messages</a>
+        <a href="/applications.html">📄 Applications</a>
+        <a href="/logout" onclick="logoutSession(event)">🚪 Logout</a>
+    </nav>
+</aside>
 
-<div class="header">
-
-    <div class="logo">
-        🎓 Alumni Portal
+<main class="main">
+    <div class="page-heading">
+        <h1>Messages</h1>
+        <p class="subtitle">Connect directly with students and alumni across your network.</p>
     </div>
 
-    <button class="logout" onclick="logout()">
-        Logout
-    </button>
+    <div id="successMessage" class="alert success"></div>
+    <div id="errorMessage" class="alert error"></div>
 
-</div>
-
-
-<!-- =========================
-     LAYOUT
-========================= -->
-
-<div class="layout">
-
-
-    <!-- =========================
-         SIDEBAR
-    ========================= -->
-
-    <div class="sidebar">
-
-        <h2>Menu</h2>
-
-        <a href="/dashboard.html" class="menu">
-            🏠 Dashboard
-        </a>
-
-        <a href="/profile.html" class="menu">
-            👤 My Profile
-        </a>
-
-        <a href="/alumni.html" class="menu">
-            🎓 Alumni
-        </a>
-
-        <a href="/mentorship.html" class="menu">
-            🤝 Mentorship
-        </a>
-
-        <a href="/jobs.html" class="menu">
-            💼 Jobs
-        </a>
-
-        <a href="/events.html" class="menu">
-            🗓️ Events
-        </a>
-
-        <a href="/messages.html" class="menu active">
-            💬 Messages
-        </a>
-
+    <div class="stats">
+        <div class="stat"><div class="stat-icon">💬</div><div><div class="stat-value" id="totalMessages">0</div><div class="stat-label">Messages</div></div></div>
+        <div class="stat"><div class="stat-icon">👥</div><div><div class="stat-value" id="contactCount">0</div><div class="stat-label">Contacts</div></div></div>
+        <div class="stat"><div class="stat-icon">✉️</div><div><div class="stat-value" id="sentCount">0</div><div class="stat-label">Sent</div></div></div>
     </div>
 
-
-    <!-- =========================
-         MAIN CONTENT
-    ========================= -->
-
-    <div class="content">
-
-        <h1>💬 Messages</h1>
-
-        <p class="subtitle">
-            Connect and communicate with other members of the alumni network.
-        </p>
-
-
-        <!-- =========================
-             ALERTS
-        ========================= -->
-
-        <div id="successMessage" class="alert success"></div>
-
-        <div id="errorMessage" class="alert error"></div>
-
-
-        <!-- =========================
-             SEND MESSAGE
-        ========================= -->
-
-        <div class="card">
-
-            <h2>✉️ Send New Message</h2>
-
-            <form id="messageForm">
-
-                <div class="form-group">
-
-                    <label for="receiverId">
-                        Receiver User ID
-                    </label>
-
-                    <input
-                            type="number"
-                            id="receiverId"
-                            placeholder="Enter receiver user ID"
-                            required>
-
+    <section class="messaging-shell">
+        <div class="conversation-panel">
+            <div class="panel-head">
+                <h2>Conversations</h2>
+                <p>Select a member to view your messages.</p>
+                <div class="search-box">
+                    <span>🔍</span>
+                    <input id="contactSearch" type="text" placeholder="Search contacts..." oninput="filterContacts()">
                 </div>
-
-
-                <div class="form-group">
-
-                    <label for="messageContent">
-                        Message
-                    </label>
-
-                    <textarea
-                            id="messageContent"
-                            placeholder="Write your message..."
-                            required></textarea>
-
-                </div>
-
-
-                <div class="button-row">
-
-                    <button
-                            type="submit"
-                            class="send-button">
-
-                        Send Message
-
-                    </button>
-
-
-                    <button
-                            type="button"
-                            class="clear-button"
-                            onclick="clearForm()">
-
-                        Clear
-
-                    </button>
-
-                </div>
-
-            </form>
-
+            </div>
+            <div id="recipientList" class="recipient-list">
+                <div class="empty-list">Loading contacts...</div>
+            </div>
         </div>
 
-
-        <!-- =========================
-             RECEIVED MESSAGES
-        ========================= -->
-
-        <div class="card">
-
-            <div class="section-header">
-
-                <h2>📥 Received Messages</h2>
-
-                <button
-                        class="refresh-button"
-                        onclick="loadReceivedMessages()">
-
-                    🔄 Refresh
-
-                </button>
-
-            </div>
-
-
-            <div id="receivedMessages">
-
-                <div class="message">
-                    Loading messages...
+        <div class="chat-panel">
+            <div class="chat-head">
+                <div class="chat-person">
+                    <div class="person-avatar" id="chatAvatar">?</div>
+                    <div>
+                        <div class="chat-name" id="chatName">Select a contact</div>
+                        <div class="chat-status" id="chatStatus">Choose a member from the conversation list</div>
+                    </div>
                 </div>
-
+                <button class="refresh-btn" onclick="refreshCurrentConversation()">↻ Refresh</button>
             </div>
 
-        </div>
-
-
-        <!-- =========================
-             SENT MESSAGES
-        ========================= -->
-
-        <div class="card">
-
-            <div class="section-header">
-
-                <h2>📤 Sent Messages</h2>
-
-                <button
-                        class="refresh-button"
-                        onclick="loadSentMessages()">
-
-                    🔄 Refresh
-
-                </button>
-
-            </div>
-
-
-            <div id="sentMessages">
-
-                <div class="message">
-                    Loading messages...
+            <div class="chat-body" id="chatBody">
+                <div class="welcome-chat">
+                    <div>
+                        <div class="welcome-icon">💬</div>
+                        <h3>Your messages</h3>
+                        <p>Select a contact on the left to start a conversation.</p>
+                    </div>
                 </div>
-
             </div>
 
+            <div class="chat-compose">
+                <div class="compose-target" id="composeTarget">No recipient selected</div>
+                <div class="compose-area">
+                    <textarea id="messageContent" maxlength="1000" placeholder="Write a message..." disabled oninput="updateCharCount()" onkeydown="handleMessageKey(event)"></textarea>
+                    <button id="sendButton" class="send-btn" onclick="sendMessage()" disabled>Send</button>
+                </div>
+                <div class="compose-actions">
+                    <span class="char-count" id="charCount">0 / 1000</span>
+                    <button class="clear-btn" onclick="clearComposer()">Clear</button>
+                </div>
+            </div>
         </div>
-
-    </div>
-
-</div>
-
+    </section>
+</main>
 
 <script>
-
-    /* =========================================================
-       GLOBAL CURRENT USER
-    ========================================================= */
-
+    let currentUserId = null;
     let currentUser = null;
+    let allUsers = [];
+    let selectedUserId = null;
+    let receivedMessages = [];
+    let sentMessages = [];
 
-
-    /* =========================================================
-       SHOW SUCCESS MESSAGE
-    ========================================================= */
-
-    function showSuccess(message) {
-
-        const success = document.getElementById("successMessage");
-        const error = document.getElementById("errorMessage");
-
-        error.style.display = "none";
-
-        success.innerText = message;
-
-        success.style.display = "block";
-
+    function initials(name){
+        if(!name) return "U";
+        return name.trim().split(/\s+/).slice(0,2).map(x=>x[0]).join("").toUpperCase();
+    }
+    function escapeHtml(value){
+        const div=document.createElement("div");
+        div.textContent=value ?? "";
+        return div.innerHTML;
+    }
+    function formatDate(value){
+        if(!value) return "";
+        const d=new Date(value);
+        if(Number.isNaN(d.getTime())) return "";
+        return d.toLocaleString([], {day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"});
+    }
+    function showSuccess(msg){
+        const e=document.getElementById("successMessage");
+        e.textContent=msg;e.style.display="block";
+        document.getElementById("errorMessage").style.display="none";
+        setTimeout(()=>e.style.display="none",3000);
+    }
+    function showError(msg){
+        const e=document.getElementById("errorMessage");
+        e.textContent=msg;e.style.display="block";
+        document.getElementById("successMessage").style.display="none";
+    }
+    function logoutSession(event){
+        event.preventDefault();
+        sessionStorage.removeItem("loggedInEmail");
+        window.location.href="/logout";
     }
 
-
-    /* =========================================================
-       SHOW ERROR MESSAGE
-    ========================================================= */
-
-    function showError(message) {
-
-        const success = document.getElementById("successMessage");
-        const error = document.getElementById("errorMessage");
-
-        success.style.display = "none";
-
-        error.innerText = message;
-
-        error.style.display = "block";
-
+    async function loadCurrentUser(){
+        const response=await fetch("/api/users/me",{credentials:"include"});
+        if(!response.ok) throw new Error("Unable to identify logged-in user.");
+        currentUser=await response.json();
+        currentUserId=Number(currentUser.id);
+        const name=currentUser.name || "User";
+        document.getElementById("sidebarName").textContent=name;
+        document.getElementById("sidebarRole").textContent=currentUser.role || "Member";
+        document.getElementById("sidebarAvatar").textContent=initials(name);
+        document.getElementById("navAvatar").textContent=initials(name);
     }
 
-
-    /* =========================================================
-       HIDE ALERTS
-    ========================================================= */
-
-    function hideAlerts() {
-
-        document.getElementById("successMessage").style.display = "none";
-
-        document.getElementById("errorMessage").style.display = "none";
-
+    async function loadUsers(){
+        const response=await fetch("/api/users",{credentials:"include"});
+        if(!response.ok) throw new Error("Unable to load users.");
+        allUsers=await response.json();
+        allUsers=allUsers.filter(u=>Number(u.id)!==currentUserId);
+        renderContacts(allUsers);
     }
 
+    function renderContacts(users){
+        const list=document.getElementById("recipientList");
+        if(!users.length){
+            list.innerHTML='<div class="empty-list">No contacts found.</div>';
+            return;
+        }
+        document.getElementById("contactCount").textContent=users.length;
+        list.innerHTML=users.map(u=>`
+    <div class="recipient ${Number(u.id)===Number(selectedUserId)?"selected":""}" onclick="selectContact(${Number(u.id)})">
+      <div class="person-avatar">${escapeHtml(initials(u.name))}</div>
+      <div class="person-info">
+        <div class="person-name">${escapeHtml(u.name || "User")}</div>
+        <div class="person-meta">${escapeHtml(u.role || "Member")} · ID ${Number(u.id)}</div>
+      </div>
+    </div>
+  `).join("");
+    }
 
-    /* =========================================================
-       GET CURRENT LOGGED-IN USER
-    ========================================================= */
+    function filterContacts(){
+        const term=document.getElementById("contactSearch").value.toLowerCase().trim();
+        renderContacts(allUsers.filter(u=>
+            (u.name||"").toLowerCase().includes(term) ||
+            (u.email||"").toLowerCase().includes(term) ||
+            String(u.id).includes(term)
+        ));
+    }
 
-    async function loadCurrentUser() {
+    async function loadMessages(){
+        if(currentUserId===null) return;
+        const [receivedResponse,sentResponse]=await Promise.all([
+            fetch(`/api/messages/received/${currentUserId}`,{credentials:"include"}),
+            fetch(`/api/messages/sent/${currentUserId}`,{credentials:"include"})
+        ]);
+        if(!receivedResponse.ok || !sentResponse.ok) throw new Error("Unable to load messages.");
+        receivedMessages=await receivedResponse.json();
+        sentMessages=await sentResponse.json();
+        document.getElementById("totalMessages").textContent=receivedMessages.length+sentMessages.length;
+        document.getElementById("sentCount").textContent=sentMessages.length;
+        if(selectedUserId!==null) renderConversation();
+    }
 
-        try {
+    function findUser(id){
+        return allUsers.find(u=>Number(u.id)===Number(id)) || (currentUser && Number(currentUser.id)===Number(id)?currentUser:null);
+    }
 
-            const response = await fetch("/api/users/me");
+    function selectContact(id){
+        selectedUserId=Number(id);
+        const user=findUser(selectedUserId);
+        if(!user) return;
+        document.getElementById("chatName").textContent=user.name || "User";
+        document.getElementById("chatStatus").textContent=(user.role||"Member")+" · User ID "+user.id;
+        document.getElementById("chatAvatar").textContent=initials(user.name);
+        document.getElementById("composeTarget").textContent="Message to "+(user.name||"User");
+        document.getElementById("messageContent").disabled=false;
+        document.getElementById("sendButton").disabled=false;
+        renderContacts(allUsers);
+        renderConversation();
+        document.getElementById("messageContent").focus();
+    }
 
-            if (!response.ok) {
+    function renderConversation(){
+        const body=document.getElementById("chatBody");
+        if(selectedUserId===null){
+            body.innerHTML='<div class="welcome-chat"><div><div class="welcome-icon">💬</div><h3>Your messages</h3><p>Select a contact on the left to start a conversation.</p></div></div>';
+            return;
+        }
+        const messages=[
+            ...receivedMessages.filter(m=>Number(m.sender?.id)===selectedUserId).map(m=>({...m,direction:"incoming"})),
+            ...sentMessages.filter(m=>Number(m.receiver?.id)===selectedUserId).map(m=>({...m,direction:"outgoing"}))
+        ].sort((a,b)=>new Date(a.sentAt||0)-new Date(b.sentAt||0));
 
-                throw new Error(
-                    "Unable to identify logged-in user"
-                );
+        if(!messages.length){
+            body.innerHTML='<div class="welcome-chat"><div><div class="welcome-icon">✉️</div><h3>No messages yet</h3><p>Start the conversation by sending a message below.</p></div></div>';
+            return;
+        }
 
-            }
+        body.innerHTML=messages.map(m=>`
+    <div class="message-row ${m.direction}">
+      <div class="bubble">
+        <div class="bubble-text">${escapeHtml(m.content||"")}</div>
+        <div class="bubble-time">${escapeHtml(formatDate(m.sentAt))}</div>
+        <button class="delete-msg" onclick="deleteMessage(${Number(m.id)})">Delete</button>
+      </div>
+    </div>
+  `).join("");
+        body.scrollTop=body.scrollHeight;
+    }
 
-            currentUser = await response.json();
+    async function sendMessage(){
+        if(currentUserId===null || selectedUserId===null) return;
+        const input=document.getElementById("messageContent");
+        const content=input.value.trim();
+        if(!content){showError("Please enter a message.");input.focus();return;}
+        if(selectedUserId===currentUserId){showError("You cannot send a message to yourself.");return;}
 
-            console.log("Current user:", currentUser);
-
-            // Load messages after current user is known
-            loadReceivedMessages();
-            loadSentMessages();
-
-        } catch (error) {
-
+        const button=document.getElementById("sendButton");
+        button.disabled=true;button.textContent="Sending...";
+        try{
+            const response=await fetch("/api/messages",{
+                method:"POST",
+                headers:{"Content-Type":"application/json"},
+                credentials:"include",
+                body:JSON.stringify({
+                    sender:{id:Number(currentUserId)},
+                    receiver:{id:Number(selectedUserId)},
+                    content
+                })
+            });
+            const text=await response.text();
+            if(!response.ok) throw new Error(text||"Failed to send message.");
+            input.value="";
+            updateCharCount();
+            await loadMessages();
+            showSuccess("Message sent successfully.");
+            input.focus();
+        }catch(error){
             console.error(error);
-
-            showError(
-                "Unable to load your user information. Please login again."
-            );
-
+            showError("Unable to send message. "+error.message);
+        }finally{
+            button.disabled=false;button.textContent="Send";
         }
-
     }
 
-
-    /* =========================================================
-       SEND MESSAGE
-    ========================================================= */
-
-    document
-        .getElementById("messageForm")
-        .addEventListener("submit", async function(event) {
-
-            event.preventDefault();
-
-            hideAlerts();
-
-            if (!currentUser) {
-
-                showError(
-                    "User information is not available. Please login again."
-                );
-
-                return;
-
-            }
-
-
-            const receiverId =
-                document.getElementById("receiverId").value;
-
-            const content =
-                document.getElementById("messageContent").value.trim();
-
-
-            if (!receiverId || !content) {
-
-                showError(
-                    "Please enter receiver ID and message."
-                );
-
-                return;
-
-            }
-
-
-            // Prevent sending message to yourself
-            if (Number(receiverId) === Number(currentUser.id)) {
-
-                showError(
-                    "You cannot send a message to yourself."
-                );
-
-                return;
-
-            }
-
-
-            /*
-             * Message object expected by Spring Boot:
-             *
-             * {
-             *     sender: { id: 1 },
-             *     receiver: { id: 2 },
-             *     content: "Hello"
-             * }
-             */
-
-            const messageData = {
-                receiver: {
-                    id: Number(receiverId)
-                },
-                content: content
-            };
-
-
-            try {
-
-                const response = await fetch(
-                    "/api/messages",
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-
-                        body: JSON.stringify(messageData)
-                    }
-                );
-
-
-                if (!response.ok) {
-
-                    let errorText = "";
-
-                    try {
-
-                        errorText = await response.text();
-
-                    } catch (e) {
-
-                        errorText = "";
-
-                    }
-
-                    console.error(
-                        "Server error:",
-                        response.status,
-                        errorText
-                    );
-
-                    throw new Error(
-                        "Unable to send message"
-                    );
-
-                }
-
-
-                const savedMessage =
-                    await response.json();
-
-                console.log(
-                    "Message sent:",
-                    savedMessage
-                );
-
-
-                showSuccess(
-                    "Message sent successfully! ✅"
-                );
-
-
-                clearForm();
-
-
-                // Refresh sent messages
-                loadSentMessages();
-
-            } catch (error) {
-
-                console.error(
-                    "Error sending message:",
-                    error
-                );
-
-                showError(
-                    "Unable to send message. Please check the receiver ID and try again."
-                );
-
-            }
-
-        });
-
-
-    /* =========================================================
-       LOAD RECEIVED MESSAGES
-    ========================================================= */
-
-    async function loadReceivedMessages() {
-
-        const container =
-            document.getElementById("receivedMessages");
-
-
-        if (!currentUser) {
-
-            container.innerHTML = `
-            <div class="message">
-                Loading user information...
-            </div>
-        `;
-
-            return;
-
+    async function deleteMessage(id){
+        if(!confirm("Are you sure you want to delete this message?")) return;
+        try{
+            const response=await fetch(`/api/messages/${id}`,{method:"DELETE",credentials:"include"});
+            if(!response.ok) throw new Error("Failed to delete message.");
+            await loadMessages();
+            showSuccess("Message deleted successfully.");
+        }catch(error){
+            console.error(error);showError("Unable to delete message.");
         }
+    }
+
+    async function refreshCurrentConversation(){
+        try{
+            await loadMessages();
+            showSuccess("Messages refreshed.");
+        }catch(error){showError("Unable to refresh messages.");}
+    }
+
+    function clearComposer(){
+        const input=document.getElementById("messageContent");
+        input.value="";updateCharCount();
+    }
+    function updateCharCount(){
+        const n=document.getElementById("messageContent").value.length;
+        document.getElementById("charCount").textContent=n+" / 1000";
+    }
+    function handleMessageKey(event){
+        if(event.key==="Enter" && !event.shiftKey){
+            event.preventDefault();sendMessage();
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded",async()=>{
+        try{
+            await loadCurrentUser();
+            await Promise.all([loadUsers(),loadMessages()]);
+        }catch(error){
+            console.error(error);
+            showError(error.message||"Unable to load Messages page.");
+        }
+    });
 
 
-        try {
+    /* ================= SHARED PROFILE PHOTO ================= */
+    async function loadSharedProfilePhoto(){
+        try{
+            const userResponse = await fetch("/api/users/me", {credentials:"include"});
+            if(!userResponse.ok) return;
+            const user = await userResponse.json();
+            const name = user.name || "User";
+            const initials = name.split(/\s+/).filter(Boolean).slice(0,2)
+                .map(part => part.charAt(0).toUpperCase()).join("") || "U";
 
-            const response = await fetch(
-                `/api/messages/received/${currentUser.id}`
-            );
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    "Failed to load received messages"
-                );
-
-            }
-
-
-            const messages =
-                await response.json();
-
-
-            if (!messages || messages.length === 0) {
-
-                container.innerHTML = `
-                <div class="message">
-                    No received messages yet.
-                </div>
-            `;
-
-                return;
-
-            }
-
-
-            let table = `
-
-            <div class="table-container">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>ID</th>
-
-                            <th>From</th>
-
-                            <th>Email</th>
-
-                            <th>Message</th>
-
-                            <th>Date & Time</th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-        `;
-
-
-            messages.forEach(message => {
-
-                const sender =
-                    message.sender || {};
-
-
-                table += `
-
-                <tr>
-
-                    <td>
-                        ${message.id ?? "-"}
-                    </td>
-
-                    <td>
-                        ${escapeHtml(sender.name || "-")}
-                    </td>
-
-                    <td>
-                        ${escapeHtml(sender.email || "-")}
-                    </td>
-
-                    <td>
-                        ${escapeHtml(message.content || "-")}
-                    </td>
-
-                    <td>
-                        ${formatDate(message.sentAt)}
-                    </td>
-
-                </tr>
-
-            `;
-
+            const selectors = [
+                "#sharedProfilePhoto",
+                "#headerAvatar",
+                "#miniAvatar",
+                "#navAvatar",
+                "#sidebarAvatar",
+                "#headerName + .avatar"
+            ];
+            const targets = [];
+            selectors.forEach(selector=>{
+                document.querySelectorAll(selector).forEach(el=>{
+                    if(!targets.includes(el)) targets.push(el);
+                });
             });
 
-
-            table += `
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        `;
-
-
-            container.innerHTML = table;
-
-
-        } catch (error) {
-
-            console.error(
-                "Error loading received messages:",
-                error
-            );
-
-
-            container.innerHTML = `
-
-            <div class="message">
-
-                Unable to load received messages.
-
-            </div>
-
-        `;
-
-        }
-
-    }
-
-
-    /* =========================================================
-       LOAD SENT MESSAGES
-    ========================================================= */
-
-    async function loadSentMessages() {
-
-        const container =
-            document.getElementById("sentMessages");
-
-
-        if (!currentUser) {
-
-            container.innerHTML = `
-            <div class="message">
-                Loading user information...
-            </div>
-        `;
-
-            return;
-
-        }
-
-
-        try {
-
-            const response = await fetch(
-                `/api/messages/sent/${currentUser.id}`
-            );
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    "Failed to load sent messages"
-                );
-
-            }
-
-
-            const messages =
-                await response.json();
-
-
-            if (!messages || messages.length === 0) {
-
-                container.innerHTML = `
-                <div class="message">
-                    No sent messages yet.
-                </div>
-            `;
-
-                return;
-
-            }
-
-
-            let table = `
-
-            <div class="table-container">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>ID</th>
-
-                            <th>To</th>
-
-                            <th>Email</th>
-
-                            <th>Message</th>
-
-                            <th>Date & Time</th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-        `;
-
-
-            messages.forEach(message => {
-
-                const receiver =
-                    message.receiver || {};
-
-
-                table += `
-
-                <tr>
-
-                    <td>
-                        ${message.id ?? "-"}
-                    </td>
-
-                    <td>
-                        ${escapeHtml(receiver.name || "-")}
-                    </td>
-
-                    <td>
-                        ${escapeHtml(receiver.email || "-")}
-                    </td>
-
-                    <td>
-                        ${escapeHtml(message.content || "-")}
-                    </td>
-
-                    <td>
-                        ${formatDate(message.sentAt)}
-                    </td>
-
-                </tr>
-
-            `;
-
+            targets.forEach(el=>{
+                el.innerHTML = '<span class="photo-fallback">'+initials+'</span>';
+                el.title = name;
             });
 
-
-            table += `
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        `;
-
-
-            container.innerHTML = table;
-
-
-        } catch (error) {
-
-            console.error(
-                "Error loading sent messages:",
-                error
+            const profileResponse = await fetch(
+                "/api/profiles/user/" + encodeURIComponent(user.id),
+                {credentials:"include"}
             );
+            if(!profileResponse.ok) return;
+            const profile = await profileResponse.json();
+            if(!profile || !profile.id) return;
 
-
-            container.innerHTML = `
-
-            <div class="message">
-
-                Unable to load sent messages.
-
-            </div>
-
-        `;
-
+            const photoUrl = "/api/profiles/" + profile.id + "/photo";
+            targets.forEach(el=>{
+                const img = document.createElement("img");
+                img.alt = name + " profile photo";
+                img.src = photoUrl + "?v=" + Date.now();
+                img.onerror = function(){
+                    this.remove();
+                    if(!el.querySelector(".photo-fallback")){
+                        el.innerHTML = '<span class="photo-fallback">'+initials+'</span>';
+                    }
+                };
+                el.innerHTML = "";
+                el.appendChild(img);
+            });
+        }catch(error){
+            console.warn("Shared profile photo could not be loaded:", error);
         }
-
     }
 
-
-    /* =========================================================
-       CLEAR FORM
-    ========================================================= */
-
-    function clearForm() {
-
-        document
-            .getElementById("receiverId")
-            .value = "";
-
-        document
-            .getElementById("messageContent")
-            .value = "";
-
-    }
-
-
-    /* =========================================================
-       FORMAT DATE
-    ========================================================= */
-
-    function formatDate(dateValue) {
-
-        if (!dateValue) {
-            return "-";
-        }
-
-        try {
-
-            const date =
-                new Date(dateValue);
-
-            return date.toLocaleString();
-
-        } catch (error) {
-
-            return dateValue;
-
-        }
-
-    }
-
-
-    /* =========================================================
-       ESCAPE HTML
-       Prevents message content from being interpreted as HTML
-    ========================================================= */
-
-    function escapeHtml(value) {
-
-        if (value === null || value === undefined) {
-
-            return "";
-
-        }
-
-        return String(value)
-
-            .replace(/&/g, "&amp;")
-
-            .replace(/</g, "&lt;")
-
-            .replace(/>/g, "&gt;")
-
-            .replace(/"/g, "&quot;")
-
-            .replace(/'/g, "&#039;");
-
-    }
-
-
-    /* =========================================================
-       LOGOUT
-    ========================================================= */
-
-    function logout() {
-
-        window.location.href = "/logout";
-
-    }
-
-
-    /* =========================================================
-       PAGE LOAD
-    ========================================================= */
-
-    loadCurrentUser();
-
+    try { loadSharedProfilePhoto(); } catch(e) { console.warn(e); }
 </script>
-
 </body>
-
 </html>

@@ -1,1812 +1,767 @@
+`
+```
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Alumni Portal - Events</title>
-
+    <title>Events - Alumni Portal</title>
     <style>
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
+        *{box-sizing:border-box;margin:0;padding:0}
+        :root{
+            --blue:#175cd3;
+            --blue-dark:#1247a6;
+            --blue-soft:#eef4ff;
+            --text:#172b4d;
+            --muted:#667085;
+            --border:#e4e7ec;
+            --bg:#f5f7fb;
+            --white:#fff;
+            --green:#16803c;
+        }
+        body{
+            font-family:"Segoe UI",Arial,Helvetica,sans-serif;
+            background:var(--bg);
+            color:var(--text);
+            line-height:1.5;
+        }
+        a{text-decoration:none;color:inherit}
+        button,input,textarea{font-family:inherit}
+        .header{
+            height:70px;background:#fff;border-bottom:1px solid var(--border);
+            display:flex;align-items:center;padding:0 30px;position:sticky;top:0;z-index:100;
+            box-shadow:0 1px 5px rgba(16,24,40,.03);
+        }
+        .logo{width:245px;display:flex;align-items:center;gap:10px;font-size:20px;font-weight:800;color:var(--blue)}
+        .logo-mark{
+            width:38px;height:38px;border-radius:11px;background:var(--blue);color:#fff;
+            display:flex;align-items:center;justify-content:center;font-size:19px;
+        }
+        .header-title{font-size:14px;color:var(--muted);font-weight:600}
+        .header-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+        .logout{
+            border:1px solid #d0d5dd;background:#fff;color:#b42318;border-radius:9px;
+            padding:9px 16px;font-weight:700;cursor:pointer;transition:.2s;
+        }
+        .logout:hover{background:#fff5f4;border-color:#f1b8b2}
+        .layout{max-width:1480px;margin:auto;display:flex;gap:24px;padding:24px;min-height:calc(100vh - 70px)}
+        .sidebar{
+            width:240px;flex-shrink:0;background:#fff;border:1px solid var(--border);
+            border-radius:16px;padding:17px 11px;height:max-content;position:sticky;top:94px;
+        }
+        .sidebar-user{padding:12px 13px 17px;border-bottom:1px solid #f0f2f5;margin-bottom:10px}
+        .sidebar-avatar{
+            width:46px;height:46px;border-radius:50%;background:var(--blue-soft);color:var(--blue);
+            display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:10px;
+        }
+        .sidebar-user strong{display:block;font-size:14px}
+        .sidebar-user span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+        .menu-title{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#98a2b3;padding:10px 13px 7px;font-weight:800}
+        .menu-item{
+            display:flex;align-items:center;gap:11px;color:#475467;padding:11px 13px;border-radius:9px;
+            margin-bottom:3px;font-size:13px;font-weight:600;transition:.2s;
+        }
+        .menu-item:hover{background:#f5f8ff;color:var(--blue)}
+        .menu-item.active{background:var(--blue-soft);color:var(--blue);font-weight:800}
+        .menu-icon{width:20px;text-align:center;font-size:15px}
+        .content{flex:1;min-width:0}
+        .hero{
+            background:linear-gradient(135deg,#175cd3 0%,#2d6fe3 55%,#4b8af0 100%);
+            color:#fff;border-radius:18px;padding:28px 30px;margin-bottom:20px;
+            display:flex;align-items:center;justify-content:space-between;overflow:hidden;position:relative;
+            box-shadow:0 10px 30px rgba(23,92,211,.16);
+        }
+        .hero:after{
+            content:"";position:absolute;width:210px;height:210px;border:35px solid rgba(255,255,255,.08);
+            border-radius:50%;right:-55px;top:-70px;
+        }
+        .eyebrow{font-size:11px;letter-spacing:.1em;font-weight:800;opacity:.82;margin-bottom:7px}
+        .page-title{font-size:30px;line-height:1.15;margin-bottom:8px}
+        .subtitle{font-size:13px;opacity:.9;max-width:650px}
+        .hero-icon{
+            width:76px;height:76px;border-radius:22px;background:rgba(255,255,255,.14);
+            display:flex;align-items:center;justify-content:center;font-size:39px;z-index:1;
+        }
+        .user-info{
+            background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px 16px;
+            margin-bottom:18px;font-size:12px;color:#667085;
+        }
+        .user-info strong{color:var(--blue)}
+        .alert{display:none;padding:12px 14px;border-radius:10px;margin-bottom:18px;font-size:13px}
+        .alert.show{display:block}
+        .alert.success{background:#ecfdf3;border:1px solid #abefc6;color:var(--green)}
+        .alert.error{background:#fff1f3;border:1px solid #fecdca;color:#b42318}
+        .card{
+            background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px;
+            margin-bottom:20px;box-shadow:0 3px 14px rgba(16,24,40,.035);
+        }
+        .card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;margin-bottom:18px}
+        .card h2{font-size:18px;color:var(--text)}
+        .card-subtitle{font-size:12px;color:#98a2b3;margin-top:4px}
+        .count{background:var(--blue-soft);color:var(--blue);border-radius:20px;padding:6px 11px;font-size:11px;font-weight:800;white-space:nowrap}
+        .events-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:16px}
+        .event-card{
+            border:1px solid #e5e9f0;border-radius:14px;padding:18px;background:#fff;
+            transition:.2s;position:relative;overflow:hidden;
+        }
+        .event-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:#8bb2f7}
+        .event-card:hover{border-color:#b8cff6;box-shadow:0 10px 24px rgba(16,24,40,.07);transform:translateY(-2px)}
+        .event-top{display:flex;gap:13px;align-items:flex-start}
+        .date-box{
+            width:58px;height:62px;flex-shrink:0;border-radius:11px;background:var(--blue-soft);color:var(--blue);
+            display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid #dbe7ff;
+        }
+        .day{font-size:21px;font-weight:850;line-height:1}.month{font-size:10px;font-weight:800;margin-top:4px}
+        .event-title{font-size:17px;font-weight:800;color:var(--text);line-height:1.3;margin-top:2px}
+        .detail{font-size:12px;color:#667085;line-height:1.5;margin-top:10px}
+        .detail strong{color:#475467}
+        .description{font-size:13px;color:#667085;line-height:1.55;border-top:1px solid #f0f2f5;margin-top:14px;padding-top:13px}
+        .actions{margin-top:16px}
+        .btn{
+            border:0;border-radius:9px;padding:10px 16px;font-size:12px;font-weight:800;cursor:pointer;
+            transition:.2s;
+        }
+        .primary{background:var(--blue);color:#fff}.primary:hover{background:var(--blue-dark);transform:translateY(-1px)}
+        .registered{display:inline-flex;align-items:center;gap:5px;padding:9px 13px;border-radius:9px;background:#ecfdf3;color:var(--green);border:1px solid #abefc6;font-size:12px;font-weight:800}
+        .empty{text-align:center;padding:45px 15px;color:#98a2b3;font-size:13px}
+        .empty:first-letter{font-size:20px}
+        .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+        .form-group.full{grid-column:1/-1}
+        label{display:block;font-size:12px;font-weight:800;color:#344054;margin-bottom:7px}
+        input,textarea{
+            width:100%;border:1px solid #d0d5dd;border-radius:9px;padding:10px 12px;font-size:13px;
+            outline:none;background:#fff;color:var(--text);transition:.2s;
+        }
+        input{height:43px}textarea{min-height:110px;resize:vertical}
+        input::placeholder,textarea::placeholder{color:#98a2b3}
+        input:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(23,92,211,.09)}
+        .create-note{
+            background:#f8faff;border:1px solid #e0eaff;border-radius:10px;padding:11px 13px;
+            color:#667085;font-size:12px;margin-bottom:18px;
+        }
+        .create-note strong{color:var(--blue)}
+        @media(max-width:900px){
+            .layout{display:block;padding:15px}.sidebar{width:100%;position:static;margin-bottom:15px}
+            .menu-item{display:inline-flex;margin-right:3px}.menu-title{display:none}
+            .sidebar-user{display:none}.content{width:100%}.logo{width:auto}.header-title{display:none}
+        }
+        @media(max-width:600px){
+            .header{padding:0 15px}.logo{font-size:17px}.logo-mark{width:34px;height:34px}
+            .layout{padding:12px}.hero{padding:22px}.page-title{font-size:25px}.hero-icon{display:none}
+            .events-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.form-group.full{grid-column:auto}
+            .card{padding:17px}.sidebar{overflow-x:auto;white-space:nowrap}
         }
 
-        body {
-            background: #f4f6f9;
-            color: #222;
-        }
-
-        /* =========================
-           TOP NAVBAR
-           ========================= */
-
-        .navbar {
-            height: 65px;
-            background: #2563eb;
-            color: white;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 0 30px;
-        }
-
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        .logout {
-            background: white;
-            color: #2563eb;
-
-            border: none;
-            padding: 10px 18px;
-
-            border-radius: 6px;
-
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .logout:hover {
-            background: #f1f5f9;
-        }
-
-        /* =========================
-           MAIN CONTAINER
-           ========================= */
-
-        .container {
-            display: flex;
-
-            min-height: calc(100vh - 65px);
-        }
-
-        /* =========================
-           SIDEBAR
-           ========================= */
-
-        .sidebar {
-            width: 230px;
-
-            background: white;
-
-            padding: 25px 15px;
-
-            box-shadow:
-                    2px 0 8px rgba(0,0,0,0.08);
-        }
-
-        .sidebar h3 {
-            margin-bottom: 20px;
-
-            color: #333;
-            font-size: 20px;
-        }
-
-        .menu-item {
-            display: block;
-
-            padding: 13px 15px;
-
-            margin-bottom: 8px;
-
-            color: #444;
-
-            text-decoration: none;
-
-            border-radius: 6px;
-
-            transition: 0.2s;
-        }
-
-        .menu-item:hover {
-            background: #e8f0ff;
-            color: #2563eb;
-        }
-
-        .menu-item.active {
-            background: #e8f0ff;
-            color: #2563eb;
-            font-weight: bold;
-        }
-
-        /* =========================
-           MAIN CONTENT
-           ========================= */
-
-        .main {
-            flex: 1;
-
-            padding: 35px;
-        }
-
-        .page-header {
-            margin-bottom: 25px;
-        }
-
-        .page-header h1 {
-            color: #222;
-
-            margin-bottom: 8px;
-
-            font-size: 30px;
-        }
-
-        .page-header p {
-            color: #666;
-
-            font-size: 15px;
-        }
-
-        /* =========================
-           SEARCH SECTION
-           ========================= */
-
-        .search-section {
-            background: white;
-
-            padding: 25px;
-
-            border-radius: 10px;
-
-            box-shadow:
-                    0 3px 10px rgba(0,0,0,0.08);
-
-            margin-bottom: 30px;
-        }
-
-        .search-section h2 {
-            margin-bottom: 18px;
-
-            font-size: 21px;
-        }
-
-        .search-row {
-            display: flex;
-
-            gap: 10px;
-        }
-
-        .search-input {
-            flex: 1;
-
-            height: 45px;
-
-            padding: 0 14px;
-
-            border: 1px solid #ccd5e0;
-
-            border-radius: 6px;
-
-            font-size: 14px;
-
-            outline: none;
-        }
-
-        .search-input:focus {
-            border-color: #2563eb;
-        }
-
-        .search-btn,
-        .clear-btn {
-            height: 45px;
-
-            padding: 0 22px;
-
-            border: none;
-
-            border-radius: 6px;
-
-            cursor: pointer;
-
-            font-weight: bold;
-        }
-
-        .search-btn {
-            background: #2563eb;
-            color: white;
-        }
-
-        .search-btn:hover {
-            background: #1d4ed8;
-        }
-
-        .clear-btn {
-            background: #64748b;
-            color: white;
-        }
-
-        .clear-btn:hover {
-            background: #475569;
-        }
-
-        /* =========================
-           EVENTS HEADER
-           ========================= */
-
-        .events-header {
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            margin-bottom: 18px;
-        }
-
-        .events-header h2 {
-            font-size: 22px;
-        }
-
-        #eventCount {
-            color: #666;
-
-            font-size: 14px;
-        }
-
-        /* =========================
-           EVENTS GRID
-           ========================= */
-
-        .events-container {
-            display: grid;
-
-            grid-template-columns:
-                repeat(auto-fill, minmax(360px, 1fr));
-
-            gap: 20px;
-        }
-
-        /* =========================
-           EVENT CARD
-           ========================= */
-
-        .event-card {
-            background: white;
-
-            padding: 22px;
-
-            border-radius: 10px;
-
-            box-shadow:
-                    0 3px 10px rgba(0,0,0,0.08);
-
-            transition: 0.2s;
-        }
-
-        .event-card:hover {
-            transform: translateY(-2px);
-
-            box-shadow:
-                    0 6px 16px rgba(0,0,0,0.10);
-        }
-
-        .event-card h3 {
-            color: #2563eb;
-
-            font-size: 20px;
-
-            margin-bottom: 12px;
-        }
-
-        .description {
-            color: #555;
-
-            line-height: 1.5;
-
-            margin-bottom: 18px;
-        }
-
-        .event-info {
-            color: #444;
-
-            line-height: 1.9;
-
-            font-size: 14px;
-
-            margin-bottom: 18px;
-        }
-
-        .event-info strong {
-            color: #222;
-        }
-
-        /* =========================
-           BUTTONS
-           ========================= */
-
-        .button-row {
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 8px;
-        }
-
-        .button-row button {
-            border: none;
-
-            border-radius: 6px;
-
-            height: 42px;
-
-            color: white;
-
-            cursor: pointer;
-
-            font-weight: bold;
-
-            font-size: 13px;
-        }
-
-        .details-btn {
-            background: #2563eb;
-        }
-
-        .details-btn:hover {
-            background: #1d4ed8;
-        }
-
-        .register-btn {
-            background: #16a34a;
-        }
-
-        .register-btn:hover {
-            background: #15803d;
-        }
-
-        .participants-btn {
-            background: #0891b2;
-        }
-
-        .participants-btn:hover {
-            background: #0e7490;
-        }
-
-        /* =========================
-           EMPTY MESSAGE
-           ========================= */
-
-        .empty-message {
-            background: white;
-
-            padding: 30px;
-
-            border-radius: 10px;
-
-            text-align: center;
-
-            color: #666;
-
-            box-shadow:
-                    0 3px 10px rgba(0,0,0,0.08);
-        }
-
-        /* =========================
-           MODAL
-           ========================= */
-
-        .modal {
-            display: none;
-
-            position: fixed;
-
-            z-index: 1000;
-
-            left: 0;
-            top: 0;
-
-            width: 100%;
-            height: 100%;
-
+        /* ================= ALUMNICONNECT SHARED DESIGN SYSTEM ================= */
+        .alumni-shared-theme{
+            --app-primary:#2563eb;
+            --app-primary-dark:#1d4ed8;
+            --app-primary-light:#eff6ff;
+            --app-bg:#f4f7fb;
+            --app-text:#172033;
+            --app-muted:#64748b;
+            --app-border:#e2e8f0;
+            --app-white:#ffffff;
+            font-family:"Segoe UI",Arial,Helvetica,sans-serif !important;
             background:
-                    rgba(0,0,0,0.55);
-
-            justify-content: center;
-
-            align-items: center;
-
-            padding: 20px;
+                    radial-gradient(circle at 8% 10%,rgba(37,99,235,.12),transparent 25%),
+                    radial-gradient(circle at 92% 12%,rgba(59,130,246,.10),transparent 23%),
+                    radial-gradient(circle at 82% 90%,rgba(96,165,250,.10),transparent 28%),
+                    linear-gradient(135deg,#f8fbff 0%,#eef5ff 48%,#f8fafc 100%) !important;
+            color:var(--app-text);
         }
-
-        .modal-content {
-            background: white;
-
-            width: 520px;
-
-            max-width: 95%;
-
-            max-height: 80vh;
-
-            overflow-y: auto;
-
-            padding: 25px;
-
-            border-radius: 10px;
-
-            box-shadow:
-                    0 10px 30px rgba(0,0,0,0.25);
+        .alumni-shared-theme::before{
+            content:"";
+            position:fixed;
+            inset:0;
+            background-image:
+                    linear-gradient(rgba(37,99,235,.025) 1px,transparent 1px),
+                    linear-gradient(90deg,rgba(37,99,235,.025) 1px,transparent 1px);
+            background-size:45px 45px;
+            pointer-events:none;
+            z-index:-2;
         }
-
-        .modal-header {
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            margin-bottom: 20px;
+        .alumni-shared-theme .shared-user-photo,
+        .alumni-shared-theme .header-avatar,
+        .alumni-shared-theme .mini-avatar,
+        .alumni-shared-theme .nav-avatar,
+        .alumni-shared-theme .sidebar-avatar,
+        .alumni-shared-theme .chip-avatar,
+        .alumni-shared-theme .profile-chip .avatar{
+            overflow:hidden;
         }
-
-        .modal-header h2 {
-            color: #2563eb;
-
-            font-size: 22px;
+        .alumni-shared-theme .shared-user-photo img,
+        .alumni-shared-theme .header-avatar img,
+        .alumni-shared-theme .mini-avatar img,
+        .alumni-shared-theme .nav-avatar img,
+        .alumni-shared-theme .sidebar-avatar img,
+        .alumni-shared-theme .chip-avatar img,
+        .alumni-shared-theme .profile-chip .avatar img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            display:block;
         }
-
-        .close-btn {
-            font-size: 28px;
-
-            color: #666;
-
-            cursor: pointer;
-
-            line-height: 1;
+        .alumni-shared-theme .shared-user-photo{
+            width:38px;height:38px;border-radius:50%;
+            background:var(--app-primary-light);color:var(--app-primary);
+            display:grid;place-items:center;font-size:13px;font-weight:800;
+            border:2px solid #fff;box-shadow:0 2px 8px rgba(15,23,42,.10);
         }
-
-        .close-btn:hover {
-            color: #222;
+        .alumni-shared-theme .shared-user-photo img{border-radius:50%}
+        .alumni-shared-theme .shared-user-photo .photo-fallback{display:grid;place-items:center;width:100%;height:100%}
+        .alumni-shared-theme .header-avatar,
+        .alumni-shared-theme .mini-avatar,
+        .alumni-shared-theme .nav-avatar{
+            position:relative;
         }
-
-        .modal-body p {
-            margin-bottom: 15px;
-
-            line-height: 1.6;
-
-            color: #444;
+        .alumni-shared-theme .header-avatar img,
+        .alumni-shared-theme .mini-avatar img,
+        .alumni-shared-theme .nav-avatar img,
+        .alumni-shared-theme .sidebar-avatar img,
+        .alumni-shared-theme .chip-avatar img{border-radius:50%}
+        .alumni-shared-theme .header,
+        .alumni-shared-theme .top-header,
+        .alumni-shared-theme .topbar,
+        .alumni-shared-theme .navbar{
+            background:rgba(255,255,255,.94) !important;
+            backdrop-filter:blur(14px);
+            border-bottom:1px solid rgba(226,232,240,.95) !important;
+            box-shadow:0 4px 20px rgba(15,23,42,.04) !important;
         }
-
-        .modal-body strong {
-            color: #222;
+        .alumni-shared-theme .logo,
+        .alumni-shared-theme .brand{
+            color:var(--app-primary) !important;
         }
-
-        /* =========================
-           PARTICIPANT
-           ========================= */
-
-        .participant {
-            padding: 14px;
-
-            margin-bottom: 10px;
-
-            background: #f8fafc;
-
-            border-left: 4px solid #2563eb;
-
-            border-radius: 6px;
+        .alumni-shared-theme .logo-icon,
+        .alumni-shared-theme .brand-icon,
+        .alumni-shared-theme .logo-mark{
+            background:linear-gradient(135deg,var(--app-primary),#3b82f6) !important;
+            color:#fff !important;
         }
-
-        .participant strong {
-            color: #2563eb;
-
-            font-size: 16px;
+        .alumni-shared-theme .sidebar{
+            background:rgba(255,255,255,.96) !important;
+            border-right:1px solid var(--app-border) !important;
+            box-shadow:4px 0 20px rgba(15,23,42,.035) !important;
         }
-
-        .participant small {
-            color: #666;
-
-            line-height: 1.6;
+        .alumni-shared-theme .sidebar a,
+        .alumni-shared-theme .menu-item,
+        .alumni-shared-theme .nav-item,
+        .alumni-shared-theme .menu,
+        .alumni-shared-theme .sidebar-menu a{
+            color:#52657f !important;
         }
-
-        /* =========================
-           RESPONSIVE
-           ========================= */
-
-        @media (max-width: 800px) {
-
-            .sidebar {
-                width: 180px;
-            }
-
-            .main {
-                padding: 25px;
-            }
-
-            .events-container {
-                grid-template-columns: 1fr;
-            }
-
-            .button-row {
-                grid-template-columns: 1fr;
-            }
-
-            .search-row {
-                flex-direction: column;
-            }
-
-            .search-btn,
-            .clear-btn {
-                width: 100%;
-            }
+        .alumni-shared-theme .sidebar a:hover,
+        .alumni-shared-theme .menu-item:hover,
+        .alumni-shared-theme .nav-item:hover,
+        .alumni-shared-theme .sidebar-menu a:hover{
+            background:#f1f6ff !important;color:var(--app-primary) !important;
+        }
+        .alumni-shared-theme .sidebar a.active,
+        .alumni-shared-theme .menu-item.active,
+        .alumni-shared-theme .nav-item.active,
+        .alumni-shared-theme .sidebar-menu a.active{
+            background:#eaf2ff !important;color:var(--app-primary) !important;
+            border-left-color:var(--app-primary) !important;
+        }
+        .alumni-shared-theme .card,
+        .alumni-shared-theme .applications-section,
+        .alumni-shared-theme .stat-card,
+        .alumni-shared-theme .messaging-shell,
+        .alumni-shared-theme .event-card,
+        .alumni-shared-theme .job-card,
+        .alumni-shared-theme .profile-card{
+            border-color:var(--app-border) !important;
+            box-shadow:0 5px 20px rgba(15,23,42,.045) !important;
+        }
+        .alumni-shared-theme button,
+        .alumni-shared-theme .btn{
+            transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+        }
+        .alumni-shared-theme button:hover,
+        .alumni-shared-theme .btn:hover{
+            transform:translateY(-1px);
+        }
+        @media(max-width:800px){
+            .alumni-shared-theme .shared-user-photo{width:34px;height:34px}
         }
 
     </style>
 </head>
 
-<body>
+<body class="alumni-shared-theme">
 
-<!-- =========================
-     NAVBAR
-     ========================= -->
-
-<div class="navbar">
-
+<header class="header">
     <div class="logo">
-        🎓 Alumni Portal
+        <div class="logo-mark">A</div>
+        AlumniConnect
+    </div>
+    <div class="header-title">Events & Community</div>
+    <div class="header-right">
+        <button class="logout" onclick="logout()">Logout</button>
     </div>
 
-    <form action="/logout" method="post">
+    <div class="shared-user-photo" id="sharedProfilePhoto" aria-label="Profile photo">U</div>
+</header>
 
-        <button
-                type="submit"
-                class="logout">
+<div class="layout">
 
-            Logout
+    <aside class="sidebar">
 
-        </button>
-
-    </form>
-
-</div>
-
-
-<!-- =========================
-     CONTAINER
-     ========================= -->
-
-<div class="container">
-
-    <!-- =========================
-         SIDEBAR
-         ========================= -->
-
-    <div class="sidebar">
-
-        <h3>Menu</h3>
-
-        <a href="/dashboard.html"
-           class="menu-item">
-
-            🏠 Dashboard
-
-        </a>
-
-        <a href="/profile.html"
-           class="menu-item">
-
-            👤 My Profile
-
-        </a>
-
-        <a href="/alumni.html"
-           class="menu-item">
-
-            🎓 Alumni
-
-        </a>
-
-        <a href="/mentorship.html"
-           class="menu-item">
-
-            🤝 Mentorship
-
-        </a>
-
-        <a href="/jobs.html"
-           class="menu-item">
-
-            💼 Jobs
-
-        </a>
-
-        <a href="/applications.html"
-           class="menu-item">
-
-            📄 Applications
-
-        </a>
-
-        <a href="/events.html"
-           class="menu-item active">
-
-            📅 Events
-
-        </a>
-
-        <a href="/messages.html"
-           class="menu-item">
-
-            💬 Messages
-
-        </a>
-
-    </div>
-
-
-    <!-- =========================
-         MAIN
-         ========================= -->
-
-    <div class="main">
-
-        <div class="page-header">
-
-            <h1>
-                Events 📅
-            </h1>
-
-            <p>
-                Discover upcoming alumni events,
-                workshops and networking opportunities.
-            </p>
-
+        <div class="sidebar-user">
+            <div class="sidebar-avatar">📅</div>
+            <strong>Alumni Community</strong>
+            <span>Connect • Learn • Grow</span>
         </div>
 
+        <div class="menu-title">Main Menu</div>
 
-        <!-- =========================
-             SEARCH
-             ========================= -->
+        <a class="menu-item" href="/dashboard.html">
+            <span class="menu-icon">🏠</span> Dashboard
+        </a>
 
-        <div class="search-section">
+        <a class="menu-item" href="/profile.html">
+            <span class="menu-icon">👤</span> My Profile
+        </a>
 
-            <h2>
-                🔍 Search Events
-            </h2>
+        <a class="menu-item" href="/alumni.html">
+            <span class="menu-icon">👥</span> Alumni Network
+        </a>
 
-            <div class="search-row">
+        <a class="menu-item" href="/mentorship.html">
+            <span class="menu-icon">🤝</span> Mentorship
+        </a>
 
-                <input
-                        type="text"
-                        id="searchInput"
-                        class="search-input"
-                        placeholder="Search by event title"
-                        onkeydown="handleSearchKey(event)">
+        <a class="menu-item" href="/jobs.html">
+            <span class="menu-icon">💼</span> Jobs
+        </a>
 
-                <button
-                        class="search-btn"
-                        onclick="searchEvents()">
+        <a class="menu-item active" href="/events.html">
+            <span class="menu-icon">📅</span> Events
+        </a>
 
-                    Search
+        <a class="menu-item" href="/messages.html">
+            <span class="menu-icon">💬</span> Messages
+        </a>
 
-                </button>
+        <a class="menu-item" href="/applications.html">
+            <span class="menu-icon">📄</span> Applications
+        </a>
 
-                <button
-                        class="clear-btn"
-                        onclick="clearSearch()">
+    </aside>
 
-                    Clear
+    <main class="content">
 
-                </button>
+        <section class="hero">
+            <div>
+                <div class="eyebrow">ALUMNI COMMUNITY</div>
+                <h1 class="page-title">Events & Activities</h1>
+                <p class="subtitle">
+                    Discover workshops, alumni meets and community activities.
+                    Register for events and stay connected with your alumni network.
+                </p>
+            </div>
+            <div class="hero-icon">📅</div>
+        </section>
 
+        <div class="user-info" id="userInfo">
+            Loading user information...
+        </div>
+
+        <div id="message" class="alert"></div>
+
+        <section class="card">
+
+            <div class="card-head">
+                <div>
+                    <h2>Upcoming Events</h2>
+                    <p class="card-subtitle">
+                        Explore upcoming activities and reserve your place.
+                    </p>
+                </div>
+                <span class="count" id="eventCount">0 events</span>
             </div>
 
-        </div>
+            <div id="eventList">
+                <div class="empty">Loading events...</div>
+            </div>
 
+        </section>
 
-        <!-- =========================
-             EVENTS HEADER
-             ========================= -->
+        <section class="card" id="createEventSection" style="display:none">
 
-        <div class="events-header">
+            <div class="card-head">
+                <div>
+                    <h2>Create an Event</h2>
+                    <p class="card-subtitle">
+                        Share an event with students and alumni in the community.
+                    </p>
+                </div>
+            </div>
 
-            <h2>
-                Upcoming Events
-            </h2>
+            <div class="create-note">
+                <strong>Alumni organizers:</strong>
+                Add the event details below. Your name will automatically be used as the organizer.
+            </div>
 
-            <span id="eventCount">
-                0 events
-            </span>
+            <form id="eventForm">
 
-        </div>
+                <div class="form-grid">
 
+                    <div class="form-group">
+                        <label for="eventTitle">Event Title</label>
+                        <input id="eventTitle" required
+                               placeholder="e.g. Alumni Networking Meet">
+                    </div>
 
-        <!-- =========================
-             EVENTS
-             ========================= -->
+                    <div class="form-group">
+                        <label for="eventDate">Date</label>
+                        <input id="eventDate" type="date" required>
+                    </div>
 
-        <div
-                id="eventsContainer"
-                class="events-container">
+                    <div class="form-group">
+                        <label for="eventTime">Time</label>
+                        <input id="eventTime" type="time" required>
+                    </div>
 
-        </div>
+                    <div class="form-group">
+                        <label for="eventLocation">Location</label>
+                        <input id="eventLocation" required
+                               placeholder="e.g. Bengaluru / Online">
+                    </div>
 
-    </div>
+                    <div class="form-group full">
+                        <label for="eventDescription">Description</label>
+                        <textarea id="eventDescription" required
+                                  placeholder="Describe the event, agenda and any useful information..."></textarea>
+                    </div>
 
-</div>
+                </div>
 
+                <button class="btn primary" type="submit">
+                    📅 Create Event
+                </button>
 
-<!-- =====================================================
-     EVENT DETAILS MODAL
-     ===================================================== -->
+            </form>
 
-<div
-        id="detailsModal"
-        class="modal">
+        </section>
 
-    <div class="modal-content">
-
-        <div class="modal-header">
-
-            <h2 id="modalTitle">
-                Event Details
-            </h2>
-
-            <span
-                    class="close-btn"
-                    onclick="closeDetailsModal()">
-
-                &times;
-
-            </span>
-
-        </div>
-
-        <div
-                id="modalBody"
-                class="modal-body">
-
-        </div>
-
-    </div>
+    </main>
 
 </div>
-
-
-<!-- =====================================================
-     PARTICIPANTS MODAL
-     ===================================================== -->
-
-<div
-        id="participantsModal"
-        class="modal">
-
-    <div class="modal-content">
-
-        <div class="modal-header">
-
-            <h2>
-                Event Participants
-            </h2>
-
-            <span
-                    class="close-btn"
-                    onclick="closeParticipantsModal()">
-
-                &times;
-
-            </span>
-
-        </div>
-
-        <div
-                id="participantsBody"
-                class="modal-body">
-
-        </div>
-
-    </div>
-
-</div>
-
 
 <script>
-
-    /* =====================================================
-       GLOBAL VARIABLES
-       ===================================================== */
-
-    const API_BASE = "/api";
-
-    let events = [];
-
     let currentUser = null;
-
-
-    /* =====================================================
-       GET LOGGED-IN EMAIL
-       ===================================================== */
-
-    function getLoggedInEmail() {
-
-        let email =
-            sessionStorage.getItem("loggedInEmail");
-
-        if (email && email.trim() !== "") {
-
-            return email.trim();
-
-        }
-
-
-        email =
-            localStorage.getItem("loggedInEmail");
-
-        if (email && email.trim() !== "") {
-
-            sessionStorage.setItem(
-                "loggedInEmail",
-                email.trim()
-            );
-
-            return email.trim();
-
-        }
-
-
-        const sessionUser =
-            sessionStorage.getItem("currentUser");
-
-        if (sessionUser) {
-
-            try {
-
-                const user =
-                    JSON.parse(sessionUser);
-
-                if (user.email) {
-
-                    return user.email;
-
-                }
-
-            } catch (error) {
-
-                console.log(
-                    "Invalid session user"
-                );
-
-            }
-
-        }
-
-
-        const localUser =
-            localStorage.getItem("currentUser");
-
-        if (localUser) {
-
-            try {
-
-                const user =
-                    JSON.parse(localUser);
-
-                if (user.email) {
-
-                    return user.email;
-
-                }
-
-            } catch (error) {
-
-                console.log(
-                    "Invalid local user"
-                );
-
-            }
-
-        }
-
-
-        return null;
-    }
-
-
-    /* =====================================================
-       LOAD CURRENT USER
-       ===================================================== */
-
-    async function loadCurrentUser() {
-
-        const email =
-            getLoggedInEmail();
-
-        if (!email) {
-
-            console.log(
-                "No logged-in email found."
-            );
-
-            return null;
-
-        }
-
-
-        try {
-
-            const response =
-                await fetch(
-                    `${API_BASE}/users/email/${encodeURIComponent(email)}`
-                );
-
-
-            if (!response.ok) {
-
-                console.error(
-                    "Could not find user:",
-                    response.status
-                );
-
-                return null;
-
-            }
-
-
-            const user =
-                await response.json();
-
-
-            currentUser = user;
-
-
-            sessionStorage.setItem(
-                "currentUser",
-                JSON.stringify(user)
-            );
-
-
-            localStorage.setItem(
-                "currentUser",
-                JSON.stringify(user)
-            );
-
-
-            return user;
-
-        } catch (error) {
-
-            console.error(
-                "Error loading user:",
-                error
-            );
-
-            return null;
-
-        }
-
-    }
-
-
-    /* =====================================================
-       LOAD EVENTS
-       ===================================================== */
-
-    async function loadEvents() {
-
-        try {
-
-            const response =
-                await fetch(
-                    `${API_BASE}/events`
-                );
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    "Failed to load events"
-                );
-
-            }
-
-
-            events =
-                await response.json();
-
-
-            displayEvents(events);
-
-
-            document.getElementById(
-                "searchInput"
-            ).value = "";
-
-
-        } catch (error) {
-
-            console.error(error);
-
-
-            document.getElementById(
-                "eventsContainer"
-            ).innerHTML = `
-
-                <div class="empty-message">
-
-                    Unable to load events.
-
-                </div>
-
-            `;
-
-        }
-
-    }
-
-
-    /* =====================================================
-       DISPLAY EVENTS
-       ===================================================== */
-
-    function displayEvents(eventList) {
-
-        const container =
-            document.getElementById(
-                "eventsContainer"
-            );
-
-
-        const count =
-            document.getElementById(
-                "eventCount"
-            );
-
-
-        count.textContent =
-            `${eventList.length} event${
-                eventList.length !== 1
-                    ? "s"
-                    : ""
-            }`;
-
-
-        if (!eventList ||
-            eventList.length === 0) {
-
-            container.innerHTML = `
-
-                <div class="empty-message">
-
-                    No events found.
-
-                </div>
-
-            `;
-
-            return;
-
-        }
-
-
-        container.innerHTML =
-            eventList.map(event => `
-
-                <div class="event-card">
-
-                    <h3>
-                        ${escapeHtml(event.title)}
-                    </h3>
-
-
-                    <div class="description">
-
-                        ${escapeHtml(
-                event.description || ""
-            )}
-
-                    </div>
-
-
-                    <div class="event-info">
-
-                        <div>
-                            📅
-                            <strong>Date:</strong>
-                            ${escapeHtml(
-                event.date || "-"
-            )}
-                        </div>
-
-
-                        <div>
-                            ⏰
-                            <strong>Time:</strong>
-                            ${escapeHtml(
-                event.time || "-"
-            )}
-                        </div>
-
-
-                        <div>
-                            📍
-                            <strong>Location:</strong>
-                            ${escapeHtml(
-                event.location || "-"
-            )}
-                        </div>
-
-
-                        <div>
-                            👤
-                            <strong>Organizer:</strong>
-                            ${escapeHtml(
-                event.organizer || "-"
-            )}
-                        </div>
-
-                    </div>
-
-
-                    <div class="button-row">
-
-                        <button
-                                class="details-btn"
-                                onclick="showDetails(${event.id})">
-
-                            View Details
-
-                        </button>
-
-
-                        <button
-                                class="register-btn"
-                                onclick="registerForEvent(${event.id})">
-
-                            Register
-
-                        </button>
-
-
-                        <button
-                                class="participants-btn"
-                                onclick="showParticipants(${event.id})">
-
-                            👥 Participants
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            `).join("");
-
-    }
-
-
-    /* =====================================================
-       SEARCH EVENTS
-       ===================================================== */
-
-    async function searchEvents() {
-
-        const title =
-            document.getElementById(
-                "searchInput"
-            ).value.trim();
-
-
-        if (!title) {
-
-            loadEvents();
-
-            return;
-
-        }
-
-
-        try {
-
-            const response =
-                await fetch(
-                    `${API_BASE}/events/search/title?title=${encodeURIComponent(title)}`
-                );
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    "Search failed"
-                );
-
-            }
-
-
-            const result =
-                await response.json();
-
-
-            events = result;
-
-            displayEvents(result);
-
-
-        } catch (error) {
-
-            console.error(error);
-
-
-            alert(
-                "Unable to search events."
-            );
-
-        }
-
-    }
-
-
-    /* =====================================================
-       CLEAR SEARCH
-       ===================================================== */
-
-    function clearSearch() {
-
-        document.getElementById(
-            "searchInput"
-        ).value = "";
-
-
-        loadEvents();
-
-    }
-
-
-    /* =====================================================
-       SEARCH WITH ENTER
-       ===================================================== */
-
-    function handleSearchKey(event) {
-
-        if (event.key === "Enter") {
-
-            searchEvents();
-
-        }
-
-    }
-
-
-    /* =====================================================
-       REGISTER FOR EVENT
-       ===================================================== */
-
-    async function registerForEvent(eventId) {
-
-        const email =
-            getLoggedInEmail();
-
-
-        if (!email) {
-
-            alert(
-                "Please login first to register for an event."
-            );
-
-            window.location.href =
-                "/login.html";
-
-            return;
-
-        }
-
-
-        let user =
-            currentUser;
-
-
-        if (!user || !user.id) {
-
-            user =
-                await loadCurrentUser();
-
-        }
-
-
-        if (!user || !user.id) {
-
-            alert(
-                "User information could not be loaded. Please login again."
-            );
-
-            return;
-
-        }
-
-
-        const event =
-            events.find(
-                e =>
-                    Number(e.id) ===
-                    Number(eventId)
-            );
-
-
-        if (!event) {
-
-            alert(
-                "Event not found."
-            );
-
-            return;
-
-        }
-
-
-        const registration = {
-
-            event: {
-                id: event.id
-            },
-
-            student: {
-                id: user.id
-            }
-
-        };
-
-
-        try {
-
-            const response =
-                await fetch(
-                    `${API_BASE}/event-registrations`,
-                    {
-
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body:
-                            JSON.stringify(
-                                registration
-                            )
-
-                    }
-                );
-
-
-            const responseText =
-                await response.text();
-
-
-            if (response.status === 409) {
-
-                alert(
-                    responseText ||
-                    "You have already registered for this event."
-                );
-
-                return;
-
-            }
-
-
-            if (!response.ok) {
-
-                console.error(
-                    "Registration failed:",
-                    responseText
-                );
-
-                alert(
-                    "Registration failed. Please try again."
-                );
-
-                return;
-
-            }
-
-
-            alert(
-                "Successfully registered for the event! 🎉"
-            );
-
-
-        } catch (error) {
-
-            console.error(
-                "Registration error:",
-                error
-            );
-
-
-            alert(
-                "Unable to register for the event."
-            );
-
-        }
-
-    }
-
-
-    /* =====================================================
-       SHOW EVENT DETAILS
-       ===================================================== */
-
-    function showDetails(eventId) {
-
-        const event =
-            events.find(
-                e =>
-                    Number(e.id) ===
-                    Number(eventId)
-            );
-
-
-        if (!event) {
-
-            return;
-
-        }
-
-
-        document.getElementById(
-            "modalTitle"
-        ).textContent =
-            event.title;
-
-
-        document.getElementById(
-            "modalBody"
-        ).innerHTML = `
-
-            <p>
-
-                <strong>
-                    Description:
-                </strong>
-
-                <br>
-
-                ${escapeHtml(
-            event.description || "-"
-        )}
-
-            </p>
-
-
-            <p>
-
-                <strong>
-                    📅 Date:
-                </strong>
-
-                ${escapeHtml(
-            event.date || "-"
-        )}
-
-            </p>
-
-
-            <p>
-
-                <strong>
-                    ⏰ Time:
-                </strong>
-
-                ${escapeHtml(
-            event.time || "-"
-        )}
-
-            </p>
-
-
-            <p>
-
-                <strong>
-                    📍 Location:
-                </strong>
-
-                ${escapeHtml(
-            event.location || "-"
-        )}
-
-            </p>
-
-
-            <p>
-
-                <strong>
-                    👤 Organizer:
-                </strong>
-
-                ${escapeHtml(
-            event.organizer || "-"
-        )}
-
-            </p>
-
-        `;
-
-
-        document.getElementById(
-            "detailsModal"
-        ).style.display = "flex";
-
-    }
-
-
-    /* =====================================================
-       CLOSE DETAILS MODAL
-       ===================================================== */
-
-    function closeDetailsModal() {
-
-        document.getElementById(
-            "detailsModal"
-        ).style.display = "none";
-
-    }
-
-
-    /* =====================================================
-       SHOW PARTICIPANTS
-       ===================================================== */
-
-    async function showParticipants(eventId) {
-
-        const modal =
-            document.getElementById(
-                "participantsModal"
-            );
-
-
-        const body =
-            document.getElementById(
-                "participantsBody"
-            );
-
-
-        body.innerHTML = `
-
-            <p>
-                Loading participants...
-            </p>
-
-        `;
-
-
-        modal.style.display = "flex";
-
-
-        try {
-
-            const response =
-                await fetch(
-                    `${API_BASE}/event-registrations/event/${eventId}`
-                );
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    "Unable to load participants"
-                );
-
-            }
-
-
-            const registrations =
-                await response.json();
-
-
-            if (
-                !registrations ||
-                registrations.length === 0
-            ) {
-
-                body.innerHTML = `
-
-                    <p>
-                        No participants yet.
-                    </p>
-
-                `;
-
-                return;
-
-            }
-
-
-            body.innerHTML =
-                registrations.map(
-                    registration => {
-
-                        const student =
-                            registration.student;
-
-
-                        return `
-
-                            <div class="participant">
-
-                                <strong>
-
-                                    ${escapeHtml(
-                            student?.name ||
-                            "Unknown User"
-                        )}
-
-                                </strong>
-
-                                <br>
-
-                                <small>
-
-                                    ${escapeHtml(
-                            student?.email ||
-                            ""
-                        )}
-
-                                </small>
-
-                                <br>
-
-                                <small>
-
-                                    Status:
-                                    ${escapeHtml(
-                            registration.status ||
-                            ""
-                        )}
-
-                                </small>
-
-                            </div>
-
-                        `;
-
-                    }
-
-                ).join("");
-
-
-        } catch (error) {
-
-            console.error(error);
-
-
-            body.innerHTML = `
-
-                <p>
-                    Unable to load participants.
-                </p>
-
-            `;
-
-        }
-
-    }
-
-
-    /* =====================================================
-       CLOSE PARTICIPANTS MODAL
-       ===================================================== */
-
-    function closeParticipantsModal() {
-
-        document.getElementById(
-            "participantsModal"
-        ).style.display = "none";
-
-    }
-
-
-    /* =====================================================
-       ESCAPE HTML
-       ===================================================== */
+    let allEvents = [];
 
     function escapeHtml(value) {
-
-        if (
-            value === null ||
-            value === undefined
-        ) {
-
-            return "";
-
-        }
-
-
-        return String(value)
-
-            .replace(
-                /&/g,
-                "&amp;"
-            )
-
-            .replace(
-                /</g,
-                "&lt;"
-            )
-
-            .replace(
-                />/g,
-                "&gt;"
-            )
-
-            .replace(
-                /"/g,
-                "&quot;"
-            )
-
-            .replace(
-                /'/g,
-                "&#039;"
-            );
-
+        if (value === null || value === undefined) return "";
+        return String(value).replace(/&/g,"&amp;").replace(/</g,"&lt;")
+            .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
     }
 
+    function showMessage(text, type="success") {
+        const box = document.getElementById("message");
+        box.textContent = text;
+        box.className = "alert show " + type;
+        setTimeout(() => box.className = "alert", 4000);
+    }
 
-    /* =====================================================
-       CLOSE MODAL WHEN CLICKING OUTSIDE
-       ===================================================== */
+    async function loadCurrentUser() {
+        const email = sessionStorage.getItem("loggedInEmail");
 
-    window.onclick =
-        function(event) {
+        if (!email) {
+            window.location.href = "/login.html";
+            return false;
+        }
 
-            const detailsModal =
-                document.getElementById(
-                    "detailsModal"
-                );
+        try {
+            const response = await fetch("/api/users");
+            if (!response.ok) throw new Error("Unable to load users");
 
+            const users = await response.json();
+            currentUser = users.find(u =>
+                u.email && u.email.toLowerCase() === email.toLowerCase()
+            );
 
-            const participantsModal =
-                document.getElementById(
-                    "participantsModal"
-                );
-
-
-            if (
-                event.target ===
-                detailsModal
-            ) {
-
-                detailsModal.style.display =
-                    "none";
-
+            if (!currentUser) {
+                document.getElementById("userInfo").textContent =
+                    "User not found. Please login again.";
+                return false;
             }
 
+            document.getElementById("userInfo").innerHTML =
+                `Logged in as: <strong>${escapeHtml(currentUser.name)}</strong>
+       &nbsp; | &nbsp; Role: <strong>${escapeHtml(currentUser.role)}</strong>`;
 
-            if (
-                event.target ===
-                participantsModal
-            ) {
-
-                participantsModal.style.display =
-                    "none";
-
+            if (String(currentUser.role || "").toUpperCase() === "ALUMNI") {
+                document.getElementById("createEventSection").style.display = "block";
             }
 
+            return true;
+        } catch (error) {
+            console.error(error);
+            document.getElementById("userInfo").textContent =
+                "Unable to load user information.";
+            return false;
+        }
+    }
+
+    function getDateParts(dateString) {
+        if (!dateString) return {day:"--", month:""};
+        const date = new Date(dateString + "T00:00:00");
+        if (Number.isNaN(date.getTime())) return {day:"--", month:""};
+        return {
+            day: String(date.getDate()).padStart(2, "0"),
+            month: date.toLocaleString("en-US", {month:"short"}).toUpperCase()
+        };
+    }
+
+    async function loadRegisteredEventIds() {
+        if (!currentUser || !currentUser.id) return new Set();
+
+        try {
+            const response = await fetch(
+                `/api/event-registrations/student/${currentUser.id}`
+            );
+
+            if (!response.ok) return new Set();
+
+            const registrations = await response.json();
+
+            return new Set(
+                registrations
+                    .filter(r => String(r.status).toUpperCase() === "REGISTERED" && r.event)
+                    .map(r => r.event.id)
+            );
+        } catch (error) {
+            console.error("Registration loading error:", error);
+            return new Set();
+        }
+    }
+
+    async function loadEvents() {
+        try {
+            const response = await fetch("/api/events");
+            if (!response.ok) throw new Error("Unable to load events");
+
+            const data = await response.json();
+            allEvents = Array.isArray(data) ? data : (data.events || []);
+
+            const registeredIds = await loadRegisteredEventIds();
+
+            allEvents.forEach(event => {
+                event.registered = registeredIds.has(event.id);
+            });
+
+            displayEvents(allEvents);
+        } catch (error) {
+            console.error(error);
+            document.getElementById("eventList").innerHTML =
+                '<div class="empty">Unable to load events.</div>';
+        }
+    }
+
+    function displayEvents(events) {
+        const container = document.getElementById("eventList");
+        document.getElementById("eventCount").textContent =
+            `${events.length} event${events.length === 1 ? "" : "s"}`;
+
+        if (!events.length) {
+            container.innerHTML = '<div class="empty">📭<br><br>No upcoming events available.</div>';
+            return;
+        }
+
+        const grid = document.createElement("div");
+        grid.className = "events-grid";
+
+        events.forEach(event => {
+            const parts = getDateParts(event.date);
+            const card = document.createElement("article");
+            card.className = "event-card";
+
+            card.innerHTML = `
+      <div class="event-top">
+        <div class="date-box">
+          <span class="day">${escapeHtml(parts.day)}</span>
+          <span class="month">${escapeHtml(parts.month)}</span>
+        </div>
+        <div>
+          <div class="event-title">${escapeHtml(event.title || "Event")}</div>
+        </div>
+      </div>
+
+      <div class="detail">📅 <strong>Date:</strong> ${escapeHtml(event.date || "To be announced")}</div>
+      <div class="detail">🕐 <strong>Time:</strong> ${escapeHtml(event.time || "To be announced")}</div>
+      <div class="detail">📍 <strong>Location:</strong> ${escapeHtml(event.location || "To be announced")}</div>
+      <div class="detail">👤 <strong>Organizer:</strong> ${escapeHtml(event.organizer || "Alumni Portal")}</div>
+
+      <div class="description">${escapeHtml(event.description || "No description available.")}</div>
+
+      <div class="actions">
+        ${
+                event.registered
+                    ? '<div class="registered">✓ Registered</div>'
+                    : `<button class="btn primary" onclick="registerEvent(${event.id})">Register</button>`
+            }
+      </div>
+    `;
+
+            grid.appendChild(card);
+        });
+
+        container.innerHTML = "";
+        container.appendChild(grid);
+    }
+
+    async function registerEvent(eventId) {
+        if (!currentUser || !currentUser.id) {
+            showMessage("Please login again.", "error");
+            return;
+        }
+
+        const registration = {
+            event: { id: eventId },
+            student: { id: currentUser.id }
         };
 
+        try {
+            const response = await fetch("/api/event-registrations", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(registration)
+            });
 
-    /* =====================================================
-       PAGE LOAD
-       ===================================================== */
+            const result = await response.text();
 
-    document.addEventListener(
-        "DOMContentLoaded",
-        async function() {
+            if (!response.ok) {
+                throw new Error(result || "Registration failed");
+            }
 
-            await loadCurrentUser();
-
+            showMessage("Event registration successful! 🎉", "success");
             await loadEvents();
 
+        } catch (error) {
+            console.error("Registration error:", error);
+
+            if (error.message.toLowerCase().includes("already registered")) {
+                showMessage("You have already registered for this event.", "error");
+            } else {
+                showMessage("Unable to register for this event.", "error");
+            }
         }
-    );
+    }
 
+    document.getElementById("eventForm").addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        if (!currentUser || String(currentUser.role).toUpperCase() !== "ALUMNI") {
+            showMessage("Only alumni can create events.", "error");
+            return;
+        }
+
+        const eventData = {
+            title: document.getElementById("eventTitle").value.trim(),
+            description: document.getElementById("eventDescription").value.trim(),
+            date: document.getElementById("eventDate").value,
+            time: document.getElementById("eventTime").value,
+            location: document.getElementById("eventLocation").value.trim(),
+            organizer: currentUser.name
+        };
+
+        try {
+            const response = await fetch("/api/events", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(eventData)
+            });
+
+            if (!response.ok) {
+                const message = await response.text();
+                throw new Error(message || "Unable to create event");
+            }
+
+            showMessage("Event created successfully! 🎉", "success");
+            document.getElementById("eventForm").reset();
+            await loadEvents();
+
+        } catch (error) {
+            console.error(error);
+            showMessage("Unable to create event: " + error.message, "error");
+        }
+    });
+
+    function logout() {
+        sessionStorage.removeItem("loggedInEmail");
+        window.location.href = "/login.html";
+    }
+
+    (async function() {
+        const ok = await loadCurrentUser();
+        if (ok) await loadEvents();
+    })();
+
+
+    /* ================= SHARED PROFILE PHOTO ================= */
+    async function loadSharedProfilePhoto(){
+        try{
+            const userResponse = await fetch("/api/users/me", {credentials:"include"});
+            if(!userResponse.ok) return;
+            const user = await userResponse.json();
+            const name = user.name || "User";
+            const initials = name.split(/\s+/).filter(Boolean).slice(0,2)
+                .map(part => part.charAt(0).toUpperCase()).join("") || "U";
+
+            const selectors = [
+                "#sharedProfilePhoto",
+                "#headerAvatar",
+                "#miniAvatar",
+                "#navAvatar",
+                "#sidebarAvatar",
+                "#headerName + .avatar"
+            ];
+            const targets = [];
+            selectors.forEach(selector=>{
+                document.querySelectorAll(selector).forEach(el=>{
+                    if(!targets.includes(el)) targets.push(el);
+                });
+            });
+
+            targets.forEach(el=>{
+                el.innerHTML = '<span class="photo-fallback">'+initials+'</span>';
+                el.title = name;
+            });
+
+            const profileResponse = await fetch(
+                "/api/profiles/user/" + encodeURIComponent(user.id),
+                {credentials:"include"}
+            );
+            if(!profileResponse.ok) return;
+            const profile = await profileResponse.json();
+            if(!profile || !profile.id) return;
+
+            const photoUrl = "/api/profiles/" + profile.id + "/photo";
+            targets.forEach(el=>{
+                const img = document.createElement("img");
+                img.alt = name + " profile photo";
+                img.src = photoUrl + "?v=" + Date.now();
+                img.onerror = function(){
+                    this.remove();
+                    if(!el.querySelector(".photo-fallback")){
+                        el.innerHTML = '<span class="photo-fallback">'+initials+'</span>';
+                    }
+                };
+                el.innerHTML = "";
+                el.appendChild(img);
+            });
+        }catch(error){
+            console.warn("Shared profile photo could not be loaded:", error);
+        }
+    }
+
+    try { loadSharedProfilePhoto(); } catch(e) { console.warn(e); }
 </script>
-
 </body>
 </html>
+```
+`

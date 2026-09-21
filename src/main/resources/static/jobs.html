@@ -1,3 +1,5 @@
+`
+```
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,33 +10,79 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Jobs - Alumni Portal</title>
-
+    <title>Jobs | Alumni Portal</title>
 
     <style>
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            box-sizing: border-box;
+        }
+
+        :root {
+
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+
+            --text: #172033;
+            --muted: #64748b;
+
+            --background: #f4f7fb;
+            --white: #ffffff;
+
+            --border: #e5eaf2;
+
+            --success: #16a34a;
+            --success-bg: #ecfdf3;
+
+            --danger: #dc2626;
+            --danger-bg: #fef2f2;
+
+            --warning: #d97706;
+            --warning-bg: #fff7ed;
+
+            --shadow: 0 8px 25px rgba(15, 23, 42, 0.06);
         }
 
 
         body {
-            background: #f4f6f9;
-            color: #222;
+
+            font-family:
+                    Arial,
+                    Helvetica,
+                    sans-serif;
+
+            background: var(--background);
+
+            color: var(--text);
+
+            min-height: 100vh;
         }
 
 
-        /* ================= HEADER ================= */
+        button,
+        input,
+        textarea,
+        select {
+
+            font-family: inherit;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
 
         .header {
-            height: 65px;
 
-            background: #2563eb;
+            height: 68px;
 
-            color: white;
+            background: var(--white);
+
+            border-bottom:
+                    1px solid var(--border);
 
             display: flex;
 
@@ -42,620 +90,1898 @@
 
             justify-content: space-between;
 
-            padding: 0 30px;
+            padding: 0 28px;
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+            right: 0;
+
+            z-index: 1000;
         }
 
 
         .logo {
-            font-size: 22px;
-            font-weight: bold;
-        }
 
-
-        .logout-btn {
-            background: white;
-
-            color: #2563eb;
-
-            border: none;
-
-            padding: 10px 18px;
-
-            border-radius: 6px;
-
-            cursor: pointer;
-
-            font-weight: bold;
-        }
-
-
-        .logout-btn:hover {
-            background: #e8f0ff;
-        }
-
-
-        /* ================= LAYOUT ================= */
-
-        .layout {
             display: flex;
 
-            min-height: calc(100vh - 65px);
+            align-items: center;
+
+            gap: 11px;
+
+            color: var(--primary);
+
+            font-size: 20px;
+
+            font-weight: 700;
         }
 
 
-        /* ================= SIDEBAR ================= */
+        .logo-icon {
 
-        .sidebar {
-            width: 230px;
-
-            background: white;
-
-            padding: 25px 15px;
-
-            box-shadow:
-                    2px 0 8px rgba(0,0,0,0.08);
-        }
-
-
-        .sidebar h2 {
-            margin-bottom: 20px;
-
-            color: #333;
-        }
-
-
-        .menu-item {
-            display: block;
-
-            padding: 13px 15px;
-
-            margin-bottom: 8px;
-
-            color: #444;
-
-            text-decoration: none;
-
-            border-radius: 6px;
-        }
-
-
-        .menu-item:hover {
-            background: #e8f0ff;
-
-            color: #2563eb;
-        }
-
-
-        .menu-item.active {
-            background: #e8f0ff;
-
-            color: #2563eb;
-
-            font-weight: bold;
-        }
-
-
-        /* ================= CONTENT ================= */
-
-        .content {
-            flex: 1;
-
-            padding: 35px;
-
-            max-width: 1500px;
-        }
-
-
-        .page-title {
-            color: #222;
-
-            margin-bottom: 8px;
-        }
-
-
-        .subtitle {
-            color: #666;
-
-            margin-bottom: 25px;
-        }
-
-
-        /* ================= USER INFO ================= */
-
-        .user-info {
-            background: #e8f0ff;
-
-            color: #2563eb;
-
-            padding: 13px 15px;
-
-            border-radius: 7px;
-
-            margin-bottom: 20px;
-
-            font-weight: bold;
-        }
-
-
-        /* ================= MESSAGE ================= */
-
-        #message {
-            margin-bottom: 15px;
-        }
-
-
-        .success {
-            background: #e6f7eb;
-
-            color: #18743a;
-
-            padding: 12px;
-
-            border-radius: 6px;
-
-            margin-bottom: 15px;
-        }
-
-
-        .error {
-            background: #ffe5e5;
-
-            color: #b42318;
-
-            padding: 12px;
-
-            border-radius: 6px;
-
-            margin-bottom: 15px;
-        }
-
-
-        /* ================= CARD ================= */
-
-        .card {
-            background: white;
+            width: 38px;
+            height: 38px;
 
             border-radius: 10px;
 
-            padding: 25px;
-
-            margin-bottom: 25px;
-
-            box-shadow:
-                    0 3px 10px rgba(0,0,0,0.08);
-        }
-
-
-        .card h2 {
-            margin-bottom: 20px;
-
-            color: #222;
-        }
-
-
-        /* ================= SEARCH ================= */
-
-        .search-container {
-            display: grid;
-
-            grid-template-columns:
-                1fr 1fr 1fr auto auto;
-
-            gap: 10px;
-        }
-
-
-        .search-container input {
-            height: 44px;
-
-            border: 1px solid #ccd4df;
-
-            border-radius: 6px;
-
-            padding: 0 12px;
-
-            font-size: 14px;
-
-            outline: none;
-        }
-
-
-        .search-container input:focus {
-            border-color: #2563eb;
-        }
-
-
-        /* ================= BUTTONS ================= */
-
-        .btn {
-            border: none;
-
-            padding: 10px 17px;
-
-            border-radius: 6px;
-
-            cursor: pointer;
-
-            font-weight: bold;
-        }
-
-
-        .btn-primary {
-            background: #2563eb;
-
-            color: white;
-        }
-
-
-        .btn-primary:hover {
-            background: #1d4ed8;
-        }
-
-
-        .btn-secondary {
-            background: #64748b;
-
-            color: white;
-        }
-
-
-        .btn-secondary:hover {
-            background: #475569;
-        }
-
-
-        .btn-danger {
-            background: #dc2626;
-
-            color: white;
-        }
-
-
-        .btn-danger:hover {
-            background: #b91c1c;
-        }
-
-
-        .btn-success {
-            background: #16a34a;
-
-            color: white;
-        }
-
-
-        .btn-success:hover {
-            background: #15803d;
-        }
-
-
-        .view-btn {
-            background: #2563eb;
+            background: var(--primary);
 
             color: white;
 
-            border: none;
+            display: flex;
 
-            padding: 10px 16px;
+            align-items: center;
+            justify-content: center;
 
-            border-radius: 6px;
-
-            cursor: pointer;
-
-            font-weight: bold;
-
-            margin-top: 10px;
+            font-size: 18px;
         }
 
 
-        .view-btn:hover {
-            background: #1d4ed8;
-        }
+        .header-right {
 
+            display: flex;
 
-        .apply-btn {
-            background: #16a34a;
-
-            color: white;
-
-            border: none;
-
-            padding: 10px 16px;
-
-            border-radius: 6px;
-
-            cursor: pointer;
-
-            font-weight: bold;
-
-            margin-top: 10px;
-        }
-
-
-        .apply-btn:hover {
-            background: #15803d;
-        }
-
-
-        /* ================= FORM ================= */
-
-        .form-row {
-            display: grid;
-
-            grid-template-columns: 1fr 1fr;
+            align-items: center;
 
             gap: 15px;
         }
 
 
+        .header-user {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+        }
+
+
+        .header-avatar {
+
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 14px;
+
+            font-weight: 700;
+        }
+
+
+        .header-name {
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .logout-btn {
+
+            border: none;
+
+            background: transparent;
+
+            color: var(--muted);
+
+            cursor: pointer;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            padding: 8px 10px;
+        }
+
+
+        .logout-btn:hover {
+
+            color: var(--danger);
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+
+            position: fixed;
+
+            top: 68px;
+
+            left: 0;
+
+            bottom: 0;
+
+            width: 235px;
+
+            background: var(--white);
+
+            border-right:
+                    1px solid var(--border);
+
+            padding: 24px 14px;
+
+            z-index: 900;
+        }
+
+
+        .sidebar-title {
+
+            font-size: 10px;
+
+            color: #94a3b8;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            padding: 0 13px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .menu-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            width: 100%;
+
+            padding: 12px 14px;
+
+            border-radius: 9px;
+
+            margin-bottom: 4px;
+
+            text-decoration: none;
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+
+        .menu-item:hover {
+
+            background: #f5f8ff;
+
+            color: var(--primary);
+        }
+
+
+        .menu-item.active {
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            font-weight: 700;
+        }
+
+
+        .menu-icon {
+
+            width: 20px;
+
+            text-align: center;
+
+            font-size: 16px;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+
+            margin-left: 235px;
+
+            padding:
+                    100px
+                    35px
+                    50px;
+
+            max-width: 1500px;
+        }
+
+
+        /* =====================================================
+           PAGE INTRO
+        ===================================================== */
+
+        .page-intro {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-end;
+
+            margin-bottom: 25px;
+        }
+
+
+        .page-title {
+
+            font-size: 30px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .subtitle {
+
+            color: var(--muted);
+
+            font-size: 14px;
+        }
+
+
+        .user-chip {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            background: var(--white);
+
+            border:
+                    1px solid var(--border);
+
+            border-radius: 30px;
+
+            padding: 7px 13px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+
+        .chip-avatar {
+
+            width: 30px;
+            height: 30px;
+
+            border-radius: 50%;
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #2563eb,
+                            #1d4ed8
+                    );
+
+            border-radius: 18px;
+
+            padding: 32px;
+
+            color: white;
+
+            position: relative;
+
+            overflow: hidden;
+
+            margin-bottom: 24px;
+
+            box-shadow:
+                    0 12px 30px
+                    rgba(37, 99, 235, 0.18);
+        }
+
+
+        .hero::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 270px;
+            height: 270px;
+
+            border-radius: 50%;
+
+            background:
+                    rgba(255,255,255,0.08);
+
+            right: -80px;
+
+            top: -100px;
+        }
+
+
+        .hero-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 800px;
+        }
+
+
+        .hero-label {
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.2px;
+
+            opacity: 0.8;
+
+            margin-bottom: 9px;
+        }
+
+
+        .hero h2 {
+
+            font-size: 27px;
+
+            margin-bottom: 9px;
+        }
+
+
+        .hero p {
+
+            font-size: 13px;
+
+            line-height: 1.6;
+
+            opacity: 0.9;
+
+            margin-bottom: 21px;
+        }
+
+
+        .search-bar {
+
+            background: white;
+
+            border-radius: 10px;
+
+            padding: 5px;
+
+            display: flex;
+
+            align-items: center;
+
+            max-width: 850px;
+        }
+
+
+        .search-field {
+
+            display: flex;
+
+            align-items: center;
+
+            flex: 1;
+
+            border-right:
+                    1px solid #e5e7eb;
+        }
+
+
+        .search-field:last-of-type {
+
+            border-right: none;
+        }
+
+
+        .search-field span {
+
+            padding-left: 12px;
+
+            font-size: 15px;
+
+            color: #94a3b8;
+        }
+
+
+        .search-field input {
+
+            width: 100%;
+
+            border: none;
+
+            outline: none;
+
+            padding: 12px;
+
+            font-size: 13px;
+
+            color: var(--text);
+        }
+
+
+        .search-action {
+
+            border: none;
+
+            background: var(--primary);
+
+            color: white;
+
+            padding: 11px 20px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+
+        .search-action:hover {
+
+            background: var(--primary-dark);
+        }
+
+
+        /* =====================================================
+           STATS
+        ===================================================== */
+
+        .stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 24px;
+        }
+
+
+        .stat-card {
+
+            background: var(--white);
+
+            border:
+                    1px solid var(--border);
+
+            border-radius: 14px;
+
+            padding: 20px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            box-shadow: var(--shadow);
+        }
+
+
+        .stat-label {
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .stat-number {
+
+            font-size: 26px;
+
+            font-weight: 700;
+        }
+
+
+        .stat-icon {
+
+            width: 45px;
+            height: 45px;
+
+            border-radius: 11px;
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 19px;
+        }
+
+
+        /* =====================================================
+           CONTENT GRID
+        ===================================================== */
+
+        .content-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1fr)
+                310px;
+
+            gap: 22px;
+
+            align-items: start;
+        }
+
+
+        .left-column,
+        .right-column {
+
+            min-width: 0;
+        }
+
+
+        /* =====================================================
+           PANEL
+        ===================================================== */
+
+        .panel {
+
+            background: var(--white);
+
+            border:
+                    1px solid var(--border);
+
+            border-radius: 14px;
+
+            box-shadow: var(--shadow);
+
+            overflow: hidden;
+
+            margin-bottom: 22px;
+        }
+
+
+        .panel-header {
+
+            padding: 19px 21px;
+
+            border-bottom:
+                    1px solid var(--border);
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        .panel-title {
+
+            font-size: 17px;
+
+            font-weight: 700;
+        }
+
+
+        .panel-subtitle {
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+            margin-top: 4px;
+        }
+
+
+        .count-badge {
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            padding: 5px 9px;
+
+            border-radius: 15px;
+
+            font-size: 10px;
+
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           JOB LIST
+        ===================================================== */
+
+        #jobList {
+
+            padding: 5px 0;
+        }
+
+
+        .job-card {
+
+            padding: 20px 22px;
+
+            border-bottom:
+                    1px solid #edf1f6;
+
+            transition: 0.2s;
+        }
+
+
+        .job-card:last-child {
+
+            border-bottom: none;
+        }
+
+
+        .job-card:hover {
+
+            background: #fafcff;
+        }
+
+
+        .job-top {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 14px;
+        }
+
+
+        .company-logo {
+
+            width: 50px;
+            height: 50px;
+
+            min-width: 50px;
+
+            border-radius: 10px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #dbeafe,
+                            #bfdbfe
+                    );
+
+            color: var(--primary);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 17px;
+
+            font-weight: 800;
+        }
+
+
+        .job-main {
+
+            flex: 1;
+
+            min-width: 0;
+        }
+
+
+        .job-heading {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 10px;
+        }
+
+
+        .job-heading h3 {
+
+            font-size: 16px;
+
+            line-height: 1.35;
+
+            margin-bottom: 4px;
+        }
+
+
+        .job-company {
+
+            color: #475569;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            margin-bottom: 7px;
+        }
+
+
+        .job-meta {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 7px;
+
+            margin-bottom: 9px;
+        }
+
+
+        .meta-tag {
+
+            background: #f1f5f9;
+
+            color: #475569;
+
+            padding: 5px 8px;
+
+            border-radius: 5px;
+
+            font-size: 10px;
+
+            font-weight: 600;
+        }
+
+
+        .type-tag {
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            padding: 5px 8px;
+
+            border-radius: 5px;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+        }
+
+
+        .job-description {
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+            line-height: 1.55;
+
+            display: -webkit-box;
+
+            -webkit-line-clamp: 2;
+
+            -webkit-box-orient: vertical;
+
+            overflow: hidden;
+        }
+
+
+        .job-bottom {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 14px;
+
+            padding-top: 12px;
+
+            border-top:
+                    1px solid #f0f3f7;
+        }
+
+
+        .posted-by {
+
+            color: var(--muted);
+
+            font-size: 10px;
+        }
+
+
+        .posted-by strong {
+
+            color: #475569;
+        }
+
+
+        .job-actions {
+
+            display: flex;
+
+            gap: 7px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .btn {
+
+            border: none;
+
+            padding: 8px 13px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+
+        .btn-view {
+
+            background: #eef4ff;
+
+            color: var(--primary);
+
+            border:
+                    1px solid #bfdbfe;
+        }
+
+
+        .btn-view:hover {
+
+            background: #e0ebff;
+        }
+
+
+        .btn-apply {
+
+            background: var(--success);
+
+            color: white;
+        }
+
+
+        .btn-apply:hover {
+
+            background: #15803d;
+        }
+
+
+        .btn-delete {
+
+            background: var(--danger);
+
+            color: white;
+        }
+
+
+        .btn-delete:hover {
+
+            background: #b91c1c;
+        }
+
+
+        .btn-linkedin {
+
+            background: #0a66c2;
+
+            color: white;
+        }
+
+
+        .btn-linkedin:hover {
+
+            background: #004182;
+        }
+
+
+        .applied-box {
+
+            background: var(--success-bg);
+
+            color: var(--success);
+
+            border:
+                    1px solid #bbf7d0;
+
+            border-radius: 6px;
+
+            padding: 8px 12px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+
+        .applied-box span {
+
+            display: block;
+
+            color: #64748b;
+
+            font-size: 9px;
+
+            margin-top: 3px;
+
+            font-weight: 500;
+        }
+
+
+        /* =====================================================
+           POST JOB
+        ===================================================== */
+
+        .post-card {
+
+            padding: 22px;
+        }
+
+
+        .form-row {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 14px;
+        }
+
+
         .form-group {
-            margin-bottom: 16px;
+
+            margin-bottom: 14px;
         }
 
 
         .form-group label {
+
             display: block;
 
-            margin-bottom: 7px;
+            font-size: 11px;
 
-            font-weight: bold;
+            font-weight: 700;
 
-            color: #333;
+            color: #475569;
+
+            margin-bottom: 6px;
         }
 
 
         .form-group input,
-        .form-group textarea,
-        .form-group select {
+        .form-group select,
+        .form-group textarea {
 
             width: 100%;
 
-            border: 1px solid #ccd4df;
+            border:
+                    1px solid #cbd5e1;
 
-            border-radius: 6px;
-
-            padding: 11px;
-
-            font-size: 14px;
+            border-radius: 7px;
 
             outline: none;
+
+            padding: 10px;
+
+            font-size: 12px;
+
+            color: var(--text);
+
+            background: white;
         }
 
 
         .form-group input,
         .form-group select {
-            height: 44px;
+
+            height: 41px;
         }
 
 
         .form-group textarea {
-            min-height: 110px;
+
+            min-height: 100px;
 
             resize: vertical;
         }
 
 
         .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
+        .form-group select:focus,
+        .form-group textarea:focus {
 
-            border-color: #2563eb;
-
-            box-shadow:
-                    0 0 0 2px rgba(37,99,235,0.08);
-        }
-
-
-        /* ================= JOB GRID ================= */
-
-        .jobs-grid {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(auto-fit, minmax(330px, 1fr));
-
-            gap: 20px;
-        }
-
-
-        /* ================= JOB CARD ================= */
-
-        .job-card {
-
-            border: 1px solid #dfe4ea;
-
-            border-radius: 10px;
-
-            padding: 20px;
-
-            background: #fafbfd;
-
-            transition: 0.2s;
-        }
-
-
-        .job-card:hover {
+            border-color: var(--primary);
 
             box-shadow:
-                    0 4px 12px rgba(0,0,0,0.08);
-
-            transform: translateY(-2px);
+                    0 0 0 3px
+                    rgba(37,99,235,0.08);
         }
 
 
-        .job-title {
+        .post-btn {
 
-            display: flex;
+            border: none;
 
-            justify-content: space-between;
+            background: var(--primary);
 
-            align-items: flex-start;
+            color: white;
 
-            gap: 10px;
+            padding: 10px 18px;
 
-            margin-bottom: 12px;
-        }
+            border-radius: 7px;
 
-
-        .job-title h3 {
-
-            font-size: 20px;
-
-            color: #17365d;
-        }
-
-
-        .job-card p {
-
-            margin: 8px 0;
-
-            color: #43566d;
-
-            line-height: 1.5;
-        }
-
-
-        .job-type {
-
-            display: inline-block;
-
-            background: #e8efff;
-
-            color: #2563eb;
-
-            padding: 5px 10px;
-
-            border-radius: 15px;
+            cursor: pointer;
 
             font-size: 12px;
 
-            font-weight: bold;
-
-            white-space: nowrap;
+            font-weight: 700;
         }
 
 
-        .posted-by {
+        .post-btn:hover {
 
-            margin-top: 15px;
-
-            padding-top: 12px;
-
-            border-top: 1px solid #e1e5eb;
-
-            color: #555;
-
-            font-size: 14px;
+            background: var(--primary-dark);
         }
 
 
-        .job-buttons {
+        /* =====================================================
+           RIGHT SIDEBAR
+        ===================================================== */
+
+        .quick-card {
+
+            padding: 20px;
+        }
+
+
+        .quick-title {
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            margin-bottom: 15px;
+        }
+
+
+        .quick-item {
 
             display: flex;
 
-            gap: 10px;
+            gap: 11px;
 
-            flex-wrap: wrap;
-
-            margin-top: 12px;
+            margin-bottom: 15px;
         }
 
 
-        /* ================= APPLIED ================= */
+        .quick-number {
 
-        .applied-box {
+            width: 27px;
+            height: 27px;
 
-            margin-top: 10px;
+            min-width: 27px;
 
-            padding: 10px 14px;
+            border-radius: 50%;
 
-            background: #e8f5e9;
+            background: var(--primary-light);
 
-            color: #2e7d32;
+            color: var(--primary);
 
-            border-radius: 6px;
+            display: flex;
 
-            font-weight: bold;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 10px;
+
+            font-weight: 800;
         }
 
 
-        .applied-status {
+        .quick-text strong {
 
-            font-size: 13px;
+            display: block;
 
-            margin-top: 4px;
+            font-size: 11px;
 
-            font-weight: normal;
+            margin-bottom: 3px;
         }
 
 
-        /* ================= EMPTY / LOADING ================= */
+        .quick-text span {
+
+            color: var(--muted);
+
+            font-size: 10px;
+
+            line-height: 1.45;
+        }
+
+
+        .role-card {
+
+            padding: 20px;
+        }
+
+
+        .role-icon {
+
+            width: 42px;
+            height: 42px;
+
+            border-radius: 10px;
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 12px;
+
+            font-size: 18px;
+        }
+
+
+        .role-card h3 {
+
+            font-size: 14px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .role-card p {
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+            line-height: 1.55;
+        }
+
+
+        /* =====================================================
+           EMPTY / LOADING
+        ===================================================== */
 
         .empty {
 
+            padding: 45px 20px;
+
             text-align: center;
 
-            padding: 25px;
+            color: var(--muted);
+        }
 
-            color: #64748b;
+
+        .empty-icon {
+
+            width: 52px;
+            height: 52px;
+
+            border-radius: 50%;
+
+            background: #f1f5f9;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            margin:
+                    0 auto
+                    12px;
+
+            font-size: 21px;
+        }
+
+
+        .empty h3 {
+
+            color: var(--text);
+
+            font-size: 14px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .empty p {
+
+            font-size: 11px;
         }
 
 
         .loading {
 
+            padding: 40px;
+
             text-align: center;
 
-            padding: 20px;
+            color: var(--muted);
 
-            color: #64748b;
+            font-size: 12px;
         }
 
 
-        /* ================= RESPONSIVE ================= */
+        .spinner {
+
+            width: 25px;
+            height: 25px;
+
+            border:
+                    3px solid #dbeafe;
+
+            border-top-color:
+                    var(--primary);
+
+            border-radius: 50%;
+
+            animation:
+                    spin 0.8s linear infinite;
+
+            margin:
+                    0 auto
+                    10px;
+        }
+
+
+        @keyframes spin {
+
+            to {
+                transform: rotate(360deg);
+            }
+
+        }
+
+
+        /* =====================================================
+           MESSAGE
+        ===================================================== */
+
+        #message {
+
+            position: fixed;
+
+            right: 25px;
+
+            bottom: 25px;
+
+            min-width: 280px;
+
+            max-width: 400px;
+
+            padding: 13px 17px;
+
+            border-radius: 9px;
+
+            color: white;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            box-shadow:
+                    0 12px 30px
+                    rgba(0,0,0,0.15);
+
+            opacity: 0;
+
+            transform:
+                    translateY(20px);
+
+            pointer-events: none;
+
+            transition: 0.3s;
+
+            z-index: 3000;
+        }
+
+
+        #message.show {
+
+            opacity: 1;
+
+            transform:
+                    translateY(0);
+        }
+
+
+        #message.success {
+
+            background: #166534;
+        }
+
+
+        #message.error {
+
+            background: #b91c1c;
+        }
+
+
+        /* =====================================================
+           MODAL
+        ===================================================== */
+
+        .modal-overlay {
+
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                    rgba(15,23,42,0.55);
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            z-index: 2500;
+        }
+
+
+        .modal-overlay.show {
+
+            display: flex;
+        }
+
+
+        .modal {
+
+            width: 100%;
+
+            max-width: 620px;
+
+            max-height: 85vh;
+
+            overflow-y: auto;
+
+            background: white;
+
+            border-radius: 16px;
+
+            box-shadow:
+                    0 25px 70px
+                    rgba(15,23,42,0.25);
+        }
+
+
+        .modal-header {
+
+            padding: 20px;
+
+            border-bottom:
+                    1px solid var(--border);
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+        }
+
+
+        .modal-header h2 {
+
+            font-size: 20px;
+        }
+
+
+        .close-modal {
+
+            width: 32px;
+            height: 32px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: #f1f5f9;
+
+            color: #475569;
+
+            cursor: pointer;
+
+            font-size: 17px;
+        }
+
+
+        .close-modal:hover {
+
+            background: #e2e8f0;
+        }
+
+
+        .modal-body {
+
+            padding: 22px;
+        }
+
+
+        .detail-company {
+
+            color: var(--primary);
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            margin-bottom: 15px;
+        }
+
+
+        .detail-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 12px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .detail-item {
+
+            background: #f8fafc;
+
+            border-radius: 8px;
+
+            padding: 12px;
+        }
+
+
+        .detail-item span {
+
+            display: block;
+
+            color: var(--muted);
+
+            font-size: 10px;
+
+            margin-bottom: 4px;
+        }
+
+
+        .detail-item strong {
+
+            font-size: 12px;
+        }
+
+
+        .detail-section {
+
+            margin-top: 17px;
+        }
+
+
+        .detail-section h4 {
+
+            font-size: 13px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .detail-section p {
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+            line-height: 1.65;
+
+            white-space: pre-wrap;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
 
         @media (max-width: 1100px) {
 
-            .search-container {
+            .content-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+            .right-column {
+
+                display: grid;
 
                 grid-template-columns:
                     1fr 1fr;
 
+                gap: 18px;
+            }
+
+            .right-column .panel {
+
+                margin-bottom: 0;
             }
 
         }
 
 
-        @media (max-width: 750px) {
+        @media (max-width: 850px) {
 
             .sidebar {
 
-                width: 180px;
+                width: 70px;
+
+                padding:
+                        20px 8px;
             }
 
+            .sidebar-title {
 
-            .content {
-
-                padding: 20px;
+                display: none;
             }
 
+            .menu-item {
+
+                justify-content: center;
+
+                padding: 13px;
+            }
+
+            .menu-text {
+
+                display: none;
+            }
+
+            .main {
+
+                margin-left: 70px;
+
+                padding-left: 20px;
+
+                padding-right: 20px;
+            }
+
+            .stats {
+
+                grid-template-columns: 1fr;
+            }
+
+            .right-column {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .header {
+
+                padding: 0 14px;
+            }
+
+            .logo {
+
+                font-size: 17px;
+            }
+
+            .header-name {
+
+                display: none;
+            }
+
+            .main {
+
+                margin-left: 0;
+
+                padding:
+                        88px
+                        14px
+                        35px;
+            }
+
+            .sidebar {
+
+                display: none;
+            }
+
+            .page-intro {
+
+                display: block;
+            }
+
+            .user-chip {
+
+                margin-top: 14px;
+
+                width: fit-content;
+            }
+
+            .hero {
+
+                padding: 24px 19px;
+            }
+
+            .hero h2 {
+
+                font-size: 22px;
+            }
+
+            .search-bar {
+
+                display: block;
+
+                padding: 6px;
+            }
+
+            .search-field {
+
+                border-right: none;
+
+                border-bottom:
+                        1px solid #e5e7eb;
+            }
+
+            .search-action {
+
+                width: 100%;
+
+                margin-top: 5px;
+            }
 
             .form-row {
 
                 grid-template-columns: 1fr;
             }
 
+            .job-top {
 
-            .search-container {
+                align-items: flex-start;
+            }
+
+            .job-heading {
+
+                display: block;
+            }
+
+            .job-bottom {
+
+                display: block;
+            }
+
+            .job-actions {
+
+                margin-top: 12px;
+            }
+
+            .detail-grid {
 
                 grid-template-columns: 1fr;
             }
 
+        }
 
-            .jobs-grid {
 
-                grid-template-columns: 1fr;
-            }
-
+        /* ================= ALUMNICONNECT SHARED DESIGN SYSTEM ================= */
+        .alumni-shared-theme{
+            --app-primary:#2563eb;
+            --app-primary-dark:#1d4ed8;
+            --app-primary-light:#eff6ff;
+            --app-bg:#f4f7fb;
+            --app-text:#172033;
+            --app-muted:#64748b;
+            --app-border:#e2e8f0;
+            --app-white:#ffffff;
+            font-family:"Segoe UI",Arial,Helvetica,sans-serif !important;
+            background:
+                    radial-gradient(circle at 8% 10%,rgba(37,99,235,.12),transparent 25%),
+                    radial-gradient(circle at 92% 12%,rgba(59,130,246,.10),transparent 23%),
+                    radial-gradient(circle at 82% 90%,rgba(96,165,250,.10),transparent 28%),
+                    linear-gradient(135deg,#f8fbff 0%,#eef5ff 48%,#f8fafc 100%) !important;
+            color:var(--app-text);
+        }
+        .alumni-shared-theme::before{
+            content:"";
+            position:fixed;
+            inset:0;
+            background-image:
+                    linear-gradient(rgba(37,99,235,.025) 1px,transparent 1px),
+                    linear-gradient(90deg,rgba(37,99,235,.025) 1px,transparent 1px);
+            background-size:45px 45px;
+            pointer-events:none;
+            z-index:-2;
+        }
+        .alumni-shared-theme .shared-user-photo,
+        .alumni-shared-theme .header-avatar,
+        .alumni-shared-theme .mini-avatar,
+        .alumni-shared-theme .nav-avatar,
+        .alumni-shared-theme .sidebar-avatar,
+        .alumni-shared-theme .chip-avatar,
+        .alumni-shared-theme .profile-chip .avatar{
+            overflow:hidden;
+        }
+        .alumni-shared-theme .shared-user-photo img,
+        .alumni-shared-theme .header-avatar img,
+        .alumni-shared-theme .mini-avatar img,
+        .alumni-shared-theme .nav-avatar img,
+        .alumni-shared-theme .sidebar-avatar img,
+        .alumni-shared-theme .chip-avatar img,
+        .alumni-shared-theme .profile-chip .avatar img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            display:block;
+        }
+        .alumni-shared-theme .shared-user-photo{
+            width:38px;height:38px;border-radius:50%;
+            background:var(--app-primary-light);color:var(--app-primary);
+            display:grid;place-items:center;font-size:13px;font-weight:800;
+            border:2px solid #fff;box-shadow:0 2px 8px rgba(15,23,42,.10);
+        }
+        .alumni-shared-theme .shared-user-photo img{border-radius:50%}
+        .alumni-shared-theme .shared-user-photo .photo-fallback{display:grid;place-items:center;width:100%;height:100%}
+        .alumni-shared-theme .header-avatar,
+        .alumni-shared-theme .mini-avatar,
+        .alumni-shared-theme .nav-avatar{
+            position:relative;
+        }
+        .alumni-shared-theme .header-avatar img,
+        .alumni-shared-theme .mini-avatar img,
+        .alumni-shared-theme .nav-avatar img,
+        .alumni-shared-theme .sidebar-avatar img,
+        .alumni-shared-theme .chip-avatar img{border-radius:50%}
+        .alumni-shared-theme .header,
+        .alumni-shared-theme .top-header,
+        .alumni-shared-theme .topbar,
+        .alumni-shared-theme .navbar{
+            background:rgba(255,255,255,.94) !important;
+            backdrop-filter:blur(14px);
+            border-bottom:1px solid rgba(226,232,240,.95) !important;
+            box-shadow:0 4px 20px rgba(15,23,42,.04) !important;
+        }
+        .alumni-shared-theme .logo,
+        .alumni-shared-theme .brand{
+            color:var(--app-primary) !important;
+        }
+        .alumni-shared-theme .logo-icon,
+        .alumni-shared-theme .brand-icon,
+        .alumni-shared-theme .logo-mark{
+            background:linear-gradient(135deg,var(--app-primary),#3b82f6) !important;
+            color:#fff !important;
+        }
+        .alumni-shared-theme .sidebar{
+            background:rgba(255,255,255,.96) !important;
+            border-right:1px solid var(--app-border) !important;
+            box-shadow:4px 0 20px rgba(15,23,42,.035) !important;
+        }
+        .alumni-shared-theme .sidebar a,
+        .alumni-shared-theme .menu-item,
+        .alumni-shared-theme .nav-item,
+        .alumni-shared-theme .menu,
+        .alumni-shared-theme .sidebar-menu a{
+            color:#52657f !important;
+        }
+        .alumni-shared-theme .sidebar a:hover,
+        .alumni-shared-theme .menu-item:hover,
+        .alumni-shared-theme .nav-item:hover,
+        .alumni-shared-theme .sidebar-menu a:hover{
+            background:#f1f6ff !important;color:var(--app-primary) !important;
+        }
+        .alumni-shared-theme .sidebar a.active,
+        .alumni-shared-theme .menu-item.active,
+        .alumni-shared-theme .nav-item.active,
+        .alumni-shared-theme .sidebar-menu a.active{
+            background:#eaf2ff !important;color:var(--app-primary) !important;
+            border-left-color:var(--app-primary) !important;
+        }
+        .alumni-shared-theme .card,
+        .alumni-shared-theme .applications-section,
+        .alumni-shared-theme .stat-card,
+        .alumni-shared-theme .messaging-shell,
+        .alumni-shared-theme .event-card,
+        .alumni-shared-theme .job-card,
+        .alumni-shared-theme .profile-card{
+            border-color:var(--app-border) !important;
+            box-shadow:0 5px 20px rgba(15,23,42,.045) !important;
+        }
+        .alumni-shared-theme button,
+        .alumni-shared-theme .btn{
+            transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+        }
+        .alumni-shared-theme button:hover,
+        .alumni-shared-theme .btn:hover{
+            transform:translateY(-1px);
+        }
+        @media(max-width:800px){
+            .alumni-shared-theme .shared-user-photo{width:34px;height:34px}
         }
 
     </style>
@@ -663,431 +1989,953 @@
 </head>
 
 
-<body>
+<body class="alumni-shared-theme">
 
 
 <!-- =========================================================
      HEADER
 ========================================================= -->
 
-<div class="header">
+<header class="header">
 
     <div class="logo">
-        🎓 Alumni Portal
+
+        <div class="logo-icon">
+            A
+        </div>
+
+        Alumni Portal
+
     </div>
 
 
-    <form action="/logout" method="post">
+    <div class="header-right">
+
+        <div class="header-user">
+
+            <div
+                    class="header-avatar"
+                    id="headerAvatar">
+
+                U
+
+            </div>
+
+            <div
+                    class="header-name"
+                    id="headerName">
+
+                User
+
+            </div>
+
+        </div>
+
 
         <button
-                type="submit"
                 class="logout-btn"
-                onclick="clearLoginSession()">
+                onclick="logout()">
 
             Logout
 
         </button>
 
-    </form>
+    </div>
 
-</div>
+</header>
 
 
 <!-- =========================================================
-     LAYOUT
+     SIDEBAR
 ========================================================= -->
 
-<div class="layout">
+<aside class="sidebar">
+
+    <div class="sidebar-title">
+        Main Menu
+    </div>
 
 
-    <!-- =====================================================
-         SIDEBAR
-    ====================================================== -->
+    <a
+            href="/dashboard.html"
+            class="menu-item">
 
-    <div class="sidebar">
+        <span class="menu-icon">
+            ⌂
+        </span>
 
-        <h2>Menu</h2>
+        <span class="menu-text">
+            Dashboard
+        </span>
 
-
-        <a href="/dashboard.html"
-           class="menu-item">
-
-            🏠 Dashboard
-
-        </a>
+    </a>
 
 
-        <a href="/profile.html"
-           class="menu-item">
+    <a
+            href="/profile.html"
+            class="menu-item">
 
-            👤 My Profile
+        <span class="menu-icon">
+            ◉
+        </span>
 
-        </a>
+        <span class="menu-text">
+            My Profile
+        </span>
 
-
-        <a href="/alumni.html"
-           class="menu-item">
-
-            🎓 Alumni
-
-        </a>
-
-
-        <a href="/mentorship.html"
-           class="menu-item">
-
-            🤝 Mentorship
-
-        </a>
+    </a>
 
 
-        <a href="/jobs.html"
-           class="menu-item active">
+    <a
+            href="/alumni.html"
+            class="menu-item">
 
-            💼 Jobs
+        <span class="menu-icon">
+            ◎
+        </span>
 
-        </a>
+        <span class="menu-text">
+            Alumni Network
+        </span>
 
-
-        <a href="/applications.html"
-           class="menu-item">
-
-            📄 Applications
-
-        </a>
-
-
-        <a href="/events.html"
-           class="menu-item">
-
-            📅 Events
-
-        </a>
+    </a>
 
 
-        <a href="/messages.html"
-           class="menu-item">
+    <a
+            href="/mentorship.html"
+            class="menu-item">
 
-            💬 Messages
+        <span class="menu-icon">
+            ♧
+        </span>
 
-        </a>
+        <span class="menu-text">
+            Mentorship
+        </span>
+
+    </a>
+
+
+    <a
+            href="/jobs.html"
+            class="menu-item active">
+
+        <span class="menu-icon">
+            ▣
+        </span>
+
+        <span class="menu-text">
+            Jobs
+        </span>
+
+    </a>
+
+
+    <a
+            href="/events.html"
+            class="menu-item">
+
+        <span class="menu-icon">
+            ◫
+        </span>
+
+        <span class="menu-text">
+            Events
+        </span>
+
+    </a>
+
+
+    <a
+            href="/messages.html"
+            class="menu-item">
+
+        <span class="menu-icon">
+            ✉
+        </span>
+
+        <span class="menu-text">
+            Messages
+        </span>
+
+    </a>
+
+
+    <a
+            href="/applications.html"
+            class="menu-item">
+
+        <span class="menu-icon">
+            ✓
+        </span>
+
+        <span class="menu-text">
+            Applications
+        </span>
+
+    </a>
+
+</aside>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main">
+
+
+    <!-- PAGE INTRO -->
+
+    <div class="page-intro">
+
+        <div>
+
+            <h1 class="page-title">
+                Career Opportunities
+            </h1>
+
+            <p class="subtitle">
+                Discover jobs and career opportunities shared by your alumni network.
+            </p>
+
+        </div>
+
+
+        <div class="user-chip">
+
+            <div
+                    class="chip-avatar"
+                    id="chipAvatar">
+
+                U
+
+            </div>
+
+            <span id="chipName">
+                Your Profile
+            </span>
+
+        </div>
 
     </div>
 
 
     <!-- =====================================================
-         MAIN CONTENT
+         HERO SEARCH
     ====================================================== -->
 
-    <div class="content">
+    <section class="hero">
 
+        <div class="hero-content">
 
-        <h1 class="page-title">
-            Job Opportunities 💼
-        </h1>
+            <div class="hero-label">
+                Alumni Career Network
+            </div>
 
-
-        <p class="subtitle">
-            Explore career opportunities shared by alumni.
-        </p>
-
-
-        <!-- CURRENT USER -->
-
-        <div
-                class="user-info"
-                id="userInfo">
-
-            Loading user information...
-
-        </div>
-
-
-        <!-- MESSAGE -->
-
-        <div id="message"></div>
-
-
-        <!-- =====================================================
-             SEARCH JOBS
-        ====================================================== -->
-
-        <div class="card">
 
             <h2>
-                🔍 Search Jobs
+                Find your next opportunity.
             </h2>
 
 
-            <div class="search-container">
+            <p>
+                Search jobs shared by alumni and discover
+                opportunities that can help you take the next
+                step in your career.
+            </p>
 
 
-                <input
-                        type="text"
-                        id="searchTitle"
-                        placeholder="Job title">
+            <div class="search-bar">
 
 
-                <input
-                        type="text"
-                        id="searchLocation"
-                        placeholder="Location">
+                <div class="search-field">
+
+                    <span>
+                        🔎
+                    </span>
+
+                    <input
+                            type="text"
+                            id="searchTitle"
+                            placeholder="Job title">
+
+                </div>
 
 
-                <input
-                        type="text"
-                        id="searchCompany"
-                        placeholder="Company">
+                <div class="search-field">
+
+                    <span>
+                        📍
+                    </span>
+
+                    <input
+                            type="text"
+                            id="searchLocation"
+                            placeholder="Location">
+
+                </div>
+
+
+                <div class="search-field">
+
+                    <span>
+                        🏢
+                    </span>
+
+                    <input
+                            type="text"
+                            id="searchCompany"
+                            placeholder="Company">
+
+                </div>
 
 
                 <button
-                        class="btn btn-primary"
+                        class="search-action"
                         onclick="searchJobs()">
 
-                    Search
+                    Search Jobs
 
                 </button>
-
-
-                <button
-                        class="btn btn-secondary"
-                        onclick="loadAllJobs()">
-
-                    Clear
-
-                </button>
-
 
             </div>
 
         </div>
 
-
-        <!-- =====================================================
-             POST JOB
-             ALUMNI ONLY
-        ====================================================== -->
-
-        <div
-                class="card"
-                id="postJobSection"
-                style="display:none;">
-
-            <h2>
-                ➕ Post a Job
-            </h2>
+    </section>
 
 
-            <form
-                    id="jobForm"
-                    onsubmit="createJob(event)">
+    <!-- =====================================================
+         STATISTICS
+    ====================================================== -->
+
+    <section class="stats">
 
 
-                <div class="form-row">
+        <div class="stat-card">
 
+            <div>
 
-                    <div class="form-group">
+                <div class="stat-label">
+                    Available Jobs
+                </div>
 
-                        <label>
-                            Job Title
-                        </label>
+                <div
+                        class="stat-number"
+                        id="jobCount">
 
-                        <input
-                                type="text"
-                                id="jobTitle"
-                                placeholder="Example: Software Developer"
-                                required>
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Company
-                        </label>
-
-                        <input
-                                type="text"
-                                id="company"
-                                placeholder="Example: Infosys"
-                                required>
-
-                    </div>
-
+                    0
 
                 </div>
 
+            </div>
 
-                <div class="form-row">
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Location
-                        </label>
-
-                        <input
-                                type="text"
-                                id="location"
-                                placeholder="Example: Bengaluru"
-                                required>
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Job Type
-                        </label>
-
-                        <select
-                                id="jobType"
-                                required>
-
-                            <option value="">
-                                Select Job Type
-                            </option>
-
-                            <option value="FULL-TIME">
-                                Full Time
-                            </option>
-
-                            <option value="PART-TIME">
-                                Part Time
-                            </option>
-
-                            <option value="INTERNSHIP">
-                                Internship
-                            </option>
-
-                            <option value="CONTRACT">
-                                Contract
-                            </option>
-
-                            <option value="REMOTE">
-                                Remote
-                            </option>
-
-                        </select>
-
-                    </div>
-
-
-                </div>
-
-
-                <div class="form-row">
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Skills
-                        </label>
-
-                        <input
-                                type="text"
-                                id="skills"
-                                placeholder="Example: Java, SQL, Spring Boot">
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Salary
-                        </label>
-
-                        <input
-                                type="text"
-                                id="salary"
-                                placeholder="Example: ₹5 - ₹8 LPA">
-
-                    </div>
-
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Job Description
-                    </label>
-
-                    <textarea
-                            id="description"
-                            placeholder="Enter job description"
-                            required></textarea>
-
-                </div>
-
-
-                <button
-                        type="submit"
-                        class="btn btn-primary">
-
-                    🚀 Post Job
-
-                </button>
-
-
-            </form>
-
-        </div>
-
-
-        <!-- =====================================================
-             AVAILABLE JOBS
-        ====================================================== -->
-
-        <div class="card">
-
-            <h2>
-                Available Jobs
-            </h2>
-
-
-            <div id="jobList">
-
-                <div class="loading">
-                    Loading jobs...
-                </div>
-
+            <div class="stat-icon">
+                💼
             </div>
 
         </div>
 
 
-        <!-- =====================================================
-             MY POSTED JOBS
-             ALUMNI ONLY
-        ====================================================== -->
+        <div class="stat-card">
 
-        <div
-                class="card"
-                id="myJobsSection"
-                style="display:none;">
+            <div>
 
-            <h2>
-                📋 My Posted Jobs
-            </h2>
+                <div class="stat-label">
+                    My Applications
+                </div>
 
+                <div
+                        class="stat-number"
+                        id="applicationCount">
 
-            <div id="myJobs">
+                    0
 
-                <div class="loading">
-                    Loading your jobs...
                 </div>
 
             </div>
 
+            <div class="stat-icon">
+                📄
+            </div>
+
         </div>
 
+
+        <div class="stat-card">
+
+            <div>
+
+                <div class="stat-label">
+                    My Posted Jobs
+                </div>
+
+                <div
+                        class="stat-number"
+                        id="postedJobCount">
+
+                    0
+
+                </div>
+
+            </div>
+
+            <div class="stat-icon">
+                📢
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =====================================================
+         CONTENT GRID
+    ====================================================== -->
+
+    <div class="content-grid">
+
+
+        <!-- =================================================
+             LEFT COLUMN
+        ================================================= -->
+
+        <div class="left-column">
+
+
+            <!-- AVAILABLE JOBS -->
+
+            <section class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <div class="panel-title">
+                            Latest Opportunities
+                        </div>
+
+                        <div class="panel-subtitle">
+                            Jobs shared by members of your alumni network.
+                        </div>
+
+                    </div>
+
+
+                    <div
+                            class="count-badge"
+                            id="jobBadge">
+
+                        0 jobs
+
+                    </div>
+
+                </div>
+
+
+                <div id="jobList">
+
+                    <div class="loading">
+
+                        <div class="spinner"></div>
+
+                        Loading jobs...
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 POST JOB - ALUMNI ONLY
+            ================================================== -->
+
+            <section
+                    class="panel"
+                    id="postJobSection"
+                    style="display:none;">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <div class="panel-title">
+                            Share an Opportunity
+                        </div>
+
+                        <div class="panel-subtitle">
+                            Help students and fellow alumni discover a career opportunity.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="post-card">
+
+
+                    <form
+                            id="jobForm"
+                            onsubmit="createJob(event)">
+
+
+                        <div class="form-row">
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    Job Title
+                                </label>
+
+                                <input
+                                        type="text"
+                                        id="jobTitle"
+                                        placeholder="Example: Software Developer"
+                                        required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    Company
+                                </label>
+
+                                <input
+                                        type="text"
+                                        id="company"
+                                        placeholder="Example: Infosys"
+                                        required>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="form-row">
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    Location
+                                </label>
+
+                                <input
+                                        type="text"
+                                        id="location"
+                                        placeholder="Example: Bengaluru"
+                                        required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    Job Type
+                                </label>
+
+                                <select
+                                        id="jobType"
+                                        required>
+
+                                    <option value="">
+                                        Select Job Type
+                                    </option>
+
+                                    <option value="FULL-TIME">
+                                        Full Time
+                                    </option>
+
+                                    <option value="PART-TIME">
+                                        Part Time
+                                    </option>
+
+                                    <option value="INTERNSHIP">
+                                        Internship
+                                    </option>
+
+                                    <option value="CONTRACT">
+                                        Contract
+                                    </option>
+
+                                    <option value="REMOTE">
+                                        Remote
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="form-row">
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    Skills
+                                </label>
+
+                                <input
+                                        type="text"
+                                        id="skills"
+                                        placeholder="Example: Java, SQL, Spring Boot">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    Salary
+                                </label>
+
+                                <input
+                                        type="text"
+                                        id="salary"
+                                        placeholder="Example: ₹5 - ₹8 LPA">
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Job Description
+                            </label>
+
+                            <textarea
+                                    id="description"
+                                    placeholder="Enter job description"
+                                    required></textarea>
+
+                        </div>
+
+
+                        <button
+                                type="submit"
+                                class="post-btn">
+
+                            🚀 Publish Opportunity
+
+                        </button>
+
+
+                    </form>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 MY POSTED JOBS - ALUMNI ONLY
+            ================================================== -->
+
+            <section
+                    class="panel"
+                    id="myJobsSection"
+                    style="display:none;">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <div class="panel-title">
+                            My Posted Jobs
+                        </div>
+
+                        <div class="panel-subtitle">
+                            Manage opportunities you have shared.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div id="myJobs">
+
+                    <div class="loading">
+
+                        <div class="spinner"></div>
+
+                        Loading your jobs...
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+
+        <!-- =================================================
+             RIGHT COLUMN
+        ================================================= -->
+
+        <div class="right-column">
+
+
+            <!-- CAREER GUIDE -->
+
+            <section class="panel">
+
+                <div class="quick-card">
+
+                    <div class="quick-title">
+                        Make your job search count
+                    </div>
+
+
+                    <div class="quick-item">
+
+                        <div class="quick-number">
+                            1
+                        </div>
+
+                        <div class="quick-text">
+
+                            <strong>
+                                Search smart
+                            </strong>
+
+                            <span>
+                                Use title, location or company to narrow your opportunities.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="quick-item">
+
+                        <div class="quick-number">
+                            2
+                        </div>
+
+                        <div class="quick-text">
+
+                            <strong>
+                                Review details
+                            </strong>
+
+                            <span>
+                                Check the company, skills, salary and job description before applying.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="quick-item">
+
+                        <div class="quick-number">
+                            3
+                        </div>
+
+                        <div class="quick-text">
+
+                            <strong>
+                                Track applications
+                            </strong>
+
+                            <span>
+                                Your submitted applications are reflected directly on the job listing.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ROLE INFORMATION -->
+
+            <section class="panel">
+
+                <div class="role-card">
+
+                    <div
+                            class="role-icon"
+                            id="roleIcon">
+
+                        💼
+
+                    </div>
+
+
+                    <h3 id="roleTitle">
+                        Career Network
+                    </h3>
+
+
+                    <p id="roleDescription">
+                        Explore career opportunities shared
+                        through the alumni network.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </div>
+
+
+</main>
+
+
+<!-- =========================================================
+     MESSAGE
+========================================================= -->
+
+<div id="message"></div>
+
+
+<!-- =========================================================
+     JOB DETAILS MODAL
+========================================================= -->
+
+<div
+        class="modal-overlay"
+        id="jobModal"
+        onclick="closeModalOutside(event)">
+
+
+    <div class="modal">
+
+
+        <div class="modal-header">
+
+            <h2 id="modalTitle">
+                Job Details
+            </h2>
+
+
+            <button
+                    class="close-modal"
+                    onclick="closeJobModal()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div
+                    class="detail-company"
+                    id="modalCompany">
+
+            </div>
+
+
+            <div class="detail-grid">
+
+
+                <div class="detail-item">
+
+                    <span>
+                        Location
+                    </span>
+
+                    <strong id="modalLocation">
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span>
+                        Job Type
+                    </span>
+
+                    <strong id="modalType">
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span>
+                        Salary
+                    </span>
+
+                    <strong id="modalSalary">
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span>
+                        Skills
+                    </span>
+
+                    <strong id="modalSkills">
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="detail-section">
+
+                <h4>
+                    Job Description
+                </h4>
+
+                <p id="modalDescription">
+                </p>
+
+            </div>
+
+
+            <div class="detail-section">
+
+                <h4>
+                    Posted By
+                </h4>
+
+                <p id="modalPostedBy">
+                </p>
+
+            </div>
+
+        </div>
 
     </div>
 
@@ -1097,24 +2945,44 @@
 <script>
 
 
-    // =========================================================
-    // GLOBAL USER
-    // =========================================================
+    /* =========================================================
+       GLOBAL VARIABLES
+    ========================================================= */
 
     let currentUser = null;
 
     let myApplications = [];
 
+    let allJobs = [];
 
-    // =========================================================
-    // LOAD CURRENT USER
-    // =========================================================
+    let myPostedJobs = [];
+
+
+    /* =========================================================
+       PAGE START
+    ========================================================= */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            loadCurrentUser();
+
+        }
+    );
+
+
+    /* =========================================================
+       LOAD CURRENT USER
+    ========================================================= */
 
     async function loadCurrentUser() {
 
 
         const loggedInEmail =
-            sessionStorage.getItem("loggedInEmail");
+            sessionStorage.getItem(
+                "loggedInEmail"
+            );
 
 
         if (!loggedInEmail) {
@@ -1123,21 +2991,17 @@
                 "/login.html";
 
             return false;
+
         }
 
 
         try {
 
 
-            /*
-             * Get all registered users.
-             *
-             * We use the email stored after login
-             * to find the current user.
-             */
-
             const response =
-                await fetch("/api/users");
+                await fetch(
+                    "/api/users"
+                );
 
 
             if (!response.ok) {
@@ -1145,16 +3009,13 @@
                 throw new Error(
                     "Unable to load users."
                 );
+
             }
 
 
             const users =
                 await response.json();
 
-
-            /*
-             * Find the currently logged-in user.
-             */
 
             currentUser =
                 users.find(
@@ -1167,119 +3028,91 @@
 
             if (!currentUser) {
 
-                document.getElementById(
-                    "userInfo"
-                ).innerHTML =
-
-                    "User not found. Please login again.";
+                showMessage(
+                    "User not found. Please login again.",
+                    "error"
+                );
 
                 return false;
+
             }
 
 
-            console.log(
-                "Current user:",
-                currentUser
-            );
+            updateUserInterface();
 
 
-            /*
-             * Display current user information.
-             */
-
-            document.getElementById(
-                "userInfo"
-            ).innerHTML =
-
-                `Logged in as:
-                <strong>
-                    ${escapeHtml(currentUser.name)}
-                </strong>
-                &nbsp; | &nbsp;
-                Role:
-                <strong>
-                    ${escapeHtml(currentUser.role)}
-                </strong>`;
+            const role =
+                currentUser.role
+                    ? currentUser.role.toUpperCase()
+                    : "";
 
 
-            /*
-             * =================================================
-             * ROLE BASED ACCESS
-             * =================================================
-             */
-
-            if (
-                currentUser.role &&
-                currentUser.role.toUpperCase() === "ALUMNI"
-            ) {
-
-
-                /*
-                 * Show Post Job.
-                 */
+            if (role === "ALUMNI") {
 
                 document.getElementById(
                     "postJobSection"
-                ).style.display = "block";
+                ).style.display =
+                    "block";
 
-
-                /*
-                 * Show My Posted Jobs.
-                 */
 
                 document.getElementById(
                     "myJobsSection"
-                ).style.display = "block";
+                ).style.display =
+                    "block";
 
 
-                /*
-                 * Load alumni's jobs.
-                 */
+                document.getElementById(
+                    "roleIcon"
+                ).textContent =
+                    "📢";
+
+
+                document.getElementById(
+                    "roleTitle"
+                ).textContent =
+                    "Share Opportunities";
+
+
+                document.getElementById(
+                    "roleDescription"
+                ).textContent =
+                    "As an alumni member, you can share job opportunities with students and fellow alumni.";
+
 
                 await loadMyJobs();
 
-
-            } else {
-
-
-                /*
-                 * Student cannot post jobs.
-                 */
-
-                document.getElementById(
-                    "postJobSection"
-                ).style.display = "none";
-
-
-                document.getElementById(
-                    "myJobsSection"
-                ).style.display = "none";
-
             }
 
 
-            /*
-             * Load jobs for everyone.
-             */
+            else {
+
+
+                document.getElementById(
+                    "roleIcon"
+                ).textContent =
+                    "🎯";
+
+
+                document.getElementById(
+                    "roleTitle"
+                ).textContent =
+                    "Explore & Apply";
+
+
+                document.getElementById(
+                    "roleDescription"
+                ).textContent =
+                    "Explore opportunities shared by alumni and apply for jobs that match your career goals.";
+
+            }
+
 
             await loadAllJobs();
 
 
-            /*
-             * Load applications only for students.
-             */
-
-            if (
-                currentUser.role &&
-                currentUser.role.toUpperCase() === "STUDENT"
-            ) {
+            if (role === "STUDENT") {
 
                 await loadMyApplications();
-
-                /*
-                 * Reload jobs so Apply buttons
-                 * have the correct state.
-                 */
 
                 await loadAllJobs();
 
@@ -1290,7 +3123,6 @@
 
 
         } catch (error) {
-
 
             console.error(
                 "User loading error:",
@@ -1311,9 +3143,52 @@
     }
 
 
-    // =========================================================
-    // LOAD MY APPLICATIONS
-    // =========================================================
+    /* =========================================================
+       UPDATE USER INTERFACE
+    ========================================================= */
+
+    function updateUserInterface() {
+
+
+        const name =
+            currentUser.name || "User";
+
+
+        const initial =
+            name
+                .charAt(0)
+                .toUpperCase();
+
+
+        document.getElementById(
+            "headerAvatar"
+        ).textContent =
+            initial;
+
+
+        document.getElementById(
+            "headerName"
+        ).textContent =
+            name;
+
+
+        document.getElementById(
+            "chipAvatar"
+        ).textContent =
+            initial;
+
+
+        document.getElementById(
+            "chipName"
+        ).textContent =
+            name;
+
+    }
+
+
+    /* =========================================================
+       LOAD APPLICATIONS
+    ========================================================= */
 
     async function loadMyApplications() {
 
@@ -1328,10 +3203,12 @@
 
         if (
             !currentUser.role ||
-            currentUser.role.toUpperCase() !== "STUDENT"
+            currentUser.role.toUpperCase() !==
+            "STUDENT"
         ) {
 
             return;
+
         }
 
 
@@ -1349,6 +3226,7 @@
                 throw new Error(
                     "Unable to load applications."
                 );
+
             }
 
 
@@ -1356,8 +3234,13 @@
                 await response.json();
 
 
-        } catch (error) {
+            document.getElementById(
+                "applicationCount"
+            ).textContent =
+                myApplications.length;
 
+
+        } catch (error) {
 
             console.error(
                 "Application loading error:",
@@ -1367,14 +3250,20 @@
 
             myApplications = [];
 
+
+            document.getElementById(
+                "applicationCount"
+            ).textContent =
+                "0";
+
         }
 
     }
 
 
-    // =========================================================
-    // LOAD ALL JOBS
-    // =========================================================
+    /* =========================================================
+       LOAD ALL JOBS
+    ========================================================= */
 
     async function loadAllJobs() {
 
@@ -1383,7 +3272,9 @@
 
 
             const response =
-                await fetch("/api/jobs");
+                await fetch(
+                    "/api/jobs"
+                );
 
 
             if (!response.ok) {
@@ -1391,6 +3282,7 @@
                 throw new Error(
                     "Failed to load jobs."
                 );
+
             }
 
 
@@ -1398,11 +3290,16 @@
                 await response.json();
 
 
+            allJobs = jobs;
+
+
             displayJobs(jobs);
 
 
-        } catch (error) {
+            updateJobCount(jobs);
 
+
+        } catch (error) {
 
             console.error(
                 "Job loading error:",
@@ -1412,29 +3309,75 @@
 
             document.getElementById(
                 "jobList"
-            ).innerHTML =
+            ).innerHTML = `
 
-                `<div class="error">
-                    Failed to load jobs.
-                </div>`;
+                <div class="empty">
+
+                    <div class="empty-icon">
+                        ⚠
+                    </div>
+
+                    <h3>
+                        Unable to load jobs
+                    </h3>
+
+                    <p>
+                        Please try again.
+                    </p>
+
+                </div>
+
+            `;
 
         }
 
     }
 
 
-    // =========================================================
-    // DISPLAY JOBS
-    // =========================================================
+    /* =========================================================
+       UPDATE JOB COUNT
+    ========================================================= */
+
+    function updateJobCount(jobs) {
+
+
+        const count =
+            jobs
+                ? jobs.length
+                : 0;
+
+
+        document.getElementById(
+            "jobCount"
+        ).textContent =
+            count;
+
+
+        document.getElementById(
+            "jobBadge"
+        ).textContent =
+            count + " jobs";
+
+    }
+
+
+    /* =========================================================
+       DISPLAY JOBS
+    ========================================================= */
 
     function displayJobs(jobs) {
 
 
         const container =
-            document.getElementById("jobList");
+            document.getElementById(
+                "jobList"
+            );
 
 
         container.innerHTML = "";
+
+
+        updateJobCount(jobs);
 
 
         if (
@@ -1442,247 +3385,383 @@
             jobs.length === 0
         ) {
 
+            container.innerHTML = `
 
-            container.innerHTML =
+                <div class="empty">
 
-                `<div class="empty">
-                    No jobs available.
-                </div>`;
+                    <div class="empty-icon">
+                        🔎
+                    </div>
 
+                    <h3>
+                        No jobs found
+                    </h3>
+
+                    <p>
+                        Try changing your search criteria.
+                    </p>
+
+                </div>
+
+            `;
 
             return;
 
         }
 
 
-        const grid =
-            document.createElement("div");
+        jobs.forEach(
+            job => {
 
-
-        grid.className =
-            "jobs-grid";
-
-
-        jobs.forEach(job => {
-
-
-            const card =
-                document.createElement("div");
-
-
-            card.className =
-                "job-card";
-
-
-            const postedByName =
-                job.postedBy
-                    ? job.postedBy.name
-                    : "Alumni";
-
-
-            const postedByEmail =
-                job.postedBy
-                    ? job.postedBy.email
-                    : "Not available";
-
-
-            let applicationHTML = "";
-
-
-            /*
-             * STUDENT
-             * Show Apply button.
-             */
-
-            if (
-                currentUser &&
-                currentUser.role &&
-                currentUser.role.toUpperCase() === "STUDENT"
-            ) {
-
-
-                const application =
-                    myApplications.find(
-                        app =>
-                            app.job &&
-                            app.job.id === job.id
+                const card =
+                    createJobCard(
+                        job,
+                        false
                     );
 
 
-                if (application) {
+                container.appendChild(
+                    card
+                );
+
+            }
+        );
+
+    }
 
 
-                    applicationHTML = `
+    /* =========================================================
+       CREATE JOB CARD
+    ========================================================= */
 
-                        <div class="applied-box">
+    function createJobCard(
+        job,
+        isMyJob
+    ) {
 
-                            ✓ Applied
 
-                            <div class="applied-status">
+        const card =
+            document.createElement(
+                "div"
+            );
 
-                                Status:
+
+        card.className =
+            "job-card";
+
+
+        const companyName =
+            job.company ||
+            "Company";
+
+
+        const companyInitial =
+            companyName
+                .charAt(0)
+                .toUpperCase();
+
+
+        const postedBy =
+            job.postedBy
+                ? job.postedBy.name
+                : "Alumni";
+
+
+        let applicationHTML =
+            "";
+
+
+        if (
+            currentUser &&
+            currentUser.role &&
+            currentUser.role.toUpperCase() ===
+            "STUDENT"
+        ) {
+
+
+            const application =
+                myApplications.find(
+                    app =>
+                        app.job &&
+                        app.job.id ===
+                        job.id
+                );
+
+
+            if (application) {
+
+
+                applicationHTML = `
+
+                    <div class="applied-box">
+
+                        ✓ Applied
+
+                        <span>
+                            Status:
+                            ${escapeHtml(
+                    application.status ||
+                    "Pending"
+                )}
+                        </span>
+
+                    </div>
+
+                `;
+
+            }
+
+
+            else {
+
+
+                applicationHTML = `
+
+                    <button
+                        class="btn btn-apply"
+                        onclick="applyForJob(${job.id})">
+
+                        Apply Now
+
+                    </button>
+
+                `;
+
+            }
+
+        }
+
+
+        let deleteHTML =
+            "";
+
+
+        if (isMyJob) {
+
+            deleteHTML = `
+
+                <button
+                    class="btn btn-delete"
+                    onclick="deleteJob(${job.id})">
+
+                    Delete
+
+                </button>
+
+            `;
+
+        }
+
+
+        const typeHTML =
+            job.jobType
+                ? `
+
+                    <span class="type-tag">
+
+                        ${escapeHtml(
+                    job.jobType
+                )}
+
+                    </span>
+
+                `
+                : "";
+
+
+        const salaryHTML =
+            job.salary
+                ? `
+
+                    <span class="meta-tag">
+
+                        💰
+                        ${escapeHtml(
+                    job.salary
+                )}
+
+                    </span>
+
+                `
+                : "";
+
+
+        const locationHTML =
+            job.location
+                ? `
+
+                    <span class="meta-tag">
+
+                        📍
+                        ${escapeHtml(
+                    job.location
+                )}
+
+                    </span>
+
+                `
+                : "";
+
+
+        const skillsHTML =
+            job.skills
+                ? `
+
+                    <span class="meta-tag">
+
+                        🛠
+                        ${escapeHtml(
+                    job.skills
+                )}
+
+                    </span>
+
+                `
+                : "";
+
+
+        card.innerHTML = `
+
+            <div class="job-top">
+
+
+                <div class="company-logo">
+
+                    ${escapeHtml(
+            companyInitial
+        )}
+
+                </div>
+
+
+                <div class="job-main">
+
+
+                    <div class="job-heading">
+
+                        <div>
+
+                            <h3>
                                 ${escapeHtml(
-                        application.status ||
-                        "Pending"
-                    )}
+            job.title ||
+            "Job Opportunity"
+        )}
+                            </h3>
+
+                            <div class="job-company">
+
+                                ${escapeHtml(
+            companyName
+        )}
 
                             </div>
 
                         </div>
 
-                    `;
+                        ${typeHTML}
+
+                    </div>
 
 
-                } else {
+                    <div class="job-meta">
+
+                        ${locationHTML}
+
+                        ${salaryHTML}
+
+                        ${skillsHTML}
+
+                    </div>
 
 
-                    applicationHTML = `
+                    <div class="job-description">
 
-                        <button
-                                class="apply-btn"
-                                onclick="applyForJob(${job.id})">
+                        ${escapeHtml(
+            job.description ||
+            "No description provided."
+        )}
 
-                            Apply Now
+                    </div>
 
-                        </button>
-
-                    `;
-
-                }
-
-            }
-
-
-            /*
-             * ALUMNI
-             * No Apply button.
-             */
-
-            card.innerHTML = `
-
-                <div class="job-title">
-
-                    <h3>
-                        💼
-                        ${escapeHtml(job.title)}
-                    </h3>
-
-                    ${
-                job.jobType
-                    ?
-                    `<span class="job-type">
-                            ${escapeHtml(job.jobType)}
-                        </span>`
-                    :
-                    ""
-            }
 
                 </div>
 
-
-                <p>
-                    <strong>Company:</strong>
-                    ${escapeHtml(job.company)}
-                </p>
+            </div>
 
 
-                <p>
-                    <strong>Location:</strong>
-                    ${escapeHtml(job.location)}
-                </p>
-
-
-                ${
-                job.skills
-                    ?
-                    `<p>
-                        <strong>Skills:</strong>
-                        ${escapeHtml(job.skills)}
-                    </p>`
-                    :
-                    ""
-            }
-
-
-                ${
-                job.salary
-                    ?
-                    `<p>
-                        <strong>Salary:</strong>
-                        ${escapeHtml(job.salary)}
-                    </p>`
-                    :
-                    ""
-            }
-
-
-                <p>
-                    <strong>Description:</strong>
-                    ${escapeHtml(job.description)}
-                </p>
+            <div class="job-bottom">
 
 
                 <div class="posted-by">
 
-                    👤
-                    <strong>Posted By:</strong>
-                    ${escapeHtml(postedByName)}
-
-                    <br>
-
-                    📧
-                    ${escapeHtml(postedByEmail)}
+                    Posted by
+                    <strong>
+                        ${escapeHtml(
+            postedBy
+        )}
+                    </strong>
 
                 </div>
 
 
-                <div class="job-buttons">
+                <div class="job-actions">
+
 
                     <button
-                            class="view-btn"
-                            onclick="viewJob(${job.id})">
+                        class="btn btn-view"
+                        onclick="viewJob(${job.id})">
 
                         View Details
 
                     </button>
 
 
+                    <button
+                        class="btn btn-linkedin"
+                        onclick="shareJobOnLinkedIn(${job.id})">
+
+                        in  Share on LinkedIn
+
+                    </button>
+
+
                     ${applicationHTML}
+
+                    ${deleteHTML}
+
 
                 </div>
 
-            `;
+
+            </div>
+
+        `;
 
 
-            grid.appendChild(card);
-
-        });
-
-
-        container.appendChild(grid);
+        return card;
 
     }
 
 
-    // =========================================================
-    // APPLY FOR JOB
-    // =========================================================
+    /* =========================================================
+       APPLY FOR JOB
+    ========================================================= */
 
-    async function applyForJob(jobId) {
+    async function applyForJob(
+        jobId
+    ) {
 
-
-        /*
-         * Only students can apply.
-         */
 
         if (
             !currentUser ||
             !currentUser.role ||
-            currentUser.role.toUpperCase() !== "STUDENT"
+            currentUser.role.toUpperCase() !==
+            "STUDENT"
         ) {
 
-            alert(
-                "Only students can apply for jobs."
+            showMessage(
+                "Only students can apply for jobs.",
+                "error"
             );
 
             return;
@@ -1690,22 +3769,20 @@
         }
 
 
-        /*
-         * Check duplicate application.
-         */
-
         const alreadyApplied =
             myApplications.some(
                 app =>
                     app.job &&
-                    app.job.id === jobId
+                    app.job.id ===
+                    jobId
             );
 
 
         if (alreadyApplied) {
 
-            alert(
-                "You have already applied for this job."
+            showMessage(
+                "You have already applied for this job.",
+                "error"
             );
 
             return;
@@ -1759,9 +3836,10 @@
                     await response.text();
 
 
-                alert(
+                showMessage(
                     "Unable to apply: " +
-                    message
+                    message,
+                    "error"
                 );
 
 
@@ -1774,20 +3852,19 @@
                 await response.json();
 
 
-            alert(
-                "Application submitted successfully! 🎉\n\n" +
-                "Status: " +
-                (application.status || "Pending")
+            showMessage(
+                "Application submitted successfully!",
+                "success"
             );
 
 
             await loadMyApplications();
 
+
             await loadAllJobs();
 
 
         } catch (error) {
-
 
             console.error(
                 "Application error:",
@@ -1795,8 +3872,9 @@
             );
 
 
-            alert(
-                "Something went wrong while applying for the job."
+            showMessage(
+                "Something went wrong while applying.",
+                "error"
             );
 
         }
@@ -1804,9 +3882,58 @@
     }
 
 
-    // =========================================================
-    // SEARCH JOBS
-    // =========================================================
+    /* =========================================================
+       SHARE JOB ON LINKEDIN
+    ========================================================= */
+
+    function shareJobOnLinkedIn(jobId) {
+
+        const job = allJobs.find(
+            item => Number(item.id) === Number(jobId)
+        );
+
+        const myJob = myPostedJobs.find(
+            item => Number(item.id) === Number(jobId)
+        );
+
+        const selectedJob = job || myJob;
+
+        if (!selectedJob) {
+
+            showMessage(
+                "Unable to find this job.",
+                "error"
+            );
+
+            return;
+        }
+
+        /*
+         * LinkedIn's public share URL shares a webpage URL.
+         * For this to work properly after deployment, the job
+         * page must be publicly reachable at this URL.
+         */
+        const jobUrl =
+            window.location.origin +
+            "/jobs.html?jobId=" +
+            encodeURIComponent(selectedJob.id);
+
+        const linkedinShareUrl =
+            "https://www.linkedin.com/sharing/share-offsite/?url=" +
+            encodeURIComponent(jobUrl);
+
+        window.open(
+            linkedinShareUrl,
+            "_blank",
+            "noopener,noreferrer,width=700,height=650"
+        );
+
+    }
+
+
+    /* =========================================================
+       SEARCH JOBS
+    ========================================================= */
 
     async function searchJobs() {
 
@@ -1829,11 +3956,6 @@
             ).value.trim();
 
 
-        /*
-         * If nothing entered,
-         * load all jobs.
-         */
-
         if (
             !title &&
             !location &&
@@ -1852,10 +3974,6 @@
 
             let jobs = [];
 
-
-            /*
-             * If title is entered.
-             */
 
             if (title) {
 
@@ -1880,11 +3998,6 @@
 
             }
 
-
-            /*
-             * If location is entered,
-             * filter the current results.
-             */
 
             if (location) {
 
@@ -1911,7 +4024,7 @@
                 if (title) {
 
 
-                    const locationIds =
+                    const ids =
                         new Set(
                             locationJobs.map(
                                 job => job.id
@@ -1922,14 +4035,15 @@
                     jobs =
                         jobs.filter(
                             job =>
-                                locationIds.has(
+                                ids.has(
                                     job.id
                                 )
                         );
 
+                }
 
-                } else {
 
+                else {
 
                     jobs =
                         locationJobs;
@@ -1938,11 +4052,6 @@
 
             }
 
-
-            /*
-             * If company is entered,
-             * filter the current results.
-             */
 
             if (company) {
 
@@ -1972,7 +4081,7 @@
                 ) {
 
 
-                    const companyIds =
+                    const ids =
                         new Set(
                             companyJobs.map(
                                 job => job.id
@@ -1983,14 +4092,15 @@
                     jobs =
                         jobs.filter(
                             job =>
-                                companyIds.has(
+                                ids.has(
                                     job.id
                                 )
                         );
 
+                }
 
-                } else {
 
+                else {
 
                     jobs =
                         companyJobs;
@@ -2005,31 +4115,29 @@
 
         } catch (error) {
 
-
             console.error(
                 "Search error:",
                 error
             );
 
 
-            document.getElementById(
-                "jobList"
-            ).innerHTML =
-
-                `<div class="error">
-                    Unable to search jobs.
-                </div>`;
+            showMessage(
+                "Unable to search jobs.",
+                "error"
+            );
 
         }
 
     }
 
 
-    // =========================================================
-    // VIEW JOB DETAILS
-    // =========================================================
+    /* =========================================================
+       VIEW JOB
+    ========================================================= */
 
-    async function viewJob(jobId) {
+    async function viewJob(
+        jobId
+    ) {
 
 
         try {
@@ -2054,59 +4162,79 @@
                 await response.json();
 
 
-            const postedBy =
+            document.getElementById(
+                "modalTitle"
+            ).textContent =
+                job.title ||
+                "Job Details";
+
+
+            document.getElementById(
+                "modalCompany"
+            ).textContent =
+                job.company ||
+                "Company not specified";
+
+
+            document.getElementById(
+                "modalLocation"
+            ).textContent =
+                job.location ||
+                "Not specified";
+
+
+            document.getElementById(
+                "modalType"
+            ).textContent =
+                job.jobType ||
+                "Not specified";
+
+
+            document.getElementById(
+                "modalSalary"
+            ).textContent =
+                job.salary ||
+                "Not specified";
+
+
+            document.getElementById(
+                "modalSkills"
+            ).textContent =
+                job.skills ||
+                "Not specified";
+
+
+            document.getElementById(
+                "modalDescription"
+            ).textContent =
+                job.description ||
+                "No description provided.";
+
+
+            document.getElementById(
+                "modalPostedBy"
+            ).textContent =
                 job.postedBy
-                    ? job.postedBy.name
+                    ? (
+                        job.postedBy.name +
+                        (
+                            job.postedBy.email
+                                ? " • " +
+                                job.postedBy.email
+                                : ""
+                        )
+                    )
                     : "Alumni";
 
 
-            alert(
-
-                "Job Details\n\n" +
-
-                "Title: " +
-                (job.title || "Not specified") +
-
-                "\n\n" +
-
-                "Company: " +
-                (job.company || "Not specified") +
-
-                "\n\n" +
-
-                "Location: " +
-                (job.location || "Not specified") +
-
-                "\n\n" +
-
-                "Salary: " +
-                (job.salary || "Not specified") +
-
-                "\n\n" +
-
-                "Job Type: " +
-                (job.jobType || "Not specified") +
-
-                "\n\n" +
-
-                "Skills: " +
-                (job.skills || "Not specified") +
-
-                "\n\n" +
-
-                "Posted By: " +
-                postedBy +
-
-                "\n\n" +
-
-                "Description: " +
-                (job.description || "Not specified")
-
+            document.getElementById(
+                "jobModal"
+            ).classList.add(
+                "show"
             );
 
 
         } catch (error) {
-
 
             console.error(
                 "View job error:",
@@ -2114,8 +4242,9 @@
             );
 
 
-            alert(
-                "Unable to load job details."
+            showMessage(
+                "Unable to load job details.",
+                "error"
             );
 
         }
@@ -2123,19 +4252,48 @@
     }
 
 
-    // =========================================================
-    // CREATE JOB
-    // =========================================================
+    /* =========================================================
+       CLOSE MODAL
+    ========================================================= */
 
-    async function createJob(event) {
+    function closeJobModal() {
+
+        document.getElementById(
+            "jobModal"
+        ).classList.remove(
+            "show"
+        );
+
+    }
+
+
+    function closeModalOutside(
+        event
+    ) {
+
+        if (
+            event.target.id ===
+            "jobModal"
+        ) {
+
+            closeJobModal();
+
+        }
+
+    }
+
+
+    /* =========================================================
+       CREATE JOB
+    ========================================================= */
+
+    async function createJob(
+        event
+    ) {
 
 
         event.preventDefault();
 
-
-        /*
-         * Make sure user exists.
-         */
 
         if (!currentUser) {
 
@@ -2149,13 +4307,10 @@
         }
 
 
-        /*
-         * Only ALUMNI can post jobs.
-         */
-
         if (
             !currentUser.role ||
-            currentUser.role.toUpperCase() !== "ALUMNI"
+            currentUser.role.toUpperCase() !==
+            "ALUMNI"
         ) {
 
             showMessage(
@@ -2167,16 +4322,6 @@
 
         }
 
-
-        /*
-         * Collect form data.
-         *
-         * IMPORTANT:
-         * We do NOT send postedBy.
-         *
-         * The backend will assign the logged-in
-         * alumni as postedBy.
-         */
 
         const jobData = {
 
@@ -2221,12 +4366,6 @@
         try {
 
 
-            /*
-             * Send current user's ID to backend.
-             *
-             * Backend will verify that the user is ALUMNI.
-             */
-
             const response =
                 await fetch(
                     `/api/jobs?userId=${currentUser.id}`,
@@ -2252,7 +4391,6 @@
 
             if (!response.ok) {
 
-
                 const errorText =
                     await response.text();
 
@@ -2266,36 +4404,23 @@
 
 
             showMessage(
-                "Job posted successfully! 🎉",
+                "Job posted successfully!",
                 "success"
             );
 
-
-            /*
-             * Clear form.
-             */
 
             document.getElementById(
                 "jobForm"
             ).reset();
 
 
-            /*
-             * Reload available jobs.
-             */
-
             await loadAllJobs();
 
-
-            /*
-             * Reload alumni's jobs.
-             */
 
             await loadMyJobs();
 
 
         } catch (error) {
-
 
             console.error(
                 "Create job error:",
@@ -2314,21 +4439,24 @@
     }
 
 
-    // =========================================================
-    // LOAD MY JOBS
-    // =========================================================
+    /* =========================================================
+       LOAD MY JOBS
+    ========================================================= */
 
     async function loadMyJobs() {
 
 
         if (!currentUser) {
+
             return;
+
         }
 
 
         if (
             !currentUser.role ||
-            currentUser.role.toUpperCase() !== "ALUMNI"
+            currentUser.role.toUpperCase() !==
+            "ALUMNI"
         ) {
 
             return;
@@ -2354,15 +4482,22 @@
             }
 
 
-            const jobs =
+            myPostedJobs =
                 await response.json();
 
 
-            displayMyJobs(jobs);
+            document.getElementById(
+                "postedJobCount"
+            ).textContent =
+                myPostedJobs.length;
+
+
+            displayMyJobs(
+                myPostedJobs
+            );
 
 
         } catch (error) {
-
 
             console.error(
                 "My jobs error:",
@@ -2372,22 +4507,38 @@
 
             document.getElementById(
                 "myJobs"
-            ).innerHTML =
+            ).innerHTML = `
 
-                `<div class="error">
-                    Failed to load your posted jobs.
-                </div>`;
+                <div class="empty">
+
+                    <div class="empty-icon">
+                        ⚠
+                    </div>
+
+                    <h3>
+                        Unable to load your jobs
+                    </h3>
+
+                    <p>
+                        Please try again.
+                    </p>
+
+                </div>
+
+            `;
 
         }
 
     }
 
 
-    // =========================================================
-    // DISPLAY MY JOBS
-    // =========================================================
+    /* =========================================================
+       DISPLAY MY JOBS
+    ========================================================= */
 
-    function displayMyJobs(jobs) {
+    function displayMyJobs(
+        jobs
+    ) {
 
 
         const container =
@@ -2405,11 +4556,25 @@
         ) {
 
 
-            container.innerHTML =
+            container.innerHTML = `
 
-                `<div class="empty">
-                    You have not posted any jobs yet.
-                </div>`;
+                <div class="empty">
+
+                    <div class="empty-icon">
+                        📢
+                    </div>
+
+                    <h3>
+                        No posted jobs
+                    </h3>
+
+                    <p>
+                        Share your first opportunity with the alumni community.
+                    </p>
+
+                </div>
+
+            `;
 
 
             return;
@@ -2417,108 +4582,33 @@
         }
 
 
-        jobs.forEach(job => {
+        jobs.forEach(
+            job => {
+
+                const card =
+                    createJobCard(
+                        job,
+                        true
+                    );
 
 
-            const card =
-                document.createElement(
-                    "div"
+                container.appendChild(
+                    card
                 );
 
-
-            card.className =
-                "job-card";
-
-
-            card.innerHTML = `
-
-                <div class="job-title">
-
-                    <h3>
-                        💼
-                        ${escapeHtml(job.title)}
-                    </h3>
-
-                    ${
-                job.jobType
-                    ?
-                    `<span class="job-type">
-                            ${escapeHtml(job.jobType)}
-                        </span>`
-                    :
-                    ""
             }
-
-                </div>
-
-
-                <p>
-                    <strong>Company:</strong>
-                    ${escapeHtml(job.company)}
-                </p>
-
-
-                <p>
-                    <strong>Location:</strong>
-                    ${escapeHtml(job.location)}
-                </p>
-
-
-                ${
-                job.skills
-                    ?
-                    `<p>
-                        <strong>Skills:</strong>
-                        ${escapeHtml(job.skills)}
-                    </p>`
-                    :
-                    ""
-            }
-
-
-                ${
-                job.salary
-                    ?
-                    `<p>
-                        <strong>Salary:</strong>
-                        ${escapeHtml(job.salary)}
-                    </p>`
-                    :
-                    ""
-            }
-
-
-                <p>
-                    <strong>Description:</strong>
-                    ${escapeHtml(job.description)}
-                </p>
-
-
-                <button
-                        class="btn btn-danger"
-                        onclick="deleteJob(${job.id})">
-
-                    🗑️ Delete Job
-
-                </button>
-
-            `;
-
-
-            container.appendChild(
-                card
-            );
-
-        });
+        );
 
     }
 
 
-    // =========================================================
-    // DELETE JOB
-    // =========================================================
+    /* =========================================================
+       DELETE JOB
+    ========================================================= */
 
-    async function deleteJob(jobId) {
+    async function deleteJob(
+        jobId
+    ) {
 
 
         if (!currentUser) {
@@ -2570,11 +4660,11 @@
 
             await loadAllJobs();
 
+
             await loadMyJobs();
 
 
         } catch (error) {
-
 
             console.error(
                 "Delete job error:",
@@ -2592,9 +4682,9 @@
     }
 
 
-    // =========================================================
-    // SHOW MESSAGE
-    // =========================================================
+    /* =========================================================
+       MESSAGE
+    ========================================================= */
 
     function showMessage(
         text,
@@ -2608,19 +4698,16 @@
             );
 
 
-        message.className =
-            type;
-
-
         message.textContent =
             text;
 
 
-        setTimeout(
-            () => {
+        message.className =
+            type + " show";
 
-                message.textContent =
-                    "";
+
+        setTimeout(
+            function () {
 
                 message.className =
                     "";
@@ -2632,11 +4719,13 @@
     }
 
 
-    // =========================================================
-    // ESCAPE HTML
-    // =========================================================
+    /* =========================================================
+       ESCAPE HTML
+    ========================================================= */
 
-    function escapeHtml(value) {
+    function escapeHtml(
+        value
+    ) {
 
 
         if (
@@ -2679,29 +4768,103 @@
     }
 
 
-    // =========================================================
-    // LOGOUT
-    // =========================================================
+    /* =========================================================
+       LOGOUT
+    ========================================================= */
 
-    function clearLoginSession() {
+    function logout() {
+
 
         sessionStorage.removeItem(
             "loggedInEmail"
         );
 
+
+        sessionStorage.removeItem(
+            "currentUser"
+        );
+
+
+        localStorage.removeItem(
+            "loggedInEmail"
+        );
+
+
+        localStorage.removeItem(
+            "currentUser"
+        );
+
+
+        window.location.href =
+            "/login.html";
+
     }
 
 
-    // =========================================================
-    // START PAGE
-    // =========================================================
 
-    loadCurrentUser();
+    /* ================= SHARED PROFILE PHOTO ================= */
+    async function loadSharedProfilePhoto(){
+        try{
+            const userResponse = await fetch("/api/users/me", {credentials:"include"});
+            if(!userResponse.ok) return;
+            const user = await userResponse.json();
+            const name = user.name || "User";
+            const initials = name.split(/\s+/).filter(Boolean).slice(0,2)
+                .map(part => part.charAt(0).toUpperCase()).join("") || "U";
 
+            const selectors = [
+                "#sharedProfilePhoto",
+                "#headerAvatar",
+                "#miniAvatar",
+                "#navAvatar",
+                "#sidebarAvatar",
+                "#headerName + .avatar"
+            ];
+            const targets = [];
+            selectors.forEach(selector=>{
+                document.querySelectorAll(selector).forEach(el=>{
+                    if(!targets.includes(el)) targets.push(el);
+                });
+            });
 
+            targets.forEach(el=>{
+                el.innerHTML = '<span class="photo-fallback">'+initials+'</span>';
+                el.title = name;
+            });
+
+            const profileResponse = await fetch(
+                "/api/profiles/user/" + encodeURIComponent(user.id),
+                {credentials:"include"}
+            );
+            if(!profileResponse.ok) return;
+            const profile = await profileResponse.json();
+            if(!profile || !profile.id) return;
+
+            const photoUrl = "/api/profiles/" + profile.id + "/photo";
+            targets.forEach(el=>{
+                const img = document.createElement("img");
+                img.alt = name + " profile photo";
+                img.src = photoUrl + "?v=" + Date.now();
+                img.onerror = function(){
+                    this.remove();
+                    if(!el.querySelector(".photo-fallback")){
+                        el.innerHTML = '<span class="photo-fallback">'+initials+'</span>';
+                    }
+                };
+                el.innerHTML = "";
+                el.appendChild(img);
+            });
+        }catch(error){
+            console.warn("Shared profile photo could not be loaded:", error);
+        }
+    }
+
+    try { loadSharedProfilePhoto(); } catch(e) { console.warn(e); }
 </script>
 
 
 </body>
 
 </html>
+```
+`
