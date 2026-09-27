@@ -3,11 +3,13 @@ package com.alumniportal.service;
 import com.alumniportal.entity.Role;
 import com.alumniportal.entity.User;
 import com.alumniportal.repository.UserRepository;
+import com.alumniportal.repository.ProfileRepository;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.stereotype.Service;
 
@@ -18,15 +20,18 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final ProfileRepository profileRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
 
     public UserService(
             UserRepository userRepository,
+            ProfileRepository profileRepository,
             PasswordEncoder passwordEncoder,
             EmailService emailService) {
 
         this.userRepository = userRepository;
+        this.profileRepository = profileRepository;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
     }
@@ -98,7 +103,10 @@ public class UserService implements UserDetailsService {
     // DELETE USER
     // =========================================================
 
+    @Transactional
     public void deleteUser(Long id) {
+        profileRepository.findByUserId(id)
+                .ifPresent(profileRepository::delete);
 
         userRepository.deleteById(id);
     }
