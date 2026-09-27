@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - AlumniConnect</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f6fa;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 240px;
+            background: #132238;
+            color: white;
+            padding: 25px 15px;
+            min-height: 100vh;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .menu a {
+            display: block;
+            color: #dbe4f0;
+            text-decoration: none;
+            padding: 13px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* MAIN */
+        .main {
+            flex: 1;
+            padding: 25px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .topbar h1 {
+            color: #172033;
+        }
+
+        .admin-info {
+            background: white;
+            padding: 10px 18px;
+            border-radius: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        /* STAT CARDS */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            color: #2563eb;
+        }
+
+        .card p {
+            color: #666;
+        }
+
+        /* CONTENT */
+        .content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .panel {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .panel h2 {
+            margin-bottom: 20px;
+            color: #172033;
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 13px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        th {
+            background: #f5f7fb;
+            color: #444;
+        }
+
+        .role {
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        /* QUICK ACTIONS */
+        .action {
+            display: block;
+            padding: 13px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            background: #eef4ff;
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        .action:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+        @media(max-width: 1000px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(max-width: 700px) {
+            .sidebar {
+                width: 190px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+
+    <div class="logo">
+        🎓 AlumniConnect
+    </div>
+
+    <div class="menu">
+
+        <a href="admin.html" class="active">
+            🏠 Dashboard
+        </a>
+
+        <a href="admin-users.html">
+            👥 Manage Users
+        </a>
+
+        <a href="admin-alumni.html">
+            🎓 Verify Alumni
+        </a>
+
+        <a href="admin-jobs.html">
+            💼 Manage Jobs
+        </a>
+
+        <a href="admin-events.html">
+            📅 Manage Events
+        </a>
+
+        <a href="#">
+            🤝 Mentorship Requests
+        </a>
+
+        <a href="#">
+            💬 Messages
+        </a>
+
+        <a href="#">
+            📊 Reports
+        </a>
+
+        <a href="/logout">
+            🚪 Logout
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+    <div class="topbar">
+
+        <div>
+            <h1>Admin Dashboard</h1>
+            <p>Manage AlumniConnect platform activities</p>
+        </div>
+
+        <div class="admin-info">
+            👤 <strong>Admin</strong>
+        </div>
+
+    </div>
+
+
+    <!-- STATISTICS -->
+    <div class="cards">
+
+        <div class="card">
+            <h3 id="userCount">0</h3>
+            <p>Total Users</p>
+        </div>
+
+        <div class="card">
+            <h3 id="studentCount">0</h3>
+            <p>Students</p>
+        </div>
+
+        <div class="card">
+            <h3 id="alumniCount">0</h3>
+            <p>Alumni</p>
+        </div>
+
+        <div class="card">
+            <h3 id="jobCount">0</h3>
+            <p>Job Posts</p>
+        </div>
+
+        <div class="card">
+            <h3 id="eventCount">0</h3>
+            <p>Events</p>
+        </div>
+
+    </div>
+
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <!-- USERS -->
+        <div class="panel">
+
+            <h2>Registered Users</h2>
+
+            <table>
+
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+                </thead>
+
+                <tbody id="userTable">
+
+                <tr>
+                    <td colspan="4">
+                        Loading users...
+                    </td>
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- QUICK ACTIONS -->
+        <div class="panel">
+
+            <h2>Quick Actions</h2>
+
+            <a href="admin-users.html" class="action">
+                👥 Manage Users
+            </a>
+
+            <a href="admin-alumni.html" class="action">
+                🎓 Verify Alumni
+            </a>
+
+            <a href="admin-jobs.html" class="action">
+                💼 Manage Jobs
+            </a>
+
+            <a href="admin-events.html" class="action">
+                📅 Manage Events
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    async function loadDashboard() {
+
+        try {
+
+            const response = await fetch("/api/users");
+
+            if (!response.ok) {
+                throw new Error("Unable to load users");
+            }
+
+            const users = await response.json();
+
+            const students =
+                users.filter(user =>
+                    user.role === "STUDENT"
+                );
+
+            const alumni =
+                users.filter(user =>
+                    user.role === "ALUMNI"
+                );
+
+            const admins =
+                users.filter(user =>
+                    user.role === "ADMIN"
+                );
+
+            document.getElementById("userCount").textContent =
+                users.length;
+
+            document.getElementById("studentCount").textContent =
+                students.length;
+
+            document.getElementById("alumniCount").textContent =
+                alumni.length;
+
+
+            const table =
+                document.getElementById("userTable");
+
+            table.innerHTML = "";
+
+            users.forEach(user => {
+
+                const row =
+                    document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${user.id ?? "-"}</td>
+                    <td>${user.name ?? "-"}</td>
+                    <td>${user.email ?? "-"}</td>
+                    <td class="role">
+                        ${user.role ?? "-"}
+                    </td>
+                `;
+
+                table.appendChild(row);
+
+            });
+
+        } catch (error) {
+
+            console.error(error);
+
+            document.getElementById("userTable").innerHTML = `
+                <tr>
+                    <td colspan="4">
+                        Unable to load users.
+                    </td>
+                </tr>
+            `;
+
+        }
+
+
+        /* LOAD JOB COUNT */
+
+        try {
+
+            const response =
+                await fetch("/api/jobs");
+
+            if (response.ok) {
+
+                const jobs =
+                    await response.json();
+
+                document.getElementById("jobCount")
+                    .textContent = jobs.length;
+            }
+
+        } catch (error) {
+
+            console.log("Jobs could not be loaded");
+
+        }
+
+
+        /* LOAD EVENT COUNT */
+
+        try {
+
+            const response =
+                await fetch("/api/events");
+
+            if (response.ok) {
+
+                const events =
+                    await response.json();
+
+                document.getElementById("eventCount")
+                    .textContent = events.length;
+            }
+
+        } catch (error) {
+
+            console.log("Events could not be loaded");
+
+        }
+
+    }
+
+
+    loadDashboard();
+
+</script>
+
+</body>
+</html>
