@@ -65,7 +65,7 @@ public class SecurityConfig {
                                 "/messages.html",
                                 "/applications.html",
 
-                                // Admin supporting pages
+                                // Admin pages
                                 "/admin-users.html",
                                 "/admin-alumni.html",
                                 "/admin-jobs.html",
@@ -99,7 +99,23 @@ public class SecurityConfig {
                         .permitAll()
 
                         // =========================
-                        // EVERYTHING ELSE
+                        // ADMIN USER APIs
+                        // =========================
+
+                        // Only ADMIN can get all users
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/users"
+                        ).hasRole("ADMIN")
+
+                        // Only ADMIN can delete users
+                        .requestMatchers(
+                                HttpMethod.DELETE,
+                                "/api/users/**"
+                        ).hasRole("ADMIN")
+
+                        // =========================
+                        // OTHER AUTHENTICATED APIs
                         // =========================
                         .anyRequest()
                         .authenticated()
@@ -111,10 +127,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login.html")
                         .loginProcessingUrl("/login")
-
-                        // Redirect based on role
                         .successHandler(successHandler)
-
                         .failureUrl("/login.html?error=true")
                         .permitAll()
                 )
