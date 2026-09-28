@@ -45,6 +45,30 @@ public class EventService {
         return eventRepository.findByOrganizerContainingIgnoreCase(organizer);
     }
 
+    // Approve event
+    public Event approveEvent(Long id) {
+
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Event not found"));
+
+        event.setStatus("APPROVED");
+
+        return eventRepository.save(event);
+    }
+
+    // Reject event
+    public Event rejectEvent(Long id) {
+
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Event not found"));
+
+        event.setStatus("REJECTED");
+
+        return eventRepository.save(event);
+    }
+
     // Delete event
     public void deleteEvent(Long id) {
         eventRepository.deleteById(id);

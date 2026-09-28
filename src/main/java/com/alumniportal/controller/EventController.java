@@ -82,6 +82,38 @@ public class EventController {
         );
     }
 
+    // Approve event
+    @PutMapping("/{id}/approve")
+    public ResponseEntity<Event> approveEvent(
+            @PathVariable Long id) {
+
+        Event event = eventService.getEventById(id);
+
+        if (event == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(
+                eventService.approveEvent(id)
+        );
+    }
+
+    // Reject event
+    @PutMapping("/{id}/reject")
+    public ResponseEntity<Event> rejectEvent(
+            @PathVariable Long id) {
+
+        Event event = eventService.getEventById(id);
+
+        if (event == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(
+                eventService.rejectEvent(id)
+        );
+    }
+
     // Delete event
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEvent(

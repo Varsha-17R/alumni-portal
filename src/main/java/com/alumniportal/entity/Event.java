@@ -27,6 +27,9 @@ public class Event {
 
     private String organizer;
 
+    @Column(nullable = false)
+    private String status = "PENDING";
+
     public Event() {
     }
 
@@ -95,5 +98,13 @@ public class Event {
 
     public void setOrganizer(String organizer) {
         this.organizer = organizer;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
