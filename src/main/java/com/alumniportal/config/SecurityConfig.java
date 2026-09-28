@@ -70,6 +70,9 @@ public class SecurityConfig {
                                 "/admin-alumni.html",
                                 "/admin-jobs.html",
                                 "/admin-events.html",
+                                "/admin-reports.html",
+                                "/admin-mentorship.html",
+                                "/admin-messages.html",
 
                                 // Static resources
                                 "/css/**",
@@ -106,7 +109,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/api/users"
-                        ).hasRole("ADMIN")
+                        ).authenticated()
 
                         // Only ADMIN can delete users
                         .requestMatchers(
