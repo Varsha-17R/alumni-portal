@@ -70,9 +70,7 @@ public class SecurityConfig {
                                 "/admin-alumni.html",
                                 "/admin-jobs.html",
                                 "/admin-events.html",
-                                "/admin-reports.html",
-                                "/admin-mentorship.html",
-                                "/admin-messages.html",
+
 
                                 // Static resources
                                 "/css/**",
