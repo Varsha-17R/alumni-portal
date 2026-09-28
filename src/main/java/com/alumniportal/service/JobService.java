@@ -46,6 +46,9 @@ public class JobService {
         // instead of trusting postedBy from frontend
         job.setPostedBy(user);
 
+        // New jobs are PENDING by default
+        job.setStatus("PENDING");
+
         return jobRepository.save(job);
     }
 
@@ -98,6 +101,40 @@ public class JobService {
     public List<Job> searchByCompany(String company) {
         return jobRepository
                 .findByCompanyContainingIgnoreCase(company);
+    }
+
+    // =========================================================
+    // APPROVE JOB
+    // =========================================================
+
+    public Job approveJob(Long id) {
+
+        Job job = jobRepository.findById(id).orElse(null);
+
+        if (job == null) {
+            return null;
+        }
+
+        job.setStatus("APPROVED");
+
+        return jobRepository.save(job);
+    }
+
+    // =========================================================
+    // REJECT JOB
+    // =========================================================
+
+    public Job rejectJob(Long id) {
+
+        Job job = jobRepository.findById(id).orElse(null);
+
+        if (job == null) {
+            return null;
+        }
+
+        job.setStatus("REJECTED");
+
+        return jobRepository.save(job);
     }
 
     // =========================================================

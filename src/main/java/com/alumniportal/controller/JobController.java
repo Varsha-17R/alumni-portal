@@ -126,6 +126,46 @@ public class JobController {
     }
 
     // =========================================================
+    // APPROVE JOB
+    // =========================================================
+
+    @PutMapping("/{id}/approve")
+    public ResponseEntity<Job> approveJob(
+            @PathVariable Long id) {
+
+        Job job =
+                jobService.approveJob(id);
+
+        if (job == null) {
+            return ResponseEntity
+                    .notFound()
+                    .build();
+        }
+
+        return ResponseEntity.ok(job);
+    }
+
+    // =========================================================
+    // REJECT JOB
+    // =========================================================
+
+    @PutMapping("/{id}/reject")
+    public ResponseEntity<Job> rejectJob(
+            @PathVariable Long id) {
+
+        Job job =
+                jobService.rejectJob(id);
+
+        if (job == null) {
+            return ResponseEntity
+                    .notFound()
+                    .build();
+        }
+
+        return ResponseEntity.ok(job);
+    }
+
+    // =========================================================
     // DELETE JOB
     // =========================================================
 

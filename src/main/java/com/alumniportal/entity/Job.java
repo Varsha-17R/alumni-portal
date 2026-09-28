@@ -29,6 +29,9 @@ public class Job {
     @Column(name = "job_type")
     private String jobType;
 
+    @Column(nullable = false)
+    private String status = "PENDING";
+
     @ManyToOne
     @JoinColumn(name = "posted_by", nullable = false)
     private User postedBy;
@@ -38,7 +41,8 @@ public class Job {
 
     public Job(String title, String company, String location,
                String description, String skills,
-               String salary, String jobType, User postedBy) {
+               String salary, String jobType,
+               String status, User postedBy) {
 
         this.title = title;
         this.company = company;
@@ -47,6 +51,7 @@ public class Job {
         this.skills = skills;
         this.salary = salary;
         this.jobType = jobType;
+        this.status = status;
         this.postedBy = postedBy;
     }
 
@@ -108,6 +113,14 @@ public class Job {
 
     public void setJobType(String jobType) {
         this.jobType = jobType;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public User getPostedBy() {
