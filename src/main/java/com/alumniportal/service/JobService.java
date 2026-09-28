@@ -1,11 +1,14 @@
 package com.alumniportal.service;
 
 import com.alumniportal.entity.Job;
+import com.alumniportal.entity.JobApplication;
 import com.alumniportal.entity.User;
 import com.alumniportal.entity.Role;
 import com.alumniportal.repository.JobRepository;
+import com.alumniportal.repository.JobApplicationRepository;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,13 +16,16 @@ import java.util.List;
 public class JobService {
 
     private final JobRepository jobRepository;
+    private final JobApplicationRepository jobApplicationRepository;
     private final EntityManager entityManager;
 
     public JobService(
             JobRepository jobRepository,
+            JobApplicationRepository jobApplicationRepository,
             EntityManager entityManager) {
 
         this.jobRepository = jobRepository;
+        this.jobApplicationRepository = jobApplicationRepository;
         this.entityManager = entityManager;
     }
 
@@ -45,9 +51,6 @@ public class JobService {
         // Always use the logged-in user's ID
         // instead of trusting postedBy from frontend
         job.setPostedBy(user);
-
-        // New jobs are PENDING by default
-        job.setStatus("PENDING");
 
         return jobRepository.save(job);
     }
@@ -109,11 +112,9 @@ public class JobService {
 
     public Job approveJob(Long id) {
 
-        Job job = jobRepository.findById(id).orElse(null);
-
-        if (job == null) {
-            return null;
-        }
+        Job job = jobRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Job not found"));
 
         job.setStatus("APPROVED");
 
@@ -126,11 +127,9 @@ public class JobService {
 
     public Job rejectJob(Long id) {
 
-        Job job = jobRepository.findById(id).orElse(null);
-
-        if (job == null) {
-            return null;
-        }
+        Job job = jobRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Job not found"));
 
         job.setStatus("REJECTED");
 
@@ -141,7 +140,18 @@ public class JobService {
     // DELETE JOB
     // =========================================================
 
+    @Transactional
     public void deleteJob(Long id) {
+
+        // First delete all applications associated with this job
+        List<JobApplication> applications =
+                jobApplicationRepository.findByJobId(id);
+
+        if (!applications.isEmpty()) {
+            jobApplicationRepository.deleteAll(applications);
+        }
+
+        // Then delete the job
         jobRepository.deleteById(id);
     }
 }
