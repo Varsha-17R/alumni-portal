@@ -1,10 +1,11 @@
 package com.alumniportal.entity;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
-
+import jakarta.persistence.*;
 import lombok.*;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -12,6 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,6 +23,7 @@ public class User {
 
     @Column(nullable = false, unique = true)
     private String email;
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable = false)
     private String password;
@@ -31,7 +34,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
-    @JsonSetter(nulls = Nulls.SKIP)
+
     @Column(nullable = false)
     private boolean verified = false;
+
+    @JsonSetter(value = "verified", nulls = Nulls.SKIP)
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
 }
