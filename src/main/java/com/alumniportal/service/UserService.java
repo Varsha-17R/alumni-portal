@@ -65,6 +65,9 @@ public class UserService implements UserDetailsService {
 
         return savedUser;
     }
+    public User saveUpdatedUser(User user) {
+        return userRepository.save(user);
+    }
 
     // =========================================================
     // GET ALL USERS

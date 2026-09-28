@@ -76,4 +76,27 @@ public class UserController {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{id}/verify")
+    public ResponseEntity<User> verifyAlumni(@PathVariable Long id) {
+        User user = userService.getUserById(id);
+
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        user.setVerified(true);
+        return ResponseEntity.ok(userService.saveUpdatedUser(user));
+    }
+    @PutMapping("/{id}/reject")
+    public ResponseEntity<User> rejectAlumni(@PathVariable Long id) {
+        User user = userService.getUserById(id);
+
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        user.setVerified(false);
+        return ResponseEntity.ok(userService.saveUpdatedUser(user));
+    }
 }
