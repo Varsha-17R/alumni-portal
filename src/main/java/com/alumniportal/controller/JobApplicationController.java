@@ -1,11 +1,16 @@
 package com.alumniportal.controller;
 
+import com.alumniportal.entity.Job;
 import com.alumniportal.entity.JobApplication;
+import com.alumniportal.entity.User;
+import com.alumniportal.repository.JobRepository;
+import com.alumniportal.repository.UserRepository;
 import com.alumniportal.service.JobApplicationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/applications")
@@ -13,12 +18,17 @@ import java.util.List;
 public class JobApplicationController {
 
     private final JobApplicationService jobApplicationService;
+    private final JobRepository jobRepository;
+    private final UserRepository userRepository;
 
     public JobApplicationController(
-            JobApplicationService jobApplicationService) {
+            JobApplicationService jobApplicationService,
+            JobRepository jobRepository,
+            UserRepository userRepository) {
 
-        this.jobApplicationService =
-                jobApplicationService;
+        this.jobApplicationService = jobApplicationService;
+        this.jobRepository = jobRepository;
+        this.userRepository = userRepository;
     }
 
     // =========================================================
@@ -27,9 +37,71 @@ public class JobApplicationController {
 
     @PostMapping
     public ResponseEntity<?> createApplication(
-            @RequestBody JobApplication application) {
+            @RequestBody Map<String, Object> data) {
 
         try {
+
+            Map<String, Object> jobData =
+                    (Map<String, Object>) data.get("job");
+
+            Map<String, Object> studentData =
+                    (Map<String, Object>) data.get("student");
+
+            if (jobData == null || studentData == null) {
+
+                return ResponseEntity
+                        .badRequest()
+                        .body("Job and student are required.");
+            }
+
+            Number jobIdNumber =
+                    (Number) jobData.get("id");
+
+            Number studentIdNumber =
+                    (Number) studentData.get("id");
+
+            if (jobIdNumber == null || studentIdNumber == null) {
+
+                return ResponseEntity
+                        .badRequest()
+                        .body("Job ID and student ID are required.");
+            }
+
+            Long jobId =
+                    jobIdNumber.longValue();
+
+            Long studentId =
+                    studentIdNumber.longValue();
+
+            Job job =
+                    jobRepository
+                            .findById(jobId)
+                            .orElse(null);
+
+            User student =
+                    userRepository
+                            .findById(studentId)
+                            .orElse(null);
+
+            if (job == null) {
+
+                return ResponseEntity
+                        .badRequest()
+                        .body("Job not found.");
+            }
+
+            if (student == null) {
+
+                return ResponseEntity
+                        .badRequest()
+                        .body("Student not found.");
+            }
+
+            JobApplication application =
+                    new JobApplication();
+
+            application.setJob(job);
+            application.setStudent(student);
 
             JobApplication savedApplication =
                     jobApplicationService
@@ -43,6 +115,14 @@ public class JobApplicationController {
             return ResponseEntity
                     .status(409)
                     .body(e.getMessage());
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .badRequest()
+                    .body("Unable to submit job application.");
         }
     }
 
