@@ -1,6 +1,9 @@
 package com.alumniportal.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
+
 import lombok.*;
 @Entity
 @Table(name = "users")
@@ -28,7 +31,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
-
+    @JsonSetter(nulls = Nulls.SKIP)
     @Column(nullable = false)
     private boolean verified = false;
 }
