@@ -1,309 +1,1318 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Admin Dashboard - AlumniConnect</title>
 
+
     <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
         }
+
+
+        /* =====================================================
+           BODY
+        ===================================================== */
 
         body {
-            background: #f5f6fa;
-            display: flex;
+
             min-height: 100vh;
+
+            display: flex;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #eef4ff 0%,
+                            #f8fbff 45%,
+                            #e8efff 100%
+                    );
+
+            color: #14235a;
+
+            position: relative;
+
+            overflow-x: hidden;
         }
 
-        /* SIDEBAR */
-        .sidebar {
-            width: 240px;
-            background: #132238;
-            color: white;
-            padding: 25px 15px;
-            min-height: 100vh;
+
+        /* =====================================================
+           TOP CAMPUS BACKGROUND
+        ===================================================== */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            top: 0;
+            right: 0;
+
+            width: 70%;
+            height: 320px;
+
+            background:
+                    linear-gradient(
+                            to bottom,
+                            rgba(235,243,255,0.10),
+                            rgba(242,247,255,0.92)
+                    ),
+                    url("https://images.unsplash.com/photo-1687466116879-7e2b9b8c8f7f?auto=format&fit=crop&w=1800&q=80");
+
+            background-size: cover;
+
+            background-position: center;
+
+            opacity: 0.48;
+
+            z-index: 0;
+
+            pointer-events: none;
+
+            border-bottom-left-radius: 45% 25%;
         }
+
+
+        /* =====================================================
+           SOFT BOTTOM WAVE
+        ===================================================== */
+
+        body::after {
+
+            content: "";
+
+            position: fixed;
+
+            left: 0;
+            bottom: 0;
+
+            width: 100%;
+            height: 230px;
+
+            background:
+                    linear-gradient(
+                            170deg,
+                            rgba(202,220,255,0.70),
+                            rgba(225,215,255,0.65)
+                    );
+
+            clip-path: polygon(
+                    0 45%,
+                    8% 30%,
+                    17% 40%,
+                    27% 70%,
+                    38% 48%,
+                    49% 68%,
+                    60% 50%,
+                    70% 25%,
+                    80% 45%,
+                    90% 25%,
+                    100% 38%,
+                    100% 100%,
+                    0 100%
+            );
+
+            z-index: 0;
+
+            pointer-events: none;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+
+            width: 240px;
+
+            min-height: 100vh;
+
+            padding: 22px 14px;
+
+            background:
+                    linear-gradient(
+                            180deg,
+                            #101a58,
+                            #16266e 55%,
+                            #101b50
+                    );
+
+            color: white;
+
+            position: relative;
+
+            z-index: 10;
+
+            overflow: hidden;
+
+            box-shadow:
+                    5px 0 25px rgba(18,35,100,0.18);
+        }
+
+
+        /* SIDEBAR CAMPUS IMAGE */
+
+        .sidebar::after {
+
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            bottom: 0;
+
+            width: 100%;
+            height: 280px;
+
+            background:
+                    linear-gradient(
+                            to top,
+                            rgba(8,18,65,0.95),
+                            rgba(8,18,65,0.20)
+                    ),
+                    url("https://images.unsplash.com/photo-1687466116879-7e2b9b8c8f7f?auto=format&fit=crop&w=700&q=80");
+
+            background-size: cover;
+
+            background-position: center;
+
+            opacity: 0.40;
+
+            z-index: -1;
+        }
+
+
+        /* =====================================================
+           LOGO
+        ===================================================== */
 
         .logo {
-            font-size: 21px;
-            font-weight: bold;
+
             text-align: center;
-            margin-bottom: 35px;
+
+            margin-bottom: 30px;
+
+            position: relative;
+
+            z-index: 2;
         }
 
-        .menu a {
-            display: block;
-            color: #dbe4f0;
-            text-decoration: none;
-            padding: 13px 15px;
-            margin: 5px 0;
-            border-radius: 8px;
+
+        .logo-icon {
+
+            font-size: 36px;
+
+            margin-bottom: 4px;
         }
 
-        .menu a:hover,
-        .menu a.active {
-            background: #2563eb;
+
+        .logo-title {
+
+            font-size: 21px;
+
+            font-weight: 700;
+
             color: white;
         }
 
-        /* MAIN */
-        .main {
-            flex: 1;
-            padding: 25px;
+
+        .logo-title span {
+
+            color: #61c9ff;
         }
+
+
+        .logo-subtitle {
+
+            margin-top: 7px;
+
+            font-size: 11px;
+
+            line-height: 1.5;
+
+            color: #dce6ff;
+        }
+
+
+        /* =====================================================
+           MENU
+        ===================================================== */
+
+        .menu {
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        .menu a {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            color: #e7ecff;
+
+            text-decoration: none;
+
+            padding: 13px 15px;
+
+            margin: 5px 0;
+
+            border-radius: 10px;
+
+            font-size: 15px;
+
+            transition: all 0.25s ease;
+        }
+
+
+        .menu-icon {
+
+            width: 25px;
+
+            text-align: center;
+
+            font-size: 19px;
+        }
+
+
+        .menu a:hover {
+
+            background:
+                    rgba(255,255,255,0.11);
+
+            color: white;
+
+            transform: translateX(3px);
+        }
+
+
+        .menu a.active {
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #4c63ff,
+                            #6548ed
+                    );
+
+            color: white;
+
+            box-shadow:
+                    0 8px 22px rgba(75,85,255,0.35);
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+
+            flex: 1;
+
+            min-width: 0;
+
+            padding: 25px 30px 80px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        /* =====================================================
+           TOPBAR
+        ===================================================== */
 
         .topbar {
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
-            margin-bottom: 25px;
+
+            margin-bottom: 27px;
         }
+
 
         .topbar h1 {
-            color: #172033;
+
+            font-size: 31px;
+
+            color: #14235a;
+
+            margin-bottom: 5px;
         }
+
+
+        .topbar p {
+
+            font-size: 15px;
+
+            color: #53648c;
+        }
+
 
         .admin-info {
-            background: white;
-            padding: 10px 18px;
-            border-radius: 25px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            background:
+                    rgba(255,255,255,0.92);
+
+            padding: 11px 20px;
+
+            border-radius: 30px;
+
+            box-shadow:
+                    0 5px 18px rgba(35,60,120,0.10);
+
+            color: #18234e;
         }
 
-        /* STAT CARDS */
+
+        /* =====================================================
+           STAT CARDS
+        ===================================================== */
+
         .cards {
+
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
             gap: 18px;
-            margin-bottom: 25px;
+
+            margin-bottom: 27px;
         }
+
 
         .card {
-            background: white;
-            padding: 22px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+
+            min-height: 125px;
+
+            padding: 19px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            border-radius: 16px;
+
+            border:
+                    1px solid rgba(255,255,255,0.90);
+
+            box-shadow:
+                    0 8px 25px rgba(42,67,130,0.09);
+
+            backdrop-filter: blur(8px);
+
+            transition: 0.25s;
+
+            overflow: hidden;
         }
+
+
+        .card:hover {
+
+            transform: translateY(-4px);
+
+            box-shadow:
+                    0 14px 30px rgba(42,67,130,0.14);
+        }
+
+
+        .card-icon {
+
+            width: 60px;
+            height: 60px;
+
+            min-width: 60px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 20px;
+
+            font-size: 28px;
+        }
+
+
+        /* BLUE */
+
+        .blue-card {
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            rgba(240,247,255,0.94),
+                            rgba(222,237,255,0.88)
+                    );
+        }
+
+
+        .blue-card .card-icon {
+            background: #d9eaff;
+        }
+
+
+        /* GREEN */
+
+        .green-card {
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            rgba(239,255,249,0.94),
+                            rgba(218,248,237,0.88)
+                    );
+        }
+
+
+        .green-card .card-icon {
+            background: #d2f5e6;
+        }
+
+
+        /* PURPLE */
+
+        .purple-card {
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            rgba(250,246,255,0.94),
+                            rgba(235,224,255,0.88)
+                    );
+        }
+
+
+        .purple-card .card-icon {
+            background: #e8dcff;
+        }
+
+
+        /* ORANGE */
+
+        .orange-card {
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            rgba(255,250,240,0.94),
+                            rgba(255,238,210,0.88)
+                    );
+        }
+
+
+        .orange-card .card-icon {
+            background: #ffe8c5;
+        }
+
+
+        /* PINK */
+
+        .pink-card {
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            rgba(255,246,250,0.94),
+                            rgba(255,226,238,0.88)
+                    );
+        }
+
+
+        .pink-card .card-icon {
+            background: #ffdce9;
+        }
+
 
         .card h3 {
-            font-size: 28px;
-            margin-bottom: 8px;
-            color: #2563eb;
+
+            font-size: 29px;
+
+            color: #14235a;
+
+            margin-bottom: 5px;
         }
+
 
         .card p {
-            color: #666;
+
+            font-size: 14px;
+
+            color: #3e4c70;
         }
 
-        /* CONTENT */
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
         .content {
+
             display: grid;
+
             grid-template-columns: 2fr 1fr;
+
             gap: 20px;
         }
 
+
         .panel {
-            background: white;
-            padding: 22px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+
+            background:
+                    rgba(255,255,255,0.92);
+
+            border:
+                    1px solid rgba(255,255,255,0.90);
+
+            border-radius: 16px;
+
+            padding: 23px;
+
+            box-shadow:
+                    0 8px 28px rgba(35,60,120,0.09);
+
+            backdrop-filter: blur(8px);
         }
+
 
         .panel h2 {
+
+            color: #14235a;
+
+            font-size: 21px;
+
             margin-bottom: 20px;
-            color: #172033;
         }
 
-        /* TABLE */
+
+        /* =====================================================
+           TABLE
+        ===================================================== */
+
         table {
+
             width: 100%;
+
             border-collapse: collapse;
         }
 
-        th, td {
-            padding: 13px;
-            border-bottom: 1px solid #eee;
+
+        th,
+        td {
+
+            padding: 13px 14px;
+
             text-align: left;
+
+            border-bottom:
+                    1px solid #e7ebf4;
+
+            font-size: 14px;
         }
+
 
         th {
-            background: #f5f7fb;
-            color: #444;
+
+            background:
+                    #f0f3fb;
+
+            color: #202c52;
+
+            font-weight: 700;
         }
 
-        .role {
+
+        tbody tr {
+
+            transition: 0.2s;
+        }
+
+
+        tbody tr:hover {
+
+            background:
+                    #f7faff;
+        }
+
+
+        /* =====================================================
+           ROLE BADGES
+        ===================================================== */
+
+        .role-badge {
+
+            display: inline-block;
+
+            padding: 6px 12px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
             font-weight: bold;
-            color: #2563eb;
         }
 
-        /* QUICK ACTIONS */
+
+        .student {
+
+            background: #e2efff;
+
+            color: #1264d6;
+        }
+
+
+        .alumni {
+
+            background: #dff8ed;
+
+            color: #16805b;
+        }
+
+
+        .admin {
+
+            background: #eee5ff;
+
+            color: #5930bd;
+        }
+
+
+        /* =====================================================
+           QUICK ACTIONS
+        ===================================================== */
+
         .action {
-            display: block;
-            padding: 13px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 14px 16px;
+
             margin-bottom: 12px;
-            border-radius: 8px;
+
+            border-radius: 11px;
+
             text-decoration: none;
-            background: #eef4ff;
-            color: #2563eb;
+
             font-weight: bold;
+
+            transition: 0.25s;
         }
+
+
+        .action-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .action-icon {
+
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 11px;
+
+            font-size: 20px;
+        }
+
+
+        .action-arrow {
+
+            font-size: 25px;
+        }
+
+
+        .action-blue {
+
+            background: #edf5ff;
+
+            color: #155ed0;
+        }
+
+
+        .action-blue .action-icon {
+            background: #dcecff;
+        }
+
+
+        .action-green {
+
+            background: #e5faf3;
+
+            color: #087b5c;
+        }
+
+
+        .action-green .action-icon {
+            background: #d2f4e7;
+        }
+
+
+        .action-orange {
+
+            background: #fff2df;
+
+            color: #9a5200;
+        }
+
+
+        .action-orange .action-icon {
+            background: #ffe4bd;
+        }
+
+
+        .action-pink {
+
+            background: #ffedf5;
+
+            color: #b42c72;
+        }
+
+
+        .action-pink .action-icon {
+            background: #ffdbea;
+        }
+
 
         .action:hover {
-            background: #2563eb;
-            color: white;
+
+            transform: translateX(4px);
+
+            box-shadow:
+                    0 6px 16px rgba(50,70,120,0.10);
         }
 
-        @media(max-width: 1000px) {
+
+        /* =====================================================
+           LOADING
+        ===================================================== */
+
+        #userTable td[colspan] {
+
+            text-align: center;
+
+            color: #68789c;
+
+            padding: 30px;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media(max-width: 1150px) {
+
             .cards {
-                grid-template-columns: repeat(2, 1fr);
+
+                grid-template-columns:
+                    repeat(3, 1fr);
             }
 
             .content {
-                grid-template-columns: 1fr;
+
+                grid-template-columns:
+                    1fr;
             }
         }
 
-        @media(max-width: 700px) {
+
+        @media(max-width: 850px) {
+
             .sidebar {
-                width: 190px;
+
+                width: 210px;
+            }
+
+            .main {
+
+                padding: 22px;
             }
 
             .cards {
-                grid-template-columns: 1fr;
+
+                grid-template-columns:
+                    repeat(2, 1fr);
             }
         }
+
+
+        @media(max-width: 650px) {
+
+            body {
+
+                display: block;
+            }
+
+            .sidebar {
+
+                width: 100%;
+
+                min-height: auto;
+            }
+
+            .menu {
+
+                display: grid;
+
+                grid-template-columns:
+                    repeat(2,1fr);
+
+                gap: 4px;
+            }
+
+            .menu a {
+
+                font-size: 13px;
+
+                padding: 10px;
+            }
+
+            .main {
+
+                padding: 20px 15px 50px;
+            }
+
+            .topbar {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+            .cards {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            .content {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            .panel {
+
+                overflow-x: auto;
+            }
+
+            table {
+
+                min-width: 600px;
+            }
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
-<!-- SIDEBAR -->
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
 <div class="sidebar">
 
+
     <div class="logo">
-        🎓 AlumniConnect
+
+        <div class="logo-icon">
+            🎓
+        </div>
+
+        <div class="logo-title">
+            Alumni<span>Connect</span>
+        </div>
+
+        <div class="logo-subtitle">
+            Alumni Networking &<br>
+            Mentorship Portal
+        </div>
+
     </div>
+
 
     <div class="menu">
 
-        <a href="admin.html" class="active">
-            🏠 Dashboard
+
+        <a href="admin.html"
+           class="active">
+
+            <span class="menu-icon">
+                🏠
+            </span>
+
+            Dashboard
+
         </a>
+
 
         <a href="admin-users.html">
-            👥 Manage Users
+
+            <span class="menu-icon">
+                👥
+            </span>
+
+            Manage Users
+
         </a>
+
 
         <a href="admin-alumni.html">
-            🎓 Verify Alumni
+
+            <span class="menu-icon">
+                🎓
+            </span>
+
+            Verify Alumni
+
         </a>
+
 
         <a href="admin-jobs.html">
-            💼 Manage Jobs
+
+            <span class="menu-icon">
+                💼
+            </span>
+
+            Manage Jobs
+
         </a>
+
 
         <a href="admin-events.html">
-            📅 Manage Events
+
+            <span class="menu-icon">
+                📅
+            </span>
+
+            Manage Events
+
         </a>
+
 
         <a href="admin-mentorship.html">
-            🤝 Mentorship Requests
+
+            <span class="menu-icon">
+                🤝
+            </span>
+
+            Mentorship Requests
+
         </a>
+
 
         <a href="admin-messages.html">
-            💬 Messages
+
+            <span class="menu-icon">
+                💬
+            </span>
+
+            Messages
+
         </a>
+
 
         <a href="admin-reports.html">
-            📊 Reports
+
+            <span class="menu-icon">
+                📊
+            </span>
+
+            Reports
+
         </a>
 
+
         <a href="/logout">
-            🚪 Logout
+
+            <span class="menu-icon">
+                🚪
+            </span>
+
+            Logout
+
         </a>
+
 
     </div>
 
 </div>
 
 
-<!-- MAIN CONTENT -->
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
 <div class="main">
+
+
+    <!-- TOPBAR -->
 
     <div class="topbar">
 
+
         <div>
-            <h1>Admin Dashboard</h1>
-            <p>Manage AlumniConnect platform activities</p>
+
+            <h1>
+                Admin Dashboard
+            </h1>
+
+            <p>
+                Manage AlumniConnect platform activities
+            </p>
+
         </div>
+
 
         <div class="admin-info">
-            👤 <strong>Admin</strong>
+
+            👤
+
+            <strong>
+                Admin
+            </strong>
+
         </div>
+
 
     </div>
 
 
-    <!-- STATISTICS -->
+
+    <!-- =====================================================
+         STATISTICS
+    ====================================================== -->
+
     <div class="cards">
 
-        <div class="card">
-            <h3 id="userCount">0</h3>
-            <p>Total Users</p>
+
+        <!-- TOTAL USERS -->
+
+        <div class="card blue-card">
+
+            <div class="card-icon">
+                👥
+            </div>
+
+            <div>
+
+                <h3 id="userCount">
+                    0
+                </h3>
+
+                <p>
+                    Total Users
+                </p>
+
+            </div>
+
         </div>
 
-        <div class="card">
-            <h3 id="studentCount">0</h3>
-            <p>Students</p>
+
+        <!-- STUDENTS -->
+
+        <div class="card green-card">
+
+            <div class="card-icon">
+                🎓
+            </div>
+
+            <div>
+
+                <h3 id="studentCount">
+                    0
+                </h3>
+
+                <p>
+                    Students
+                </p>
+
+            </div>
+
         </div>
 
-        <div class="card">
-            <h3 id="alumniCount">0</h3>
-            <p>Alumni</p>
+
+        <!-- ALUMNI -->
+
+        <div class="card purple-card">
+
+            <div class="card-icon">
+                👥
+            </div>
+
+            <div>
+
+                <h3 id="alumniCount">
+                    0
+                </h3>
+
+                <p>
+                    Alumni
+                </p>
+
+            </div>
+
         </div>
 
-        <div class="card">
-            <h3 id="jobCount">0</h3>
-            <p>Job Posts</p>
+
+        <!-- JOBS -->
+
+        <div class="card orange-card">
+
+            <div class="card-icon">
+                💼
+            </div>
+
+            <div>
+
+                <h3 id="jobCount">
+                    0
+                </h3>
+
+                <p>
+                    Job Posts
+                </p>
+
+            </div>
+
         </div>
 
-        <div class="card">
-            <h3 id="eventCount">0</h3>
-            <p>Events</p>
+
+        <!-- EVENTS -->
+
+        <div class="card pink-card">
+
+            <div class="card-icon">
+                📅
+            </div>
+
+            <div>
+
+                <h3 id="eventCount">
+                    0
+                </h3>
+
+                <p>
+                    Events
+                </p>
+
+            </div>
+
         </div>
+
 
     </div>
 
 
-    <!-- CONTENT -->
+
+    <!-- =====================================================
+         CONTENT
+    ====================================================== -->
+
     <div class="content">
 
-        <!-- USERS -->
+
+        <!-- REGISTERED USERS -->
+
         <div class="panel">
 
-            <h2>Registered Users</h2>
+            <h2>
+                Registered Users
+            </h2>
+
 
             <table>
 
                 <thead>
+
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Name
+                    </th>
+
+                    <th>
+                        Email
+                    </th>
+
+                    <th>
+                        Role
+                    </th>
+
                 </tr>
+
                 </thead>
+
 
                 <tbody id="userTable">
 
                 <tr>
+
                     <td colspan="4">
                         Loading users...
                     </td>
+
                 </tr>
 
                 </tbody>
@@ -313,162 +1322,354 @@
         </div>
 
 
+
         <!-- QUICK ACTIONS -->
+
         <div class="panel">
 
-            <h2>Quick Actions</h2>
+            <h2>
+                Quick Actions
+            </h2>
 
-            <a href="admin-users.html" class="action">
-                👥 Manage Users
+
+            <a href="admin-users.html"
+               class="action action-blue">
+
+                <span class="action-left">
+
+                    <span class="action-icon">
+                        👥
+                    </span>
+
+                    Manage Users
+
+                </span>
+
+                <span class="action-arrow">
+                    ›
+                </span>
+
             </a>
 
-            <a href="admin-alumni.html" class="action">
-                🎓 Verify Alumni
+
+            <a href="admin-alumni.html"
+               class="action action-green">
+
+                <span class="action-left">
+
+                    <span class="action-icon">
+                        🎓
+                    </span>
+
+                    Verify Alumni
+
+                </span>
+
+                <span class="action-arrow">
+                    ›
+                </span>
+
             </a>
 
-            <a href="admin-jobs.html" class="action">
-                💼 Manage Jobs
+
+            <a href="admin-jobs.html"
+               class="action action-orange">
+
+                <span class="action-left">
+
+                    <span class="action-icon">
+                        💼
+                    </span>
+
+                    Manage Jobs
+
+                </span>
+
+                <span class="action-arrow">
+                    ›
+                </span>
+
             </a>
 
-            <a href="admin-events.html" class="action">
-                📅 Manage Events
+
+            <a href="admin-events.html"
+               class="action action-pink">
+
+                <span class="action-left">
+
+                    <span class="action-icon">
+                        📅
+                    </span>
+
+                    Manage Events
+
+                </span>
+
+                <span class="action-arrow">
+                    ›
+                </span>
+
             </a>
+
 
         </div>
 
+
     </div>
+
 
 </div>
 
 
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
 <script>
+
 
     async function loadDashboard() {
 
+
+        /* =====================================================
+           LOAD USERS
+        ===================================================== */
+
         try {
 
-            const response = await fetch("/api/users");
+            const response =
+                await fetch("/api/users");
+
 
             if (!response.ok) {
-                throw new Error("Unable to load users");
+
+                throw new Error(
+                    "Unable to load users"
+                );
+
             }
 
-            const users = await response.json();
+
+            const users =
+                await response.json();
+
 
             const students =
-                users.filter(user =>
-                    user.role === "STUDENT"
+                users.filter(
+                    user =>
+                        user.role === "STUDENT"
                 );
+
 
             const alumni =
-                users.filter(user =>
-                    user.role === "ALUMNI"
+                users.filter(
+                    user =>
+                        user.role === "ALUMNI"
                 );
 
-            const admins =
-                users.filter(user =>
-                    user.role === "ADMIN"
-                );
 
-            document.getElementById("userCount").textContent =
+            /* =================================================
+               UPDATE COUNTS
+            ================================================= */
+
+            document
+                .getElementById("userCount")
+                .textContent =
                 users.length;
 
-            document.getElementById("studentCount").textContent =
+
+            document
+                .getElementById("studentCount")
+                .textContent =
                 students.length;
 
-            document.getElementById("alumniCount").textContent =
+
+            document
+                .getElementById("alumniCount")
+                .textContent =
                 alumni.length;
 
 
+            /* =================================================
+               USER TABLE
+            ================================================= */
+
             const table =
-                document.getElementById("userTable");
+                document.getElementById(
+                    "userTable"
+                );
+
 
             table.innerHTML = "";
 
+
             users.forEach(user => {
 
+
                 const row =
-                    document.createElement("tr");
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                let roleClass = "";
+
+
+                if (user.role === "STUDENT") {
+
+                    roleClass = "student";
+
+                }
+
+                else if (user.role === "ALUMNI") {
+
+                    roleClass = "alumni";
+
+                }
+
+                else if (user.role === "ADMIN") {
+
+                    roleClass = "admin";
+
+                }
+
 
                 row.innerHTML = `
-                    <td>${user.id ?? "-"}</td>
-                    <td>${user.name ?? "-"}</td>
-                    <td>${user.email ?? "-"}</td>
-                    <td class="role">
-                        ${user.role ?? "-"}
+
+                    <td>
+                        ${user.id ?? "-"}
                     </td>
+
+                    <td>
+                        ${user.name ?? "-"}
+                    </td>
+
+                    <td>
+                        ${user.email ?? "-"}
+                    </td>
+
+                    <td>
+
+                        <span class="role-badge ${roleClass}">
+                            ${user.role ?? "-"}
+                        </span>
+
+                    </td>
+
                 `;
+
 
                 table.appendChild(row);
 
             });
 
-        } catch (error) {
+        }
+
+
+        catch (error) {
 
             console.error(error);
 
-            document.getElementById("userTable").innerHTML = `
+
+            document
+                .getElementById("userTable")
+                .innerHTML = `
+
                 <tr>
+
                     <td colspan="4">
                         Unable to load users.
                     </td>
+
                 </tr>
+
             `;
 
         }
 
 
-        /* LOAD JOB COUNT */
+
+        /* =====================================================
+           LOAD JOB COUNT
+        ===================================================== */
 
         try {
 
             const response =
                 await fetch("/api/jobs");
 
+
             if (response.ok) {
 
                 const jobs =
                     await response.json();
 
-                document.getElementById("jobCount")
-                    .textContent = jobs.length;
+
+                document
+                    .getElementById("jobCount")
+                    .textContent =
+                    jobs.length;
+
             }
 
-        } catch (error) {
+        }
 
-            console.log("Jobs could not be loaded");
+        catch (error) {
+
+            console.log(
+                "Jobs could not be loaded"
+            );
 
         }
 
 
-        /* LOAD EVENT COUNT */
+
+        /* =====================================================
+           LOAD EVENT COUNT
+        ===================================================== */
 
         try {
 
             const response =
                 await fetch("/api/events");
 
+
             if (response.ok) {
 
                 const events =
                     await response.json();
 
-                document.getElementById("eventCount")
-                    .textContent = events.length;
+
+                document
+                    .getElementById("eventCount")
+                    .textContent =
+                    events.length;
+
             }
 
-        } catch (error) {
+        }
 
-            console.log("Events could not be loaded");
+        catch (error) {
+
+            console.log(
+                "Events could not be loaded"
+            );
 
         }
 
     }
 
 
+    /* =========================================================
+       LOAD DASHBOARD
+    ========================================================= */
+
     loadDashboard();
 
 </script>
 
+
 </body>
+
 </html>
