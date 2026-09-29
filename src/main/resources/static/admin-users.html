@@ -1,299 +1,990 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Manage Users - AlumniConnect</title>
 
+
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
         }
+
+
+        /* =========================
+           BODY / BACKGROUND
+        ========================== */
 
         body {
-            background: #f4f6fb;
-            color: #17233c;
+
+            min-height: 100vh;
+
+            color: #14235a;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            rgba(238,244,255,0.96),
+                            rgba(248,251,255,0.94),
+                            rgba(232,239,255,0.96)
+                    ),
+                    url("https://images.unsplash.com/photo-1687466116879-7e2b9b8c8f7f?auto=format&fit=crop&w=1800&q=80");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+
+            position: relative;
+
+            overflow-x: hidden;
         }
+
+
+        /* Campus image at top */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            top: 0;
+            right: 0;
+
+            width: 78%;
+            height: 360px;
+
+            background:
+
+                    linear-gradient(
+                            to bottom,
+                            rgba(230,240,255,0.30),
+                            rgba(248,251,255,0.94)
+                    ),
+
+                    url("https://images.unsplash.com/photo-1687466116879-7e2b9b8c8f7f?auto=format&fit=crop&w=1800&q=80");
+
+            background-size: cover;
+
+            background-position: center;
+
+            opacity: 0.55;
+
+            z-index: -2;
+
+            pointer-events: none;
+
+            border-bottom-left-radius: 50% 30%;
+        }
+
+
+        /* Soft bottom wave */
+
+        body::after {
+
+            content: "";
+
+            position: fixed;
+
+            left: 0;
+            bottom: 0;
+
+            width: 100%;
+            height: 230px;
+
+            background:
+
+                    linear-gradient(
+                            170deg,
+                            rgba(202,220,255,0.70),
+                            rgba(225,215,255,0.65)
+                    );
+
+            clip-path: polygon(
+                    0 45%,
+                    8% 30%,
+                    17% 40%,
+                    27% 70%,
+                    38% 48%,
+                    49% 68%,
+                    60% 50%,
+                    70% 25%,
+                    80% 45%,
+                    90% 25%,
+                    100% 38%,
+                    100% 100%,
+                    0 100%
+            );
+
+            z-index: -1;
+
+            pointer-events: none;
+        }
+
+
+        /* =========================
+           LAYOUT
+        ========================== */
 
         .layout {
+
             display: flex;
+
             min-height: 100vh;
+
         }
 
-        /* Sidebar */
+
+        /* =========================
+           SIDEBAR
+        ========================== */
+
         .sidebar {
-            width: 235px;
-            background: #14233d;
+
+            width: 240px;
+
+            min-height: 100vh;
+
+            padding: 22px 14px;
+
+            background:
+
+                    linear-gradient(
+                            180deg,
+                            #101a58,
+                            #16266e 55%,
+                            #101b50
+                    );
+
             color: white;
-            padding: 25px 14px;
+
             position: fixed;
+
             top: 0;
             bottom: 0;
             left: 0;
+
+            z-index: 10;
+
+            overflow: hidden;
+
+            box-shadow:
+                    5px 0 25px rgba(18,35,100,0.18);
         }
+
+
+        /* Sidebar background image */
+
+        .sidebar::after {
+
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            bottom: 0;
+
+            width: 100%;
+            height: 300px;
+
+            background:
+
+                    linear-gradient(
+                            to top,
+                            rgba(8,18,65,0.95),
+                            rgba(8,18,65,0.20)
+                    ),
+
+                    url("https://images.unsplash.com/photo-1687466116879-7e2b9b8c8f7f?auto=format&fit=crop&w=700&q=80");
+
+            background-size: cover;
+
+            background-position: center;
+
+            opacity: 0.35;
+
+            z-index: -1;
+        }
+
+
+        /* Logo */
 
         .logo {
-            font-size: 21px;
-            font-weight: bold;
-            margin: 0 12px 35px;
+
+            text-align: center;
+
+            margin-bottom: 30px;
+
+            position: relative;
+
+            z-index: 2;
         }
 
-        .logo span {
-            margin-right: 6px;
+
+        .logo-icon {
+
+            font-size: 34px;
+
+            margin-bottom: 5px;
         }
+
+
+        .logo-title {
+
+            font-size: 21px;
+
+            font-weight: 700;
+
+            color: white;
+        }
+
+
+        .logo-title span {
+
+            color: #61c9ff;
+        }
+
+
+        .logo-subtitle {
+
+            margin-top: 7px;
+
+            font-size: 11px;
+
+            line-height: 1.5;
+
+            color: #dce6ff;
+        }
+
+
+        /* Menu */
+
+        .menu {
+
+            position: relative;
+
+            z-index: 2;
+        }
+
 
         .menu a {
-            display: block;
-            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            color: #e7ecff;
+
             text-decoration: none;
-            padding: 14px 18px;
-            margin-bottom: 7px;
+
+            padding: 13px 15px;
+
+            margin: 5px 0;
+
             border-radius: 10px;
-            font-size: 15px;
+
+            font-size: 14px;
+
+            transition: all 0.25s ease;
         }
 
-        .menu a:hover,
+
+        .menu-icon {
+
+            width: 25px;
+
+            text-align: center;
+
+            font-size: 18px;
+        }
+
+
+        .menu a:hover {
+
+            background:
+                    rgba(255,255,255,0.11);
+
+            color: white;
+
+            transform: translateX(3px);
+        }
+
+
         .menu a.active {
-            background: #2867e8;
+
+            background:
+
+                    linear-gradient(
+                            135deg,
+                            #4c63ff,
+                            #6548ed
+                    );
+
+            color: white;
+
+            box-shadow:
+                    0 8px 22px rgba(75,85,255,0.35);
         }
 
-        /* Main */
+
+        /* =========================
+           MAIN CONTENT
+        ========================== */
+
         .main {
-            margin-left: 235px;
-            width: calc(100% - 235px);
-            padding: 35px;
+
+            margin-left: 240px;
+
+            width: calc(100% - 240px);
+
+            padding: 30px 30px 80px;
+
+            position: relative;
+
+            z-index: 2;
         }
+
+
+        /* =========================
+           HEADER
+        ========================== */
 
         .header {
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
-            margin-bottom: 30px;
+
+            margin-bottom: 28px;
         }
 
+
         .header h1 {
-            font-size: 32px;
+
+            font-size: 31px;
+
+            color: #14235a;
+
             margin-bottom: 6px;
         }
 
+
         .header p {
-            color: #6f7b91;
+
+            color: #53648c;
+
+            font-size: 15px;
         }
 
+
+        /* Admin badge */
+
         .admin-badge {
-            background: white;
-            padding: 12px 20px;
-            border-radius: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            background:
+                    rgba(255,255,255,0.94);
+
+            padding: 11px 20px;
+
+            border-radius: 30px;
+
+            box-shadow:
+                    0 5px 18px rgba(35,60,120,0.10);
+
+            color: #18234e;
+
             font-weight: bold;
         }
 
-        /* Card */
+
+        /* =========================
+           MAIN CARD
+        ========================== */
+
         .card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+
+            background:
+                    rgba(255,255,255,0.92);
+
+            border:
+                    1px solid rgba(255,255,255,0.90);
+
+            border-radius: 17px;
+
+            padding: 24px;
+
+            box-shadow:
+                    0 8px 28px rgba(35,60,120,0.10);
+
+            backdrop-filter: blur(10px);
         }
 
+
+        /* =========================
+           CARD HEADER
+        ========================== */
+
         .card-header {
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
             margin-bottom: 20px;
         }
 
+
         .card-header h2 {
-            font-size: 22px;
+
+            font-size: 21px;
+
+            color: #14235a;
         }
+
+
+        /* Search */
 
         .search-box {
+
             padding: 11px 15px;
+
             width: 260px;
-            border: 1px solid #d8deea;
-            border-radius: 8px;
+
+            border:
+                    1px solid #d8deea;
+
+            border-radius: 9px;
+
             outline: none;
+
+            background:
+                    rgba(255,255,255,0.95);
+
+            color: #17233c;
+
+            transition: 0.2s;
         }
+
 
         .search-box:focus {
-            border-color: #2867e8;
+
+            border-color: #5267ff;
+
+            box-shadow:
+                    0 0 0 3px rgba(82,103,255,0.10);
         }
 
-        /* Table */
+
+        /* =========================
+           TABLE
+        ========================== */
+
         .table-container {
+
             overflow-x: auto;
+
+            border-radius: 10px;
         }
+
 
         table {
+
             width: 100%;
+
             border-collapse: collapse;
+
+            min-width: 750px;
         }
+
 
         th {
-            background: #f1f4fa;
+
+            background:
+                    #eef2fa;
+
             text-align: left;
-            padding: 15px;
-            font-size: 14px;
+
+            padding: 14px;
+
+            font-size: 13px;
+
+            color: #202c52;
+
+            font-weight: 700;
         }
+
 
         td {
-            padding: 15px;
-            border-bottom: 1px solid #edf0f5;
+
+            padding: 15px 14px;
+
+            border-bottom:
+                    1px solid #e7ebf4;
+
+            font-size: 14px;
+
+            color: #25345b;
+        }
+
+
+        tbody tr {
+
+            transition: 0.2s;
+        }
+
+
+        tbody tr:hover {
+
+            background:
+                    #f7faff;
+
+            transform: scale(1.001);
+        }
+
+
+        /* =========================
+           ROLE BADGES
+        ========================== */
+
+        .role {
+
+            display: inline-block;
+
+            padding: 6px 12px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+
+        .role.admin {
+
+            background: #eee5ff;
+
+            color: #5930bd;
+        }
+
+
+        .role.alumni {
+
+            background: #dff8ed;
+
+            color: #16805b;
+        }
+
+
+        .role.student {
+
+            background: #e2efff;
+
+            color: #1264d6;
+        }
+
+
+        /* =========================
+           DELETE BUTTON
+        ========================== */
+
+        .delete-btn {
+
+            background:
+                    #e63950;
+
+            color: white;
+
+            border: none;
+
+            padding: 8px 14px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+
+        .delete-btn:hover {
+
+            background:
+                    #c9253c;
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                    0 4px 10px rgba(220,53,69,0.20);
+        }
+
+
+        /* =========================
+           MESSAGE
+        ========================== */
+
+        .message {
+
+            text-align: center;
+
+            padding: 30px;
+
+            color: #68789c;
+
             font-size: 14px;
         }
 
-        tr:hover {
-            background: #fafbfe;
-        }
 
-        .role {
-            font-weight: bold;
-            color: #2867e8;
-        }
+        /* =========================
+           MOBILE
+        ========================== */
 
-        .role.admin {
-            color: #8a3ffc;
-        }
-
-        .role.alumni {
-            color: #198754;
-        }
-
-        .role.student {
-            color: #2867e8;
-        }
-
-        .delete-btn {
-            background: #dc3545;
-            color: white;
-            border: none;
-            padding: 8px 13px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .delete-btn:hover {
-            background: #bb2d3b;
-        }
-
-        .message {
-            text-align: center;
-            padding: 25px;
-            color: #6f7b91;
-        }
-
-        /* Mobile */
-        @media (max-width: 768px) {
+        @media (max-width: 1000px) {
 
             .sidebar {
-                width: 190px;
+
+                width: 220px;
             }
 
             .main {
+
+                margin-left: 220px;
+
+                width: calc(100% - 220px);
+
+                padding: 25px;
+            }
+
+        }
+
+
+        @media (max-width: 768px) {
+
+            .sidebar {
+
+                width: 190px;
+            }
+
+
+            .main {
+
                 margin-left: 190px;
+
                 width: calc(100% - 190px);
+
                 padding: 20px;
             }
 
+
             .header {
+
                 flex-direction: column;
+
                 align-items: flex-start;
+
                 gap: 15px;
             }
+
 
             .card-header {
+
                 flex-direction: column;
+
                 align-items: flex-start;
+
                 gap: 15px;
             }
 
+
             .search-box {
+
                 width: 100%;
             }
+
         }
+
+
+        @media (max-width: 600px) {
+
+            .layout {
+
+                display: block;
+            }
+
+
+            .sidebar {
+
+                position: relative;
+
+                width: 100%;
+
+                min-height: auto;
+            }
+
+
+            .main {
+
+                margin-left: 0;
+
+                width: 100%;
+
+                padding: 20px 15px 50px;
+            }
+
+
+            .menu {
+
+                display: grid;
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+                gap: 4px;
+            }
+
+
+            .menu a {
+
+                font-size: 13px;
+
+                padding: 10px;
+            }
+
+
+            .header h1 {
+
+                font-size: 27px;
+            }
+
+
+            .card {
+
+                padding: 18px;
+            }
+
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
+
 <div class="layout">
 
-    <!-- Sidebar -->
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
     <aside class="sidebar">
 
+
         <div class="logo">
-            🎓 AlumniConnect
+
+            <div class="logo-icon">
+                🎓
+            </div>
+
+
+            <div class="logo-title">
+                Alumni<span>Connect</span>
+            </div>
+
+
+            <div class="logo-subtitle">
+                Alumni Networking &<br>
+                Mentorship Portal
+            </div>
+
         </div>
+
 
         <nav class="menu">
 
+
             <a href="/admin.html">
-                🏠 Dashboard
+
+                <span class="menu-icon">
+                    🏠
+                </span>
+
+                Dashboard
+
             </a>
 
-            <a href="/admin-users.html" class="active">
-                👥 Manage Users
+
+            <a href="/admin-users.html"
+               class="active">
+
+                <span class="menu-icon">
+                    👥
+                </span>
+
+                Manage Users
+
             </a>
+
 
             <a href="/admin-alumni.html">
-                🎓 Verify Alumni
+
+                <span class="menu-icon">
+                    🎓
+                </span>
+
+                Verify Alumni
+
             </a>
+
 
             <a href="/admin-jobs.html">
-                💼 Manage Jobs
+
+                <span class="menu-icon">
+                    💼
+                </span>
+
+                Manage Jobs
+
             </a>
+
 
             <a href="/admin-events.html">
-                🗓️ Manage Events
+
+                <span class="menu-icon">
+                    📅
+                </span>
+
+                Manage Events
+
             </a>
+
 
             <a href="/mentorship.html">
-                🤝 Mentorship Requests
+
+                <span class="menu-icon">
+                    🤝
+                </span>
+
+                Mentorship Requests
+
             </a>
+
 
             <a href="/messages.html">
-                💬 Messages
+
+                <span class="menu-icon">
+                    💬
+                </span>
+
+                Messages
+
             </a>
+
 
             <a href="/admin.html">
-                📊 Reports
+
+                <span class="menu-icon">
+                    📊
+                </span>
+
+                Reports
+
             </a>
 
+
             <a href="/logout">
-                🚪 Logout
+
+                <span class="menu-icon">
+                    🚪
+                </span>
+
+                Logout
+
             </a>
+
 
         </nav>
 
     </aside>
 
 
-    <!-- Main Content -->
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
     <main class="main">
+
 
         <div class="header">
 
+
             <div>
-                <h1>Manage Users</h1>
-                <p>View and manage registered AlumniConnect users</p>
+
+                <h1>
+                    Manage Users
+                </h1>
+
+                <p>
+                    View and manage registered AlumniConnect users
+                </p>
+
             </div>
 
+
             <div class="admin-badge">
-                👤 Admin
+
+                👤
+
+                <strong>
+                    Admin
+                </strong>
+
             </div>
+
 
         </div>
 
 
+
+        <!-- =========================
+             USERS CARD
+        ========================== -->
+
         <div class="card">
+
 
             <div class="card-header">
 
-                <h2>Registered Users</h2>
+
+                <h2>
+                    Registered Users
+                </h2>
+
 
                 <input
                         type="text"
@@ -303,141 +994,278 @@
                         onkeyup="searchUsers()"
                 >
 
+
             </div>
 
 
-            <div id="message" class="message">
+
+            <div id="message"
+                 class="message">
+
                 Loading users...
+
             </div>
+
 
 
             <div class="table-container">
 
-                <table id="usersTable" style="display:none;">
+
+                <table
+                        id="usersTable"
+                        style="display:none;"
+                >
+
 
                     <thead>
 
                     <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Role</th>
-                        <th>Action</th>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Name
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th>
+                            Phone
+                        </th>
+
+                        <th>
+                            Role
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
                     </tr>
 
                     </thead>
 
-                    <tbody id="usersBody"></tbody>
+
+                    <tbody id="usersBody">
+
+                    </tbody>
+
 
                 </table>
 
+
             </div>
+
 
         </div>
 
+
     </main>
+
 
 </div>
 
 
+
 <script>
+
 
     let allUsers = [];
 
 
-    // Load users
+    /* =========================
+       LOAD USERS
+    ========================== */
+
     async function loadUsers() {
+
 
         try {
 
-            const response = await fetch("/api/users");
+
+            const response =
+                await fetch("/api/users");
+
 
             if (!response.ok) {
 
+
                 if (response.status === 403) {
-                    throw new Error("Access denied. Admin permission required.");
+
+                    throw new Error(
+                        "Access denied. Admin permission required."
+                    );
+
                 }
 
-                throw new Error("Unable to load users.");
+
+                throw new Error(
+                    "Unable to load users."
+                );
+
             }
 
-            allUsers = await response.json();
+
+            allUsers =
+                await response.json();
+
 
             displayUsers(allUsers);
 
-        } catch (error) {
 
-            document.getElementById("message").textContent =
+        }
+
+
+        catch (error) {
+
+
+            document
+                .getElementById("message")
+                .textContent =
                 error.message;
+
 
         }
 
     }
 
 
-    // Display users
+
+    /* =========================
+       DISPLAY USERS
+    ========================== */
+
     function displayUsers(users) {
 
-        const tbody = document.getElementById("usersBody");
-        const table = document.getElementById("usersTable");
-        const message = document.getElementById("message");
+
+        const tbody =
+            document.getElementById(
+                "usersBody"
+            );
+
+
+        const table =
+            document.getElementById(
+                "usersTable"
+            );
+
+
+        const message =
+            document.getElementById(
+                "message"
+            );
+
 
         tbody.innerHTML = "";
 
+
         if (users.length === 0) {
 
-            table.style.display = "none";
 
-            message.textContent = "No users found.";
+            table.style.display =
+                "none";
+
+
+            message.style.display =
+                "block";
+
+
+            message.textContent =
+                "No users found.";
+
 
             return;
+
         }
 
-        message.style.display = "none";
-        table.style.display = "table";
+
+        message.style.display =
+            "none";
+
+
+        table.style.display =
+            "table";
+
 
 
         users.forEach(user => {
 
-            const row = document.createElement("tr");
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
 
             let roleClass = "";
 
+
             if (user.role === "ADMIN") {
+
                 roleClass = "admin";
+
             }
+
             else if (user.role === "ALUMNI") {
+
                 roleClass = "alumni";
+
             }
+
             else {
+
                 roleClass = "student";
+
             }
+
 
 
             row.innerHTML = `
 
-                <td>${user.id}</td>
+                <td>
+                    ${user.id ?? "-"}
+                </td>
 
-                <td>${escapeHtml(user.name || "")}</td>
-
-                <td>${escapeHtml(user.email || "")}</td>
-
-                <td>${escapeHtml(user.phone || "N/A")}</td>
 
                 <td>
-                    <span class="role ${roleClass}">
-                        ${user.role}
-                    </span>
+                    ${escapeHtml(user.name || "")}
                 </td>
+
+
+                <td>
+                    ${escapeHtml(user.email || "")}
+                </td>
+
+
+                <td>
+                    ${escapeHtml(user.phone || "N/A")}
+                </td>
+
+
+                <td>
+
+                    <span class="role ${roleClass}">
+                        ${escapeHtml(user.role || "")}
+                    </span>
+
+                </td>
+
 
                 <td>
 
                     ${
                 user.role === "ADMIN"
+
                     ?
-                    "<span style='color:#6f7b91;'>Protected</span>"
+
+                    "<span style='color:#68789c;font-weight:500;'>Protected</span>"
+
                     :
+
                     `<button
                             class="delete-btn"
                             onclick="deleteUser(${user.id})">
@@ -449,108 +1277,205 @@
 
             `;
 
+
             tbody.appendChild(row);
+
 
         });
 
     }
 
 
-    // Search users
+
+    /* =========================
+       SEARCH USERS
+    ========================== */
+
     function searchUsers() {
 
+
         const search =
-            document.getElementById("searchInput")
+
+            document
+                .getElementById("searchInput")
                 .value
-                .toLowerCase();
-
-        const filteredUsers = allUsers.filter(user =>
-
-            (user.name || "")
                 .toLowerCase()
-                .includes(search)
+                .trim();
 
-            ||
 
-            (user.email || "")
-                .toLowerCase()
-                .includes(search)
 
-            ||
+        const filteredUsers =
 
-            (user.role || "")
-                .toLowerCase()
-                .includes(search)
+            allUsers.filter(user =>
 
-        );
+
+                (user.name || "")
+                    .toLowerCase()
+                    .includes(search)
+
+
+                ||
+
+
+                (user.email || "")
+                    .toLowerCase()
+                    .includes(search)
+
+
+                ||
+
+
+                (user.role || "")
+                    .toLowerCase()
+                    .includes(search)
+
+
+                ||
+
+
+                (user.phone || "")
+                    .toLowerCase()
+                    .includes(search)
+
+            );
+
 
         displayUsers(filteredUsers);
 
     }
 
 
-    // Delete user
+
+    /* =========================
+       DELETE USER
+    ========================== */
+
     async function deleteUser(id) {
 
+
         const confirmed =
-            confirm("Are you sure you want to delete this user?");
+
+            confirm(
+                "Are you sure you want to delete this user?"
+            );
+
 
         if (!confirmed) {
+
             return;
+
         }
+
 
 
         try {
 
+
             const response =
-                await fetch(`/api/users/${id}`, {
-                    method: "DELETE"
-                });
+
+                await fetch(
+                    `/api/users/${id}`,
+                    {
+                        method: "DELETE"
+                    }
+                );
+
 
 
             if (!response.ok) {
 
+
                 if (response.status === 403) {
-                    alert("Access denied. Admin permission required.");
+
+                    alert(
+                        "Access denied. Admin permission required."
+                    );
+
                     return;
+
                 }
 
-                throw new Error("Failed to delete user.");
+
+                throw new Error(
+                    "Failed to delete user."
+                );
 
             }
 
 
-            alert("User deleted successfully.");
+
+            alert(
+                "User deleted successfully."
+            );
+
 
             loadUsers();
 
+
         }
+
+
         catch (error) {
 
-            alert(error.message);
+
+            alert(
+                error.message
+            );
 
         }
 
     }
 
 
-    // Prevent HTML injection in displayed values
+
+    /* =========================
+       ESCAPE HTML
+    ========================== */
+
     function escapeHtml(value) {
 
-        return value
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
+
+        return String(value)
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
+            );
 
     }
 
 
-    // Load when page opens
+
+    /* =========================
+       PAGE LOAD
+    ========================== */
+
     loadUsers();
+
 
 </script>
 
+
 </body>
+
 </html>
