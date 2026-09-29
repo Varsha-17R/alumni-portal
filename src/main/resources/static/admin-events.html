@@ -1,363 +1,1425 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Manage Events - AlumniConnect</title>
 
+
     <style>
+
+        /* =========================
+           RESET
+        ========================== */
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
         }
+
+
+        /* =========================
+           BODY
+        ========================== */
 
         body {
-            background: #f5f6fa;
-            display: flex;
+
             min-height: 100vh;
+
+            color: #17233c;
+
+            position: relative;
+
+            overflow-x: hidden;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #eef4ff 0%,
+                            #f8f5ff 50%,
+                            #fff3f8 100%
+                    );
+
         }
 
-        /* SIDEBAR */
-        .sidebar {
-            width: 240px;
-            background: #132238;
-            color: white;
-            padding: 25px 15px;
-            min-height: 100vh;
+
+        /* =========================
+           BLUE BACKGROUND GLOW
+        ========================== */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            width: 520px;
+            height: 520px;
+
+            top: -220px;
+            right: -120px;
+
+            background:
+                    radial-gradient(
+                            circle,
+                            rgba(76, 99, 255, 0.22),
+                            rgba(76, 99, 255, 0.08) 45%,
+                            transparent 70%
+                    );
+
+            border-radius: 50%;
+
+            z-index: 0;
+
+            pointer-events: none;
+
         }
+
+
+        /* =========================
+           PURPLE / PINK GLOW
+        ========================== */
+
+        body::after {
+
+            content: "";
+
+            position: fixed;
+
+            width: 600px;
+            height: 600px;
+
+            bottom: -350px;
+            left: 25%;
+
+            background:
+                    radial-gradient(
+                            circle,
+                            rgba(160, 120, 255, 0.20),
+                            rgba(255, 150, 200, 0.10) 45%,
+                            transparent 70%
+                    );
+
+            border-radius: 50%;
+
+            z-index: 0;
+
+            pointer-events: none;
+
+        }
+
+
+        /* =========================
+           LAYOUT
+        ========================== */
+
+        .layout {
+
+            display: flex;
+
+            min-height: 100vh;
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+
+        /* =========================
+           SIDEBAR
+        ========================== */
+
+        .sidebar {
+
+            width: 235px;
+
+            min-height: 100vh;
+
+            background:
+                    linear-gradient(
+                            180deg,
+                            #101b4f,
+                            #162866 55%,
+                            #101a4b
+                    );
+
+            color: white;
+
+            padding: 24px 14px;
+
+            position: fixed;
+
+            top: 0;
+            bottom: 0;
+            left: 0;
+
+            z-index: 10;
+
+            overflow: hidden;
+
+            box-shadow:
+                    6px 0 25px
+                    rgba(20, 40, 100, 0.18);
+
+        }
+
+
+        /* Decorative sidebar glow */
+
+        .sidebar::after {
+
+            content: "";
+
+            position: absolute;
+
+            left: -80px;
+            bottom: -100px;
+
+            width: 300px;
+            height: 300px;
+
+            background:
+                    radial-gradient(
+                            circle,
+                            rgba(88, 111, 255, 0.28),
+                            transparent 70%
+                    );
+
+            border-radius: 50%;
+
+            z-index: -1;
+
+            pointer-events: none;
+
+        }
+
+
+        /* =========================
+           LOGO
+        ========================== */
 
         .logo {
-            font-size: 21px;
-            font-weight: bold;
+
             text-align: center;
-            margin-bottom: 35px;
+
+            margin-bottom: 30px;
+
+            position: relative;
+
+            z-index: 2;
+
         }
+
+
+        .logo-icon {
+
+            font-size: 35px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .logo-title {
+
+            font-size: 21px;
+
+            font-weight: 700;
+
+            color: white;
+
+        }
+
+
+        .logo-title span {
+
+            color: #61c9ff;
+
+        }
+
+
+        .logo-subtitle {
+
+            font-size: 10px;
+
+            line-height: 1.5;
+
+            margin-top: 6px;
+
+            color: #dce6ff;
+
+        }
+
+
+        /* =========================
+           MENU
+        ========================== */
+
+        .menu {
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
 
         .menu a {
-            display: block;
-            color: #dbe4f0;
-            text-decoration: none;
-            padding: 13px 15px;
-            margin: 5px 0;
-            border-radius: 8px;
-        }
 
-        .menu a:hover,
-        .menu a.active {
-            background: #2563eb;
-            color: white;
-        }
-
-        /* MAIN */
-        .main {
-            flex: 1;
-            padding: 25px;
-        }
-
-        .topbar {
             display: flex;
-            justify-content: space-between;
+
             align-items: center;
-            margin-bottom: 25px;
+
+            gap: 12px;
+
+            color: #e8edff;
+
+            text-decoration: none;
+
+            padding: 13px 15px;
+
+            margin-bottom: 5px;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+
+            transition:
+                    all 0.25s ease;
+
         }
 
-        .topbar h1 {
-            color: #172033;
+
+        .menu-icon {
+
+            width: 25px;
+
+            text-align: center;
+
+            font-size: 18px;
+
         }
 
-        .admin-info {
-            background: white;
-            padding: 10px 18px;
-            border-radius: 25px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+
+        .menu a:hover {
+
+            background:
+                    rgba(255,255,255,0.12);
+
+            color: white;
+
+            transform:
+                    translateX(3px);
+
         }
 
-        /* SEARCH */
-        .search-box {
-            background: white;
-            padding: 18px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+
+        .menu a.active {
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #4c63ff,
+                            #6548ed
+                    );
+
+            color: white;
+
+            box-shadow:
+                    0 8px 22px
+                    rgba(75,85,255,0.35);
+
         }
 
-        .search-box input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+
+        /* =========================
+           MAIN CONTENT
+        ========================== */
+
+        .main {
+
+            margin-left: 235px;
+
+            width:
+                    calc(100% - 235px);
+
+            padding:
+                    30px 32px 80px;
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+
+        /* =========================
+           HEADER
+        ========================== */
+
+        .header {
+
+            display: flex;
+
+            justify-content:
+                    space-between;
+
+            align-items:
+                    center;
+
+            margin-bottom: 27px;
+
+        }
+
+
+        .header h1 {
+
+            font-size: 31px;
+
+            color: #14235a;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .header p {
+
+            color: #53648c;
+
             font-size: 15px;
+
         }
 
-        /* TABLE PANEL */
-        .panel {
-            background: white;
-            padding: 22px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            overflow-x: auto;
+
+        /* =========================
+           ADMIN BADGE
+        ========================== */
+
+        .admin-badge {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            background:
+                    rgba(255,255,255,0.94);
+
+            padding:
+                    11px 20px;
+
+            border-radius:
+                    30px;
+
+            box-shadow:
+                    0 6px 20px
+                    rgba(35,60,120,0.10);
+
+            font-weight: bold;
+
+            color: #18234e;
+
         }
 
-        .panel h2 {
+
+        /* =========================
+           MAIN CARD
+        ========================== */
+
+        .card {
+
+            background:
+                    rgba(255,255,255,0.93);
+
+            border:
+                    1px solid
+                    rgba(255,255,255,0.95);
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+            box-shadow:
+                    0 10px 30px
+                    rgba(35,60,120,0.10);
+
+            backdrop-filter:
+                    blur(10px);
+
+        }
+
+
+        /* =========================
+           CARD HEADER
+        ========================== */
+
+        .card-header {
+
+            display: flex;
+
+            justify-content:
+                    space-between;
+
+            align-items:
+                    center;
+
             margin-bottom: 20px;
-            color: #172033;
+
         }
+
+
+        .card-header h2 {
+
+            font-size: 22px;
+
+            color: #14235a;
+
+        }
+
+
+        /* =========================
+           SEARCH BOX
+        ========================== */
+
+        .search-box {
+
+            padding:
+                    12px 16px;
+
+            width: 280px;
+
+            border:
+                    1px solid #d7dfef;
+
+            border-radius: 10px;
+
+            outline: none;
+
+            background:
+                    rgba(255,255,255,0.95);
+
+            color: #17233c;
+
+            transition:
+                    0.2s;
+
+        }
+
+
+        .search-box::placeholder {
+
+            color: #7b879e;
+
+        }
+
+
+        .search-box:focus {
+
+            border-color:
+                    #596cff;
+
+            box-shadow:
+                    0 0 0 3px
+                    rgba(89,108,255,0.10);
+
+        }
+
+
+        /* =========================
+           TABLE
+        ========================== */
+
+        .table-container {
+
+            overflow-x: auto;
+
+        }
+
 
         table {
+
             width: 100%;
-            border-collapse: collapse;
+
+            border-collapse:
+                    collapse;
+
             min-width: 950px;
+
         }
 
-        th, td {
-            padding: 13px;
-            border-bottom: 1px solid #eee;
-            text-align: left;
-            vertical-align: middle;
-        }
 
         th {
-            background: #f5f7fb;
-            color: #444;
+
+            background:
+                    #eef2fa;
+
+            text-align: left;
+
+            padding:
+                    14px;
+
+            font-size: 13px;
+
+            color: #253457;
+
+            font-weight: 700;
+
         }
 
-        /* STATUS */
-        .status {
-            font-weight: bold;
-            padding: 6px 10px;
-            border-radius: 15px;
-            display: inline-block;
+
+        th:first-child {
+
+            border-top-left-radius: 8px;
+
+            border-bottom-left-radius: 8px;
+
         }
+
+
+        th:last-child {
+
+            border-top-right-radius: 8px;
+
+            border-bottom-right-radius: 8px;
+
+        }
+
+
+        td {
+
+            padding:
+                    15px 14px;
+
+            border-bottom:
+                    1px solid #e7ebf4;
+
+            font-size: 14px;
+
+            color: #243354;
+
+        }
+
+
+        tbody tr {
+
+            transition:
+                    0.2s ease;
+
+        }
+
+
+        tbody tr:hover {
+
+            background:
+                    rgba(242,247,255,0.85);
+
+        }
+
+
+        /* =========================
+           STATUS
+        ========================== */
+
+        .status {
+
+            font-weight: 700;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            padding:
+                    6px 11px;
+
+            border-radius:
+                    20px;
+
+            font-size: 12px;
+
+        }
+
 
         .approved {
-            background: #dcfce7;
-            color: #166534;
+
+            color: #13805a;
+
+            background:
+                    #dff7ec;
+
         }
+
 
         .pending {
-            background: #fef3c7;
-            color: #92400e;
+
+            color: #d88700;
+
+            background:
+                    #fff2d9;
+
         }
+
 
         .rejected {
-            background: #fee2e2;
-            color: #991b1b;
+
+            color: #c93648;
+
+            background:
+                    #ffe2e6;
+
         }
 
-        /* BUTTONS */
-        button {
-            border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            margin: 2px;
-            color: white;
-            font-weight: bold;
-        }
+
+        /* =========================
+           APPROVE BUTTON
+        ========================== */
 
         .approve-btn {
-            background: #16a34a;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #15966a,
+                            #087c59
+                    );
+
+            color: white;
+
+            border: none;
+
+            padding:
+                    9px 14px;
+
+            border-radius:
+                    8px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+
+            transition:
+                    0.2s ease;
+
+            box-shadow:
+                    0 5px 12px
+                    rgba(20,145,100,0.18);
+
         }
+
 
         .approve-btn:hover {
-            background: #15803d;
+
+            transform:
+                    translateY(-2px);
+
+            box-shadow:
+                    0 8px 18px
+                    rgba(20,145,100,0.25);
+
         }
+
+
+        /* =========================
+           REJECT BUTTON
+        ========================== */
 
         .reject-btn {
-            background: #dc2626;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #ef4d5d,
+                            #d93648
+                    );
+
+            color: white;
+
+            border: none;
+
+            padding:
+                    9px 14px;
+
+            border-radius:
+                    8px;
+
+            cursor: pointer;
+
+            margin-left: 5px;
+
+            font-weight: 600;
+
+            transition:
+                    0.2s ease;
+
+            box-shadow:
+                    0 5px 12px
+                    rgba(220,53,69,0.16);
+
         }
+
 
         .reject-btn:hover {
-            background: #b91c1c;
+
+            transform:
+                    translateY(-2px);
+
+            box-shadow:
+                    0 8px 18px
+                    rgba(220,53,69,0.23);
+
         }
+
+
+        /* =========================
+           DELETE BUTTON
+        ========================== */
 
         .delete-btn {
-            background: #374151;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #6c757d,
+                            #495057
+                    );
+
+            color: white;
+
+            border: none;
+
+            padding:
+                    9px 14px;
+
+            border-radius:
+                    8px;
+
+            cursor: pointer;
+
+            margin-left: 5px;
+
+            font-weight: 600;
+
+            transition:
+                    0.2s ease;
+
+            box-shadow:
+                    0 5px 12px
+                    rgba(70,80,90,0.15);
+
         }
+
 
         .delete-btn:hover {
-            background: #111827;
+
+            transform:
+                    translateY(-2px);
+
+            box-shadow:
+                    0 8px 18px
+                    rgba(70,80,90,0.22);
+
         }
+
+
+        /* =========================
+           MESSAGE
+        ========================== */
 
         .message {
+
             text-align: center;
-            padding: 20px;
-            color: #666;
+
+            padding:
+                    28px;
+
+            color: #6f7b91;
+
         }
 
-        @media(max-width: 800px) {
-            .sidebar {
-                width: 190px;
+
+        /* =========================
+           TABLE ANIMATION
+        ========================== */
+
+        #eventTable {
+
+            animation:
+                    fadeIn 0.35s ease;
+
+        }
+
+
+        @keyframes fadeIn {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                        translateY(5px);
+
             }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                        translateY(0);
+
+            }
+
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 1000px) {
+
+            .card-header {
+
+                flex-direction:
+                        column;
+
+                align-items:
+                        flex-start;
+
+                gap: 15px;
+
+            }
+
+
+            .search-box {
+
+                width: 100%;
+
+            }
+
+        }
+
+
+        @media (max-width: 768px) {
+
+            .sidebar {
+
+                width: 200px;
+
+            }
+
 
             .main {
-                padding: 15px;
+
+                margin-left: 200px;
+
+                width:
+                        calc(100% - 200px);
+
+                padding:
+                        22px 18px 60px;
+
             }
+
+
+            .header {
+
+                flex-direction:
+                        column;
+
+                align-items:
+                        flex-start;
+
+                gap: 15px;
+
+            }
+
+
+            .card {
+
+                padding: 18px;
+
+            }
+
         }
+
+
+        @media (max-width: 600px) {
+
+            .layout {
+
+                display: block;
+
+            }
+
+
+            .sidebar {
+
+                position: relative;
+
+                width: 100%;
+
+                min-height: auto;
+
+            }
+
+
+            .main {
+
+                margin-left: 0;
+
+                width: 100%;
+
+                padding:
+                        20px 14px 50px;
+
+            }
+
+
+            .menu {
+
+                display: grid;
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+                gap: 5px;
+
+            }
+
+
+            .menu a {
+
+                font-size: 12px;
+
+                padding: 10px;
+
+            }
+
+
+            .header h1 {
+
+                font-size: 26px;
+
+            }
+
+
+            .table-container {
+
+                overflow-x: auto;
+
+            }
+
+
+            table {
+
+                min-width: 950px;
+
+            }
+
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
 
-    <div class="logo">
-        🎓 AlumniConnect
-    </div>
+<div class="layout">
 
-    <div class="menu">
 
-        <a href="admin.html">
-            🏠 Dashboard
-        </a>
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
 
-        <a href="admin-users.html">
-            👥 Manage Users
-        </a>
+    <aside class="sidebar">
 
-        <a href="admin-alumni.html">
-            🎓 Verify Alumni
-        </a>
 
-        <a href="admin-jobs.html">
-            💼 Manage Jobs
-        </a>
+        <div class="logo">
 
-        <a href="admin-events.html" class="active">
-            📅 Manage Events
-        </a>
+            <div class="logo-icon">
+                🎓
+            </div>
 
-        <a href="admin-mentorship.html">
-            🤝 Mentorship Requests
-        </a>
 
-        <a href="admin-messages.html">
-            💬 Messages
-        </a>
+            <div class="logo-title">
+                Alumni<span>Connect</span>
+            </div>
 
-        <a href="admin-reports.html">
-            📊 Reports
-        </a>
 
-        <a href="/logout">
-            🚪 Logout
-        </a>
+            <div class="logo-subtitle">
 
-    </div>
+                Alumni Networking &<br>
+                Mentorship Portal
+
+            </div>
+
+        </div>
+
+
+        <nav class="menu">
+
+
+            <a href="/admin.html">
+
+                <span class="menu-icon">
+                    🏠
+                </span>
+
+                Dashboard
+
+            </a>
+
+
+            <a href="/admin-users.html">
+
+                <span class="menu-icon">
+                    👥
+                </span>
+
+                Manage Users
+
+            </a>
+
+
+            <a href="/admin-alumni.html">
+
+                <span class="menu-icon">
+                    🎓
+                </span>
+
+                Verify Alumni
+
+            </a>
+
+
+            <a href="/admin-jobs.html">
+
+                <span class="menu-icon">
+                    💼
+                </span>
+
+                Manage Jobs
+
+            </a>
+
+
+            <a href="/admin-events.html"
+               class="active">
+
+                <span class="menu-icon">
+                    📅
+                </span>
+
+                Manage Events
+
+            </a>
+
+
+            <a href="/mentorship.html">
+
+                <span class="menu-icon">
+                    🤝
+                </span>
+
+                Mentorship Requests
+
+            </a>
+
+
+            <a href="/messages.html">
+
+                <span class="menu-icon">
+                    💬
+                </span>
+
+                Messages
+
+            </a>
+
+
+            <a href="/admin.html">
+
+                <span class="menu-icon">
+                    📊
+                </span>
+
+                Reports
+
+            </a>
+
+
+            <a href="/logout">
+
+                <span class="menu-icon">
+                    🚪
+                </span>
+
+                Logout
+
+            </a>
+
+
+        </nav>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="main">
+
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+
+            <div>
+
+                <h1>
+                    Manage Events
+                </h1>
+
+                <p>
+                    Review and manage alumni events
+                </p>
+
+            </div>
+
+
+            <div class="admin-badge">
+
+                👤
+
+                <strong>
+                    Admin
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             EVENTS CARD
+        ========================== -->
+
+        <div class="card">
+
+
+            <div class="card-header">
+
+
+                <h2>
+                    All Events
+                </h2>
+
+
+                <input
+                        type="text"
+                        id="searchInput"
+                        class="search-box"
+                        placeholder="Search events..."
+                        onkeyup="searchEvents"
+                >
+
+            </div>
+
+
+
+            <div class="table-container">
+
+
+                <table>
+
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Event Title
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Time
+                        </th>
+
+                        <th>
+                            Location
+                        </th>
+
+                        <th>
+                            Organizer
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="eventTable">
+
+                    <tr>
+
+                        <td
+                                colspan="8"
+                                class="message">
+
+                            Loading events...
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
 
 </div>
 
-
-<!-- MAIN -->
-<div class="main">
-
-    <div class="topbar">
-
-        <div>
-            <h1>Manage Events</h1>
-            <p>Review and manage alumni events</p>
-        </div>
-
-        <div class="admin-info">
-            👤 <strong>Admin</strong>
-        </div>
-
-    </div>
-
-
-    <!-- SEARCH -->
-    <div class="search-box">
-
-        <input
-                type="text"
-                id="searchInput"
-                placeholder="Search by event title, location or organizer..."
-                onkeyup="searchEvents()">
-
-    </div>
-
-
-    <!-- EVENTS TABLE -->
-    <div class="panel">
-
-        <h2>All Events</h2>
-
-        <table>
-
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Event Title</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Location</th>
-                <th>Organizer</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-
-            <tbody id="eventTable">
-
-            <tr>
-                <td colspan="8" class="message">
-                    Loading events...
-                </td>
-            </tr>
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-</div>
 
 
 <script>
 
+
     let allEvents = [];
 
 
-    // LOAD EVENTS
+
+    /* =========================
+       LOAD EVENTS
+    ========================== */
+
     async function loadEvents() {
 
         try {
 
-            const response = await fetch("/api/events");
+            const response =
+                await fetch(
+                    "/api/events"
+                );
+
 
             if (!response.ok) {
-                throw new Error("Unable to load events");
+
+                if (
+                    response.status === 403
+                ) {
+
+                    throw new Error(
+                        "Access denied. Admin permission required."
+                    );
+
+                }
+
+
+                throw new Error(
+                    "Unable to load events."
+                );
+
             }
 
-            allEvents = await response.json();
 
-            displayEvents(allEvents);
+            allEvents =
+                await response.json();
 
-        } catch (error) {
+
+            displayEvents(
+                allEvents
+            );
+
+
+        }
+
+        catch (error) {
 
             console.error(error);
 
-            document.getElementById("eventTable").innerHTML = `
+
+            document.getElementById(
+                "eventTable"
+            ).innerHTML = `
+
                 <tr>
-                    <td colspan="8" class="message">
-                        Unable to load events.
+
+                    <td
+                        colspan="8"
+                        class="message">
+
+                        ${escapeHtml(
+                error.message
+            )}
+
                     </td>
+
                 </tr>
+
             `;
+
         }
+
     }
 
 
-    // DISPLAY EVENTS
+
+    /* =========================
+       DISPLAY EVENTS
+    ========================== */
+
     function displayEvents(events) {
 
         const table =
-            document.getElementById("eventTable");
+            document.getElementById(
+                "eventTable"
+            );
+
 
         table.innerHTML = "";
 
@@ -365,119 +1427,238 @@
         if (events.length === 0) {
 
             table.innerHTML = `
+
                 <tr>
-                    <td colspan="8" class="message">
+
+                    <td
+                        colspan="8"
+                        class="message">
+
                         No events found.
+
                     </td>
+
                 </tr>
+
             `;
 
             return;
+
         }
 
 
         events.forEach(event => {
 
             const row =
-                document.createElement("tr");
+                document.createElement(
+                    "tr"
+                );
+
 
             const status =
                 event.status || "PENDING";
 
-            let statusClass = "pending";
 
-            if (status === "APPROVED") {
-                statusClass = "approved";
+            let statusClass =
+                "pending";
+
+
+            if (
+                status === "APPROVED"
+            ) {
+
+                statusClass =
+                    "approved";
+
             }
 
-            if (status === "REJECTED") {
-                statusClass = "rejected";
+
+            else if (
+                status === "REJECTED"
+            ) {
+
+                statusClass =
+                    "rejected";
+
             }
 
 
             row.innerHTML = `
-                <td>${escapeHtml(event.id)}</td>
-
-                <td>${escapeHtml(event.title)}</td>
-
-                <td>${escapeHtml(event.date)}</td>
-
-                <td>${escapeHtml(event.time)}</td>
-
-                <td>${escapeHtml(event.location)}</td>
-
-                <td>${escapeHtml(event.organizer || "-")}</td>
 
                 <td>
-                    <span class="status ${statusClass}">
-                        ${escapeHtml(status)}
-                    </span>
+                    ${escapeHtml(
+                event.id
+            )}
                 </td>
 
+
                 <td>
+                    ${escapeHtml(
+                event.title
+            )}
+                </td>
+
+
+                <td>
+                    ${escapeHtml(
+                event.date
+            )}
+                </td>
+
+
+                <td>
+                    ${escapeHtml(
+                event.time
+            )}
+                </td>
+
+
+                <td>
+                    ${escapeHtml(
+                event.location
+            )}
+                </td>
+
+
+                <td>
+                    ${escapeHtml(
+                event.organizer ||
+                "-"
+            )}
+                </td>
+
+
+                <td>
+
+                    <span
+                        class="status ${statusClass}">
+
+                        ${escapeHtml(
+                status
+            )}
+
+                    </span>
+
+                </td>
+
+
+                <td>
+
 
                     <button
                         class="approve-btn"
                         onclick="approveEvent(${event.id})">
-                        Approve
+
+                        ✓ Approve
+
                     </button>
+
 
                     <button
                         class="reject-btn"
                         onclick="rejectEvent(${event.id})">
-                        Reject
+
+                        ✕ Reject
+
                     </button>
+
 
                     <button
                         class="delete-btn"
                         onclick="deleteEvent(${event.id})">
-                        Delete
+
+                        🗑 Delete
+
                     </button>
 
+
                 </td>
+
             `;
+
 
             table.appendChild(row);
 
         });
+
     }
 
 
-    // SEARCH EVENTS
+
+    /* =========================
+       SEARCH EVENTS
+    ========================== */
+
     function searchEvents() {
 
         const search =
-            document.getElementById("searchInput")
+
+            document
+                .getElementById(
+                    "searchInput"
+                )
                 .value
                 .toLowerCase();
 
+
         const filtered =
+
             allEvents.filter(event =>
 
-                (event.title || "")
+                (
+                    event.title ||
+                    ""
+                )
                     .toLowerCase()
                     .includes(search)
 
                 ||
 
-                (event.location || "")
+                (
+                    event.location ||
+                    ""
+                )
                     .toLowerCase()
                     .includes(search)
 
                 ||
 
-                (event.organizer || "")
+                (
+                    event.organizer ||
+                    ""
+                )
                     .toLowerCase()
                     .includes(search)
 
             );
 
-        displayEvents(filtered);
+
+        displayEvents(
+            filtered
+        );
+
     }
 
 
-    // APPROVE EVENT
+
+    /* =========================
+       APPROVE EVENT
+    ========================== */
+
     async function approveEvent(id) {
+
+        const confirmed =
+            confirm(
+                "Are you sure you want to approve this event?"
+            );
+
+
+        if (!confirmed) {
+
+            return;
+
+        }
+
 
         try {
 
@@ -489,25 +1670,58 @@
                     }
                 );
 
+
             if (!response.ok) {
-                throw new Error("Failed to approve event");
+
+                throw new Error(
+                    "Failed to approve event."
+                );
+
             }
 
-            alert("Event approved successfully.");
+
+            alert(
+                "Event approved successfully."
+            );
+
 
             loadEvents();
 
-        } catch (error) {
+        }
+
+        catch (error) {
 
             console.error(error);
 
-            alert("Failed to approve event.");
+
+            alert(
+                error.message
+            );
+
         }
+
     }
 
 
-    // REJECT EVENT
+
+    /* =========================
+       REJECT EVENT
+    ========================== */
+
     async function rejectEvent(id) {
+
+        const confirmed =
+            confirm(
+                "Are you sure you want to reject this event?"
+            );
+
+
+        if (!confirmed) {
+
+            return;
+
+        }
+
 
         try {
 
@@ -519,24 +1733,44 @@
                     }
                 );
 
+
             if (!response.ok) {
-                throw new Error("Failed to reject event");
+
+                throw new Error(
+                    "Failed to reject event."
+                );
+
             }
 
-            alert("Event rejected successfully.");
+
+            alert(
+                "Event rejected successfully."
+            );
+
 
             loadEvents();
 
-        } catch (error) {
+        }
+
+        catch (error) {
 
             console.error(error);
 
-            alert("Failed to reject event.");
+
+            alert(
+                error.message
+            );
+
         }
+
     }
 
 
-    // DELETE EVENT
+
+    /* =========================
+       DELETE EVENT
+    ========================== */
+
     async function deleteEvent(id) {
 
         const confirmed =
@@ -544,8 +1778,11 @@
                 "Are you sure you want to delete this event?"
             );
 
+
         if (!confirmed) {
+
             return;
+
         }
 
 
@@ -559,43 +1796,97 @@
                     }
                 );
 
+
             if (!response.ok) {
-                throw new Error("Failed to delete event");
+
+                throw new Error(
+                    "Failed to delete event."
+                );
+
             }
 
-            alert("Event deleted successfully.");
+
+            alert(
+                "Event deleted successfully."
+            );
+
 
             loadEvents();
 
-        } catch (error) {
+        }
+
+        catch (error) {
 
             console.error(error);
 
-            alert("Failed to delete event.");
+
+            alert(
+                error.message
+            );
+
         }
+
     }
 
 
-    // HTML ESCAPE
+
+    /* =========================
+       ESCAPE HTML
+    ========================== */
+
     function escapeHtml(value) {
 
-        if (value === null || value === undefined) {
+        if (
+            value === null ||
+            value === undefined
+        ) {
+
             return "";
+
         }
 
+
         return String(value)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
     }
 
 
-    // INITIAL LOAD
+
+    /* =========================
+       INITIAL LOAD
+    ========================== */
+
     loadEvents();
+
 
 </script>
 
+
 </body>
+
 </html>
