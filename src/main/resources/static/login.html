@@ -362,7 +362,7 @@
 
             text-align: center;
 
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
 
@@ -381,6 +381,92 @@
             font-size: 15px;
 
             color: #6a7f9e;
+        }
+
+
+        /* =====================================================
+           LOGIN TYPE TABS
+        ===================================================== */
+
+        .login-tabs {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .login-tab {
+
+            height: 58px;
+
+            border: 1px solid #d8e2ef;
+
+            border-radius: 12px;
+
+            background: #f8fbff;
+
+            color: #526984;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+        }
+
+
+        .login-tab:hover {
+
+            border-color: #3266ae;
+
+            color: #2458a6;
+
+            transform: translateY(-1px);
+        }
+
+
+        .login-tab.active {
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #eaf3ff,
+                            #dceaff
+                    );
+
+            border: 1.5px solid #2d66b3;
+
+            color: #1456c0;
+
+            box-shadow:
+                    0 4px 12px rgba(36, 88, 166, 0.10);
+        }
+
+
+        .login-tab-icon {
+
+            font-size: 20px;
+
+            margin-right: 6px;
+        }
+
+
+        .login-type-description {
+
+            text-align: center;
+
+            font-size: 13px;
+
+            color: #6a7f9e;
+
+            margin-bottom: 25px;
         }
 
 
@@ -691,6 +777,7 @@
                 gap: 18px;
             }
 
+
             .content {
 
                 grid-template-columns: 1fr;
@@ -698,10 +785,12 @@
                 gap: 35px;
             }
 
+
             .left-section {
 
                 text-align: center;
             }
+
 
             .description {
 
@@ -709,6 +798,7 @@
 
                 margin-right: auto;
             }
+
 
             .features {
 
@@ -718,6 +808,7 @@
 
                 text-align: left;
             }
+
 
             .quote {
 
@@ -734,37 +825,48 @@
                 height: auto;
 
                 padding: 20px;
-
             }
+
 
             .nav-links {
 
                 display: none;
             }
 
+
             .main-container {
 
                 padding: 30px 20px 50px;
             }
+
 
             .left-section h1 {
 
                 font-size: 37px;
             }
 
+
             .description {
 
                 font-size: 16px;
             }
+
 
             .login-card {
 
                 padding: 32px 25px;
             }
 
+
             .card-header h2 {
 
                 font-size: 27px;
+            }
+
+
+            .login-tab {
+
+                font-size: 13px;
             }
 
         }
@@ -847,8 +949,13 @@
         <section class="left-section">
 
             <h1>
+
                 Welcome Back to<br>
-                <span>Alumni Community</span>
+
+                <span>
+                    Alumni Community
+                </span>
+
             </h1>
 
 
@@ -956,6 +1063,7 @@
             <div class="quote">
 
                 Once a Student,<br>
+
                 Always a Part
 
             </div>
@@ -971,21 +1079,80 @@
         <section class="login-card">
 
 
+            <!-- CARD HEADER -->
+
             <div class="card-header">
 
-                <h2>
+                <h2 id="loginTitle">
                     Welcome Back
                 </h2>
 
-                <p>
-                    Sign in to your Alumni Portal account
+                <p id="loginSubtitle">
+                    Please select your login type to continue
                 </p>
 
             </div>
 
 
 
-            <!-- ERROR MESSAGE -->
+            <!-- =================================================
+                 LOGIN TYPE
+            ================================================== -->
+
+            <div class="login-tabs">
+
+
+                <!-- USER LOGIN -->
+
+                <button
+                        type="button"
+                        class="login-tab active"
+                        id="userLoginTab"
+                        onclick="selectLoginType('user')">
+
+                    <span class="login-tab-icon">
+                        👤
+                    </span>
+
+                    User Login
+
+                </button>
+
+
+
+                <!-- ADMIN LOGIN -->
+
+                <button
+                        type="button"
+                        class="login-tab"
+                        id="adminLoginTab"
+                        onclick="selectLoginType('admin')">
+
+                    <span class="login-tab-icon">
+                        🔐
+                    </span>
+
+                    Admin Login
+
+                </button>
+
+            </div>
+
+
+
+            <div
+                    class="login-type-description"
+                    id="loginTypeDescription">
+
+                Login as a Student or Alumni
+
+            </div>
+
+
+
+            <!-- =================================================
+                 ERROR MESSAGE
+            ================================================== -->
 
             <div
                     id="errorMessage"
@@ -999,7 +1166,9 @@
 
 
 
-            <!-- LOGOUT MESSAGE -->
+            <!-- =================================================
+                 LOGOUT MESSAGE
+            ================================================== -->
 
             <div
                     id="logoutMessage"
@@ -1012,7 +1181,9 @@
 
 
 
-            <!-- LOGIN FORM -->
+            <!-- =================================================
+                 LOGIN FORM
+            ================================================== -->
 
             <form
                     action="/login"
@@ -1034,6 +1205,7 @@
                         <span class="input-icon">
                             ✉
                         </span>
+
 
                         <input
                                 type="email"
@@ -1064,6 +1236,7 @@
                             🔒
                         </span>
 
+
                         <input
                                 type="password"
                                 id="password"
@@ -1071,6 +1244,7 @@
                                 placeholder="Enter your password"
                                 required
                                 autocomplete="current-password">
+
 
                         <button
                                 type="button"
@@ -1092,9 +1266,10 @@
 
                 <button
                         type="submit"
-                        class="login-button">
+                        class="login-button"
+                        id="loginButton">
 
-                    Sign In &nbsp; →
+                    Login as User &nbsp; →
 
                 </button>
 
@@ -1102,7 +1277,9 @@
 
 
 
-            <!-- DIVIDER -->
+            <!-- =================================================
+                 DIVIDER
+            ================================================== -->
 
             <div class="divider">
                 OR
@@ -1110,7 +1287,9 @@
 
 
 
-            <!-- REGISTER -->
+            <!-- =================================================
+                 REGISTER
+            ================================================== -->
 
             <div class="register-section">
 
@@ -1126,11 +1305,14 @@
 
 
 
-            <!-- FOOTER -->
+            <!-- =================================================
+                 FOOTER
+            ================================================== -->
 
             <div class="footer">
 
                 Alumni Networking &
+
                 Mentorship Portal
 
             </div>
@@ -1145,6 +1327,126 @@
 
 
 <script>
+
+
+    /* =========================================================
+       LOGIN TYPE
+    ========================================================= */
+
+    let selectedLoginType = "user";
+
+
+    function selectLoginType(type) {
+
+        selectedLoginType = type;
+
+
+        const userTab =
+            document.getElementById(
+                "userLoginTab"
+            );
+
+
+        const adminTab =
+            document.getElementById(
+                "adminLoginTab"
+            );
+
+
+        const loginTitle =
+            document.getElementById(
+                "loginTitle"
+            );
+
+
+        const loginSubtitle =
+            document.getElementById(
+                "loginSubtitle"
+            );
+
+
+        const loginDescription =
+            document.getElementById(
+                "loginTypeDescription"
+            );
+
+
+        const loginButton =
+            document.getElementById(
+                "loginButton"
+            );
+
+
+        /* =====================================================
+           ADMIN LOGIN
+        ===================================================== */
+
+        if (type === "admin") {
+
+            userTab.classList.remove(
+                "active"
+            );
+
+
+            adminTab.classList.add(
+                "active"
+            );
+
+
+            loginTitle.textContent =
+                "Admin Login";
+
+
+            loginSubtitle.textContent =
+                "Sign in to access the administration panel";
+
+
+            loginDescription.textContent =
+                "Login as an Administrator";
+
+
+            loginButton.textContent =
+                "Login as Admin  →";
+
+
+        }
+
+
+        /* =====================================================
+           USER LOGIN
+        ===================================================== */
+
+        else {
+
+            adminTab.classList.remove(
+                "active"
+            );
+
+
+            userTab.classList.add(
+                "active"
+            );
+
+
+            loginTitle.textContent =
+                "Welcome Back";
+
+
+            loginSubtitle.textContent =
+                "Sign in to your Alumni Portal account";
+
+
+            loginDescription.textContent =
+                "Login as a Student or Alumni";
+
+
+            loginButton.textContent =
+                "Login as User  →";
+
+        }
+
+    }
+
 
 
     /* =========================================================
@@ -1204,23 +1506,40 @@
     function togglePassword() {
 
         const password =
-            document.getElementById("password");
+            document.getElementById(
+                "password"
+            );
+
 
         const toggle =
-            document.getElementById("passwordToggle");
+            document.getElementById(
+                "passwordToggle"
+            );
 
 
-        if (password.type === "password") {
+        if (
+            password.type ===
+            "password"
+        ) {
 
-            password.type = "text";
+            password.type =
+                "text";
 
-            toggle.textContent = "🙈";
 
-        } else {
+            toggle.textContent =
+                "🙈";
 
-            password.type = "password";
+        }
 
-            toggle.textContent = "👁";
+
+        else {
+
+            password.type =
+                "password";
+
+
+            toggle.textContent =
+                "👁";
 
         }
 
@@ -1240,33 +1559,47 @@
             );
 
 
-        /* LOGIN ERROR */
+        /* =====================================================
+           LOGIN ERROR
+        ===================================================== */
 
         if (
-            params.get("error") === "true"
+            params.get("error") ===
+            "true"
         ) {
 
             document
-                .getElementById("errorMessage")
-                .style.display = "block";
+                .getElementById(
+                    "errorMessage"
+                )
+                .style.display =
+                "block";
 
         }
 
 
-        /* LOGOUT */
+
+        /* =====================================================
+           LOGOUT
+        ===================================================== */
 
         if (
-            params.get("logout") === "true"
+            params.get("logout") ===
+            "true"
         ) {
 
             document
-                .getElementById("logoutMessage")
-                .style.display = "block";
+                .getElementById(
+                    "logoutMessage"
+                )
+                .style.display =
+                "block";
 
 
             sessionStorage.removeItem(
                 "loggedInEmail"
             );
+
 
             sessionStorage.removeItem(
                 "currentUser"
@@ -1276,6 +1609,7 @@
             localStorage.removeItem(
                 "loggedInEmail"
             );
+
 
             localStorage.removeItem(
                 "currentUser"
