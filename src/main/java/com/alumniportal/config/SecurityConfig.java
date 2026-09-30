@@ -39,114 +39,87 @@ public class SecurityConfig {
             throws Exception {
 
         http
-
-                // =========================
-                // CSRF
-                // =========================
                 .csrf(csrf -> csrf.disable())
 
+                .authorizeHttpRequests(auth -> auth
 
-                // =========================
-                // AUTHORIZATION
-                // =========================
-                .authorizeHttpRequests(auth -> auth)
+                        // =========================
+                        // ADMIN PAGES
+                        // =========================
+                        .requestMatchers(
+                                "/admin.html",
+                                "/admin-users.html",
+                                "/admin-alumni.html",
+                                "/admin-jobs.html",
+                                "/admin-events.html",
+                                "/admin-mentorship.html",
+                                "/admin-messages.html",
+                                "/admin-reports.html"
+                        ).hasRole("ADMIN")
 
+                        // =========================
+                        // PUBLIC STATIC PAGES
+                        // =========================
+                        .requestMatchers(
+                                "/login.html",
+                                "/register.html",
+                                "/dashboard.html",
+                                "/profile.html",
+                                "/alumni.html",
+                                "/mentorship.html",
+                                "/jobs.html",
+                                "/events.html",
+                                "/messages.html",
+                                "/applications.html",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**",
+                                "/favicon.ico"
+                        ).permitAll()
 
-                // =========================
-                // ADMIN PAGES
-                // =========================
-                .requestMatchers(
-                        "/admin.html",
-                        "/admin-users.html",
-                        "/admin-alumni.html",
-                        "/admin-jobs.html",
-                        "/admin-events.html",
-                        "/admin-mentorship.html",
-                        "/admin-messages.html",
-                        "/admin-reports.html"
-                ).hasRole("ADMIN")
+                        // =========================
+                        // LOGIN
+                        // =========================
+                        .requestMatchers("/login").permitAll()
 
+                        // =========================
+                        // USER REGISTRATION
+                        // =========================
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/users"
+                        ).permitAll()
 
-                // =========================
-                // PUBLIC / USER PAGES
-                // =========================
-                .requestMatchers(
-                        "/login.html",
-                        "/register.html",
-                        "/dashboard.html",
-                        "/profile.html",
-                        "/alumni.html",
-                        "/mentorship.html",
-                        "/jobs.html",
-                        "/events.html",
-                        "/messages.html",
-                        "/applications.html"
-                ).permitAll()
+                        // =========================
+                        // PROFILE APIs
+                        // =========================
+                        .requestMatchers("/api/profiles/**").permitAll()
 
+                        // =========================
+                        // USER API
+                        // =========================
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/users"
+                        ).authenticated()
 
-                // =========================
-                // STATIC RESOURCES
-                // =========================
-                .requestMatchers(
-                        "/css/**",
-                        "/js/**",
-                        "/images/**",
-                        "/favicon.ico"
-                ).permitAll()
+                        // =========================
+                        // DELETE USER - ADMIN ONLY
+                        // =========================
+                        .requestMatchers(
+                                HttpMethod.DELETE,
+                                "/api/users/**"
+                        ).hasRole("ADMIN")
 
-
-                // =========================
-                // LOGIN
-                // =========================
-                .requestMatchers("/login")
-                .permitAll()
-
-
-                // =========================
-                // USER REGISTRATION
-                // =========================
-                .requestMatchers(
-                        HttpMethod.POST,
-                        "/api/users"
-                ).permitAll()
-
-
-                // =========================
-                // PROFILE APIs
-                // =========================
-                .requestMatchers(
-                        "/api/profiles/**"
-                ).permitAll()
-
-
-                // =========================
-                // ADMIN USER APIs
-                // =========================
-
-                .requestMatchers(
-                        HttpMethod.GET,
-                        "/api/users"
-                ).hasRole("ADMIN")
-
-
-                .requestMatchers(
-                        HttpMethod.DELETE,
-                        "/api/users/**"
-                ).hasRole("ADMIN")
-
-
-                // =========================
-                // OTHER APIs
-                // =========================
-                .anyRequest()
-                .authenticated()
-
+                        // =========================
+                        // EVERYTHING ELSE
+                        // =========================
+                        .anyRequest().authenticated()
+                )
 
                 // =========================
                 // FORM LOGIN
                 // =========================
-                .and()
-
                 .formLogin(form -> form
                         .loginPage("/login.html")
                         .loginProcessingUrl("/login")
@@ -155,25 +128,14 @@ public class SecurityConfig {
                         .permitAll()
                 )
 
-
                 // =========================
                 // LOGOUT
                 // =========================
                 .logout(logout -> logout
-
                         .logoutUrl("/logout")
-
-                        .logoutSuccessUrl(
-                                "/login.html?logout=true"
-                        )
-
-                        .invalidateHttpSession(true)
-
-                        .deleteCookies("JSESSIONID")
-
+                        .logoutSuccessUrl("/login.html?logout=true")
                         .permitAll()
                 );
-
 
         return http.build();
     }
