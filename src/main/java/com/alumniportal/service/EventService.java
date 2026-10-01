@@ -15,37 +15,62 @@ public class EventService {
         this.eventRepository = eventRepository;
     }
 
-    // Create a new event
+    // =========================================================
+    // CREATE A NEW EVENT
+    // =========================================================
+
     public Event createEvent(Event event) {
+
+        // Every newly created event starts as PENDING
+        event.setStatus("PENDING");
+
         return eventRepository.save(event);
     }
 
-    // Get all events
+    // =========================================================
+    // GET ALL EVENTS
+    // =========================================================
+
     public List<Event> getAllEvents() {
         return eventRepository.findAll();
     }
 
-    // Get event by ID
+    // =========================================================
+    // GET EVENT BY ID
+    // =========================================================
+
     public Event getEventById(Long id) {
         return eventRepository.findById(id).orElse(null);
     }
 
-    // Search events by title
+    // =========================================================
+    // SEARCH EVENTS BY TITLE
+    // =========================================================
+
     public List<Event> searchByTitle(String title) {
         return eventRepository.findByTitleContainingIgnoreCase(title);
     }
 
-    // Search events by location
+    // =========================================================
+    // SEARCH EVENTS BY LOCATION
+    // =========================================================
+
     public List<Event> searchByLocation(String location) {
         return eventRepository.findByLocationContainingIgnoreCase(location);
     }
 
-    // Search events by organizer
+    // =========================================================
+    // SEARCH EVENTS BY ORGANIZER
+    // =========================================================
+
     public List<Event> searchByOrganizer(String organizer) {
         return eventRepository.findByOrganizerContainingIgnoreCase(organizer);
     }
 
-    // Approve event
+    // =========================================================
+    // APPROVE EVENT
+    // =========================================================
+
     public Event approveEvent(Long id) {
 
         Event event = eventRepository.findById(id)
@@ -57,7 +82,10 @@ public class EventService {
         return eventRepository.save(event);
     }
 
-    // Reject event
+    // =========================================================
+    // REJECT EVENT
+    // =========================================================
+
     public Event rejectEvent(Long id) {
 
         Event event = eventRepository.findById(id)
@@ -69,7 +97,10 @@ public class EventService {
         return eventRepository.save(event);
     }
 
-    // Delete event
+    // =========================================================
+    // DELETE EVENT
+    // =========================================================
+
     public void deleteEvent(Long id) {
         eventRepository.deleteById(id);
     }
