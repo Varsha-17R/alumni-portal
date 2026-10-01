@@ -1,3 +1,4 @@
+```
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -240,16 +241,378 @@
             .alumni-shared-theme .shared-user-photo{width:34px;height:34px}
         }
 
+
+        /* =========================================================
+           ALUMNICONNECT MESSAGES — NEW MODERN THEME
+           Same navy / purple / blue palette as Mentorship
+        ========================================================= */
+        :root{
+            --navy:#17153f;
+            --navy2:#211d52;
+            --sidebarEnd:#29265f;
+            --purple:#6652df;
+            --blue:#5878e5;
+            --purpleLight:#eeeaff;
+            --bg:#f4f6ff;
+            --text:#17204a;
+            --muted:#7180a3;
+            --border:#e5e8f4;
+            --white:#ffffff;
+        }
+
+        body.alumni-shared-theme{
+            background:
+                    radial-gradient(circle at 90% 8%, rgba(102,82,223,.12), transparent 25%),
+                    radial-gradient(circle at 12% 85%, rgba(88,120,229,.08), transparent 28%),
+                    linear-gradient(135deg,#f7f8ff 0%,#f0f2ff 52%,#f8f9ff 100%) !important;
+            color:var(--text) !important;
+            min-height:100vh;
+        }
+
+        body.alumni-shared-theme::before{
+            background-image:
+                    linear-gradient(rgba(102,82,223,.025) 1px,transparent 1px),
+                    linear-gradient(90deg,rgba(102,82,223,.025) 1px,transparent 1px) !important;
+            background-size:42px 42px !important;
+        }
+
+        /* TOP HEADER */
+        body.alumni-shared-theme .navbar{
+            height:68px !important;
+            position:fixed !important;
+            top:0 !important;
+            left:0 !important;
+            right:0 !important;
+            z-index:1000 !important;
+            padding:0 22px !important;
+            background:linear-gradient(90deg,var(--navy),#201c50) !important;
+            border:0 !important;
+            box-shadow:0 8px 25px rgba(23,21,63,.18) !important;
+        }
+
+        body.alumni-shared-theme .brand{
+            color:#fff !important;
+            font-size:20px !important;
+            font-weight:800 !important;
+            letter-spacing:-.2px;
+        }
+
+        body.alumni-shared-theme .brand-icon{
+            width:38px !important;
+            height:38px !important;
+            border-radius:11px !important;
+            background:linear-gradient(135deg,#725cf0,#5577e8) !important;
+            box-shadow:0 6px 16px rgba(102,82,223,.28);
+        }
+
+        body.alumni-shared-theme .nav-right{
+            gap:12px !important;
+        }
+
+        body.alumni-shared-theme .nav-link{
+            display:none !important;
+        }
+
+        body.alumni-shared-theme .nav-right::before{
+            content:'Welcome, Varsha R';
+            color:#fff;
+            font-size:13px;
+            font-weight:700;
+            margin-right:4px;
+        }
+
+        body.alumni-shared-theme .nav-avatar{
+            width:36px !important;
+            height:36px !important;
+            border:2px solid rgba(255,255,255,.28) !important;
+            background:linear-gradient(135deg,#6652df,#5878e5) !important;
+            color:#fff !important;
+            font-size:12px;
+        }
+
+        body.alumni-shared-theme .nav-right::after{
+            content:'Logout';
+            color:#fff;
+            font-size:12px;
+            font-weight:700;
+            border:1px solid rgba(255,255,255,.25);
+            border-radius:8px;
+            padding:9px 14px;
+            cursor:pointer;
+        }
+
+        /* SIDEBAR */
+        body.alumni-shared-theme .sidebar{
+            position:fixed !important;
+            top:68px !important;
+            left:0 !important;
+            bottom:0 !important;
+            width:225px !important;
+            padding:24px 14px !important;
+            background:linear-gradient(180deg,var(--navy) 0%,var(--navy2) 55%,var(--sidebarEnd) 100%) !important;
+            border-right:1px solid rgba(255,255,255,.06) !important;
+            box-shadow:6px 0 25px rgba(23,21,63,.12) !important;
+            z-index:900 !important;
+        }
+
+        body.alumni-shared-theme .sidebar-profile{
+            display:none !important;
+        }
+
+        body.alumni-shared-theme .sidebar-menu{
+            gap:5px !important;
+        }
+
+        body.alumni-shared-theme .sidebar-menu::before{
+            content:'MAIN MENU';
+            display:block;
+            color:#9d9abd;
+            font-size:10px;
+            font-weight:800;
+            letter-spacing:1.3px;
+            padding:0 14px;
+            margin:2px 0 13px;
+        }
+
+        body.alumni-shared-theme .sidebar-menu a{
+            position:relative;
+            color:#c8c6df !important;
+            padding:12px 14px !important;
+            margin-bottom:2px;
+            border-radius:10px !important;
+            font-size:13px;
+            font-weight:600;
+            transition:.2s ease;
+        }
+
+        body.alumni-shared-theme .sidebar-menu a:hover{
+            background:rgba(255,255,255,.08) !important;
+            color:#fff !important;
+            transform:translateX(2px);
+        }
+
+        body.alumni-shared-theme .sidebar-menu a.active{
+            background:linear-gradient(135deg,var(--purple),var(--blue)) !important;
+            color:#fff !important;
+            box-shadow:0 7px 18px rgba(88,78,210,.28) !important;
+            border-left:0 !important;
+        }
+
+        body.alumni-shared-theme .sidebar-menu a.active::before{
+            content:'';
+            position:absolute;
+            left:-14px;
+            top:50%;
+            transform:translateY(-50%);
+            width:4px;
+            height:26px;
+            border-radius:0 5px 5px 0;
+            background:#fff;
+        }
+
+        /* MAIN */
+        body.alumni-shared-theme .main{
+            margin-left:225px !important;
+            width:calc(100% - 225px) !important;
+            max-width:none !important;
+            padding:96px 34px 34px !important;
+        }
+
+        body.alumni-shared-theme .page-heading{
+            max-width:1250px;
+            margin:0 auto 20px !important;
+        }
+
+        body.alumni-shared-theme .page-heading h1{
+            font-size:30px !important;
+            color:var(--text) !important;
+            margin-bottom:5px !important;
+            letter-spacing:-.5px;
+        }
+
+        body.alumni-shared-theme .subtitle{
+            color:var(--muted) !important;
+        }
+
+        /* STATS */
+        body.alumni-shared-theme .stats{
+            max-width:1250px;
+            margin:0 auto 20px !important;
+            gap:16px !important;
+        }
+
+        body.alumni-shared-theme .stat{
+            border:1px solid var(--border) !important;
+            border-radius:15px !important;
+            padding:17px 19px !important;
+            box-shadow:0 7px 24px rgba(34,37,88,.055) !important;
+        }
+
+        body.alumni-shared-theme .stat-icon{
+            background:var(--purpleLight) !important;
+            color:var(--purple) !important;
+        }
+
+        body.alumni-shared-theme .stat-value{color:var(--text) !important}
+        body.alumni-shared-theme .stat-label{color:var(--muted) !important}
+
+        /* MESSAGE AREA */
+        body.alumni-shared-theme .messaging-shell{
+            max-width:1250px;
+            margin:0 auto;
+            grid-template-columns:330px 1fr !important;
+            min-height:650px !important;
+            border:1px solid var(--border) !important;
+            border-radius:18px !important;
+            background:#fff !important;
+            box-shadow:0 12px 35px rgba(34,37,88,.07) !important;
+        }
+
+        body.alumni-shared-theme .conversation-panel{
+            background:#fbfbff !important;
+            border-right:1px solid var(--border) !important;
+        }
+
+        body.alumni-shared-theme .panel-head{
+            padding:20px !important;
+            background:#fff !important;
+        }
+
+        body.alumni-shared-theme .panel-head h2{
+            color:var(--text) !important;
+        }
+
+        body.alumni-shared-theme .panel-head p,
+        body.alumni-shared-theme .person-meta,
+        body.alumni-shared-theme .chat-status,
+        body.alumni-shared-theme .compose-target{
+            color:var(--muted) !important;
+        }
+
+        body.alumni-shared-theme .search-box input{
+            background:#f5f6ff !important;
+            border-color:#e0e3f2 !important;
+        }
+
+        body.alumni-shared-theme .search-box input:focus{
+            border-color:var(--purple) !important;
+            box-shadow:0 0 0 3px rgba(102,82,223,.10);
+        }
+
+        body.alumni-shared-theme .recipient{
+            padding:14px 18px !important;
+            border-bottom:1px solid #eceef7 !important;
+        }
+
+        body.alumni-shared-theme .recipient:hover,
+        body.alumni-shared-theme .recipient.selected{
+            background:var(--purpleLight) !important;
+        }
+
+        body.alumni-shared-theme .person-avatar,
+        body.alumni-shared-theme .welcome-icon{
+            background:var(--purpleLight) !important;
+            color:var(--purple) !important;
+        }
+
+        body.alumni-shared-theme .chat-panel{
+            background:#fff !important;
+        }
+
+        body.alumni-shared-theme .chat-head{
+            padding:17px 22px !important;
+            background:#fff !important;
+            border-bottom:1px solid var(--border) !important;
+        }
+
+        body.alumni-shared-theme .chat-name{
+            color:var(--text) !important;
+        }
+
+        body.alumni-shared-theme .refresh-btn{
+            border-color:#dedff0 !important;
+            color:#596783 !important;
+            background:#fff !important;
+        }
+
+        body.alumni-shared-theme .refresh-btn:hover{
+            color:var(--purple) !important;
+            border-color:var(--purple) !important;
+        }
+
+        body.alumni-shared-theme .chat-body{
+            background:linear-gradient(180deg,#f7f7ff,#f3f5ff) !important;
+        }
+
+        body.alumni-shared-theme .bubble{
+            border-color:#e4e6f2 !important;
+            background:#fff !important;
+        }
+
+        body.alumni-shared-theme .outgoing .bubble{
+            background:linear-gradient(135deg,var(--purple),var(--blue)) !important;
+            border-color:transparent !important;
+        }
+
+        body.alumni-shared-theme .chat-compose{
+            background:#fff !important;
+            border-top:1px solid var(--border) !important;
+        }
+
+        body.alumni-shared-theme .compose-area textarea{
+            background:#f8f8ff !important;
+            border-color:#dedff0 !important;
+        }
+
+        body.alumni-shared-theme .compose-area textarea:focus{
+            border-color:var(--purple) !important;
+            box-shadow:0 0 0 3px rgba(102,82,223,.10) !important;
+        }
+
+        body.alumni-shared-theme .send-btn{
+            background:linear-gradient(135deg,var(--purple),var(--blue)) !important;
+            box-shadow:0 7px 16px rgba(102,82,223,.22);
+        }
+
+        body.alumni-shared-theme .send-btn:hover{
+            background:linear-gradient(135deg,#5c49cf,#4e6fd8) !important;
+        }
+
+        body.alumni-shared-theme .alert{
+            max-width:1250px;
+            margin-left:auto !important;
+            margin-right:auto !important;
+        }
+
+        @media(max-width:900px){
+            body.alumni-shared-theme .sidebar{width:190px !important}
+            body.alumni-shared-theme .main{margin-left:190px !important;width:calc(100% - 190px) !important;padding:92px 22px 25px !important}
+            body.alumni-shared-theme .messaging-shell{grid-template-columns:285px 1fr !important}
+        }
+
+        @media(max-width:700px){
+            body.alumni-shared-theme .navbar{padding:0 14px !important}
+            body.alumni-shared-theme .nav-right::before{display:none}
+            body.alumni-shared-theme .nav-right::after{display:none}
+            body.alumni-shared-theme .sidebar{display:none !important}
+            body.alumni-shared-theme .main{margin-left:0 !important;width:100% !important;padding:88px 15px 20px !important}
+            body.alumni-shared-theme .page-heading h1{font-size:25px !important}
+            body.alumni-shared-theme .stats{grid-template-columns:1fr !important}
+            body.alumni-shared-theme .messaging-shell{grid-template-columns:1fr !important}
+        }
+
     </style>
 </head>
 <body class="alumni-shared-theme">
 
 <header class="navbar">
-    <div class="brand"><div class="brand-icon">A</div> AlumniConnect</div>
+    <div class="brand">
+        <div class="brand-icon">A</div>
+        <span>AlumniConnect</span>
+    </div>
     <div class="nav-right">
-        <a class="nav-link" href="/dashboard.html">Home</a>
-        <a class="nav-link" href="/messages.html">Messages</a>
         <div class="nav-avatar" id="navAvatar">U</div>
+        <button type="button" onclick="logoutSession(event)" style="display:none">Logout</button>
     </div>
 </header>
 
@@ -263,19 +626,18 @@
         <a href="/dashboard.html">🏠 Dashboard</a>
         <a href="/profile.html">👤 My Profile</a>
         <a href="/alumni.html">👥 Alumni Network</a>
-        <a href="/mentorship.html">🎓 Mentorship</a>
+        <a href="/mentorship.html">🤝 Mentorship</a>
         <a href="/jobs.html">💼 Jobs</a>
         <a href="/events.html">📅 Events</a>
         <a href="/messages.html" class="active">💬 Messages</a>
-        <a href="/applications.html">📄 Applications</a>
-        <a href="/logout" onclick="logoutSession(event)">🚪 Logout</a>
+        <a href="/applications.html">✓ Applications</a>
     </nav>
 </aside>
 
 <main class="main">
     <div class="page-heading">
         <h1>Messages</h1>
-        <p class="subtitle">Connect directly with students and alumni across your network.</p>
+        <p class="subtitle">Stay connected with students and alumni across your network.</p>
     </div>
 
     <div id="successMessage" class="alert success"></div>
