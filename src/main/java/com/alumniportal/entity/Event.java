@@ -46,6 +46,19 @@ public class Event {
         this.time = time;
         this.location = location;
         this.organizer = organizer;
+        this.status = "PENDING";
+    }
+
+    // =========================================================
+    // GUARANTEE DEFAULT STATUS BEFORE DATABASE INSERT
+    // =========================================================
+
+    @PrePersist
+    public void setDefaultStatus() {
+
+        if (status == null || status.trim().isEmpty()) {
+            status = "PENDING";
+        }
     }
 
     public Long getId() {
