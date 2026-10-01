@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>My Profile - AlumniConnect</title>
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -14,409 +16,685 @@
         }
 
         body {
-            background: #f5f3ff;
-            color: #25234a;
+            background: #f5f7ff;
+            color: #15133b;
         }
 
-        /* ================= SIDEBAR ================= */
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
 
         .sidebar {
             position: fixed;
             left: 0;
             top: 0;
-            width: 250px;
+
+            width: 218px;
             height: 100vh;
-            background: linear-gradient(180deg, #4c1d95, #6d28d9, #2563eb);
+
+            background: linear-gradient(
+                    180deg,
+                    #17153f,
+                    #29265f
+            );
+
             color: white;
-            padding: 25px 18px;
+
+            padding: 26px 15px;
+
             z-index: 1000;
-            box-shadow: 5px 0 20px rgba(76, 29, 149, 0.15);
+
+            box-shadow: 3px 0 15px rgba(20, 18, 60, 0.08);
         }
 
         .logo {
-            text-align: center;
-            margin-bottom: 35px;
+            text-align: left;
+            padding: 0 9px;
+            margin-bottom: 30px;
         }
 
         .logo-icon {
-            width: 55px;
-            height: 55px;
-            border-radius: 16px;
-            background: rgba(255,255,255,0.15);
+            width: 39px;
+            height: 39px;
+
+            border-radius: 11px;
+
+            background: #7357e8;
+
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: auto;
-            font-size: 27px;
-            backdrop-filter: blur(10px);
+
+            font-size: 19px;
+
+            margin-bottom: 8px;
         }
 
         .logo h2 {
-            margin-top: 12px;
-            font-size: 21px;
+            font-size: 17px;
+            font-weight: 700;
         }
 
         .logo p {
-            font-size: 12px;
-            opacity: 0.75;
-            margin-top: 3px;
+            font-size: 8px;
+            opacity: 0.65;
+            margin-top: 2px;
         }
 
         .menu {
             display: flex;
             flex-direction: column;
-            gap: 7px;
+            gap: 5px;
+        }
+
+        .menu::before {
+            content: "MAIN MENU";
+
+            font-size: 9px;
+
+            color: #8581a8;
+
+            margin: 0 10px 5px;
+
+            letter-spacing: 1px;
         }
 
         .menu a {
             text-decoration: none;
-            color: rgba(255,255,255,0.82);
-            padding: 13px 15px;
-            border-radius: 12px;
+
+            color: #d1cee6;
+
+            padding: 12px 14px;
+
+            border-radius: 10px;
+
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 14px;
-            transition: 0.25s;
+
+            gap: 11px;
+
+            font-size: 12px;
+
+            transition: 0.2s;
         }
 
-        .menu a:hover,
-        .menu a.active {
-            background: rgba(255,255,255,0.16);
+        .menu a:hover {
+            background: rgba(255,255,255,0.08);
             color: white;
-            transform: translateX(3px);
+        }
+
+        .menu a.active {
+            background: #6953df;
+            color: white;
+
+            box-shadow:
+                    0 5px 15px rgba(105,83,223,0.25);
         }
 
         .menu-icon {
-            width: 25px;
+            width: 20px;
+
             text-align: center;
-            font-size: 17px;
+
+            font-size: 14px;
         }
 
         .logout {
             position: absolute;
-            bottom: 25px;
-            left: 18px;
-            right: 18px;
+
+            bottom: 20px;
+
+            left: 15px;
+            right: 15px;
         }
 
         .logout a {
             text-decoration: none;
-            color: white;
-            padding: 13px 15px;
-            border-radius: 12px;
-            background: rgba(255,255,255,0.10);
+
+            color: #ffb2a8;
+
+            padding: 10px 14px;
+
+            border-radius: 9px;
+
+            background: rgba(196,72,94,0.18);
+
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 14px;
+
+            gap: 10px;
+
+            font-size: 12px;
         }
 
         .logout a:hover {
-            background: rgba(255,255,255,0.20);
+            background: rgba(196,72,94,0.28);
         }
 
-        /* ================= MAIN ================= */
+        /* =====================================================
+           MAIN
+        ===================================================== */
 
         .main {
-            margin-left: 250px;
+            margin-left: 218px;
+
             min-height: 100vh;
-            padding: 28px 35px;
+
+            padding: 30px;
         }
 
-        /* ================= TOPBAR ================= */
+        /* =====================================================
+           TOP BAR
+        ===================================================== */
 
         .topbar {
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
-            margin-bottom: 28px;
+
+            margin-bottom: 25px;
+        }
+
+        .topbar-left {
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
         }
 
         .topbar h1 {
-            font-size: 28px;
-            color: #2e1065;
+            font-size: 25px;
+
+            color: #17153f;
         }
 
         .topbar p {
-            color: #77739a;
-            margin-top: 5px;
-            font-size: 14px;
+            color: #7d799c;
+
+            margin-top: 4px;
+
+            font-size: 12px;
         }
 
         .user-mini {
             display: flex;
+
             align-items: center;
-            gap: 12px;
+
+            gap: 9px;
+
             background: white;
-            padding: 8px 15px 8px 8px;
+
+            padding: 7px 15px 7px 7px;
+
             border-radius: 30px;
-            box-shadow: 0 5px 20px rgba(76, 29, 149, 0.08);
+
+            box-shadow:
+                    0 4px 18px rgba(36,31,90,0.07);
         }
 
         .user-mini img {
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
+
             border-radius: 50%;
+
             object-fit: cover;
-            background: #ede9fe;
+
+            background: #eeeaff;
         }
 
         .user-mini span {
-            font-size: 14px;
+            font-size: 12px;
+
             font-weight: 600;
+
+            color: #29264e;
         }
 
-        /* ================= PROFILE HERO ================= */
+        /* =====================================================
+           MOBILE MENU
+        ===================================================== */
+
+        .mobile-menu {
+            display: none;
+
+            width: 40px;
+            height: 40px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background: #6652df;
+
+            color: white;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 20px;
+
+            cursor: pointer;
+        }
+
+        /* =====================================================
+           PROFILE HERO
+        ===================================================== */
 
         .profile-hero {
             background: white;
-            border-radius: 22px;
+
+            border-radius: 18px;
+
             overflow: hidden;
-            box-shadow: 0 8px 30px rgba(76, 29, 149, 0.08);
-            margin-bottom: 25px;
+
+            box-shadow:
+                    0 5px 20px rgba(52,45,120,0.07);
+
+            margin-bottom: 20px;
         }
 
         .cover {
-            height: 150px;
+            height: 145px;
+
             background:
-                    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.22), transparent 25%),
-                    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.18), transparent 25%),
-                    linear-gradient(135deg, #4c1d95, #7c3aed, #2563eb);
+                    radial-gradient(
+                            circle at 90% 15%,
+                            rgba(255,255,255,0.18),
+                            transparent 25%
+                    ),
+                    radial-gradient(
+                            circle at 78% 100%,
+                            rgba(255,255,255,0.12),
+                            transparent 20%
+                    ),
+                    linear-gradient(
+                            110deg,
+                            #6552df,
+                            #725be7,
+                            #597ce8
+                    );
         }
 
         .profile-main {
             display: flex;
+
             align-items: center;
-            gap: 22px;
-            padding: 0 28px 25px;
-            margin-top: -55px;
+
+            gap: 20px;
+
+            padding: 0 25px 22px;
+
+            margin-top: -52px;
         }
 
         .profile-photo {
-            width: 125px;
-            height: 125px;
+            width: 112px;
+            height: 112px;
+
             border-radius: 50%;
-            border: 6px solid white;
-            background: #ede9fe;
+
+            border: 5px solid white;
+
+            background: #eeeaff;
+
             object-fit: cover;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+
+            box-shadow:
+                    0 5px 18px rgba(31,28,80,0.15);
         }
 
         .profile-info {
-            padding-top: 58px;
+            padding-top: 52px;
         }
 
         .profile-info h2 {
-            font-size: 25px;
-            color: #2e1065;
+            font-size: 23px;
+
+            color: #17153f;
         }
 
         .profile-info p {
             color: #77739a;
-            margin-top: 5px;
-            font-size: 14px;
+
+            margin-top: 4px;
+
+            font-size: 13px;
         }
 
         .verified {
             display: inline-block;
-            margin-top: 9px;
-            padding: 5px 11px;
+
+            margin-top: 8px;
+
+            padding: 5px 10px;
+
             border-radius: 20px;
-            background: #ede9fe;
-            color: #6d28d9;
-            font-size: 12px;
+
+            background: #eeebff;
+
+            color: #6049d8;
+
+            font-size: 10px;
+
             font-weight: 600;
         }
 
-        /* ================= GRID ================= */
+        /* =====================================================
+           CONTENT GRID
+        ===================================================== */
 
         .content-grid {
             display: grid;
+
             grid-template-columns: 2fr 1fr;
-            gap: 22px;
+
+            gap: 18px;
         }
 
         .left-column,
         .right-column {
             display: flex;
+
             flex-direction: column;
-            gap: 22px;
+
+            gap: 18px;
         }
 
-        /* ================= CARDS ================= */
+        /* =====================================================
+           CARDS
+        ===================================================== */
 
         .card {
             background: white;
-            border-radius: 18px;
-            padding: 23px;
-            box-shadow: 0 7px 25px rgba(76, 29, 149, 0.07);
+
+            border-radius: 16px;
+
+            padding: 20px;
+
+            box-shadow:
+                    0 5px 20px rgba(47,42,105,0.06);
         }
 
         .card-title {
             display: flex;
+
             align-items: center;
+
             gap: 10px;
-            margin-bottom: 20px;
-            color: #3b176d;
+
+            margin-bottom: 17px;
         }
 
         .card-title .icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 11px;
-            background: linear-gradient(135deg, #ede9fe, #dbeafe);
+            width: 35px;
+            height: 35px;
+
+            border-radius: 10px;
+
+            background: #efecff;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
-            font-size: 18px;
+
+            font-size: 16px;
         }
 
         .card-title h3 {
-            font-size: 17px;
+            font-size: 15px;
+
+            color: #17153f;
         }
 
-        /* ================= INFO GRID ================= */
+        /* =====================================================
+           INFORMATION
+        ===================================================== */
 
         .info-grid {
             display: grid;
+
             grid-template-columns: 1fr 1fr;
-            gap: 18px;
+
+            gap: 12px;
         }
 
         .info-item {
-            padding: 15px;
-            border-radius: 12px;
-            background: #faf9ff;
-            border: 1px solid #eeeafd;
+            padding: 13px;
+
+            border-radius: 10px;
+
+            background: #f8f8ff;
+
+            border: 1px solid #eeecf8;
         }
 
         .info-item label {
             display: block;
-            font-size: 11px;
-            color: #88849f;
+
+            font-size: 9px;
+
+            color: #88849e;
+
             text-transform: uppercase;
+
             letter-spacing: 0.5px;
-            margin-bottom: 6px;
+
+            margin-bottom: 5px;
         }
 
         .info-item span {
-            font-size: 14px;
+            font-size: 12px;
+
             font-weight: 600;
-            color: #30265c;
+
+            color: #343054;
+
+            word-break: break-word;
         }
 
-        /* ================= SKILLS ================= */
+        /* =====================================================
+           SKILLS
+        ===================================================== */
 
         .skills {
             display: flex;
+
             flex-wrap: wrap;
-            gap: 9px;
+
+            gap: 7px;
         }
 
         .skill {
-            background: #ede9fe;
-            color: #6d28d9;
-            padding: 8px 13px;
+            background: #efecff;
+
+            color: #6049d8;
+
+            padding: 7px 11px;
+
             border-radius: 20px;
-            font-size: 12px;
+
+            font-size: 10px;
+
             font-weight: 600;
         }
 
-        /* ================= LINKEDIN ================= */
+        /* =====================================================
+           LINKEDIN
+        ===================================================== */
 
         .linkedin-box {
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
-            padding: 15px;
-            background: #eff6ff;
-            border-radius: 13px;
+
+            gap: 10px;
+
+            padding: 13px;
+
+            background: #f1f4ff;
+
+            border-radius: 10px;
         }
 
         .linkedin-box span {
-            font-size: 14px;
-            color: #1d4ed8;
+            font-size: 12px;
+
+            color: #4e4a73;
+
             font-weight: 600;
         }
 
         .linkedin-box a {
             text-decoration: none;
+
             color: white;
-            background: linear-gradient(135deg, #6d28d9, #2563eb);
-            padding: 8px 14px;
-            border-radius: 9px;
-            font-size: 12px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #6652df,
+                            #5878e5
+                    );
+
+            padding: 8px 13px;
+
+            border-radius: 8px;
+
+            font-size: 10px;
+
+            white-space: nowrap;
         }
 
-        /* ================= PROFILE STRENGTH ================= */
+        /* =====================================================
+           PROFILE STRENGTH
+        ===================================================== */
 
         .strength-card {
             text-align: center;
         }
 
         .circle {
-            width: 145px;
-            height: 145px;
+            width: 135px;
+            height: 135px;
+
             border-radius: 50%;
-            margin: 10px auto 18px;
-            background: conic-gradient(#6d28d9 var(--progress), #eeeaff 0deg);
+
+            margin: 10px auto 15px;
+
+            background:
+                    conic-gradient(
+                            #6853df var(--progress),
+                            #eceaf8 0deg
+                    );
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
         }
 
         .circle-inner {
-            width: 112px;
-            height: 112px;
+            width: 105px;
+            height: 105px;
+
             border-radius: 50%;
+
             background: white;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             flex-direction: column;
         }
 
         .circle-inner strong {
-            font-size: 27px;
-            color: #4c1d95;
+            font-size: 25px;
+
+            color: #4e3bc0;
         }
 
         .circle-inner span {
-            font-size: 11px;
-            color: #88849f;
+            font-size: 9px;
+
+            color: #88849e;
         }
 
         .strength-text {
             color: #77739a;
-            font-size: 13px;
+
+            font-size: 11px;
+
             line-height: 1.5;
         }
 
-        /* ================= PHOTO CARD ================= */
+        /* =====================================================
+           PROFILE PHOTO
+        ===================================================== */
 
         .photo-card {
             text-align: center;
         }
 
         .photo-preview {
-            width: 150px;
-            height: 150px;
+            width: 125px;
+            height: 125px;
+
             object-fit: cover;
-            border-radius: 18px;
-            margin: 5px auto 15px;
+
+            border-radius: 15px;
+
+            margin: 5px auto 13px;
+
             display: block;
-            background: #ede9fe;
+
+            background: #efecff;
+        }
+
+        .photo-actions {
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 5px;
+
+            flex-wrap: wrap;
         }
 
         .upload-btn {
             display: inline-block;
-            background: linear-gradient(135deg, #6d28d9, #2563eb);
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #6652df,
+                            #5878e5
+                    );
+
             color: white;
-            padding: 10px 17px;
-            border-radius: 10px;
+
+            padding: 9px 14px;
+
+            border-radius: 8px;
+
             cursor: pointer;
-            font-size: 13px;
+
+            font-size: 11px;
+
             font-weight: 600;
         }
 
@@ -426,58 +704,84 @@
 
         .delete-photo {
             border: none;
-            background: #fee2e2;
-            color: #dc2626;
-            padding: 9px 15px;
-            border-radius: 9px;
+
+            background: #fff0f0;
+
+            color: #d9535f;
+
+            padding: 8px 12px;
+
+            border-radius: 8px;
+
             cursor: pointer;
-            font-size: 12px;
-            margin-left: 6px;
+
+            font-size: 10px;
         }
 
-        /* ================= QUICK DETAILS ================= */
+        /* =====================================================
+           QUICK DETAILS
+        ===================================================== */
 
         .quick-list {
             display: flex;
+
             flex-direction: column;
-            gap: 13px;
+
+            gap: 11px;
         }
 
         .quick-item {
             display: flex;
+
             align-items: center;
-            gap: 12px;
+
+            gap: 10px;
         }
 
         .quick-icon {
-            width: 35px;
-            height: 35px;
-            border-radius: 10px;
-            background: #f0ebff;
+            width: 32px;
+            height: 32px;
+
+            border-radius: 9px;
+
+            background: #efecff;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
+            font-size: 13px;
+
+            flex-shrink: 0;
         }
 
         .quick-item div:last-child {
-            font-size: 13px;
-            color: #5f5a79;
+            font-size: 11px;
+
+            color: #65617f;
         }
 
-        /* ================= EDIT PROFILE ================= */
+        /* =====================================================
+           EDIT PROFILE
+        ===================================================== */
 
         .edit-section {
-            margin-top: 25px;
+            margin-top: 20px;
         }
 
         .form-grid {
             display: grid;
+
             grid-template-columns: 1fr 1fr;
-            gap: 17px;
+
+            gap: 14px;
         }
 
         .form-group {
             display: flex;
+
             flex-direction: column;
         }
 
@@ -486,68 +790,116 @@
         }
 
         .form-group label {
-            font-size: 12px;
-            color: #615c7d;
-            margin-bottom: 7px;
+            font-size: 10px;
+
+            color: #615d7c;
+
+            margin-bottom: 6px;
+
             font-weight: 600;
         }
 
         .form-group input,
         .form-group textarea {
-            border: 1px solid #e5e0f5;
-            border-radius: 10px;
-            padding: 12px;
+            border: 1px solid #e5e3f0;
+
+            border-radius: 9px;
+
+            padding: 10px;
+
             outline: none;
-            font-size: 13px;
-            color: #30265c;
-            background: #fcfbff;
+
+            font-size: 11px;
+
+            color: #302d50;
+
+            background: #fafaff;
+
             transition: 0.2s;
         }
 
         .form-group input:focus,
         .form-group textarea:focus {
-            border-color: #7c3aed;
-            box-shadow: 0 0 0 3px rgba(124,58,237,0.10);
+            border-color: #6c56df;
+
+            box-shadow:
+                    0 0 0 3px rgba(108,86,223,0.09);
         }
 
         .form-group textarea {
-            min-height: 90px;
+            min-height: 80px;
+
             resize: vertical;
         }
 
         .save-btn {
-            margin-top: 20px;
+            margin-top: 17px;
+
             border: none;
+
             color: white;
-            background: linear-gradient(135deg, #6d28d9, #2563eb);
-            padding: 12px 25px;
-            border-radius: 10px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #6652df,
+                            #5878e5
+                    );
+
+            padding: 10px 20px;
+
+            border-radius: 9px;
+
             cursor: pointer;
-            font-size: 14px;
+
+            font-size: 11px;
+
             font-weight: 600;
-            box-shadow: 0 7px 18px rgba(109,40,217,0.22);
+
+            box-shadow:
+                    0 5px 15px rgba(101,82,223,0.20);
+
+            transition: 0.2s;
         }
 
         .save-btn:hover {
             transform: translateY(-1px);
+
+            box-shadow:
+                    0 7px 18px rgba(101,82,223,0.28);
         }
 
         #message {
-            margin-top: 12px;
-            font-size: 13px;
+            margin-top: 10px;
+
+            font-size: 11px;
+
             font-weight: 600;
         }
 
-        /* ================= MOBILE ================= */
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
 
-        .mobile-menu {
-            display: none;
+        @media (max-width: 1000px) {
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .right-column {
+                display: grid;
+
+                grid-template-columns: 1fr 1fr;
+            }
+
         }
 
-        @media(max-width: 900px) {
+        @media (max-width: 900px) {
 
             .sidebar {
                 transform: translateX(-100%);
+
                 transition: 0.3s;
             }
 
@@ -557,46 +909,32 @@
 
             .main {
                 margin-left: 0;
+
                 padding: 20px;
             }
 
             .mobile-menu {
                 display: flex;
-                width: 42px;
-                height: 42px;
-                border: none;
-                border-radius: 10px;
-                background: #6d28d9;
-                color: white;
-                align-items: center;
-                justify-content: center;
-                font-size: 20px;
-                cursor: pointer;
-            }
-
-            .content-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .topbar {
-                gap: 15px;
-            }
-
-            .topbar h1 {
-                font-size: 23px;
             }
 
             .user-mini {
                 display: none;
             }
+
         }
 
-        @media(max-width: 600px) {
+        @media (max-width: 650px) {
+
+            .right-column {
+                display: flex;
+            }
 
             .profile-main {
                 flex-direction: column;
+
                 text-align: center;
-                margin-top: -65px;
+
+                margin-top: -60px;
             }
 
             .profile-info {
@@ -613,132 +951,220 @@
             }
 
             .cover {
-                height: 125px;
+                height: 120px;
             }
 
-            .card {
-                padding: 18px;
+            .linkedin-box {
+                flex-direction: column;
+
+                align-items: flex-start;
             }
+
+            .topbar h1 {
+                font-size: 22px;
+            }
+
         }
+
     </style>
 </head>
 
+
 <body>
 
-<!-- ================= SIDEBAR ================= -->
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
 
 <aside class="sidebar" id="sidebar">
 
     <div class="logo">
-        <div class="logo-icon">🎓</div>
+
+        <div class="logo-icon">
+            🎓
+        </div>
+
         <h2>AlumniConnect</h2>
+
         <p>Networking & Mentorship</p>
+
     </div>
+
 
     <nav class="menu">
 
         <a href="/dashboard.html">
+
             <span class="menu-icon">🏠</span>
+
             Dashboard
+
         </a>
+
 
         <a href="/profile.html" class="active">
+
             <span class="menu-icon">👤</span>
+
             My Profile
+
         </a>
+
 
         <a href="/alumni.html">
-            <span class="menu-icon">👥</span>
+
+            <span class="menu-icon">🎓</span>
+
             Alumni Network
+
         </a>
+
 
         <a href="/mentorship.html">
+
             <span class="menu-icon">🤝</span>
+
             Mentorship
+
         </a>
+
 
         <a href="/jobs.html">
+
             <span class="menu-icon">💼</span>
+
             Jobs
+
         </a>
+
 
         <a href="/events.html">
+
             <span class="menu-icon">📅</span>
+
             Events
+
         </a>
+
 
         <a href="/messages.html">
+
             <span class="menu-icon">💬</span>
+
             Messages
+
         </a>
 
+
         <a href="/applications.html">
+
             <span class="menu-icon">📄</span>
+
             My Applications
+
         </a>
 
     </nav>
 
+
     <div class="logout">
+
         <a href="/logout">
+
             <span>🚪</span>
+
             Logout
+
         </a>
+
     </div>
 
 </aside>
 
 
-<!-- ================= MAIN ================= -->
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
 
 <main class="main">
 
-    <!-- TOPBAR -->
+
+    <!-- TOP BAR -->
 
     <div class="topbar">
 
-        <div style="display:flex; align-items:center; gap:15px;">
+        <div class="topbar-left">
 
-            <button class="mobile-menu" onclick="toggleSidebar()">
+            <button
+                    class="mobile-menu"
+                    onclick="toggleSidebar()">
+
                 ☰
+
             </button>
 
+
             <div>
+
                 <h1>My Profile</h1>
-                <p>Manage your personal and professional information</p>
+
+                <p>
+                    Manage your personal and professional information
+                </p>
+
             </div>
 
         </div>
 
+
         <div class="user-mini">
 
-            <img id="topPhoto"
-                 src="https://via.placeholder.com/100">
+            <img
+                    id="topPhoto"
+                    src="https://via.placeholder.com/100"
+                    alt="Profile">
 
-            <span id="topName">Loading...</span>
+            <span id="topName">
+                Loading...
+            </span>
 
         </div>
 
     </div>
 
 
-    <!-- ================= PROFILE HERO ================= -->
+
+    <!-- =====================================================
+         PROFILE HERO
+    ====================================================== -->
 
     <section class="profile-hero">
 
+
         <div class="cover"></div>
+
 
         <div class="profile-main">
 
-            <img id="profilePhoto"
-                 class="profile-photo"
-                 src="https://via.placeholder.com/150">
+
+            <img
+                    id="profilePhoto"
+                    class="profile-photo"
+                    src="https://via.placeholder.com/150"
+                    alt="Profile Photo">
+
 
             <div class="profile-info">
 
-                <h2 id="profileName">Loading...</h2>
+                <h2 id="profileName">
+                    Loading...
+                </h2>
 
-                <p id="profileJob">Professional Profile</p>
+                <p id="profileJob">
+                    Professional Profile
+                </p>
 
                 <span class="verified">
                     ✓ AlumniConnect Member
@@ -751,46 +1177,91 @@
     </section>
 
 
-    <!-- ================= CONTENT ================= -->
+
+    <!-- =====================================================
+         CONTENT
+    ====================================================== -->
 
     <div class="content-grid">
 
-        <!-- LEFT -->
+
+        <!-- =================================================
+             LEFT COLUMN
+        ================================================= -->
 
         <div class="left-column">
+
 
             <!-- PERSONAL INFORMATION -->
 
             <div class="card">
 
+
                 <div class="card-title">
 
-                    <div class="icon">👤</div>
+                    <div class="icon">
+                        👤
+                    </div>
 
-                    <h3>Personal Information</h3>
+                    <h3>
+                        Personal Information
+                    </h3>
 
                 </div>
 
+
                 <div class="info-grid">
 
-                    <div class="info-item">
-                        <label>Full Name</label>
-                        <span id="name">-</span>
-                    </div>
 
                     <div class="info-item">
-                        <label>Email</label>
-                        <span id="email">-</span>
+
+                        <label>
+                            Full Name
+                        </label>
+
+                        <span id="name">
+                            -
+                        </span>
+
                     </div>
 
-                    <div class="info-item">
-                        <label>Phone</label>
-                        <span id="phone">-</span>
-                    </div>
 
                     <div class="info-item">
-                        <label>Location</label>
-                        <span id="location">-</span>
+
+                        <label>
+                            Email
+                        </label>
+
+                        <span id="email">
+                            -
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <label>
+                            Phone
+                        </label>
+
+                        <span id="phone">
+                            -
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <label>
+                            Location
+                        </label>
+
+                        <span id="location">
+                            -
+                        </span>
+
                     </div>
 
                 </div>
@@ -798,87 +1269,153 @@
             </div>
 
 
-            <!-- EDUCATION & CAREER -->
+
+            <!-- EDUCATION AND CAREER -->
 
             <div class="card">
 
+
                 <div class="card-title">
 
-                    <div class="icon">🎓</div>
+                    <div class="icon">
+                        🎓
+                    </div>
 
-                    <h3>Education & Career</h3>
+                    <h3>
+                        Education & Career
+                    </h3>
 
                 </div>
 
+
                 <div class="info-grid">
 
-                    <div class="info-item">
-                        <label>Education</label>
-                        <span id="education">-</span>
-                    </div>
 
                     <div class="info-item">
-                        <label>Graduation Year</label>
-                        <span id="graduationYear">-</span>
+
+                        <label>
+                            Education
+                        </label>
+
+                        <span id="education">
+                            -
+                        </span>
+
                     </div>
 
-                    <div class="info-item">
-                        <label>Company</label>
-                        <span id="company">-</span>
-                    </div>
 
                     <div class="info-item">
-                        <label>Job Title</label>
-                        <span id="jobTitle">-</span>
+
+                        <label>
+                            Graduation Year
+                        </label>
+
+                        <span id="graduationYear">
+                            -
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <label>
+                            Company
+                        </label>
+
+                        <span id="company">
+                            -
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <label>
+                            Job Title
+                        </label>
+
+                        <span id="jobTitle">
+                            -
+                        </span>
+
                     </div>
 
                 </div>
 
             </div>
+
 
 
             <!-- SKILLS -->
 
             <div class="card">
 
+
                 <div class="card-title">
 
-                    <div class="icon">💡</div>
+                    <div class="icon">
+                        💡
+                    </div>
 
-                    <h3>Skills</h3>
+                    <h3>
+                        Skills
+                    </h3>
 
                 </div>
 
-                <div class="skills" id="skills">
-                    <span class="skill">No skills added</span>
+
+                <div
+                        class="skills"
+                        id="skills">
+
+                    <span class="skill">
+                        No skills added
+                    </span>
+
                 </div>
 
             </div>
+
 
 
             <!-- LINKEDIN -->
 
             <div class="card">
 
+
                 <div class="card-title">
 
-                    <div class="icon">🔗</div>
+                    <div class="icon">
+                        🔗
+                    </div>
 
-                    <h3>Professional Profile</h3>
+                    <h3>
+                        Professional Profile
+                    </h3>
 
                 </div>
 
+
                 <div class="linkedin-box">
 
+
                     <span id="linkedinText">
+
                         LinkedIn profile not added
+
                     </span>
 
-                    <a id="linkedinLink"
-                       href="#"
-                       target="_blank"
-                       style="display:none;">
+
+                    <a
+                            id="linkedinLink"
+                            href="#"
+                            target="_blank"
+                            style="display:none;">
+
                         View Profile
+
                     </a>
 
                 </div>
@@ -888,25 +1425,36 @@
         </div>
 
 
-        <!-- RIGHT -->
+
+        <!-- =================================================
+             RIGHT COLUMN
+        ================================================= -->
 
         <div class="right-column">
+
 
             <!-- PROFILE STRENGTH -->
 
             <div class="card strength-card">
 
+
                 <div class="card-title">
 
-                    <div class="icon">📊</div>
+                    <div class="icon">
+                        📊
+                    </div>
 
-                    <h3>Profile Strength</h3>
+                    <h3>
+                        Profile Strength
+                    </h3>
 
                 </div>
 
-                <div class="circle"
-                     id="strengthCircle"
-                     style="--progress: 0deg;">
+
+                <div
+                        class="circle"
+                        id="strengthCircle"
+                        style="--progress: 0deg;">
 
                     <div class="circle-inner">
 
@@ -914,70 +1462,111 @@
                             0%
                         </strong>
 
-                        <span>Complete</span>
+                        <span>
+                            Complete
+                        </span>
 
                     </div>
 
                 </div>
 
-                <p class="strength-text"
-                   id="strengthText">
-                    Complete your profile to connect better with the alumni community.
+
+                <p
+                        class="strength-text"
+                        id="strengthText">
+
+                    Complete your profile to connect
+                    better with the alumni community.
+
                 </p>
 
             </div>
 
 
-            <!-- PHOTO -->
+
+            <!-- PROFILE PHOTO -->
 
             <div class="card photo-card">
 
+
                 <div class="card-title">
 
-                    <div class="icon">📷</div>
+                    <div class="icon">
+                        📷
+                    </div>
 
-                    <h3>Profile Photo</h3>
+                    <h3>
+                        Profile Photo
+                    </h3>
 
                 </div>
 
-                <img id="photoPreview"
-                     class="photo-preview"
-                     src="https://via.placeholder.com/150">
 
-                <label class="upload-btn"
-                       for="photoInput">
-                    Upload Photo
-                </label>
+                <img
+                        id="photoPreview"
+                        class="photo-preview"
+                        src="https://via.placeholder.com/150"
+                        alt="Profile Photo">
 
-                <input type="file"
-                       id="photoInput"
-                       accept="image/*">
 
-                <button class="delete-photo"
-                        onclick="deletePhoto()">
-                    Remove
-                </button>
+                <div class="photo-actions">
+
+
+                    <label
+                            class="upload-btn"
+                            for="photoInput">
+
+                        Upload Photo
+
+                    </label>
+
+
+                    <input
+                            type="file"
+                            id="photoInput"
+                            accept="image/*">
+
+
+                    <button
+                            class="delete-photo"
+                            onclick="deletePhoto()">
+
+                        Remove
+
+                    </button>
+
+                </div>
 
             </div>
+
 
 
             <!-- QUICK DETAILS -->
 
             <div class="card">
 
+
                 <div class="card-title">
 
-                    <div class="icon">⚡</div>
+                    <div class="icon">
+                        ⚡
+                    </div>
 
-                    <h3>Quick Details</h3>
+                    <h3>
+                        Quick Details
+                    </h3>
 
                 </div>
 
+
                 <div class="quick-list">
+
 
                     <div class="quick-item">
 
-                        <div class="quick-icon">📍</div>
+                        <div class="quick-icon">
+                            📍
+                        </div>
 
                         <div id="quickLocation">
                             Location not added
@@ -985,9 +1574,12 @@
 
                     </div>
 
+
                     <div class="quick-item">
 
-                        <div class="quick-icon">💼</div>
+                        <div class="quick-icon">
+                            💼
+                        </div>
 
                         <div id="quickCompany">
                             Company not added
@@ -995,9 +1587,12 @@
 
                     </div>
 
+
                     <div class="quick-item">
 
-                        <div class="quick-icon">🎓</div>
+                        <div class="quick-icon">
+                            🎓
+                        </div>
 
                         <div id="quickEducation">
                             Education not added
@@ -1014,101 +1609,137 @@
     </div>
 
 
-    <!-- ================= EDIT PROFILE ================= -->
+
+    <!-- =====================================================
+         EDIT PROFILE
+    ====================================================== -->
 
     <section class="card edit-section">
 
+
         <div class="card-title">
 
-            <div class="icon">✏️</div>
+            <div class="icon">
+                ✏️
+            </div>
 
-            <h3>Edit Profile</h3>
+            <h3>
+                Edit Profile
+            </h3>
 
         </div>
 
+
         <div class="form-grid">
 
+
             <div class="form-group">
 
-                <label>Education</label>
+                <label>
+                    Education
+                </label>
 
-                <input type="text"
-                       id="editEducation"
-                       placeholder="Example: MCA">
+                <input
+                        type="text"
+                        id="editEducation"
+                        placeholder="Example: MCA">
 
             </div>
 
 
             <div class="form-group">
 
-                <label>Graduation Year</label>
+                <label>
+                    Graduation Year
+                </label>
 
-                <input type="number"
-                       id="editGraduationYear"
-                       placeholder="Example: 2026">
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Company</label>
-
-                <input type="text"
-                       id="editCompany"
-                       placeholder="Company name">
+                <input
+                        type="number"
+                        id="editGraduationYear"
+                        placeholder="Example: 2026">
 
             </div>
 
 
             <div class="form-group">
 
-                <label>Job Title</label>
+                <label>
+                    Company
+                </label>
 
-                <input type="text"
-                       id="editJobTitle"
-                       placeholder="Example: Software Developer">
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Location</label>
-
-                <input type="text"
-                       id="editLocation"
-                       placeholder="Example: Bengaluru">
+                <input
+                        type="text"
+                        id="editCompany"
+                        placeholder="Company name">
 
             </div>
 
 
             <div class="form-group">
 
-                <label>LinkedIn URL</label>
+                <label>
+                    Job Title
+                </label>
 
-                <input type="text"
-                       id="editLinkedin"
-                       placeholder="https://linkedin.com/in/yourprofile">
+                <input
+                        type="text"
+                        id="editJobTitle"
+                        placeholder="Example: Software Developer">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Location
+                </label>
+
+                <input
+                        type="text"
+                        id="editLocation"
+                        placeholder="Example: Bengaluru">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    LinkedIn URL
+                </label>
+
+                <input
+                        type="text"
+                        id="editLinkedin"
+                        placeholder="https://linkedin.com/in/yourprofile">
 
             </div>
 
 
             <div class="form-group full">
 
-                <label>Skills</label>
+                <label>
+                    Skills
+                </label>
 
-                <textarea id="editSkills"
-                          placeholder="Example: Java, Spring Boot, MySQL, Python"></textarea>
+                <textarea
+                        id="editSkills"
+                        placeholder="Example: Java, Spring Boot, MySQL, Python"></textarea>
 
             </div>
 
         </div>
 
-        <button class="save-btn"
+
+        <button
+                class="save-btn"
                 onclick="saveProfile()">
+
             💾 Save Changes
+
         </button>
+
 
         <div id="message"></div>
 
@@ -1117,13 +1748,22 @@
 </main>
 
 
+
 <script>
 
+
+    /* =========================================================
+       GLOBAL VARIABLES
+    ========================================================= */
+
     let currentUser = null;
+
     let currentProfile = null;
 
 
-    /* ================= SIDEBAR ================= */
+    /* =========================================================
+       SIDEBAR
+    ========================================================= */
 
     function toggleSidebar() {
 
@@ -1134,52 +1774,79 @@
     }
 
 
-    /* ================= LOAD USER ================= */
+    /* =========================================================
+       LOAD CURRENT USER
+    ========================================================= */
 
     async function loadUser() {
 
         try {
 
-            const response = await fetch("/api/users/me", {
-                credentials: "include"
-            });
+            const response = await fetch(
+                "/api/users/me",
+                {
+                    credentials: "include"
+                }
+            );
+
 
             if (!response.ok) {
 
-                window.location.href = "/login.html";
+                window.location.href =
+                    "/login.html";
+
                 return;
 
             }
 
-            currentUser = await response.json();
 
-            document.getElementById("name").textContent =
+            currentUser =
+                await response.json();
+
+
+            document.getElementById("name")
+                .textContent =
                 currentUser.name || "-";
 
-            document.getElementById("email").textContent =
+
+            document.getElementById("email")
+                .textContent =
                 currentUser.email || "-";
 
-            document.getElementById("phone").textContent =
+
+            document.getElementById("phone")
+                .textContent =
                 currentUser.phone || "-";
 
-            document.getElementById("profileName").textContent =
+
+            document.getElementById("profileName")
+                .textContent =
                 currentUser.name || "User";
 
-            document.getElementById("topName").textContent =
+
+            document.getElementById("topName")
+                .textContent =
                 currentUser.name || "User";
+
 
             loadProfile(currentUser.id);
 
+
         } catch (error) {
 
-            console.error(error);
+            console.error(
+                "User loading error:",
+                error
+            );
 
         }
 
     }
 
 
-    /* ================= LOAD PROFILE ================= */
+    /* =========================================================
+       LOAD PROFILE
+    ========================================================= */
 
     async function loadProfile(userId) {
 
@@ -1192,84 +1859,152 @@
                 }
             );
 
+
             if (!response.ok) {
-                console.log("Profile not found");
+
+                console.log(
+                    "Profile not found"
+                );
+
                 return;
+
             }
 
-            currentProfile = await response.json();
+
+            currentProfile =
+                await response.json();
+
 
             displayProfile();
 
+
         } catch (error) {
 
-            console.error(error);
+            console.error(
+                "Profile loading error:",
+                error
+            );
 
         }
 
     }
 
 
-    /* ================= DISPLAY PROFILE ================= */
+    /* =========================================================
+       DISPLAY PROFILE
+    ========================================================= */
 
     function displayProfile() {
 
+        if (!currentProfile) {
+            return;
+        }
+
+
         const p = currentProfile;
 
-        document.getElementById("education").textContent =
+
+        /* PERSONAL INFORMATION */
+
+        document.getElementById("education")
+            .textContent =
             p.education || "-";
 
-        document.getElementById("graduationYear").textContent =
+
+        document.getElementById("graduationYear")
+            .textContent =
             p.graduationYear || "-";
 
-        document.getElementById("company").textContent =
+
+        document.getElementById("company")
+            .textContent =
             p.company || "-";
 
-        document.getElementById("jobTitle").textContent =
+
+        document.getElementById("jobTitle")
+            .textContent =
             p.jobTitle || "-";
 
-        document.getElementById("location").textContent =
+
+        document.getElementById("location")
+            .textContent =
             p.location || "-";
 
-        document.getElementById("quickLocation").textContent =
+
+        /* QUICK DETAILS */
+
+        document.getElementById("quickLocation")
+            .textContent =
             p.location || "Location not added";
 
-        document.getElementById("quickCompany").textContent =
+
+        document.getElementById("quickCompany")
+            .textContent =
             p.company || "Company not added";
 
-        document.getElementById("quickEducation").textContent =
+
+        document.getElementById("quickEducation")
+            .textContent =
             p.education || "Education not added";
 
-        document.getElementById("profileJob").textContent =
-            p.jobTitle || "AlumniConnect Member";
+
+        /* PROFILE JOB */
+
+        document.getElementById("profileJob")
+            .textContent =
+            p.jobTitle ||
+            p.company ||
+            "AlumniConnect Member";
 
 
-        /* SKILLS */
+        /* =====================================================
+           SKILLS
+        ===================================================== */
 
         const skillsContainer =
             document.getElementById("skills");
 
+
         skillsContainer.innerHTML = "";
+
 
         if (p.skills) {
 
-            const skills = p.skills
-                .split(",")
-                .map(skill => skill.trim())
-                .filter(skill => skill);
+            const skills =
+                p.skills
+                    .split(",")
+                    .map(skill => skill.trim())
+                    .filter(skill => skill.length > 0);
 
-            skills.forEach(skill => {
 
-                const span =
-                    document.createElement("span");
+            if (skills.length > 0) {
 
-                span.className = "skill";
+                skills.forEach(skill => {
 
-                span.textContent = skill;
+                    const span =
+                        document.createElement("span");
 
-                skillsContainer.appendChild(span);
 
-            });
+                    span.className =
+                        "skill";
+
+
+                    span.textContent =
+                        skill;
+
+
+                    skillsContainer.appendChild(
+                        span
+                    );
+
+                });
+
+            } else {
+
+                skillsContainer.innerHTML =
+                    '<span class="skill">No skills added</span>';
+
+            }
 
         } else {
 
@@ -1279,43 +2014,90 @@
         }
 
 
-        /* LINKEDIN */
+        /* =====================================================
+           LINKEDIN
+        ===================================================== */
+
+        const linkedinText =
+            document.getElementById(
+                "linkedinText"
+            );
+
+
+        const linkedinLink =
+            document.getElementById(
+                "linkedinLink"
+            );
+
 
         if (p.linkedinUrl) {
 
-            document.getElementById("linkedinText")
-                .textContent = "LinkedIn profile available";
+            linkedinText.textContent =
+                "LinkedIn profile available";
 
-            const link =
-                document.getElementById("linkedinLink");
 
-            link.href = p.linkedinUrl;
-            link.style.display = "block";
+            linkedinLink.href =
+                p.linkedinUrl;
+
+
+            linkedinLink.style.display =
+                "block";
+
+        } else {
+
+            linkedinText.textContent =
+                "LinkedIn profile not added";
+
+
+            linkedinLink.style.display =
+                "none";
 
         }
 
 
-        /* EDIT FORM */
+        /* =====================================================
+           EDIT FORM
+        ===================================================== */
 
-        document.getElementById("editEducation").value =
+        document.getElementById(
+            "editEducation"
+        ).value =
             p.education || "";
 
-        document.getElementById("editGraduationYear").value =
+
+        document.getElementById(
+            "editGraduationYear"
+        ).value =
             p.graduationYear || "";
 
-        document.getElementById("editCompany").value =
+
+        document.getElementById(
+            "editCompany"
+        ).value =
             p.company || "";
 
-        document.getElementById("editJobTitle").value =
+
+        document.getElementById(
+            "editJobTitle"
+        ).value =
             p.jobTitle || "";
 
-        document.getElementById("editLocation").value =
+
+        document.getElementById(
+            "editLocation"
+        ).value =
             p.location || "";
 
-        document.getElementById("editLinkedin").value =
+
+        document.getElementById(
+            "editLinkedin"
+        ).value =
             p.linkedinUrl || "";
 
-        document.getElementById("editSkills").value =
+
+        document.getElementById(
+            "editSkills"
+        ).value =
             p.skills || "";
 
 
@@ -1324,20 +2106,29 @@
         calculateStrength(p);
 
 
-        /* PHOTO */
+        /* PROFILE PHOTO */
 
         if (p.id) {
 
             const photoUrl =
                 `/api/profiles/${p.id}/photo`;
 
-            document.getElementById("profilePhoto").src =
+
+            document.getElementById(
+                "profilePhoto"
+            ).src =
                 photoUrl;
 
-            document.getElementById("photoPreview").src =
+
+            document.getElementById(
+                "photoPreview"
+            ).src =
                 photoUrl;
 
-            document.getElementById("topPhoto").src =
+
+            document.getElementById(
+                "topPhoto"
+            ).src =
                 photoUrl;
 
         }
@@ -1345,57 +2136,83 @@
     }
 
 
-    /* ================= PROFILE STRENGTH ================= */
+    /* =========================================================
+       PROFILE STRENGTH
+    ========================================================= */
 
     function calculateStrength(p) {
 
         const fields = [
 
             p.education,
+
             p.graduationYear,
+
             p.company,
+
             p.jobTitle,
+
             p.skills,
+
             p.location,
+
             p.linkedinUrl
 
         ];
 
+
         const completed =
-            fields.filter(value =>
-                value !== null &&
-                value !== undefined &&
-                value !== ""
+            fields.filter(
+                value =>
+                    value !== null &&
+                    value !== undefined &&
+                    String(value).trim() !== ""
             ).length;
 
+
         const percentage =
-            Math.round((completed / fields.length) * 100);
+            Math.round(
+                (completed / fields.length) * 100
+            );
 
-        document.getElementById("strengthValue")
-            .textContent = percentage + "%";
 
-        document.getElementById("strengthCircle")
-            .style.setProperty(
+        document.getElementById(
+            "strengthValue"
+        ).textContent =
+            percentage + "%";
+
+
+        document.getElementById(
+            "strengthCircle"
+        ).style.setProperty(
             "--progress",
             (percentage * 3.6) + "deg"
         );
 
+
         if (percentage === 100) {
 
-            document.getElementById("strengthText")
-                .textContent =
+            document.getElementById(
+                "strengthText"
+            ).textContent =
                 "Excellent! Your profile is complete.";
 
-        } else if (percentage >= 70) {
+        }
 
-            document.getElementById("strengthText")
-                .textContent =
+        else if (percentage >= 70) {
+
+            document.getElementById(
+                "strengthText"
+            ).textContent =
                 "Your profile is almost complete. Add the remaining details.";
 
-        } else {
+        }
 
-            document.getElementById("strengthText")
-                .textContent =
+        else {
+
+            document.getElementById(
+                "strengthText"
+            ).textContent =
                 "Complete your profile to connect better with the alumni community.";
 
         }
@@ -1403,7 +2220,9 @@
     }
 
 
-    /* ================= SAVE PROFILE ================= */
+    /* =========================================================
+       SAVE PROFILE
+    ========================================================= */
 
     async function saveProfile() {
 
@@ -1418,28 +2237,49 @@
 
         }
 
+
         const updatedProfile = {
 
             education:
-            document.getElementById("editEducation").value,
+                document.getElementById(
+                    "editEducation"
+                ).value.trim(),
+
 
             graduationYear:
-            document.getElementById("editGraduationYear").value,
+                document.getElementById(
+                    "editGraduationYear"
+                ).value.trim(),
+
 
             company:
-            document.getElementById("editCompany").value,
+                document.getElementById(
+                    "editCompany"
+                ).value.trim(),
+
 
             jobTitle:
-            document.getElementById("editJobTitle").value,
+                document.getElementById(
+                    "editJobTitle"
+                ).value.trim(),
+
 
             location:
-            document.getElementById("editLocation").value,
+                document.getElementById(
+                    "editLocation"
+                ).value.trim(),
+
 
             linkedinUrl:
-            document.getElementById("editLinkedin").value,
+                document.getElementById(
+                    "editLinkedin"
+                ).value.trim(),
+
 
             skills:
-            document.getElementById("editSkills").value
+                document.getElementById(
+                    "editSkills"
+                ).value.trim()
 
         };
 
@@ -1447,18 +2287,29 @@
         try {
 
             const response = await fetch(
+
                 `/api/profiles/${currentProfile.id}`,
+
                 {
+
                     method: "PUT",
 
                     headers: {
-                        "Content-Type": "application/json"
+
+                        "Content-Type":
+                            "application/json"
+
                     },
 
                     credentials: "include",
 
-                    body: JSON.stringify(updatedProfile)
+                    body:
+                        JSON.stringify(
+                            updatedProfile
+                        )
+
                 }
+
             );
 
 
@@ -1474,7 +2325,9 @@
             currentProfile =
                 await response.json();
 
+
             displayProfile();
+
 
             showMessage(
                 "Profile updated successfully!",
@@ -1486,6 +2339,7 @@
 
             console.error(error);
 
+
             showMessage(
                 "Failed to update profile.",
                 false
@@ -1496,46 +2350,84 @@
     }
 
 
-    /* ================= MESSAGE ================= */
+    /* =========================================================
+       SHOW MESSAGE
+    ========================================================= */
 
-    function showMessage(text, success) {
+    function showMessage(
+        text,
+        success
+    ) {
 
         const message =
-            document.getElementById("message");
+            document.getElementById(
+                "message"
+            );
 
-        message.textContent = text;
+
+        message.textContent =
+            text;
+
 
         message.style.color =
-            success ? "#16a34a" : "#dc2626";
+            success
+                ? "#16a34a"
+                : "#dc2626";
 
     }
 
 
-    /* ================= PHOTO UPLOAD ================= */
+    /* =========================================================
+       PHOTO UPLOAD
+    ========================================================= */
 
-    document.getElementById("photoInput")
-        .addEventListener("change", async function () {
+    document.getElementById(
+        "photoInput"
+    ).addEventListener(
+        "change",
+        async function () {
 
-            const file = this.files[0];
+            const file =
+                this.files[0];
 
-            if (!file || !currentProfile) return;
+
+            if (!file ||
+                !currentProfile) {
+
+                return;
+
+            }
 
 
-            const formData = new FormData();
+            const formData =
+                new FormData();
 
-            formData.append("file", file);
+
+            formData.append(
+                "file",
+                file
+            );
 
 
             try {
 
-                const response = await fetch(
-                    `/api/profiles/${currentProfile.id}/photo`,
-                    {
-                        method: "POST",
-                        body: formData,
-                        credentials: "include"
-                    }
-                );
+                const response =
+                    await fetch(
+
+                        `/api/profiles/${currentProfile.id}/photo`,
+
+                        {
+
+                            method: "POST",
+
+                            body: formData,
+
+                            credentials:
+                                "include"
+
+                        }
+
+                    );
 
 
                 if (!response.ok) {
@@ -1551,13 +2443,21 @@
                     `/api/profiles/${currentProfile.id}/photo?time=${Date.now()}`;
 
 
-                document.getElementById("profilePhoto").src =
+                document.getElementById(
+                    "profilePhoto"
+                ).src =
                     imageUrl;
 
-                document.getElementById("photoPreview").src =
+
+                document.getElementById(
+                    "photoPreview"
+                ).src =
                     imageUrl;
 
-                document.getElementById("topPhoto").src =
+
+                document.getElementById(
+                    "topPhoto"
+                ).src =
                     imageUrl;
 
 
@@ -1571,6 +2471,7 @@
 
                 console.error(error);
 
+
                 showMessage(
                     "Failed to upload photo.",
                     false
@@ -1578,30 +2479,47 @@
 
             }
 
-        });
+        }
+    );
 
 
-    /* ================= DELETE PHOTO ================= */
+    /* =========================================================
+       DELETE PHOTO
+    ========================================================= */
 
     async function deletePhoto() {
 
-        if (!currentProfile) return;
-
-
-        if (!confirm("Remove your profile photo?")) {
+        if (!currentProfile) {
             return;
+        }
+
+
+        if (!confirm(
+            "Remove your profile photo?"
+        )) {
+
+            return;
+
         }
 
 
         try {
 
-            const response = await fetch(
-                `/api/profiles/${currentProfile.id}/photo`,
-                {
-                    method: "DELETE",
-                    credentials: "include"
-                }
-            );
+            const response =
+                await fetch(
+
+                    `/api/profiles/${currentProfile.id}/photo`,
+
+                    {
+
+                        method: "DELETE",
+
+                        credentials:
+                            "include"
+
+                    }
+
+                );
 
 
             if (!response.ok) {
@@ -1617,13 +2535,21 @@
                 "https://via.placeholder.com/150";
 
 
-            document.getElementById("profilePhoto").src =
+            document.getElementById(
+                "profilePhoto"
+            ).src =
                 defaultPhoto;
 
-            document.getElementById("photoPreview").src =
+
+            document.getElementById(
+                "photoPreview"
+            ).src =
                 defaultPhoto;
 
-            document.getElementById("topPhoto").src =
+
+            document.getElementById(
+                "topPhoto"
+            ).src =
                 defaultPhoto;
 
 
@@ -1637,6 +2563,7 @@
 
             console.error(error);
 
+
             showMessage(
                 "Failed to remove photo.",
                 false
@@ -1647,7 +2574,9 @@
     }
 
 
-    /* ================= START ================= */
+    /* =========================================================
+       START APPLICATION
+    ========================================================= */
 
     loadUser();
 
