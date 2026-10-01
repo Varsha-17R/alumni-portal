@@ -841,6 +841,92 @@
         @media(max-width:700px){.sidebar{width:205px!important}.content{margin-left:205px!important;padding:25px 18px 40px!important}.header{padding:0 16px!important}.user-name{display:none!important}.stats-grid{grid-template-columns:1fr!important}.applications-grid{grid-template-columns:1fr!important}.page-title{font-size:25px!important}}
         @media(max-width:560px){.sidebar{width:70px!important;padding:20px 8px!important}.sidebar h2{display:none!important}.menu{justify-content:center!important;padding:12px 8px!important;font-size:0!important}.menu::first-letter{font-size:17px}.menu.active::before{left:-8px}.content{margin-left:70px!important;padding:22px 14px 35px!important}.logo{font-size:17px!important}.section-head{align-items:flex-start!important;flex-direction:column!important}.filters{flex-direction:column!important}.search-box,.filter-select{width:100%!important}}
 
+
+        /* FINAL ALUMNICONNECT DARK HEADER + SIDEBAR OVERRIDE */
+        .alumni-shared-theme .header{
+            background:linear-gradient(135deg,#17153f 0%,#211d52 100%) !important;
+            border-bottom:0 !important;
+            box-shadow:0 6px 22px rgba(23,21,63,.16) !important;
+        }
+        .alumni-shared-theme .logo{
+            color:#ffffff !important;
+        }
+        .alumni-shared-theme .logo-icon,
+        .alumni-shared-theme .brand-icon,
+        .alumni-shared-theme .logo-mark{
+            background:linear-gradient(135deg,#6652df,#5878e5) !important;
+            color:#ffffff !important;
+        }
+        .alumni-shared-theme .header .user-name{
+            color:#dddafa !important;
+        }
+        .alumni-shared-theme .header .logout{
+            background:rgba(255,255,255,.10) !important;
+            border:1px solid rgba(255,255,255,.20) !important;
+            color:#ffffff !important;
+        }
+        .alumni-shared-theme .sidebar{
+            background:linear-gradient(180deg,#17153f 0%,#211d52 55%,#29265f 100%) !important;
+            border-right:0 !important;
+            box-shadow:6px 0 25px rgba(23,21,63,.12) !important;
+        }
+        .alumni-shared-theme .sidebar h2{
+            color:#9d9abd !important;
+        }
+        .alumni-shared-theme .sidebar .menu,
+        .alumni-shared-theme .sidebar a,
+        .alumni-shared-theme .sidebar .menu-item,
+        .alumni-shared-theme .sidebar .nav-item{
+            color:#c8c6df !important;
+        }
+        .alumni-shared-theme .sidebar .menu:hover,
+        .alumni-shared-theme .sidebar a:hover,
+        .alumni-shared-theme .sidebar .menu-item:hover,
+        .alumni-shared-theme .sidebar .nav-item:hover{
+            background:rgba(255,255,255,.08) !important;
+            color:#ffffff !important;
+        }
+        .alumni-shared-theme .sidebar .menu.active,
+        .alumni-shared-theme .sidebar a.active,
+        .alumni-shared-theme .sidebar .menu-item.active,
+        .alumni-shared-theme .sidebar .nav-item.active{
+            background:linear-gradient(135deg,#6652df,#5878e5) !important;
+            color:#ffffff !important;
+            box-shadow:0 7px 18px rgba(88,78,210,.28) !important;
+        }
+
+
+        /* SIDEBAR LOGOUT BUTTON */
+        .sidebar-logout{
+            width:calc(100% - 28px) !important;
+            margin:24px 14px 8px !important;
+            padding:12px 14px !important;
+            display:flex !important;
+            align-items:center !important;
+            gap:13px !important;
+            border:1px solid rgba(255,255,255,.16) !important;
+            border-radius:10px !important;
+            background:rgba(255,255,255,.08) !important;
+            color:#ffffff !important;
+            font:600 13px Inter,Arial,Helvetica,sans-serif !important;
+            cursor:pointer !important;
+            text-align:left !important;
+            transition:.25s !important;
+        }
+        .sidebar-logout:hover{
+            background:linear-gradient(135deg,#6652df,#5878e5) !important;
+            border-color:rgba(255,255,255,.25) !important;
+            transform:translateX(2px) !important;
+        }
+        @media(max-width:560px){
+            .sidebar-logout{
+                width:44px !important;
+                margin:24px auto 8px !important;
+                padding:12px !important;
+                justify-content:center !important;
+            }
+            .sidebar-logout span{display:none !important}
+        }
     </style>
 </head>
 
@@ -849,7 +935,7 @@
 <header class="header">
 
     <div class="logo">
-        👥 Alumni NetworkConnect
+        👥 AlumniConnect
     </div>
 
     <div class="header-user">
@@ -904,6 +990,10 @@
         <a href="/messages.html" class="menu">
             💬 Messages
         </a>
+
+        <button type="button" class="sidebar-logout" onclick="logout()">
+            🚪 <span>Logout</span>
+        </button>
 
     </aside>
 
