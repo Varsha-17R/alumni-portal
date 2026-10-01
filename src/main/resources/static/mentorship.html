@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Mentorship | Alumni Portal</title>
+    <title>Mentorship | AlumniConnect</title>
 
     <style>
         * {
@@ -14,16 +14,21 @@
         }
 
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --primary-light: #eff6ff;
+            --navy: #17153f;
+            --navy-2: #211d52;
+            --sidebar-end: #29265f;
 
-            --text: #172033;
-            --muted: #64748b;
+            --purple: #6652df;
+            --purple-dark: #5745c9;
+            --blue: #5878e5;
+            --purple-light: #eeeaff;
 
-            --background: #f4f7fb;
+            --text: #17204a;
+            --muted: #7180a3;
+
+            --bg: #f4f6ff;
             --white: #ffffff;
-            --border: #e5eaf2;
+            --border: #e3e6f2;
 
             --success: #16a34a;
             --success-bg: #ecfdf3;
@@ -34,13 +39,29 @@
             --danger: #dc2626;
             --danger-bg: #fef2f2;
 
-            --shadow: 0 8px 25px rgba(15, 23, 42, 0.06);
+            --shadow: 0 8px 25px rgba(35, 31, 90, 0.08);
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background: var(--background);
+            background:
+                    radial-gradient(
+                            circle at 90% 10%,
+                            rgba(103, 91, 230, 0.10),
+                            transparent 28%
+                    ),
+                    radial-gradient(
+                            circle at 55% 70%,
+                            rgba(91, 120, 232, 0.07),
+                            transparent 30%
+                    ),
+                    var(--bg);
             color: var(--text);
+            min-height: 100vh;
         }
 
         button,
@@ -48,110 +69,127 @@
             font-family: inherit;
         }
 
-        /* =========================
+        /* ================================
            TOP HEADER
-        ========================= */
+        ================================= */
 
         .top-header {
             height: 68px;
-            background: var(--white);
-            border-bottom: 1px solid var(--border);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
 
             display: flex;
             align-items: center;
             justify-content: space-between;
 
-            padding: 0 28px;
+            padding: 0 25px;
 
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            background: linear-gradient(
+                    90deg,
+                    var(--navy),
+                    var(--navy-2)
+            );
 
-            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
 
         .brand {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 11px;
 
+            color: #fff;
             font-size: 21px;
-            font-weight: 700;
-            color: var(--primary);
+            font-weight: 800;
         }
 
         .brand-icon {
             width: 38px;
             height: 38px;
-
-            border-radius: 10px;
-
-            background: var(--primary);
-
-            color: white;
+            border-radius: 11px;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
+            background: linear-gradient(
+                    135deg,
+                    var(--purple),
+                    var(--blue)
+            );
+
+            color: #fff;
             font-size: 18px;
+
+            box-shadow: 0 5px 15px rgba(101,82,223,.30);
         }
 
         .header-right {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 15px;
         }
 
         .header-user {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 9px;
+        }
+
+        .header-user-name {
+            color: rgba(255,255,255,.92);
+            font-size: 14px;
+            font-weight: 600;
         }
 
         .header-avatar {
             width: 38px;
             height: 38px;
-
             border-radius: 50%;
-
-            background: var(--primary-light);
-            color: var(--primary);
 
             display: flex;
             align-items: center;
             justify-content: center;
 
-            font-weight: 700;
-        }
+            background: linear-gradient(
+                    135deg,
+                    var(--purple),
+                    var(--blue)
+            );
 
-        .header-user-name {
-            font-size: 14px;
-            font-weight: 600;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 800;
+
+            border: 2px solid rgba(255,255,255,.25);
         }
 
         .logout-btn {
-            border: none;
-            background: transparent;
+            border: 1px solid rgba(255,255,255,.25);
+            background: rgba(255,255,255,.06);
 
-            color: var(--muted);
+            color: #fff;
+
+            padding: 8px 15px;
+            border-radius: 9px;
 
             cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
 
-            font-size: 14px;
-            font-weight: 600;
-
-            padding: 8px 10px;
+            transition: .2s;
         }
 
         .logout-btn:hover {
-            color: var(--danger);
+            background: rgba(255,255,255,.15);
         }
 
-        /* =========================
+        /* ================================
            SIDEBAR
-        ========================= */
+        ================================= */
 
         .sidebar {
             position: fixed;
@@ -159,28 +197,33 @@
             left: 0;
             bottom: 0;
 
-            width: 235px;
+            width: 223px;
 
-            background: var(--white);
+            padding: 25px 12px;
 
-            border-right: 1px solid var(--border);
-
-            padding: 25px 14px;
+            background: linear-gradient(
+                    180deg,
+                    var(--navy),
+                    var(--navy-2) 48%,
+                    var(--sidebar-end)
+            );
 
             z-index: 900;
+
+            overflow-y: auto;
         }
 
         .sidebar-title {
+            padding: 0 13px;
+            margin-bottom: 14px;
+
+            color: rgba(255,255,255,.52);
+
             font-size: 11px;
-            font-weight: 700;
-            color: #94a3b8;
+            font-weight: 800;
 
             text-transform: uppercase;
-
             letter-spacing: 1px;
-
-            padding: 0 13px;
-            margin-bottom: 12px;
         }
 
         .nav-item {
@@ -191,19 +234,17 @@
             width: 100%;
 
             padding: 12px 14px;
+            margin-bottom: 5px;
 
-            border-radius: 9px;
+            border-radius: 10px;
 
+            color: rgba(255,255,255,.80);
             text-decoration: none;
-
-            color: #64748b;
 
             font-size: 14px;
             font-weight: 600;
 
-            margin-bottom: 4px;
-
-            transition: 0.2s;
+            transition: .2s;
         }
 
         .nav-icon {
@@ -213,40 +254,45 @@
         }
 
         .nav-item:hover {
-            background: #f5f8ff;
-            color: var(--primary);
+            background: rgba(255,255,255,.08);
+            color: #fff;
         }
 
         .nav-item.active {
-            background: var(--primary-light);
-            color: var(--primary);
+            background: linear-gradient(
+                    90deg,
+                    var(--purple),
+                    var(--blue)
+            );
+
+            color: #fff;
+
+            box-shadow:
+                    0 6px 18px rgba(101,82,223,.28);
         }
 
-        /* =========================
+        /* ================================
            MAIN
-        ========================= */
+        ================================= */
 
         .main {
-            margin-left: 235px;
-            padding: 100px 35px 40px;
-
+            margin-left: 223px;
+            padding: 100px 38px 45px;
             max-width: 1500px;
         }
-
-        /* =========================
-           PAGE INTRO
-        ========================= */
 
         .page-intro {
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
+            align-items: center;
 
-            margin-bottom: 25px;
+            margin-bottom: 22px;
         }
 
         .page-title {
+            color: var(--text);
             font-size: 30px;
+            font-weight: 800;
             margin-bottom: 7px;
         }
 
@@ -258,44 +304,61 @@
         .profile-chip {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 9px;
 
-            background: var(--white);
-
+            background: #fff;
             border: 1px solid var(--border);
 
-            padding: 8px 14px;
-
+            padding: 9px 14px;
             border-radius: 30px;
 
+            color: #526184;
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 700;
+
+            box-shadow: 0 4px 15px rgba(35,31,90,.04);
         }
 
-        /* =========================
+        /* ================================
            HERO
-        ========================= */
+        ================================= */
 
         .hero {
-            background: linear-gradient(
-                    135deg,
-                    #2563eb,
-                    #1d4ed8
-            );
-
-            border-radius: 18px;
-
-            padding: 32px;
-
-            color: white;
-
-            margin-bottom: 25px;
-
             position: relative;
-
             overflow: hidden;
 
-            box-shadow: 0 12px 30px rgba(37, 99, 235, 0.18);
+            margin-bottom: 22px;
+            padding: 29px;
+
+            border-radius: 17px;
+
+            color: #fff;
+
+            background: linear-gradient(
+                    110deg,
+                    #6953df 0%,
+                    #6652df 45%,
+                    #5878e5 100%
+            );
+
+            box-shadow:
+                    0 12px 30px rgba(91,82,223,.20);
+        }
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 210px;
+            height: 210px;
+
+            right: -60px;
+            top: -100px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,.10);
         }
 
         .hero::after {
@@ -303,132 +366,129 @@
 
             position: absolute;
 
-            width: 230px;
-            height: 230px;
+            width: 150px;
+            height: 150px;
+
+            right: 120px;
+            bottom: -110px;
 
             border-radius: 50%;
 
-            background: rgba(255,255,255,0.08);
-
-            right: -70px;
-            top: -80px;
+            background: rgba(255,255,255,.08);
         }
 
         .hero-content {
             position: relative;
             z-index: 2;
-
-            max-width: 700px;
+            max-width: 850px;
         }
 
         .hero-label {
+            margin-bottom: 9px;
+
             font-size: 12px;
+            font-weight: 700;
 
             text-transform: uppercase;
-
             letter-spacing: 1px;
 
-            opacity: 0.8;
-
-            margin-bottom: 10px;
+            opacity: .80;
         }
 
         .hero h2 {
-            font-size: 26px;
+            margin-bottom: 8px;
 
-            margin-bottom: 10px;
+            font-size: 26px;
+            line-height: 1.25;
         }
 
         .hero p {
-            font-size: 14px;
+            margin-bottom: 19px;
 
+            max-width: 760px;
+
+            font-size: 14px;
             line-height: 1.6;
 
-            opacity: 0.9;
-
-            margin-bottom: 22px;
+            opacity: .93;
         }
 
         .search-box {
+            max-width: 700px;
+
             display: flex;
-
             align-items: center;
-
-            background: white;
-
-            border-radius: 10px;
 
             padding: 4px;
 
-            max-width: 680px;
+            background: #fff;
+            border-radius: 10px;
         }
 
         .search-icon {
-            color: #94a3b8;
-
             padding-left: 13px;
-
             font-size: 17px;
+            color: #7180a3;
         }
 
         .search-box input {
             flex: 1;
 
-            border: none;
+            min-width: 0;
 
+            padding: 12px;
+
+            border: none;
             outline: none;
 
-            padding: 13px;
-
-            font-size: 14px;
-
             color: var(--text);
+            font-size: 14px;
         }
 
         .search-button {
             border: none;
 
-            background: var(--primary);
-
-            color: white;
-
             padding: 11px 19px;
 
             border-radius: 7px;
 
-            font-weight: 600;
+            background: linear-gradient(
+                    135deg,
+                    var(--purple),
+                    var(--blue)
+            );
+
+            color: #fff;
+
+            font-size: 13px;
+            font-weight: 700;
 
             cursor: pointer;
         }
 
-        /* =========================
+        /* ================================
            STATISTICS
-        ========================= */
+        ================================= */
 
         .stats-grid {
             display: grid;
-
             grid-template-columns: repeat(3, 1fr);
+            gap: 17px;
 
-            gap: 18px;
-
-            margin-bottom: 25px;
+            margin-bottom: 22px;
         }
 
         .stat-card {
-            background: var(--white);
-
-            border: 1px solid var(--border);
-
-            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
             padding: 20px;
 
-            display: flex;
+            background: #fff;
 
-            justify-content: space-between;
-
-            align-items: center;
+            border: 1px solid var(--border);
+            border-radius: 14px;
 
             box-shadow: var(--shadow);
         }
@@ -436,103 +496,94 @@
         .stat-info span {
             display: block;
 
-            color: var(--muted);
-
-            font-size: 13px;
-
             margin-bottom: 8px;
+
+            color: var(--muted);
+            font-size: 13px;
         }
 
         .stat-info strong {
-            font-size: 26px;
+            color: var(--text);
+            font-size: 27px;
         }
 
         .stat-icon {
             width: 44px;
             height: 44px;
 
-            border-radius: 11px;
-
-            background: var(--primary-light);
-
-            color: var(--primary);
-
             display: flex;
             align-items: center;
             justify-content: center;
 
-            font-size: 19px;
+            border-radius: 12px;
+
+            background: var(--purple-light);
+            color: var(--purple);
+
+            font-size: 18px;
         }
 
-        /* =========================
-           CONTENT GRID
-        ========================= */
+        /* ================================
+           CONTENT
+        ================================= */
 
         .content-grid {
             display: grid;
-
             grid-template-columns: minmax(0, 1fr) 330px;
-
-            gap: 22px;
+            gap: 21px;
 
             align-items: start;
         }
 
         .panel {
-            background: var(--white);
+            overflow: hidden;
+
+            background: #fff;
 
             border: 1px solid var(--border);
-
             border-radius: 14px;
 
             box-shadow: var(--shadow);
-
-            overflow: hidden;
         }
 
         .panel-header {
-            padding: 20px 22px;
-
-            border-bottom: 1px solid var(--border);
-
             display: flex;
-
             justify-content: space-between;
-
             align-items: center;
+
+            padding: 19px 21px;
+
+            border-bottom: 1px solid #e8eaf3;
         }
 
         .panel-title {
+            color: var(--text);
             font-size: 17px;
-
-            font-weight: 700;
+            font-weight: 800;
         }
 
         .panel-subtitle {
-            font-size: 12px;
+            margin-top: 4px;
 
             color: var(--muted);
-
-            margin-top: 4px;
+            font-size: 12px;
         }
 
         .mentor-count {
-            background: var(--primary-light);
-
-            color: var(--primary);
+            padding: 5px 10px;
 
             border-radius: 20px;
 
-            padding: 5px 10px;
+            background: var(--purple-light);
+            color: var(--purple);
 
             font-size: 12px;
-
-            font-weight: 700;
+            font-weight: 800;
         }
 
-        /* =========================
-           MENTOR LIST
-        ========================= */
+        /* ================================
+           MENTORS
+        ================================= */
 
         .mentor-list {
             padding: 5px 0;
@@ -540,16 +591,14 @@
 
         .mentor-row {
             display: flex;
-
             align-items: center;
+            gap: 15px;
 
-            gap: 16px;
+            padding: 17px 21px;
 
-            padding: 18px 22px;
+            border-bottom: 1px solid #edf0f7;
 
-            border-bottom: 1px solid #edf1f6;
-
-            transition: 0.2s;
+            transition: .2s;
         }
 
         .mentor-row:last-child {
@@ -557,75 +606,73 @@
         }
 
         .mentor-row:hover {
-            background: #f9fbff;
+            background: #faf9ff;
         }
 
         .mentor-avatar {
-            width: 54px;
-            height: 54px;
-
-            min-width: 54px;
-
-            border-radius: 50%;
-
-            background: linear-gradient(
-                    135deg,
-                    #dbeafe,
-                    #bfdbfe
-            );
-
-            color: var(--primary);
+            width: 55px;
+            height: 55px;
+            min-width: 55px;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
-            font-weight: 800;
+            border-radius: 50%;
+
+            background: linear-gradient(
+                    135deg,
+                    #e8e4ff,
+                    #d9e2ff
+            );
+
+            color: var(--purple);
 
             font-size: 17px;
+            font-weight: 800;
+
+            border: 3px solid #fff;
+
+            box-shadow: 0 4px 12px rgba(101,82,223,.18);
         }
 
         .mentor-info {
             flex: 1;
-
             min-width: 0;
         }
 
         .mentor-name {
+            margin-bottom: 4px;
+
+            color: var(--text);
+
             font-size: 15px;
-
-            font-weight: 700;
-
-            margin-bottom: 5px;
+            font-weight: 800;
         }
 
         .mentor-email {
+            overflow: hidden;
+
             color: var(--muted);
 
             font-size: 13px;
 
-            overflow: hidden;
-
             text-overflow: ellipsis;
-
             white-space: nowrap;
         }
 
         .mentor-role {
             display: inline-block;
 
-            margin-top: 7px;
-
+            margin-top: 6px;
             padding: 4px 8px;
 
             border-radius: 5px;
 
-            background: #f1f5f9;
-
-            color: #475569;
+            background: #f0effa;
+            color: var(--purple);
 
             font-size: 11px;
-
             font-weight: 700;
         }
 
@@ -636,57 +683,55 @@
         .connect-btn {
             border: none;
 
-            background: var(--primary);
-
-            color: white;
-
             padding: 9px 16px;
 
-            border-radius: 7px;
+            border-radius: 8px;
+
+            background: linear-gradient(
+                    135deg,
+                    var(--purple),
+                    var(--blue)
+            );
+
+            color: #fff;
 
             font-size: 12px;
-
             font-weight: 700;
 
             cursor: pointer;
 
-            transition: 0.2s;
+            transition: .2s;
         }
 
         .connect-btn:hover {
-            background: var(--primary-dark);
-
             transform: translateY(-1px);
+            background: var(--purple-dark);
         }
 
         .connect-btn:disabled {
+            opacity: .6;
             cursor: not-allowed;
-
-            opacity: 0.6;
-
             transform: none;
         }
 
-        /* =========================
-           RIGHT PANEL
-        ========================= */
+        /* ================================
+           RIGHT COLUMN
+        ================================= */
 
         .right-column {
             display: flex;
-
             flex-direction: column;
-
-            gap: 20px;
+            gap: 19px;
         }
 
         .activity-list {
-            padding: 6px 0;
+            padding: 5px 0;
         }
 
         .activity-item {
-            padding: 15px 20px;
+            padding: 14px 19px;
 
-            border-bottom: 1px solid #edf1f6;
+            border-bottom: 1px solid #edf0f7;
         }
 
         .activity-item:last-child {
@@ -695,85 +740,76 @@
 
         .activity-top {
             display: flex;
-
             align-items: center;
+            gap: 9px;
 
-            gap: 10px;
-
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
 
         .small-avatar {
             width: 34px;
             height: 34px;
 
-            border-radius: 50%;
-
-            background: var(--primary-light);
-
-            color: var(--primary);
-
             display: flex;
             align-items: center;
             justify-content: center;
 
-            font-size: 12px;
+            border-radius: 50%;
 
-            font-weight: 700;
+            background: var(--purple-light);
+            color: var(--purple);
+
+            font-size: 12px;
+            font-weight: 800;
         }
 
         .activity-name {
+            color: var(--text);
             font-size: 13px;
-
-            font-weight: 700;
+            font-weight: 800;
         }
 
         .activity-status {
             margin-left: auto;
 
-            font-size: 10px;
-
-            font-weight: 700;
-
             padding: 4px 7px;
 
             border-radius: 10px;
+
+            font-size: 10px;
+            font-weight: 800;
         }
 
         .status-pending {
             background: var(--warning-bg);
-
             color: var(--warning);
         }
 
         .status-accepted {
             background: var(--success-bg);
-
             color: var(--success);
         }
 
         .status-rejected {
             background: var(--danger-bg);
-
             color: var(--danger);
         }
 
         .activity-email {
+            margin-left: 43px;
+
             color: var(--muted);
-
             font-size: 11px;
-
-            margin-left: 44px;
         }
 
-        /* =========================
-           INCOMING REQUEST
-        ========================= */
+        /* ================================
+           INCOMING REQUESTS
+        ================================= */
 
         .request-card {
-            padding: 18px 20px;
+            padding: 17px 19px;
 
-            border-bottom: 1px solid #edf1f6;
+            border-bottom: 1px solid #edf0f7;
         }
 
         .request-card:last-child {
@@ -782,17 +818,14 @@
 
         .request-user {
             display: flex;
-
-            gap: 10px;
-
             align-items: center;
+            gap: 9px;
 
-            margin-bottom: 12px;
+            margin-bottom: 11px;
         }
 
         .request-actions {
             display: flex;
-
             gap: 8px;
         }
 
@@ -804,18 +837,16 @@
 
             padding: 8px;
 
-            border-radius: 6px;
+            border-radius: 7px;
 
             cursor: pointer;
 
             font-size: 11px;
-
-            font-weight: 700;
+            font-weight: 800;
         }
 
         .accept-btn {
             background: var(--success-bg);
-
             color: var(--success);
         }
 
@@ -825,7 +856,6 @@
 
         .reject-btn {
             background: var(--danger-bg);
-
             color: var(--danger);
         }
 
@@ -833,25 +863,24 @@
             background: #fee2e2;
         }
 
-        /* =========================
+        /* ================================
            INFO CARD
-        ========================= */
+        ================================= */
 
         .info-card {
             padding: 21px;
         }
 
         .info-title {
-            font-size: 15px;
-
-            font-weight: 700;
-
             margin-bottom: 15px;
+
+            color: var(--text);
+            font-size: 15px;
+            font-weight: 800;
         }
 
         .info-step {
             display: flex;
-
             gap: 11px;
 
             margin-bottom: 15px;
@@ -860,47 +889,42 @@
         .step-number {
             width: 27px;
             height: 27px;
-
             min-width: 27px;
-
-            border-radius: 50%;
-
-            background: var(--primary-light);
-
-            color: var(--primary);
 
             display: flex;
             align-items: center;
             justify-content: center;
 
-            font-size: 11px;
+            border-radius: 50%;
 
+            background: var(--purple-light);
+            color: var(--purple);
+
+            font-size: 11px;
             font-weight: 800;
         }
 
         .step-text strong {
             display: block;
 
-            font-size: 12px;
-
             margin-bottom: 3px;
+
+            color: var(--text);
+            font-size: 12px;
         }
 
         .step-text span {
-            font-size: 11px;
-
             color: var(--muted);
-
+            font-size: 11px;
             line-height: 1.4;
         }
 
-        /* =========================
-           EMPTY STATE
-        ========================= */
+        /* ================================
+           EMPTY / LOADING
+        ================================= */
 
         .empty-state {
-            padding: 45px 20px;
-
+            padding: 42px 20px;
             text-align: center;
 
             color: var(--muted);
@@ -910,58 +934,52 @@
             width: 52px;
             height: 52px;
 
-            margin: 0 auto 14px;
-
-            border-radius: 50%;
-
-            background: #f1f5f9;
+            margin: 0 auto 13px;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
-            font-size: 22px;
+            border-radius: 50%;
+
+            background: var(--purple-light);
+            color: var(--purple);
+
+            font-size: 21px;
         }
 
         .empty-state h3 {
+            margin-bottom: 5px;
+
             color: var(--text);
-
             font-size: 15px;
-
-            margin-bottom: 6px;
         }
 
         .empty-state p {
             font-size: 12px;
         }
 
-        /* =========================
-           LOADING
-        ========================= */
-
         .loading {
-            padding: 40px;
+            padding: 38px;
 
             text-align: center;
 
             color: var(--muted);
-
             font-size: 13px;
         }
 
         .spinner {
-            width: 26px;
-            height: 26px;
+            width: 27px;
+            height: 27px;
 
-            border: 3px solid #dbeafe;
+            margin: 0 auto 10px;
 
-            border-top-color: var(--primary);
+            border: 3px solid #ddd9ff;
+            border-top-color: var(--purple);
 
             border-radius: 50%;
 
-            animation: spin 0.8s linear infinite;
-
-            margin: 0 auto 10px;
+            animation: spin .8s linear infinite;
         }
 
         @keyframes spin {
@@ -970,96 +988,75 @@
             }
         }
 
-        /* =========================
+        /* ================================
            TOAST
-        ========================= */
+        ================================= */
 
         .toast {
             position: fixed;
-
             right: 25px;
             bottom: 25px;
 
             min-width: 280px;
-
             max-width: 400px;
 
             padding: 14px 18px;
 
-            border-radius: 9px;
+            border-radius: 10px;
 
-            background: #172033;
+            background: var(--navy-2);
+            color: #fff;
 
-            color: white;
+            box-shadow: 0 12px 30px rgba(0,0,0,.18);
 
             font-size: 13px;
-
-            box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+            font-weight: 600;
 
             opacity: 0;
-
-            transform: translateY(20px);
+            transform: translateY(15px);
 
             pointer-events: none;
 
-            transition: 0.3s;
+            transition: .25s;
 
-            z-index: 3000;
+            z-index: 2000;
         }
 
         .toast.show {
             opacity: 1;
-
             transform: translateY(0);
         }
 
         .toast.success {
-            border-left: 4px solid var(--success);
+            border-left: 4px solid #22c55e;
         }
 
         .toast.error {
-            border-left: 4px solid var(--danger);
+            border-left: 4px solid #ef4444;
         }
 
-        /* =========================
+        /* ================================
            RESPONSIVE
-        ========================= */
+        ================================= */
 
-        @media (max-width: 1100px) {
-
+        @media (max-width: 1050px) {
             .content-grid {
                 grid-template-columns: 1fr;
             }
 
             .right-column {
                 display: grid;
-
                 grid-template-columns: 1fr 1fr;
             }
         }
 
-        @media (max-width: 850px) {
-
+        @media (max-width: 800px) {
             .sidebar {
-                width: 70px;
-
-                padding: 20px 8px;
-            }
-
-            .sidebar-title,
-            .nav-item span:not(.nav-icon) {
-                display: none;
-            }
-
-            .nav-item {
-                justify-content: center;
-
-                padding: 13px;
+                width: 190px;
             }
 
             .main {
-                margin-left: 70px;
-
+                margin-left: 190px;
                 padding-left: 20px;
                 padding-right: 20px;
             }
@@ -1069,246 +1066,111 @@
             }
 
             .right-column {
-                grid-template-columns: 1fr;
+                display: flex;
             }
 
-            .header-user-name {
-                display: none;
+            .page-title {
+                font-size: 25px;
             }
         }
 
-        @media (max-width: 600px) {
-
+        @media (max-width: 650px) {
             .top-header {
-                padding: 0 15px;
+                padding: 0 14px;
             }
 
             .brand {
                 font-size: 17px;
             }
 
-            .brand-icon {
-                width: 34px;
-                height: 34px;
-            }
-
-            .main {
-                margin-left: 0;
-
-                padding: 90px 14px 30px;
-            }
-
-            .sidebar {
+            .header-user-name {
                 display: none;
             }
 
+            .sidebar {
+                width: 70px;
+                padding: 18px 8px;
+            }
+
+            .sidebar-title {
+                display: none;
+            }
+
+            .nav-item {
+                justify-content: center;
+                padding: 12px 5px;
+            }
+
+            .nav-item span:not(.nav-icon) {
+                display: none;
+            }
+
+            .main {
+                margin-left: 70px;
+                padding: 88px 13px 30px;
+            }
+
             .page-intro {
-                display: block;
+                align-items: flex-start;
+                gap: 12px;
             }
 
             .profile-chip {
-                margin-top: 15px;
-
-                width: fit-content;
+                display: none;
             }
 
             .hero {
-                padding: 24px 20px;
+                padding: 24px 19px;
             }
 
             .hero h2 {
                 font-size: 22px;
             }
 
-            .search-button {
-                padding: 10px 13px;
+            .search-box {
+                max-width: 100%;
             }
 
             .mentor-row {
                 align-items: flex-start;
-
                 flex-wrap: wrap;
-
-                padding: 16px;
-            }
-
-            .mentor-info {
-                width: calc(100% - 75px);
             }
 
             .mentor-action {
                 width: 100%;
-
                 margin-left: 70px;
             }
 
             .connect-btn {
-                width: 100%;
+                width: calc(100% - 70px);
             }
         }
-
-        /* ================= ALUMNICONNECT SHARED DESIGN SYSTEM ================= */
-        .alumni-shared-theme{
-            --app-primary:#2563eb;
-            --app-primary-dark:#1d4ed8;
-            --app-primary-light:#eff6ff;
-            --app-bg:#f4f7fb;
-            --app-text:#172033;
-            --app-muted:#64748b;
-            --app-border:#e2e8f0;
-            --app-white:#ffffff;
-            font-family:"Segoe UI",Arial,Helvetica,sans-serif !important;
-            background:
-                    radial-gradient(circle at 8% 10%,rgba(37,99,235,.12),transparent 25%),
-                    radial-gradient(circle at 92% 12%,rgba(59,130,246,.10),transparent 23%),
-                    radial-gradient(circle at 82% 90%,rgba(96,165,250,.10),transparent 28%),
-                    linear-gradient(135deg,#f8fbff 0%,#eef5ff 48%,#f8fafc 100%) !important;
-            color:var(--app-text);
-        }
-        .alumni-shared-theme::before{
-            content:"";
-            position:fixed;
-            inset:0;
-            background-image:
-                    linear-gradient(rgba(37,99,235,.025) 1px,transparent 1px),
-                    linear-gradient(90deg,rgba(37,99,235,.025) 1px,transparent 1px);
-            background-size:45px 45px;
-            pointer-events:none;
-            z-index:-2;
-        }
-        .alumni-shared-theme .shared-user-photo,
-        .alumni-shared-theme .header-avatar,
-        .alumni-shared-theme .mini-avatar,
-        .alumni-shared-theme .nav-avatar,
-        .alumni-shared-theme .sidebar-avatar,
-        .alumni-shared-theme .chip-avatar,
-        .alumni-shared-theme .profile-chip .avatar{
-            overflow:hidden;
-        }
-        .alumni-shared-theme .shared-user-photo img,
-        .alumni-shared-theme .header-avatar img,
-        .alumni-shared-theme .mini-avatar img,
-        .alumni-shared-theme .nav-avatar img,
-        .alumni-shared-theme .sidebar-avatar img,
-        .alumni-shared-theme .chip-avatar img,
-        .alumni-shared-theme .profile-chip .avatar img{
-            width:100%;
-            height:100%;
-            object-fit:cover;
-            display:block;
-        }
-        .alumni-shared-theme .shared-user-photo{
-            width:38px;height:38px;border-radius:50%;
-            background:var(--app-primary-light);color:var(--app-primary);
-            display:grid;place-items:center;font-size:13px;font-weight:800;
-            border:2px solid #fff;box-shadow:0 2px 8px rgba(15,23,42,.10);
-        }
-        .alumni-shared-theme .shared-user-photo img{border-radius:50%}
-        .alumni-shared-theme .shared-user-photo .photo-fallback{display:grid;place-items:center;width:100%;height:100%}
-        .alumni-shared-theme .header-avatar,
-        .alumni-shared-theme .mini-avatar,
-        .alumni-shared-theme .nav-avatar{
-            position:relative;
-        }
-        .alumni-shared-theme .header-avatar img,
-        .alumni-shared-theme .mini-avatar img,
-        .alumni-shared-theme .nav-avatar img,
-        .alumni-shared-theme .sidebar-avatar img,
-        .alumni-shared-theme .chip-avatar img{border-radius:50%}
-        .alumni-shared-theme .header,
-        .alumni-shared-theme .top-header,
-        .alumni-shared-theme .topbar,
-        .alumni-shared-theme .navbar{
-            background:rgba(255,255,255,.94) !important;
-            backdrop-filter:blur(14px);
-            border-bottom:1px solid rgba(226,232,240,.95) !important;
-            box-shadow:0 4px 20px rgba(15,23,42,.04) !important;
-        }
-        .alumni-shared-theme .logo,
-        .alumni-shared-theme .brand{
-            color:var(--app-primary) !important;
-        }
-        .alumni-shared-theme .logo-icon,
-        .alumni-shared-theme .brand-icon,
-        .alumni-shared-theme .logo-mark{
-            background:linear-gradient(135deg,var(--app-primary),#3b82f6) !important;
-            color:#fff !important;
-        }
-        .alumni-shared-theme .sidebar{
-            background:rgba(255,255,255,.96) !important;
-            border-right:1px solid var(--app-border) !important;
-            box-shadow:4px 0 20px rgba(15,23,42,.035) !important;
-        }
-        .alumni-shared-theme .sidebar a,
-        .alumni-shared-theme .menu-item,
-        .alumni-shared-theme .nav-item,
-        .alumni-shared-theme .menu,
-        .alumni-shared-theme .sidebar-menu a{
-            color:#52657f !important;
-        }
-        .alumni-shared-theme .sidebar a:hover,
-        .alumni-shared-theme .menu-item:hover,
-        .alumni-shared-theme .nav-item:hover,
-        .alumni-shared-theme .sidebar-menu a:hover{
-            background:#f1f6ff !important;color:var(--app-primary) !important;
-        }
-        .alumni-shared-theme .sidebar a.active,
-        .alumni-shared-theme .menu-item.active,
-        .alumni-shared-theme .nav-item.active,
-        .alumni-shared-theme .sidebar-menu a.active{
-            background:#eaf2ff !important;color:var(--app-primary) !important;
-            border-left-color:var(--app-primary) !important;
-        }
-        .alumni-shared-theme .card,
-        .alumni-shared-theme .applications-section,
-        .alumni-shared-theme .stat-card,
-        .alumni-shared-theme .messaging-shell,
-        .alumni-shared-theme .event-card,
-        .alumni-shared-theme .job-card,
-        .alumni-shared-theme .profile-card{
-            border-color:var(--app-border) !important;
-            box-shadow:0 5px 20px rgba(15,23,42,.045) !important;
-        }
-        .alumni-shared-theme button,
-        .alumni-shared-theme .btn{
-            transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
-        }
-        .alumni-shared-theme button:hover,
-        .alumni-shared-theme .btn:hover{
-            transform:translateY(-1px);
-        }
-        @media(max-width:800px){
-            .alumni-shared-theme .shared-user-photo{width:34px;height:34px}
-        }
-
     </style>
 </head>
 
-<body class="alumni-shared-theme">
+<body>
 
-<!-- =========================
-     HEADER
-========================= -->
+<!-- =====================================================
+     TOP HEADER
+===================================================== -->
 
 <header class="top-header">
 
     <div class="brand">
-        <div class="brand-icon">A</div>
-        Alumni Portal
+        <div class="brand-icon">🎓</div>
+        <span>AlumniConnect</span>
     </div>
 
     <div class="header-right">
 
         <div class="header-user">
+            <span class="header-user-name" id="headerUserName">
+                Welcome
+            </span>
 
             <div class="header-avatar" id="headerAvatar">
                 U
             </div>
-
-            <div class="header-user-name" id="headerUserName">
-                User
-            </div>
-
         </div>
 
         <button class="logout-btn" onclick="logout()">
@@ -1320,62 +1182,62 @@
 </header>
 
 
-<!-- =========================
+<!-- =====================================================
      SIDEBAR
-========================= -->
+===================================================== -->
 
 <aside class="sidebar">
 
     <div class="sidebar-title">
-        Main Menu
+        Navigation
     </div>
 
-    <a href="dashboard.html" class="nav-item">
-        <span class="nav-icon">⌂</span>
+    <a class="nav-item" href="/dashboard.html">
+        <span class="nav-icon">🏠</span>
         <span>Dashboard</span>
     </a>
 
-    <a href="profile.html" class="nav-item">
-        <span class="nav-icon">◉</span>
+    <a class="nav-item" href="/profile.html">
+        <span class="nav-icon">👤</span>
         <span>My Profile</span>
     </a>
 
-    <a href="alumni.html" class="nav-item">
-        <span class="nav-icon">◎</span>
+    <a class="nav-item" href="/alumni.html">
+        <span class="nav-icon">👥</span>
         <span>Alumni Network</span>
     </a>
 
-    <a href="mentorship.html" class="nav-item active">
-        <span class="nav-icon">♧</span>
+    <a class="nav-item active" href="/mentorship.html">
+        <span class="nav-icon">🤝</span>
         <span>Mentorship</span>
     </a>
 
-    <a href="jobs.html" class="nav-item">
-        <span class="nav-icon">▣</span>
+    <a class="nav-item" href="/jobs.html">
+        <span class="nav-icon">💼</span>
         <span>Jobs</span>
     </a>
 
-    <a href="events.html" class="nav-item">
-        <span class="nav-icon">◫</span>
+    <a class="nav-item" href="/events.html">
+        <span class="nav-icon">📅</span>
         <span>Events</span>
     </a>
 
-    <a href="messages.html" class="nav-item">
-        <span class="nav-icon">✉</span>
+    <a class="nav-item" href="/messages.html">
+        <span class="nav-icon">💬</span>
         <span>Messages</span>
     </a>
 
-    <a href="applications.html" class="nav-item">
-        <span class="nav-icon">✓</span>
-        <span>Applications</span>
+    <a class="nav-item" href="/applications.html">
+        <span class="nav-icon">📄</span>
+        <span>My Applications</span>
     </a>
 
 </aside>
 
 
-<!-- =========================
-     MAIN
-========================= -->
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
 
 <main class="main">
 
@@ -1394,15 +1256,9 @@
         </div>
 
         <div class="profile-chip">
-
-            <div class="small-avatar" id="profileAvatar">
-                U
-            </div>
-
-            <span id="profileName">
-                Your Profile
+            <span id="profileChipName">
+                User
             </span>
-
         </div>
 
     </div>
@@ -1423,27 +1279,26 @@
             </h2>
 
             <p>
-                Connect with experienced alumni, ask questions,
-                learn from their journey and take the next step
-                in your professional career.
+                Connect with experienced alumni, ask questions, learn from
+                their journey and take the next step in your professional career.
             </p>
 
             <div class="search-box">
 
                 <span class="search-icon">
-                    🔎
+                    🔍
                 </span>
 
                 <input
                         type="text"
                         id="mentorSearch"
                         placeholder="Search mentors by name or email..."
-                        oninput="filterMentors()"
+                        oninput="searchMentors()"
                 >
 
                 <button
                         class="search-button"
-                        onclick="filterMentors()">
+                        onclick="searchMentors()">
                     Search
                 </button>
 
@@ -1462,11 +1317,11 @@
 
             <div class="stat-info">
                 <span>Available Mentors</span>
-                <strong id="mentorCount">0</strong>
+                <strong id="availableMentors">0</strong>
             </div>
 
             <div class="stat-icon">
-                ♧
+                🤝
             </div>
 
         </div>
@@ -1476,7 +1331,7 @@
 
             <div class="stat-info">
                 <span>Requests Sent</span>
-                <strong id="sentCount">0</strong>
+                <strong id="requestsSent">0</strong>
             </div>
 
             <div class="stat-icon">
@@ -1490,7 +1345,7 @@
 
             <div class="stat-info">
                 <span>Requests Received</span>
-                <strong id="receivedCount">0</strong>
+                <strong id="requestsReceived">0</strong>
             </div>
 
             <div class="stat-icon">
@@ -1504,17 +1359,14 @@
 
     <!-- CONTENT -->
 
-    <div class="content-grid">
+    <section class="content-grid">
 
-        <!-- =========================
-             LEFT CONTENT
-        ========================= -->
+
+        <!-- LEFT -->
 
         <div>
 
-            <!-- FIND MENTORS -->
-
-            <section class="panel">
+            <div class="panel">
 
                 <div class="panel-header">
 
@@ -1524,114 +1376,109 @@
                         </div>
 
                         <div class="panel-subtitle">
-                            Explore alumni and send a mentorship request.
+                            Experienced alumni available for mentorship
                         </div>
                     </div>
 
-                    <div class="mentor-count" id="mentorBadge">
+                    <div class="mentor-count" id="mentorCount">
                         0 mentors
                     </div>
 
                 </div>
 
-                <div id="mentorList" class="mentor-list">
+
+                <div
+                        class="mentor-list"
+                        id="mentorList">
 
                     <div class="loading">
-
                         <div class="spinner"></div>
-
                         Loading mentors...
-
                     </div>
 
                 </div>
 
-            </section>
-
-
-            <!-- SENT REQUESTS -->
-
-            <section class="panel" style="margin-top:22px;">
-
-                <div class="panel-header">
-
-                    <div>
-                        <div class="panel-title">
-                            Your Mentorship Activity
-                        </div>
-
-                        <div class="panel-subtitle">
-                            Track requests you have sent.
-                        </div>
-                    </div>
-
-                </div>
-
-                <div id="sentRequests">
-
-                    <div class="loading">
-
-                        <div class="spinner"></div>
-
-                        Loading requests...
-
-                    </div>
-
-                </div>
-
-            </section>
+            </div>
 
         </div>
 
 
-        <!-- =========================
-             RIGHT CONTENT
-        ========================= -->
+        <!-- RIGHT -->
 
         <div class="right-column">
 
-            <!-- INCOMING REQUESTS -->
 
-            <section class="panel">
+            <!-- SENT REQUESTS -->
+
+            <div class="panel">
 
                 <div class="panel-header">
 
                     <div>
                         <div class="panel-title">
-                            Requests Received
+                            My Requests
                         </div>
 
                         <div class="panel-subtitle">
-                            People interested in connecting.
+                            Mentorship requests you sent
                         </div>
                     </div>
 
                 </div>
 
-                <div id="incomingRequests">
+                <div
+                        class="activity-list"
+                        id="sentRequests">
 
                     <div class="loading">
-
-                        <div class="spinner"></div>
-
                         Loading...
-
                     </div>
 
                 </div>
 
-            </section>
+            </div>
+
+
+            <!-- RECEIVED REQUESTS -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <div class="panel-title">
+                            Incoming Requests
+                        </div>
+
+                        <div class="panel-subtitle">
+                            Requests from students
+                        </div>
+                    </div>
+
+                </div>
+
+                <div
+                        id="incomingRequests">
+
+                    <div class="loading">
+                        Loading...
+                    </div>
+
+                </div>
+
+            </div>
 
 
             <!-- HOW IT WORKS -->
 
-            <section class="panel">
+            <div class="panel">
 
                 <div class="info-card">
 
                     <div class="info-title">
-                        How mentorship works
+                        How Mentorship Works
                     </div>
+
 
                     <div class="info-step">
 
@@ -1646,7 +1493,8 @@
                             </strong>
 
                             <span>
-                                Search the alumni network and find someone whose experience interests you.
+                                Browse experienced alumni and find someone
+                                whose experience matches your interests.
                             </span>
 
                         </div>
@@ -1667,7 +1515,8 @@
                             </strong>
 
                             <span>
-                                Send a mentorship request and introduce yourself professionally.
+                                Send a mentorship request to the alumni
+                                you would like to connect with.
                             </span>
 
                         </div>
@@ -1688,7 +1537,8 @@
                             </strong>
 
                             <span>
-                                Once accepted, build the relationship and learn from their experience.
+                                Once accepted, build a professional
+                                relationship and learn from their experience.
                             </span>
 
                         </div>
@@ -1697,167 +1547,186 @@
 
                 </div>
 
-            </section>
+            </div>
 
         </div>
 
-    </div>
+    </section>
 
 </main>
 
 
-<!-- TOAST -->
+<!-- =====================================================
+     TOAST
+===================================================== -->
 
-<div id="toast" class="toast"></div>
+<div
+        class="toast"
+        id="toast">
+</div>
 
 
 <script>
 
+    /* =====================================================
+       GLOBAL VARIABLES
+    ===================================================== */
+
     let currentUser = null;
-
     let allMentors = [];
-
     let sentRequests = [];
-
     let incomingRequests = [];
 
 
-    /* =========================
+    /* =====================================================
        INITIALIZATION
-    ========================= */
+    ===================================================== */
 
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", async () => {
 
-        initializePage();
+        await loadCurrentUser();
+
+        if (!currentUser) {
+            return;
+        }
+
+        await Promise.all([
+            loadMentors(),
+            loadSentRequests(),
+            loadIncomingRequests()
+        ]);
 
     });
 
 
-    async function initializePage() {
+    /* =====================================================
+       LOAD CURRENT USER
+    ===================================================== */
+
+    async function loadCurrentUser() {
 
         try {
 
-            await loadCurrentUser();
+            const response = await fetch(
+                "/api/users/me",
+                {
+                    credentials: "include"
+                }
+            );
 
-            await loadMentors();
+            if (!response.ok) {
 
-            await loadSentRequests();
+                showToast(
+                    "Please login to continue.",
+                    "error"
+                );
 
-            await loadIncomingRequests();
+                return null;
+            }
+
+            currentUser = await response.json();
+
+            const name =
+                currentUser.name || "User";
+
+            document.getElementById(
+                "headerUserName"
+            ).textContent =
+                "Welcome, " + name;
+
+            document.getElementById(
+                "profileChipName"
+            ).textContent =
+                name;
+
+            const avatar =
+                getInitials(name);
+
+            document.getElementById(
+                "headerAvatar"
+            ).textContent =
+                avatar;
+
+            return currentUser;
+
+        } catch (error) {
+
+            console.error(
+                "Current user error:",
+                error
+            );
+
+            showToast(
+                "Unable to load your profile.",
+                "error"
+            );
+
+            return null;
+        }
+    }
+
+
+    /* =====================================================
+       LOAD ALUMNI MENTORS
+    ===================================================== */
+
+    async function loadMentors() {
+
+        const container =
+            document.getElementById(
+                "mentorList"
+            );
+
+        try {
+
+            const response = await fetch(
+                "/api/users/alumni",
+                {
+                    credentials: "include"
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(
+                    "Failed to load alumni"
+                );
+            }
+
+            const alumni =
+                await response.json();
+
+            allMentors =
+                alumni.filter(
+                    user =>
+                        currentUser &&
+                        user.id !== currentUser.id
+                );
+
+            document.getElementById(
+                "availableMentors"
+            ).textContent =
+                allMentors.length;
+
+            renderMentors(allMentors);
 
         } catch (error) {
 
             console.error(error);
 
-            showToast(
-                "Unable to load mentorship data.",
-                "error"
-            );
-
+            container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">⚠️</div>
+                <h3>Unable to load mentors</h3>
+                <p>Please refresh the page and try again.</p>
+            </div>
+        `;
         }
-
     }
 
 
-    /* =========================
-       CURRENT USER
-    ========================= */
-
-    async function loadCurrentUser() {
-
-        const response =
-            await fetch("/api/users/me");
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Unable to load current user."
-            );
-
-        }
-
-        currentUser = await response.json();
-
-        updateUserInterface();
-
-    }
-
-
-    function updateUserInterface() {
-
-        if (!currentUser) return;
-
-        const name =
-            currentUser.name || "User";
-
-        const initial =
-            name.charAt(0).toUpperCase();
-
-        document.getElementById(
-            "headerUserName"
-        ).textContent = name;
-
-        document.getElementById(
-            "profileName"
-        ).textContent = name;
-
-        document.getElementById(
-            "headerAvatar"
-        ).textContent = initial;
-
-        document.getElementById(
-            "profileAvatar"
-        ).textContent = initial;
-
-    }
-
-
-    /* =========================
-       LOAD MENTORS
-    ========================= */
-
-    async function loadMentors() {
-
-        const response =
-            await fetch("/api/users/alumni");
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Unable to load alumni."
-            );
-
-        }
-
-        const alumni =
-            await response.json();
-
-        allMentors =
-            alumni.filter(function (user) {
-
-                return currentUser &&
-                    user.id !== currentUser.id;
-
-            });
-
-        document.getElementById(
-            "mentorCount"
-        ).textContent =
-            allMentors.length;
-
-        document.getElementById(
-            "mentorBadge"
-        ).textContent =
-            allMentors.length + " mentors";
-
-        renderMentors(allMentors);
-
-    }
-
-
-    /* =========================
+    /* =====================================================
        RENDER MENTORS
-    ========================= */
+    ===================================================== */
 
     function renderMentors(mentors) {
 
@@ -1866,232 +1735,224 @@
                 "mentorList"
             );
 
+        document.getElementById(
+            "mentorCount"
+        ).textContent =
+            mentors.length +
+            (mentors.length === 1
+                ? " mentor"
+                : " mentors");
+
         if (!mentors.length) {
 
             container.innerHTML = `
-
-                <div class="empty-state">
-
-                    <div class="empty-icon">
-                        🔎
-                    </div>
-
-                    <h3>
-                        No mentors found
-                    </h3>
-
-                    <p>
-                        Try searching with a different name or email.
-                    </p>
-
-                </div>
-
-            `;
+            <div class="empty-state">
+                <div class="empty-icon">🔍</div>
+                <h3>No mentors found</h3>
+                <p>
+                    Try another search or check back later.
+                </p>
+            </div>
+        `;
 
             return;
-
         }
 
-
         container.innerHTML =
-            mentors.map(function (mentor) {
+            mentors.map(
+                mentor =>
+                    createMentorHTML(mentor)
+            ).join("");
 
-                const initial =
-                    (mentor.name || "A")
-                        .charAt(0)
-                        .toUpperCase();
-
-                return `
-
-                    <div class="mentor-row">
-
-                        <div class="mentor-avatar">
-                            ${escapeHtml(initial)}
-                        </div>
-
-                        <div class="mentor-info">
-
-                            <div class="mentor-name">
-                                ${escapeHtml(
-                    mentor.name || "Alumni"
-                )}
-                            </div>
-
-                            <div class="mentor-email">
-                                ${escapeHtml(
-                    mentor.email || "Email unavailable"
-                )}
-                            </div>
-
-                            <span class="mentor-role">
-                                ${escapeHtml(
-                    mentor.role || "ALUMNI"
-                )}
-                            </span>
-
-                        </div>
-
-                        <div class="mentor-action">
-
-                            ${getMentorButton(mentor)}
-
-                        </div>
-
-                    </div>
-
-                `;
-
-            }).join("");
-
+        updateMentorButtons();
     }
 
 
-    /* =========================
-       MENTOR BUTTON
-    ========================= */
+    /* =====================================================
+       CREATE MENTOR HTML
+    ===================================================== */
 
-    function getMentorButton(mentor) {
+    function createMentorHTML(mentor) {
 
-        const existing =
-            sentRequests.find(function (request) {
+        const initials =
+            getInitials(
+                mentor.name || "Alumni"
+            );
 
-                return request.alumni &&
-                    request.alumni.id === mentor.id;
+        const role =
+            mentor.role || "ALUMNI";
 
-            });
+        return `
+        <div
+            class="mentor-row"
+            data-name="${escapeHtml(
+            mentor.name || ""
+        ).toLowerCase()}"
+            data-email="${escapeHtml(
+            mentor.email || ""
+        ).toLowerCase()}">
 
+            <div class="mentor-avatar">
+                ${initials}
+            </div>
 
-        if (!existing) {
+            <div class="mentor-info">
 
-            return `
+                <div class="mentor-name">
+                    ${escapeHtml(
+            mentor.name || "Alumni"
+        )}
+                </div>
+
+                <div class="mentor-email">
+                    ${escapeHtml(
+            mentor.email || ""
+        )}
+                </div>
+
+                <span class="mentor-role">
+                    ${escapeHtml(role)}
+                </span>
+
+            </div>
+
+            <div class="mentor-action">
 
                 <button
                     class="connect-btn"
+                    id="connect-${mentor.id}"
                     onclick="sendMentorshipRequest(${mentor.id})">
 
                     Connect
 
                 </button>
 
-            `;
+            </div>
 
-        }
-
-
-        if (existing.status === "PENDING") {
-
-            return `
-
-                <button
-                    class="connect-btn"
-                    disabled>
-
-                    Request Sent
-
-                </button>
-
-            `;
-
-        }
-
-
-        if (existing.status === "ACCEPTED") {
-
-            return `
-
-                <button
-                    class="connect-btn"
-                    disabled>
-
-                    Connected
-
-                </button>
-
-            `;
-
-        }
-
-
-        if (existing.status === "REJECTED") {
-
-            return `
-
-                <button
-                    class="connect-btn"
-                    disabled>
-
-                    Request Closed
-
-                </button>
-
-            `;
-
-        }
-
-
-        return `
-
-            <button
-                class="connect-btn"
-                onclick="sendMentorshipRequest(${mentor.id})">
-
-                Connect
-
-            </button>
-
-        `;
-
+        </div>
+    `;
     }
 
 
-    /* =========================
-       SEARCH
-    ========================= */
+    /* =====================================================
+       UPDATE MENTOR BUTTONS
+    ===================================================== */
 
-    function filterMentors() {
+    function updateMentorButtons() {
 
-        const search =
+        allMentors.forEach(
+            mentor => {
+
+                const button =
+                    document.getElementById(
+                        "connect-" + mentor.id
+                    );
+
+                if (!button) {
+                    return;
+                }
+
+                const existing =
+                    sentRequests.find(
+                        request =>
+                            request.alumni &&
+                            request.alumni.id === mentor.id
+                    );
+
+                if (existing) {
+
+                    const status =
+                        String(
+                            existing.status || ""
+                        ).toUpperCase();
+
+                    if (status === "PENDING") {
+
+                        button.textContent =
+                            "Pending";
+
+                        button.disabled =
+                            true;
+
+                    } else if (
+                        status === "ACCEPTED"
+                    ) {
+
+                        button.textContent =
+                            "Connected";
+
+                        button.disabled =
+                            true;
+
+                    } else {
+
+                        button.textContent =
+                            "Connect";
+
+                        button.disabled =
+                            false;
+                    }
+
+                }
+
+            }
+        );
+    }
+
+
+    /* =====================================================
+       SEARCH MENTORS
+    ===================================================== */
+
+    function searchMentors() {
+
+        const input =
             document.getElementById(
                 "mentorSearch"
-            ).value
+            );
+
+        const search =
+            input.value
                 .trim()
                 .toLowerCase();
 
-
         if (!search) {
 
-            renderMentors(allMentors);
+            renderMentors(
+                allMentors
+            );
 
             return;
-
         }
 
-
         const filtered =
-            allMentors.filter(function (mentor) {
+            allMentors.filter(
+                mentor => {
 
-                const name =
-                    (mentor.name || "")
-                        .toLowerCase();
+                    const name =
+                        String(
+                            mentor.name || ""
+                        ).toLowerCase();
 
-                const email =
-                    (mentor.email || "")
-                        .toLowerCase();
+                    const email =
+                        String(
+                            mentor.email || ""
+                        ).toLowerCase();
 
-                return name.includes(search) ||
-                    email.includes(search);
-
-            });
-
+                    return (
+                        name.includes(search) ||
+                        email.includes(search)
+                    );
+                }
+            );
 
         renderMentors(filtered);
-
     }
 
 
-    /* =========================
-       SEND REQUEST
-    ========================= */
+    /* =====================================================
+       SEND MENTORSHIP REQUEST
+    ===================================================== */
 
     async function sendMentorshipRequest(
         alumniId
@@ -2100,20 +1961,17 @@
         if (!currentUser) {
 
             showToast(
-                "User information is not available.",
+                "Please login first.",
                 "error"
             );
 
             return;
-
         }
 
-
         const button =
-            event && event.target
-                ? event.target
-                : null;
-
+            document.getElementById(
+                "connect-" + alumniId
+            );
 
         if (button) {
 
@@ -2121,9 +1979,26 @@
 
             button.textContent =
                 "Sending...";
-
         }
 
+        const alumni =
+            allMentors.find(
+                user =>
+                    user.id === alumniId
+            );
+
+        if (!alumni) {
+
+            if (button) {
+
+                button.disabled = false;
+
+                button.textContent =
+                    "Connect";
+            }
+
+            return;
+        }
 
         try {
 
@@ -2138,6 +2013,8 @@
                                 "application/json"
                         },
 
+                        credentials: "include",
+
                         body: JSON.stringify({
 
                             student: {
@@ -2145,471 +2022,415 @@
                             },
 
                             alumni: {
-                                id: alumniId
+                                id: alumni.id
                             }
 
                         })
-
                     }
                 );
 
-
-            if (response.status === 409) {
-
-                const message =
-                    await response.text();
-
-                showToast(
-                    message ||
-                    "A request already exists.",
-                    "error"
-                );
-
-                return;
-
-            }
-
+            const text =
+                await response.text();
 
             if (!response.ok) {
 
                 throw new Error(
+                    text ||
                     "Unable to send request."
                 );
-
             }
 
-
             showToast(
-                "Mentorship request sent successfully!",
+                "Mentorship request sent successfully.",
                 "success"
             );
 
-
             await loadSentRequests();
 
-            renderMentors(
-                getFilteredMentors()
+            updateMentorButtons();
+
+        } catch (error) {
+
+            console.error(
+                "Mentorship request error:",
+                error
             );
 
+            if (button) {
+
+                button.disabled = false;
+
+                button.textContent =
+                    "Connect";
+            }
+
+            showToast(
+                error.message ||
+                "Unable to send mentorship request.",
+                "error"
+            );
+        }
+    }
+
+
+    /* =====================================================
+       LOAD SENT REQUESTS
+    ===================================================== */
+
+    async function loadSentRequests() {
+
+        if (!currentUser) {
+            return;
+        }
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/mentorship/student/" +
+                    currentUser.id,
+                    {
+                        credentials: "include"
+                    }
+                );
+
+            if (!response.ok) {
+                throw new Error(
+                    "Failed to load sent requests"
+                );
+            }
+
+            sentRequests =
+                await response.json();
+
+            document.getElementById(
+                "requestsSent"
+            ).textContent =
+                sentRequests.length;
+
+            renderSentRequests(
+                sentRequests
+            );
+
+            updateMentorButtons();
 
         } catch (error) {
 
             console.error(error);
 
-            showToast(
-                "Failed to send mentorship request.",
-                "error"
-            );
-
-        }
-
-    }
-
-
-    function getFilteredMentors() {
-
-        const search =
             document.getElementById(
-                "mentorSearch"
-            ).value
-                .trim()
-                .toLowerCase();
-
-
-        if (!search) {
-
-            return allMentors;
-
+                "sentRequests"
+            ).innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">⚠️</div>
+                <p>Unable to load requests.</p>
+            </div>
+        `;
         }
-
-
-        return allMentors.filter(
-            function (mentor) {
-
-                return (
-                    (mentor.name || "")
-                        .toLowerCase()
-                        .includes(search)
-                    ||
-                    (mentor.email || "")
-                        .toLowerCase()
-                        .includes(search)
-                );
-
-            }
-        );
-
     }
 
 
-    /* =========================
-       SENT REQUESTS
-    ========================= */
+    /* =====================================================
+       RENDER SENT REQUESTS
+    ===================================================== */
 
-    async function loadSentRequests() {
-
-        if (!currentUser) return;
-
-
-        const response =
-            await fetch(
-                "/api/mentorship/student/"
-                + currentUser.id
-            );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Unable to load sent requests."
-            );
-
-        }
-
-
-        sentRequests =
-            await response.json();
-
-
-        document.getElementById(
-            "sentCount"
-        ).textContent =
-            sentRequests.length;
-
-
-        renderSentRequests();
-
-    }
-
-
-    function renderSentRequests() {
+    function renderSentRequests(
+        requests
+    ) {
 
         const container =
             document.getElementById(
                 "sentRequests"
             );
 
-
-        if (!sentRequests.length) {
+        if (!requests.length) {
 
             container.innerHTML = `
-
-                <div class="empty-state">
-
-                    <div class="empty-icon">
-                        ♧
-                    </div>
-
-                    <h3>
-                        No mentorship requests yet
-                    </h3>
-
-                    <p>
-                        Find an alumni mentor above and start your journey.
-                    </p>
-
-                </div>
-
-            `;
+            <div class="empty-state">
+                <div class="empty-icon">📨</div>
+                <h3>No requests yet</h3>
+                <p>
+                    Your sent mentorship requests
+                    will appear here.
+                </p>
+            </div>
+        `;
 
             return;
-
         }
 
-
         container.innerHTML =
-            sentRequests.map(function (request) {
+            requests
+                .slice()
+                .reverse()
+                .map(
+                    request => {
 
-                const alumni =
-                    request.alumni || {};
+                        const alumni =
+                            request.alumni || {};
 
-                const initial =
-                    (alumni.name || "A")
-                        .charAt(0)
-                        .toUpperCase();
+                        const status =
+                            String(
+                                request.status ||
+                                "PENDING"
+                            ).toUpperCase();
 
+                        const statusClass =
+                            status === "ACCEPTED"
+                                ? "status-accepted"
+                                : status === "REJECTED"
+                                    ? "status-rejected"
+                                    : "status-pending";
 
-                return `
+                        return `
+                        <div class="activity-item">
 
-                    <div class="activity-item">
+                            <div class="activity-top">
 
-                        <div class="activity-top">
+                                <div class="small-avatar">
+                                    ${getInitials(
+                            alumni.name ||
+                            "A"
+                        )}
+                                </div>
 
-                            <div class="small-avatar">
-                                ${escapeHtml(initial)}
+                                <div class="activity-name">
+                                    ${escapeHtml(
+                            alumni.name ||
+                            "Alumni"
+                        )}
+                                </div>
+
+                                <span
+                                    class="activity-status ${statusClass}">
+                                    ${status}
+                                </span>
+
                             </div>
 
-                            <div class="activity-name">
+                            <div class="activity-email">
                                 ${escapeHtml(
-                    alumni.name || "Alumni"
-                )}
-                            </div>
-
-                            <div class="
-                                activity-status
-                                ${getStatusClass(
-                    request.status
-                )}
-                            ">
-
-                                ${escapeHtml(
-                    request.status || "PENDING"
-                )}
-
+                            alumni.email ||
+                            ""
+                        )}
                             </div>
 
                         </div>
-
-                        <div class="activity-email">
-                            ${escapeHtml(
-                    alumni.email || ""
-                )}
-                        </div>
-
-                    </div>
-
-                `;
-
-            }).join("");
-
+                    `;
+                    }
+                )
+                .join("");
     }
 
 
-    /* =========================
-       INCOMING REQUESTS
-    ========================= */
+    /* =====================================================
+       LOAD INCOMING REQUESTS
+    ===================================================== */
 
     async function loadIncomingRequests() {
 
-        if (!currentUser) return;
-
-
-        const response =
-            await fetch(
-                "/api/mentorship/alumni/"
-                + currentUser.id
-            );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Unable to load incoming requests."
-            );
-
+        if (!currentUser) {
+            return;
         }
 
+        try {
 
-        incomingRequests =
-            await response.json();
+            const response =
+                await fetch(
+                    "/api/mentorship/alumni/" +
+                    currentUser.id,
+                    {
+                        credentials: "include"
+                    }
+                );
 
+            if (!response.ok) {
+                throw new Error(
+                    "Failed to load incoming requests"
+                );
+            }
 
-        document.getElementById(
-            "receivedCount"
-        ).textContent =
-            incomingRequests.length;
+            incomingRequests =
+                await response.json();
 
+            const pending =
+                incomingRequests.filter(
+                    request =>
+                        String(
+                            request.status || ""
+                        ).toUpperCase() ===
+                        "PENDING"
+                );
 
-        renderIncomingRequests();
+            document.getElementById(
+                "requestsReceived"
+            ).textContent =
+                pending.length;
 
+            renderIncomingRequests(
+                incomingRequests
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            document.getElementById(
+                "incomingRequests"
+            ).innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">⚠️</div>
+                <p>Unable to load requests.</p>
+            </div>
+        `;
+        }
     }
 
 
-    function renderIncomingRequests() {
+    /* =====================================================
+       RENDER INCOMING REQUESTS
+    ===================================================== */
+
+    function renderIncomingRequests(
+        requests
+    ) {
 
         const container =
             document.getElementById(
                 "incomingRequests"
             );
 
+        const pending =
+            requests.filter(
+                request =>
+                    String(
+                        request.status || ""
+                    ).toUpperCase() ===
+                    "PENDING"
+            );
 
-        if (!incomingRequests.length) {
+        if (!pending.length) {
 
             container.innerHTML = `
-
-                <div class="empty-state">
-
-                    <div class="empty-icon">
-                        ✉
-                    </div>
-
-                    <h3>
-                        No requests
-                    </h3>
-
-                    <p>
-                        New mentorship requests will appear here.
-                    </p>
-
-                </div>
-
-            `;
+            <div class="empty-state">
+                <div class="empty-icon">📥</div>
+                <h3>No incoming requests</h3>
+                <p>
+                    New mentorship requests
+                    will appear here.
+                </p>
+            </div>
+        `;
 
             return;
-
         }
 
-
         container.innerHTML =
-            incomingRequests.map(function (request) {
+            pending
+                .map(
+                    request => {
 
-                const student =
-                    request.student || {};
+                        const student =
+                            request.student || {};
 
-                const initial =
-                    (student.name || "U")
-                        .charAt(0)
-                        .toUpperCase();
-
-
-                if (request.status !== "PENDING") {
-
-                    return `
-
-                        <div class="request-card">
+                        return `
+                        <div
+                            class="request-card"
+                            id="request-${request.id}">
 
                             <div class="request-user">
 
                                 <div class="small-avatar">
-                                    ${escapeHtml(initial)}
+                                    ${getInitials(
+                            student.name ||
+                            "S"
+                        )}
                                 </div>
 
                                 <div>
-
                                     <div class="activity-name">
                                         ${escapeHtml(
-                        student.name || "User"
-                    )}
+                            student.name ||
+                            "Student"
+                        )}
                                     </div>
 
                                     <div class="activity-email"
-                                         style="margin-left:0;margin-top:3px;">
-
+                                         style="margin-left:0;">
                                         ${escapeHtml(
-                        student.email || ""
-                    )}
-
+                            student.email ||
+                            ""
+                        )}
                                     </div>
-
                                 </div>
 
                             </div>
 
-                            <div class="
-                                activity-status
-                                ${getStatusClass(
-                        request.status
-                    )}
-                            " style="display:inline-block;">
+                            <div class="request-actions">
 
-                                ${escapeHtml(
-                        request.status
-                    )}
+                                <button
+                                    class="accept-btn"
+                                    onclick="acceptRequest(${request.id})">
+
+                                    Accept
+
+                                </button>
+
+                                <button
+                                    class="reject-btn"
+                                    onclick="rejectRequest(${request.id})">
+
+                                    Reject
+
+                                </button>
 
                             </div>
 
                         </div>
-
                     `;
-
-                }
-
-
-                return `
-
-                    <div class="request-card">
-
-                        <div class="request-user">
-
-                            <div class="small-avatar">
-                                ${escapeHtml(initial)}
-                            </div>
-
-                            <div>
-
-                                <div class="activity-name">
-                                    ${escapeHtml(
-                    student.name || "User"
-                )}
-                                </div>
-
-                                <div class="activity-email"
-                                     style="margin-left:0;margin-top:3px;">
-
-                                    ${escapeHtml(
-                    student.email || ""
-                )}
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="request-actions">
-
-                            <button
-                                class="accept-btn"
-                                onclick="acceptRequest(${request.id})">
-
-                                Accept
-
-                            </button>
-
-                            <button
-                                class="reject-btn"
-                                onclick="rejectRequest(${request.id})">
-
-                                Reject
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                `;
-
-            }).join("");
-
+                    }
+                )
+                .join("");
     }
 
 
-    /* =========================
-       ACCEPT
-    ========================= */
+    /* =====================================================
+       ACCEPT REQUEST
+    ===================================================== */
 
-    async function acceptRequest(id) {
+    async function acceptRequest(
+        requestId
+    ) {
 
         try {
 
             const response =
                 await fetch(
-                    "/api/mentorship/requests/"
-                    + id
-                    + "/accept",
+                    "/api/mentorship/requests/" +
+                    requestId +
+                    "/accept",
                     {
-                        method: "PUT"
+                        method: "PUT",
+                        credentials: "include"
                     }
                 );
 
-
             if (!response.ok) {
 
+                const message =
+                    await response.text();
+
                 throw new Error(
+                    message ||
                     "Unable to accept request."
                 );
-
             }
-
 
             showToast(
                 "Mentorship request accepted.",
                 "success"
             );
 
-
             await loadIncomingRequests();
 
         } catch (error) {
@@ -2617,49 +2438,51 @@
             console.error(error);
 
             showToast(
-                "Failed to accept request.",
+                error.message ||
+                "Unable to accept request.",
                 "error"
             );
-
         }
-
     }
 
 
-    /* =========================
-       REJECT
-    ========================= */
+    /* =====================================================
+       REJECT REQUEST
+    ===================================================== */
 
-    async function rejectRequest(id) {
+    async function rejectRequest(
+        requestId
+    ) {
 
         try {
 
             const response =
                 await fetch(
-                    "/api/mentorship/requests/"
-                    + id
-                    + "/reject",
+                    "/api/mentorship/requests/" +
+                    requestId +
+                    "/reject",
                     {
-                        method: "PUT"
+                        method: "PUT",
+                        credentials: "include"
                     }
                 );
 
-
             if (!response.ok) {
 
+                const message =
+                    await response.text();
+
                 throw new Error(
+                    message ||
                     "Unable to reject request."
                 );
-
             }
-
 
             showToast(
                 "Mentorship request rejected.",
                 "success"
             );
 
-
             await loadIncomingRequests();
 
         } catch (error) {
@@ -2667,65 +2490,93 @@
             console.error(error);
 
             showToast(
-                "Failed to reject request.",
+                error.message ||
+                "Unable to reject request.",
                 "error"
             );
-
         }
-
     }
 
 
-    /* =========================
-       STATUS
-    ========================= */
+    /* =====================================================
+       LOGOUT
+    ===================================================== */
 
-    function getStatusClass(status) {
+    function logout() {
 
-        if (status === "ACCEPTED") {
-
-            return "status-accepted";
-
-        }
-
-        if (status === "REJECTED") {
-
-            return "status-rejected";
-
-        }
-
-        return "status-pending";
-
+        window.location.href =
+            "/logout";
     }
 
 
-    /* =========================
+    /* =====================================================
+       INITIALS
+    ===================================================== */
+
+    function getInitials(
+        name
+    ) {
+
+        if (!name) {
+            return "U";
+        }
+
+        const words =
+            String(name)
+                .trim()
+                .split(/\s+/);
+
+        if (words.length === 1) {
+
+            return words[0]
+                .substring(0, 2)
+                .toUpperCase();
+        }
+
+        return (
+            words[0][0] +
+            words[words.length - 1][0]
+        ).toUpperCase();
+    }
+
+
+    /* =====================================================
        ESCAPE HTML
-    ========================= */
+    ===================================================== */
 
-    function escapeHtml(value) {
+    function escapeHtml(
+        value
+    ) {
 
-        if (value === null ||
-            value === undefined) {
-
-            return "";
-
-        }
-
-
-        return String(value)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-
+        return String(value || "")
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
     }
 
 
-    /* =========================
+    /* =====================================================
        TOAST
-    ========================= */
+    ===================================================== */
+
+    let toastTimer;
 
     function showToast(
         message,
@@ -2737,116 +2588,31 @@
                 "toast"
             );
 
-
         toast.textContent =
             message;
 
-
         toast.className =
-            "toast "
-            + type
-            + " show";
+            "toast " +
+            type +
+            " show";
 
+        clearTimeout(
+            toastTimer
+        );
 
-        setTimeout(function () {
+        toastTimer =
+            setTimeout(
+                () => {
 
-            toast.classList.remove(
-                "show"
+                    toast.classList.remove(
+                        "show"
+                    );
+
+                },
+                3500
             );
-
-        }, 3500);
-
     }
 
-
-    /* =========================
-       LOGOUT
-    ========================= */
-
-    function logout() {
-
-        sessionStorage.removeItem(
-            "loggedInEmail"
-        );
-
-        sessionStorage.removeItem(
-            "currentUser"
-        );
-
-        localStorage.removeItem(
-            "loggedInEmail"
-        );
-
-        localStorage.removeItem(
-            "currentUser"
-        );
-
-
-        window.location.href =
-            "login.html";
-
-    }
-
-
-
-    /* ================= SHARED PROFILE PHOTO ================= */
-    async function loadSharedProfilePhoto(){
-        try{
-            const userResponse = await fetch("/api/users/me", {credentials:"include"});
-            if(!userResponse.ok) return;
-            const user = await userResponse.json();
-            const name = user.name || "User";
-            const initials = name.split(/\s+/).filter(Boolean).slice(0,2)
-                .map(part => part.charAt(0).toUpperCase()).join("") || "U";
-
-            const selectors = [
-                "#sharedProfilePhoto",
-                "#headerAvatar",
-                "#miniAvatar",
-                "#navAvatar",
-                "#sidebarAvatar",
-                "#headerName + .avatar"
-            ];
-            const targets = [];
-            selectors.forEach(selector=>{
-                document.querySelectorAll(selector).forEach(el=>{
-                    if(!targets.includes(el)) targets.push(el);
-                });
-            });
-
-            targets.forEach(el=>{
-                el.innerHTML = '<span class="photo-fallback">'+initials+'</span>';
-                el.title = name;
-            });
-
-            const profileResponse = await fetch(
-                "/api/profiles/user/" + encodeURIComponent(user.id),
-                {credentials:"include"}
-            );
-            if(!profileResponse.ok) return;
-            const profile = await profileResponse.json();
-            if(!profile || !profile.id) return;
-
-            const photoUrl = "/api/profiles/" + profile.id + "/photo";
-            targets.forEach(el=>{
-                const img = document.createElement("img");
-                img.alt = name + " profile photo";
-                img.src = photoUrl + "?v=" + Date.now();
-                img.onerror = function(){
-                    this.remove();
-                    if(!el.querySelector(".photo-fallback")){
-                        el.innerHTML = '<span class="photo-fallback">'+initials+'</span>';
-                    }
-                };
-                el.innerHTML = "";
-                el.appendChild(img);
-            });
-        }catch(error){
-            console.warn("Shared profile photo could not be loaded:", error);
-        }
-    }
-
-    try { loadSharedProfilePhoto(); } catch(e) { console.warn(e); }
 </script>
 
 </body>
