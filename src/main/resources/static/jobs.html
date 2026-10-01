@@ -1984,6 +1984,196 @@
             .alumni-shared-theme .shared-user-photo{width:34px;height:34px}
         }
 
+
+        /* =========================================================
+           ALUMNICONNECT THEME - MATCH MENTORSHIP PAGE
+        ========================================================= */
+        .alumni-shared-theme {
+            --theme-navy:#17153f;
+            --theme-navy-2:#211d52;
+            --theme-sidebar-end:#29265f;
+            --theme-purple:#6652df;
+            --theme-blue:#5878e5;
+            --theme-purple-light:#eeeaff;
+            --theme-bg:#f4f6ff;
+            --theme-text:#17204a;
+            --theme-muted:#7180a3;
+            --theme-border:#e4e6f3;
+            background:var(--theme-bg) !important;
+            color:var(--theme-text);
+        }
+
+        .alumni-shared-theme .header,
+        .alumni-shared-theme .top-header,
+        .alumni-shared-theme .topbar,
+        .alumni-shared-theme .navbar{
+            height:60px !important;
+            background:linear-gradient(135deg,var(--theme-navy),var(--theme-navy-2)) !important;
+            border-bottom:1px solid rgba(255,255,255,.08) !important;
+            box-shadow:none !important;
+            padding:0 18px !important;
+            backdrop-filter:none !important;
+        }
+
+        .alumni-shared-theme .logo,
+        .alumni-shared-theme .brand{
+            color:#fff !important;
+            font-size:20px !important;
+            font-weight:700 !important;
+        }
+
+        .alumni-shared-theme .logo-icon,
+        .alumni-shared-theme .brand-icon,
+        .alumni-shared-theme .logo-mark{
+            width:36px !important;
+            height:36px !important;
+            border-radius:9px !important;
+            background:linear-gradient(135deg,var(--theme-purple),var(--theme-blue)) !important;
+            color:#fff !important;
+        }
+
+        .alumni-shared-theme .header-right{gap:12px !important;}
+        .alumni-shared-theme .header-name{color:#fff !important;font-size:12px !important;}
+        .alumni-shared-theme .header-avatar{
+            width:36px !important;height:36px !important;
+            background:linear-gradient(135deg,#7568e9,#5575e4) !important;
+            color:#fff !important;
+            border:2px solid rgba(255,255,255,.25) !important;
+        }
+        .alumni-shared-theme .logout-btn{
+            color:#fff !important;
+            border:1px solid rgba(255,255,255,.22) !important;
+            background:rgba(255,255,255,.07) !important;
+            border-radius:8px !important;
+            padding:8px 14px !important;
+        }
+        .alumni-shared-theme .logout-btn:hover{background:rgba(255,255,255,.14) !important;color:#fff !important;}
+
+        .alumni-shared-theme .sidebar{
+            top:60px !important;
+            width:191px !important;
+            padding:25px 8px !important;
+            background:linear-gradient(180deg,var(--theme-navy) 0%,var(--theme-navy-2) 55%,var(--theme-sidebar-end) 100%) !important;
+            border-right:1px solid rgba(255,255,255,.06) !important;
+            box-shadow:none !important;
+            overflow-y:auto;
+        }
+
+        .alumni-shared-theme .sidebar-title{
+            color:#9d9abd !important;
+            font-size:10px !important;
+            letter-spacing:1.2px !important;
+            padding:0 10px !important;
+            margin-bottom:13px !important;
+        }
+
+        .alumni-shared-theme .menu-item,
+        .alumni-shared-theme .sidebar a,
+        .alumni-shared-theme .nav-item,
+        .alumni-shared-theme .menu,
+        .alumni-shared-theme .sidebar-menu a{
+            color:#c8c6df !important;
+            padding:11px 12px !important;
+            border-radius:9px !important;
+            margin-bottom:4px !important;
+            font-size:12px !important;
+            font-weight:600 !important;
+            gap:11px !important;
+            border-left:none !important;
+            background:transparent !important;
+        }
+
+        .alumni-shared-theme .menu-item:hover,
+        .alumni-shared-theme .sidebar a:hover,
+        .alumni-shared-theme .nav-item:hover,
+        .alumni-shared-theme .sidebar-menu a:hover{
+            color:#fff !important;
+            background:rgba(255,255,255,.08) !important;
+            transform:translateX(2px);
+        }
+
+        .alumni-shared-theme .menu-item.active,
+        .alumni-shared-theme .sidebar a.active,
+        .alumni-shared-theme .nav-item.active,
+        .alumni-shared-theme .sidebar-menu a.active{
+            color:#fff !important;
+            background:linear-gradient(135deg,var(--theme-purple),var(--theme-blue)) !important;
+            box-shadow:0 7px 18px rgba(88,78,210,.28) !important;
+            border-left:none !important;
+        }
+
+        .alumni-shared-theme .menu-item.active::before{
+            content:"";
+            position:absolute;
+            left:-8px;
+            top:50%;
+            transform:translateY(-50%);
+            width:4px;
+            height:25px;
+            border-radius:0 5px 5px 0;
+            background:#fff;
+        }
+
+        .alumni-shared-theme .menu-icon{color:inherit !important;}
+
+        .alumni-shared-theme .main,
+        .alumni-shared-theme .content{
+            margin-left:191px !important;
+            padding:92px 34px 45px !important;
+            background:var(--theme-bg) !important;
+        }
+
+        .alumni-shared-theme .page-title{color:var(--theme-text) !important;font-size:30px !important;}
+        .alumni-shared-theme .subtitle{color:var(--theme-muted) !important;}
+
+        .alumni-shared-theme .user-chip{
+            background:#fff !important;
+            border:1px solid var(--theme-border) !important;
+            color:var(--theme-text) !important;
+            box-shadow:0 4px 14px rgba(23,21,63,.04) !important;
+        }
+
+        .alumni-shared-theme .hero{
+            background:linear-gradient(135deg,var(--theme-purple),var(--theme-blue)) !important;
+            box-shadow:0 12px 30px rgba(88,78,210,.18) !important;
+        }
+
+        .alumni-shared-theme .search-action{
+            background:var(--theme-purple) !important;
+        }
+        .alumni-shared-theme .search-action:hover{background:#5140c8 !important;}
+
+        .alumni-shared-theme .stat-card,
+        .alumni-shared-theme .panel,
+        .alumni-shared-theme .card,
+        .alumni-shared-theme .applications-section,
+        .alumni-shared-theme .messaging-shell,
+        .alumni-shared-theme .event-card,
+        .alumni-shared-theme .job-card,
+        .alumni-shared-theme .profile-card{
+            border-color:var(--theme-border) !important;
+            box-shadow:0 5px 20px rgba(23,21,63,.045) !important;
+        }
+
+        .alumni-shared-theme .stat-icon,
+        .alumni-shared-theme .count-badge,
+        .alumni-shared-theme .type-tag,
+        .alumni-shared-theme .btn-view{
+            background:var(--theme-purple-light) !important;
+            color:var(--theme-purple) !important;
+        }
+
+        .alumni-shared-theme .company-logo{
+            background:linear-gradient(135deg,#eeeaff,#dfe5ff) !important;
+            color:var(--theme-purple) !important;
+        }
+
+        @media(max-width:800px){
+            .alumni-shared-theme .sidebar{width:191px !important;}
+            .alumni-shared-theme .main,
+            .alumni-shared-theme .content{margin-left:0 !important;padding:82px 18px 35px !important;}
+        }
+
     </style>
 
 </head>
@@ -2001,10 +2191,10 @@
     <div class="logo">
 
         <div class="logo-icon">
-            A
+            🎓
         </div>
 
-        Alumni Portal
+        AlumniConnect
 
     </div>
 
