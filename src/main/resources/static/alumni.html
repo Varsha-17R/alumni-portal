@@ -10,1290 +10,865 @@
 
     <style>
 
-        * {
-            box-sizing: border-box;
+        *{
+            box-sizing:border-box;
         }
 
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f7fb;
-            color: #172b4d;
+        :root{
+            --primary:#6652df;
+            --primary2:#5878e5;
+            --sidebar1:#17153f;
+            --sidebar2:#29265f;
+            --bg:#f5f7ff;
+            --text:#24213f;
+            --muted:#7d8299;
+            --border:#e8e8f2;
+            --white:#fff;
         }
 
-        /* =====================================================
-           NAVBAR
-        ===================================================== */
-
-        .navbar {
-            height: 68px;
-            background: #0a66c2;
-            color: white;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 0 32px;
-
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-
-            z-index: 1000;
-
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            font-size: 21px;
-            font-weight: bold;
-        }
-
-        .brand-icon {
-            width: 38px;
-            height: 38px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            background: white;
-            color: #0a66c2;
-
-            border-radius: 9px;
-
-            font-size: 20px;
-        }
-
-        .navbar-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .welcome-text {
-            font-size: 14px;
-            opacity: 0.95;
-        }
-
-        .logout-btn {
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            background: transparent;
-            color: white;
-
-            padding: 9px 17px;
-
-            border-radius: 7px;
-
-            cursor: pointer;
-            font-weight: 600;
-
-            transition: 0.2s;
-        }
-
-        .logout-btn:hover {
-            background: white;
-            color: #0a66c2;
-        }
-
-
-        /* =====================================================
-           SIDEBAR
-        ===================================================== */
-
-        .sidebar {
-            position: fixed;
-
-            top: 68px;
-            left: 0;
-            bottom: 0;
-
-            width: 235px;
-
-            background: white;
-
-            border-right: 1px solid #e3e8ef;
-
-            padding: 24px 14px;
-
-            z-index: 900;
-        }
-
-        .sidebar-title {
-            padding: 0 14px 12px;
-
-            font-size: 12px;
-            font-weight: bold;
-
-            color: #8a94a6;
-
-            text-transform: uppercase;
-
-            letter-spacing: 0.7px;
-        }
-
-        .sidebar a {
-            display: flex;
-            align-items: center;
-
-            gap: 13px;
-
-            padding: 12px 14px;
-
-            margin-bottom: 5px;
-
-            color: #4a5b73;
-
-            text-decoration: none;
-
-            border-radius: 8px;
-
-            font-size: 14px;
-            font-weight: 600;
-
-            transition: 0.2s;
-        }
-
-        .sidebar a:hover {
-            background: #eef5ff;
-            color: #0a66c2;
-        }
-
-        .sidebar a.active {
-            background: #e8f2ff;
-            color: #0a66c2;
-
-            border-left: 4px solid #0a66c2;
-
-            padding-left: 10px;
-        }
-
-        .sidebar-icon {
-            width: 22px;
-
-            text-align: center;
-
-            font-size: 17px;
-        }
-
-
-        /* =====================================================
-           MAIN CONTENT
-        ===================================================== */
-
-        .main {
-            margin-left: 235px;
-
-            padding: 100px 38px 40px;
-
-            min-height: 100vh;
-        }
-
-        .page-container {
-            max-width: 1400px;
-            margin: auto;
-        }
-
-
-        /* =====================================================
-           PAGE HEADER
-        ===================================================== */
-
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-
-            margin-bottom: 25px;
-        }
-
-        .page-title {
-            margin: 0;
-
-            color: #172b4d;
-
-            font-size: 30px;
-            font-weight: 700;
-        }
-
-        .page-subtitle {
-            margin-top: 8px;
-
-            color: #718096;
-
-            font-size: 15px;
-        }
-
-        .user-badge {
-            background: white;
-
-            border: 1px solid #e0e6ed;
-
-            padding: 10px 15px;
-
-            border-radius: 9px;
-
-            font-size: 13px;
-
-            color: #5d6b82;
-        }
-
-
-        /* =====================================================
-           HERO
-        ===================================================== */
-
-        .hero {
-            background: linear-gradient(
-                    135deg,
-                    #0a66c2,
-                    #164b8a
-            );
-
-            border-radius: 15px;
-
-            padding: 28px 32px;
-
-            color: white;
-
-            margin-bottom: 25px;
-
-            position: relative;
-
-            overflow: hidden;
-
-            box-shadow: 0 7px 20px rgba(10, 102, 194, 0.18);
-        }
-
-        .hero::after {
-            content: "";
-
-            position: absolute;
-
-            width: 230px;
-            height: 230px;
-
-            border-radius: 50%;
-
-            right: -70px;
-            top: -100px;
-
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .hero h2 {
-            margin: 0 0 8px;
-
-            font-size: 24px;
-        }
-
-        .hero p {
-            margin: 0;
-
-            max-width: 650px;
-
-            line-height: 1.6;
-
-            opacity: 0.92;
-
-            font-size: 14px;
-        }
-
-
-        /* =====================================================
-           STAT CARDS
-        ===================================================== */
-
-        .stats {
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 18px;
-
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background: white;
-
-            border-radius: 12px;
-
-            padding: 20px;
-
-            border: 1px solid #e5eaf0;
-
-            box-shadow:
-                    0 3px 12px rgba(0, 0, 0, 0.04);
-        }
-
-        .stat-label {
-            color: #78869a;
-
-            font-size: 13px;
-
-            margin-bottom: 8px;
-        }
-
-        .stat-value {
-            font-size: 26px;
-
-            font-weight: 700;
-
-            color: #172b4d;
-        }
-
-        .stat-description {
-            margin-top: 5px;
-
-            color: #8b97a8;
-
-            font-size: 12px;
-        }
-
-
-        /* =====================================================
-           SEARCH / FILTERS
-        ===================================================== */
-
-        .filter-card {
-            background: white;
-
-            border: 1px solid #e2e8f0;
-
-            border-radius: 12px;
-
-            padding: 20px;
-
-            margin-bottom: 25px;
-
-            box-shadow:
-                    0 3px 12px rgba(0, 0, 0, 0.04);
-        }
-
-        .filter-title {
-            margin: 0 0 14px;
-
-            font-size: 16px;
-
-            color: #172b4d;
-        }
-
-        .filter-row {
-            display: flex;
-
-            gap: 12px;
-        }
-
-        .search-wrapper {
-            position: relative;
-
-            flex: 1;
-        }
-
-        .search-icon {
-            position: absolute;
-
-            left: 14px;
-            top: 50%;
-
-            transform: translateY(-50%);
-
-            color: #8a96a8;
-        }
-
-        .search-input {
-            width: 100%;
-
-            height: 45px;
-
-            border: 1px solid #d4dce6;
-
-            border-radius: 8px;
-
-            padding: 0 15px 0 42px;
-
-            font-size: 14px;
-
-            outline: none;
-
-            transition: 0.2s;
-        }
-
-        .search-input:focus {
-            border-color: #0a66c2;
-
-            box-shadow:
-                    0 0 0 3px rgba(10, 102, 194, 0.1);
-        }
-
-        .filter-select {
-            width: 180px;
-
-            height: 45px;
-
-            border: 1px solid #d4dce6;
-
-            border-radius: 8px;
-
-            padding: 0 12px;
-
-            font-size: 14px;
-
-            color: #44546a;
-
-            background: white;
-
-            outline: none;
-        }
-
-        .clear-btn {
-            height: 45px;
-
-            padding: 0 18px;
-
-            border: 1px solid #ccd6e2;
-
-            background: white;
-
-            color: #4a5b73;
-
-            border-radius: 8px;
-
-            cursor: pointer;
-
-            font-weight: 600;
-        }
-
-        .clear-btn:hover {
-            background: #f5f8fc;
-        }
-
-
-        /* =====================================================
-           ALUMNI GRID
-        ===================================================== */
-
-        .section-heading {
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            margin-bottom: 15px;
-        }
-
-        .section-heading h2 {
-            margin: 0;
-
-            font-size: 19px;
-
-            color: #172b4d;
-        }
-
-        .result-count {
-            color: #718096;
-
-            font-size: 13px;
-        }
-
-        #alumniContainer {
-            display: grid;
-
-            grid-template-columns:
-                repeat(4, minmax(0, 1fr));
-
-            gap: 20px;
-        }
-
-
-        /* =====================================================
-           ALUMNI CARD
-        ===================================================== */
-
-        .alumni-card {
-            background: white;
-
-            border: 1px solid #e1e7ef;
-
-            border-radius: 13px;
-
-            overflow: hidden;
-
-            box-shadow:
-                    0 4px 15px rgba(0, 0, 0, 0.05);
-
-            transition:
-                    transform 0.2s,
-                    box-shadow 0.2s;
-
-            display: flex;
-
-            flex-direction: column;
-        }
-
-        .alumni-card:hover {
-            transform: translateY(-4px);
-
-            box-shadow:
-                    0 9px 25px rgba(0, 0, 0, 0.09);
-        }
-
-        .card-cover {
-            height: 75px;
-
+        body{
+            margin:0;
+            font-family:Inter,Arial,Helvetica,sans-serif;
             background:
-                    linear-gradient(
-                            135deg,
-                            #dcecff,
-                            #edf5ff
-                    );
-
-            position: relative;
+                    radial-gradient(circle at 80% 5%,rgba(102,82,223,.08),transparent 25%),
+                    radial-gradient(circle at 20% 80%,rgba(88,120,229,.07),transparent 25%),
+                    var(--bg);
+            color:var(--text);
         }
 
-        .avatar {
-            position: absolute;
-
-            width: 70px;
-            height: 70px;
-
-            border-radius: 50%;
-
-            left: 20px;
-            bottom: -35px;
-
-            background: #0a66c2;
-
-            border: 4px solid white;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            color: white;
-
-            font-size: 24px;
-
-            font-weight: bold;
-
-            box-shadow:
-                    0 3px 10px rgba(0, 0, 0, 0.12);
-        }
-
-        .card-body {
-            padding: 48px 20px 18px;
-        }
-
-        .alumni-name {
-            margin: 0;
-
-            color: #172b4d;
-
-            font-size: 18px;
-
-            font-weight: 700;
-
-            white-space: nowrap;
-
-            overflow: hidden;
-
-            text-overflow: ellipsis;
-        }
-
-        .role {
-            color: #0a66c2;
-
-            font-size: 13px;
-
-            font-weight: 600;
-
-            margin-top: 5px;
-
-            min-height: 18px;
-        }
-
-        .alumni-info {
-            margin-top: 15px;
-        }
-
-        .info-row {
-            display: flex;
-
-            gap: 9px;
-
-            align-items: flex-start;
-
-            margin-bottom: 9px;
-
-            color: #69788d;
-
-            font-size: 13px;
-
-            line-height: 1.4;
-        }
-
-        .info-icon {
-            width: 18px;
-
-            text-align: center;
-
-            flex-shrink: 0;
-        }
-
-        .card-actions {
-            display: flex;
-
-            gap: 9px;
-
-            padding: 0 20px 20px;
-
-            margin-top: auto;
-        }
-
-        .action-btn {
-            flex: 1;
-
-            height: 38px;
-
-            border-radius: 7px;
-
-            font-size: 13px;
-
-            font-weight: 600;
-
-            cursor: pointer;
-
-            transition: 0.2s;
-        }
-
-        .connect-btn {
-            background: #0a66c2;
-
-            color: white;
-
-            border: 1px solid #0a66c2;
-        }
-
-        .connect-btn:hover {
-            background: #084f96;
-        }
-
-        .connect-btn.pending {
-            background: #f4f7fb;
-
-            color: #65748a;
-
-            border-color: #d5dde7;
-
-            cursor: default;
-        }
-
-        .connect-btn.connected {
-            background: #e8f6ed;
-
-            color: #237a45;
-
-            border-color: #bce3ca;
-
-            cursor: default;
-        }
-
-        .connect-btn.received {
-            background: #fff5df;
-
-            color: #996515;
-
-            border-color: #efd49c;
-        }
-
-        .connect-btn.received:hover {
-            background: #ffedc4;
-        }
-
-        .connect-btn.rejected {
-            background: #f4f7fb;
-
-            color: #52647b;
-
-            border-color: #d4dce7;
-        }
-
-        .view-btn {
-            background: white;
-
-            color: #0a66c2;
-
-            border: 1px solid #0a66c2;
-        }
-
-        .view-btn:hover {
-            background: #eef5ff;
-        }
-
-
-        /* =====================================================
-           EMPTY / LOADING
-        ===================================================== */
-
-        .empty-state {
-            grid-column: 1 / -1;
-
-            background: white;
-
-            border: 1px solid #e2e8f0;
-
-            border-radius: 12px;
-
-            padding: 55px 20px;
-
-            text-align: center;
-
-            color: #78869a;
-        }
-
-        .empty-icon {
-            font-size: 40px;
-
-            margin-bottom: 12px;
-        }
-
-        .empty-state h3 {
-            margin: 0 0 7px;
-
-            color: #34445b;
-
-            font-size: 18px;
-        }
-
-        .empty-state p {
-            margin: 0;
-
-            font-size: 14px;
-        }
-
-
-        /* =====================================================
-           MESSAGE
-        ===================================================== */
-
-        #message {
-            display: none;
-
-            position: fixed;
-
-            right: 25px;
-            bottom: 25px;
-
-            max-width: 390px;
-
-            padding: 14px 18px;
-
-            border-radius: 9px;
-
-            z-index: 2000;
-
-            font-size: 14px;
-
-            font-weight: 600;
-
-            box-shadow:
-                    0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        #message.success {
-            background: #e8f7ee;
-
-            color: #237a45;
-
-            border: 1px solid #bde4cc;
-        }
-
-        #message.error {
-            background: #fff0f0;
-
-            color: #c33d3d;
-
-            border: 1px solid #f0c2c2;
-        }
-
-        #message.info {
-            background: #edf5ff;
-
-            color: #0a66c2;
-
-            border: 1px solid #c8def8;
-        }
-
-
-        /* =====================================================
-           MODAL
-        ===================================================== */
-
-        .modal {
-            display: none;
-
-            position: fixed;
-
-            inset: 0;
-
-            background: rgba(10, 25, 45, 0.55);
-
-            z-index: 1500;
-
-            align-items: center;
-
-            justify-content: center;
-
-            padding: 20px;
-        }
-
-        .modal-content {
-            background: white;
-
-            width: 100%;
-
-            max-width: 520px;
-
-            max-height: 85vh;
-
-            overflow-y: auto;
-
-            border-radius: 15px;
-
-            box-shadow:
-                    0 20px 50px rgba(0, 0, 0, 0.25);
-
-            animation: modalOpen 0.2s ease;
-        }
-
-        @keyframes modalOpen {
-
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-
-        }
-
-        .modal-header {
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            padding: 20px 23px;
-
-            border-bottom: 1px solid #e8edf3;
-        }
-
-        .modal-header h2 {
-            margin: 0;
-
-            font-size: 20px;
-
-            color: #172b4d;
-        }
-
-        .close-btn {
-            width: 32px;
-            height: 32px;
-
-            border: none;
-
-            background: #f2f5f9;
-
-            border-radius: 50%;
-
-            color: #65748a;
-
-            font-size: 20px;
-
-            cursor: pointer;
-        }
-
-        .close-btn:hover {
-            background: #e5ebf2;
-        }
-
-        .profile-header {
-            text-align: center;
-
-            padding: 28px 20px 20px;
-        }
-
-        .profile-avatar {
-            width: 82px;
-            height: 82px;
-
-            border-radius: 50%;
-
-            background: #0a66c2;
-
-            color: white;
-
-            margin: auto;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            font-size: 30px;
-
-            font-weight: bold;
-
-            border: 4px solid #e8f2ff;
-        }
-
-        .profile-header h3 {
-            margin: 12px 0 4px;
-
-            font-size: 22px;
-
-            color: #172b4d;
-        }
-
-        .profile-role {
-            color: #0a66c2;
-
-            font-size: 14px;
-
-            font-weight: 600;
-        }
-
-        .profile-details {
-            padding: 0 25px 25px;
-        }
-
-        .profile-detail {
-            display: flex;
-
-            gap: 12px;
-
-            padding: 13px 0;
-
-            border-bottom: 1px solid #edf0f4;
-
-            font-size: 14px;
-        }
-
-        .profile-detail:last-child {
-            border-bottom: none;
-        }
-
-        .detail-label {
-            width: 100px;
-
-            color: #7a8799;
-
-            font-weight: 600;
-        }
-
-        .detail-value {
-            color: #35465d;
-
-            word-break: break-word;
-        }
-
-        .modal-actions {
-            display: flex;
-
-            gap: 10px;
-
-            padding: 0 25px 25px;
-        }
-
-        .modal-action {
-            flex: 1;
-
-            height: 42px;
-
-            border-radius: 8px;
-
-            cursor: pointer;
-
-            font-weight: 600;
-
-            font-size: 14px;
-        }
-
-        .modal-connect {
-            background: #0a66c2;
-
-            border: 1px solid #0a66c2;
-
-            color: white;
-        }
-
-        .modal-message {
-            background: white;
-
-            border: 1px solid #0a66c2;
-
-            color: #0a66c2;
-        }
-
-
-        /* =====================================================
-           MOBILE
-        ===================================================== */
-
-        .mobile-menu {
-            display: none;
-        }
-
-        @media (max-width: 1200px) {
-
-            #alumniContainer {
-                grid-template-columns:
-                    repeat(3, minmax(0, 1fr));
-            }
-
-        }
-
-        @media (max-width: 950px) {
-
-            .sidebar {
-                width: 200px;
-            }
-
-            .main {
-                margin-left: 200px;
-
-                padding-left: 25px;
-                padding-right: 25px;
-            }
-
-            #alumniContainer {
-                grid-template-columns:
-                    repeat(2, minmax(0, 1fr));
-            }
-
-        }
-
-        @media (max-width: 700px) {
-
-            .navbar {
-                padding: 0 15px;
-            }
-
-            .brand span {
-                display: none;
-            }
-
-            .welcome-text {
-                display: none;
-            }
-
-            .sidebar {
-                display: none;
-            }
-
-            .main {
-                margin-left: 0;
-
-                padding:
-                        88px 15px 30px;
-            }
-
-            .page-header {
-                flex-direction: column;
-
-                gap: 12px;
-            }
-
-            .page-title {
-                font-size: 25px;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-            .filter-row {
-                flex-direction: column;
-            }
-
-            .filter-select {
-                width: 100%;
-            }
-
-            .clear-btn {
-                width: 100%;
-            }
-
-            #alumniContainer {
-                grid-template-columns: 1fr;
-            }
-
-            .hero {
-                padding: 23px;
-            }
-
-        }
-
-
-        /* ================= ALUMNICONNECT SHARED DESIGN SYSTEM ================= */
-        .alumni-shared-theme{
-            --app-primary:#2563eb;
-            --app-primary-dark:#1d4ed8;
-            --app-primary-light:#eff6ff;
-            --app-bg:#f4f7fb;
-            --app-text:#172033;
-            --app-muted:#64748b;
-            --app-border:#e2e8f0;
-            --app-white:#ffffff;
-            font-family:"Segoe UI",Arial,Helvetica,sans-serif !important;
-            background:
-                    radial-gradient(circle at 8% 10%,rgba(37,99,235,.12),transparent 25%),
-                    radial-gradient(circle at 92% 12%,rgba(59,130,246,.10),transparent 23%),
-                    radial-gradient(circle at 82% 90%,rgba(96,165,250,.10),transparent 28%),
-                    linear-gradient(135deg,#f8fbff 0%,#eef5ff 48%,#f8fafc 100%) !important;
-            color:var(--app-text);
-        }
-        .alumni-shared-theme::before{
-            content:"";
+        .navbar{
+            height:72px;
+            background:linear-gradient(135deg,var(--sidebar1),var(--sidebar2));
+            color:#fff;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:0 28px;
             position:fixed;
-            inset:0;
-            background-image:
-                    linear-gradient(rgba(37,99,235,.025) 1px,transparent 1px),
-                    linear-gradient(90deg,rgba(37,99,235,.025) 1px,transparent 1px);
-            background-size:45px 45px;
-            pointer-events:none;
-            z-index:-2;
+            top:0;
+            left:0;
+            right:0;
+            z-index:1000;
+            box-shadow:0 8px 25px rgba(30,25,75,.16);
         }
-        .alumni-shared-theme .shared-user-photo,
-        .alumni-shared-theme .header-avatar,
-        .alumni-shared-theme .mini-avatar,
-        .alumni-shared-theme .nav-avatar,
-        .alumni-shared-theme .sidebar-avatar,
-        .alumni-shared-theme .chip-avatar,
-        .alumni-shared-theme .profile-chip .avatar{
+
+        .brand{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-size:21px;
+            font-weight:800;
+        }
+
+        .brand-icon{
+            width:40px;
+            height:40px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            background:linear-gradient(135deg,#7966ed,#5d7ce5);
+            color:#fff;
+            border-radius:12px;
+            font-size:20px;
+            box-shadow:0 6px 15px rgba(102,82,223,.3);
+        }
+
+        .navbar-right{
+            display:flex;
+            align-items:center;
+            gap:16px;
+        }
+
+        .welcome-text{
+            font-size:14px;
+            opacity:.9;
+        }
+
+        .logout-btn{
+            border:1px solid rgba(255,255,255,.25);
+            background:rgba(255,255,255,.08);
+            color:#fff;
+            padding:10px 17px;
+            border-radius:10px;
+            cursor:pointer;
+            font-weight:700;
+            transition:.2s;
+        }
+
+        .logout-btn:hover{
+            background:#fff;
+            color:var(--primary);
+        }
+
+        .shared-user-photo{
+            width:40px;
+            height:40px;
+            border-radius:50%;
+            background:linear-gradient(135deg,var(--primary),var(--primary2));
+            border:2px solid rgba(255,255,255,.7);
+            display:flex;
+            align-items:center;
+            justify-content:center;
             overflow:hidden;
+            font-weight:800;
         }
-        .alumni-shared-theme .shared-user-photo img,
-        .alumni-shared-theme .header-avatar img,
-        .alumni-shared-theme .mini-avatar img,
-        .alumni-shared-theme .nav-avatar img,
-        .alumni-shared-theme .sidebar-avatar img,
-        .alumni-shared-theme .chip-avatar img,
-        .alumni-shared-theme .profile-chip .avatar img{
+
+        .shared-user-photo img{
             width:100%;
             height:100%;
             object-fit:cover;
-            display:block;
         }
-        .alumni-shared-theme .shared-user-photo{
-            width:38px;height:38px;border-radius:50%;
-            background:var(--app-primary-light);color:var(--app-primary);
-            display:grid;place-items:center;font-size:13px;font-weight:800;
-            border:2px solid #fff;box-shadow:0 2px 8px rgba(15,23,42,.10);
+
+        .sidebar{
+            position:fixed;
+            top:72px;
+            left:0;
+            bottom:0;
+            width:250px;
+            background:linear-gradient(180deg,var(--sidebar1),var(--sidebar2));
+            padding:24px 14px;
+            z-index:900;
+            box-shadow:8px 0 30px rgba(29,24,70,.08);
         }
-        .alumni-shared-theme .shared-user-photo img{border-radius:50%}
-        .alumni-shared-theme .shared-user-photo .photo-fallback{display:grid;place-items:center;width:100%;height:100%}
-        .alumni-shared-theme .header-avatar,
-        .alumni-shared-theme .mini-avatar,
-        .alumni-shared-theme .nav-avatar{
+
+        .sidebar-title{
+            padding:0 14px 14px;
+            font-size:11px;
+            font-weight:800;
+            color:rgba(255,255,255,.5);
+            text-transform:uppercase;
+            letter-spacing:1px;
+        }
+
+        .sidebar a{
+            display:flex;
+            align-items:center;
+            gap:13px;
+            padding:12px 14px;
+            margin-bottom:6px;
+            color:rgba(255,255,255,.72);
+            text-decoration:none;
+            border-radius:11px;
+            font-size:14px;
+            font-weight:650;
+            transition:.2s;
+        }
+
+        .sidebar a:hover{
+            background:rgba(255,255,255,.1);
+            color:#fff;
+            transform:translateX(2px);
+        }
+
+        .sidebar a.active{
+            background:linear-gradient(
+                    135deg,
+                    rgba(121,102,237,.95),
+                    rgba(88,120,229,.9)
+            );
+            color:#fff;
+            box-shadow:0 8px 18px rgba(102,82,223,.25);
+        }
+
+        .sidebar-icon{
+            width:22px;
+            text-align:center;
+            font-size:17px;
+        }
+
+        .main{
+            margin-left:250px;
+            padding:104px 38px 45px;
+            min-height:100vh;
+        }
+
+        .page-container{
+            max-width:1450px;
+            margin:auto;
+        }
+
+        .page-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            margin-bottom:22px;
+        }
+
+        .page-title{
+            margin:0;
+            color:var(--text);
+            font-size:30px;
+            font-weight:800;
+        }
+
+        .page-subtitle{
+            margin-top:8px;
+            color:var(--muted);
+            font-size:15px;
+        }
+
+        .user-badge{
+            background:#fff;
+            border:1px solid var(--border);
+            padding:10px 15px;
+            border-radius:12px;
+            font-size:13px;
+            color:#656b83;
+            box-shadow:0 5px 18px rgba(44,39,91,.04);
+        }
+
+        .hero{
+            background:linear-gradient(
+                    110deg,
+                    #6552df,
+                    #725be7,
+                    #597ce8
+            );
+            border-radius:20px;
+            padding:30px 32px;
+            color:#fff;
+            margin-bottom:24px;
+            position:relative;
+            overflow:hidden;
+            box-shadow:0 12px 30px rgba(102,82,223,.2);
+        }
+
+        .hero:before,
+        .hero:after{
+            content:"";
+            position:absolute;
+            border-radius:50%;
+            background:rgba(255,255,255,.08);
+        }
+
+        .hero:before{
+            width:260px;
+            height:260px;
+            right:-70px;
+            top:-130px;
+        }
+
+        .hero:after{
+            width:150px;
+            height:150px;
+            right:180px;
+            bottom:-100px;
+        }
+
+        .hero h2{
+            margin:0 0 8px;
+            font-size:25px;
+            position:relative;
+            z-index:1;
+        }
+
+        .hero p{
+            margin:0;
+            max-width:720px;
+            line-height:1.65;
+            opacity:.93;
+            font-size:14px;
+            position:relative;
+            z-index:1;
+        }
+
+        .stats{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:18px;
+            margin-bottom:24px;
+        }
+
+        .stat-card{
+            background:#fff;
+            border:1px solid var(--border);
+            border-radius:16px;
+            padding:20px;
+            box-shadow:0 7px 22px rgba(44,39,91,.05);
+        }
+
+        .stat-label{
+            color:#858aa0;
+            font-size:13px;
+            margin-bottom:8px;
+        }
+
+        .stat-value{
+            font-size:28px;
+            font-weight:800;
+            color:var(--text);
+        }
+
+        .stat-description{
+            margin-top:5px;
+            color:#9a9eb0;
+            font-size:12px;
+        }
+
+        .filter-card{
+            background:rgba(255,255,255,.96);
+            border:1px solid var(--border);
+            border-radius:17px;
+            padding:21px;
+            margin-bottom:25px;
+            box-shadow:0 7px 22px rgba(44,39,91,.05);
+        }
+
+        .filter-title{
+            margin:0 0 14px;
+            font-size:16px;
+            color:var(--text);
+        }
+
+        .filter-row{
+            display:flex;
+            gap:12px;
+        }
+
+        .search-wrapper{
+            position:relative;
+            flex:1;
+        }
+
+        .search-icon{
+            position:absolute;
+            left:14px;
+            top:50%;
+            transform:translateY(-50%);
+            color:#8d91a7;
+        }
+
+        .search-input{
+            width:100%;
+            height:46px;
+            border:1px solid #ddddec;
+            border-radius:11px;
+            padding:0 15px 0 42px;
+            font-size:14px;
+            outline:none;
+            transition:.2s;
+            background:#fbfbfe;
+        }
+
+        .search-input:focus{
+            border-color:var(--primary);
+            box-shadow:0 0 0 4px rgba(102,82,223,.1);
+            background:#fff;
+        }
+
+        .filter-select{
+            width:180px;
+            height:46px;
+            border:1px solid #ddddec;
+            border-radius:11px;
+            padding:0 12px;
+            font-size:14px;
+            color:#555b74;
+            background:#fff;
+            outline:none;
+        }
+
+        .clear-btn{
+            height:46px;
+            padding:0 19px;
+            border:1px solid #ddddec;
+            background:#fff;
+            color:#5e647c;
+            border-radius:11px;
+            cursor:pointer;
+            font-weight:700;
+        }
+
+        .clear-btn:hover{
+            background:#f5f3ff;
+            color:var(--primary);
+            border-color:#cbc3fa;
+        }
+
+        .section-heading{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:15px;
+        }
+
+        .section-heading h2{
+            margin:0;
+            font-size:20px;
+            color:var(--text);
+        }
+
+        .result-count{
+            color:#858aa0;
+            font-size:13px;
+        }
+
+        #alumniContainer{
+            display:grid;
+            grid-template-columns:repeat(4,minmax(0,1fr));
+            gap:20px;
+        }
+
+        .alumni-card{
+            background:#fff;
+            border:1px solid var(--border);
+            border-radius:17px;
+            overflow:hidden;
+            box-shadow:0 7px 20px rgba(44,39,91,.055);
+            transition:.22s;
+            display:flex;
+            flex-direction:column;
+        }
+
+        .alumni-card:hover{
+            transform:translateY(-5px);
+            box-shadow:0 15px 30px rgba(44,39,91,.11);
+        }
+
+        .card-cover{
+            height:82px;
+            background:linear-gradient(135deg,#eeeaff,#e7efff);
             position:relative;
         }
-        .alumni-shared-theme .header-avatar img,
-        .alumni-shared-theme .mini-avatar img,
-        .alumni-shared-theme .nav-avatar img,
-        .alumni-shared-theme .sidebar-avatar img,
-        .alumni-shared-theme .chip-avatar img{border-radius:50%}
-        .alumni-shared-theme .header,
-        .alumni-shared-theme .top-header,
-        .alumni-shared-theme .topbar,
-        .alumni-shared-theme .navbar{
-            background:rgba(255,255,255,.94) !important;
-            backdrop-filter:blur(14px);
-            border-bottom:1px solid rgba(226,232,240,.95) !important;
-            box-shadow:0 4px 20px rgba(15,23,42,.04) !important;
+
+        .avatar{
+            position:absolute;
+            width:72px;
+            height:72px;
+            border-radius:50%;
+            left:20px;
+            bottom:-36px;
+            background:linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--primary2)
+            );
+            border:4px solid #fff;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#fff;
+            font-size:24px;
+            font-weight:800;
+            box-shadow:0 5px 15px rgba(102,82,223,.25);
+            overflow:hidden;
         }
-        .alumni-shared-theme .logo,
-        .alumni-shared-theme .brand{
-            color:var(--app-primary) !important;
+
+        .avatar img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
         }
-        .alumni-shared-theme .logo-icon,
-        .alumni-shared-theme .brand-icon,
-        .alumni-shared-theme .logo-mark{
-            background:linear-gradient(135deg,var(--app-primary),#3b82f6) !important;
-            color:#fff !important;
+
+        .card-body{
+            padding:49px 20px 18px;
         }
-        .alumni-shared-theme .sidebar{
-            background:rgba(255,255,255,.96) !important;
-            border-right:1px solid var(--app-border) !important;
-            box-shadow:4px 0 20px rgba(15,23,42,.035) !important;
+
+        .alumni-name{
+            margin:0;
+            color:var(--text);
+            font-size:18px;
+            font-weight:800;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
         }
-        .alumni-shared-theme .sidebar a,
-        .alumni-shared-theme .menu-item,
-        .alumni-shared-theme .nav-item,
-        .alumni-shared-theme .menu,
-        .alumni-shared-theme .sidebar-menu a{
-            color:#52657f !important;
+
+        .role{
+            color:var(--primary);
+            font-size:13px;
+            font-weight:700;
+            margin-top:5px;
+            min-height:18px;
         }
-        .alumni-shared-theme .sidebar a:hover,
-        .alumni-shared-theme .menu-item:hover,
-        .alumni-shared-theme .nav-item:hover,
-        .alumni-shared-theme .sidebar-menu a:hover{
-            background:#f1f6ff !important;color:var(--app-primary) !important;
+
+        .alumni-info{
+            margin-top:15px;
         }
-        .alumni-shared-theme .sidebar a.active,
-        .alumni-shared-theme .menu-item.active,
-        .alumni-shared-theme .nav-item.active,
-        .alumni-shared-theme .sidebar-menu a.active{
-            background:#eaf2ff !important;color:var(--app-primary) !important;
-            border-left-color:var(--app-primary) !important;
+
+        .info-row{
+            display:flex;
+            gap:9px;
+            align-items:flex-start;
+            margin-bottom:9px;
+            color:#70758b;
+            font-size:13px;
+            line-height:1.4;
         }
-        .alumni-shared-theme .card,
-        .alumni-shared-theme .applications-section,
-        .alumni-shared-theme .stat-card,
-        .alumni-shared-theme .messaging-shell,
-        .alumni-shared-theme .event-card,
-        .alumni-shared-theme .job-card,
-        .alumni-shared-theme .profile-card{
-            border-color:var(--app-border) !important;
-            box-shadow:0 5px 20px rgba(15,23,42,.045) !important;
+
+        .info-icon{
+            width:18px;
+            text-align:center;
+            flex-shrink:0;
         }
-        .alumni-shared-theme button,
-        .alumni-shared-theme .btn{
-            transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+
+        .card-actions{
+            display:flex;
+            gap:9px;
+            padding:0 20px 20px;
+            margin-top:auto;
         }
-        .alumni-shared-theme button:hover,
-        .alumni-shared-theme .btn:hover{
+
+        .action-btn{
+            flex:1;
+            height:39px;
+            border-radius:10px;
+            font-size:13px;
+            font-weight:700;
+            cursor:pointer;
+            transition:.2s;
+        }
+
+        .connect-btn{
+            background:linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--primary2)
+            );
+            color:#fff;
+            border:1px solid transparent;
+        }
+
+        .connect-btn:hover{
+            filter:brightness(.96);
             transform:translateY(-1px);
         }
-        @media(max-width:800px){
-            .alumni-shared-theme .shared-user-photo{width:34px;height:34px}
+
+        .connect-btn.pending{
+            background:#f2f2f8;
+            color:#777b90;
+            border-color:#dedeea;
+            cursor:default;
+        }
+
+        .connect-btn.connected{
+            background:#e9f8ef;
+            color:#247a47;
+            border-color:#bfe4cc;
+            cursor:default;
+        }
+
+        .connect-btn.received{
+            background:#fff6df;
+            color:#956316;
+            border-color:#efd8a4;
+        }
+
+        .connect-btn.rejected{
+            background:#f5f6fa;
+            color:#62687d;
+            border-color:#dfe1ea;
+        }
+
+        .view-btn{
+            background:#fff;
+            color:var(--primary);
+            border:1px solid #c9c1f7;
+        }
+
+        .view-btn:hover{
+            background:#f4f1ff;
+        }
+
+        .empty-state{
+            grid-column:1/-1;
+            background:#fff;
+            border:1px solid var(--border);
+            border-radius:17px;
+            padding:60px 20px;
+            text-align:center;
+            color:#858aa0;
+            box-shadow:0 7px 20px rgba(44,39,91,.04);
+        }
+
+        .empty-icon{
+            font-size:40px;
+            margin-bottom:12px;
+        }
+
+        .empty-state h3{
+            margin:0 0 7px;
+            color:#42465d;
+            font-size:18px;
+        }
+
+        .empty-state p{
+            margin:0;
+            font-size:14px;
+        }
+
+        #message{
+            display:none;
+            position:fixed;
+            right:25px;
+            bottom:25px;
+            max-width:390px;
+            padding:14px 18px;
+            border-radius:11px;
+            z-index:2000;
+            font-size:14px;
+            font-weight:700;
+            box-shadow:0 10px 30px rgba(0,0,0,.15);
+        }
+
+        #message.success{
+            background:#eaf8ef;
+            color:#237a45;
+            border:1px solid #bde4cc;
+        }
+
+        #message.error{
+            background:#fff0f0;
+            color:#c33d3d;
+            border:1px solid #f0c2c2;
+        }
+
+        #message.info{
+            background:#f0edff;
+            color:#5b48c7;
+            border:1px solid #d7d0fa;
+        }
+
+        .modal{
+            display:none;
+            position:fixed;
+            inset:0;
+            background:rgba(18,16,45,.58);
+            z-index:1500;
+            align-items:center;
+            justify-content:center;
+            padding:20px;
+        }
+
+        .modal-content{
+            background:#fff;
+            width:100%;
+            max-width:520px;
+            max-height:85vh;
+            overflow-y:auto;
+            border-radius:19px;
+            box-shadow:0 25px 60px rgba(0,0,0,.25);
+            animation:modalOpen .2s ease;
+        }
+
+        .modal-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:20px 23px;
+            border-bottom:1px solid #eeeef5;
+        }
+
+        .modal-header h2{
+            margin:0;
+            font-size:20px;
+            color:var(--text);
+        }
+
+        .close-btn{
+            width:34px;
+            height:34px;
+            border:none;
+            background:#f1f1f7;
+            border-radius:50%;
+            color:#686d82;
+            font-size:20px;
+            cursor:pointer;
+        }
+
+        .profile-header{
+            text-align:center;
+            padding:28px 20px 20px;
+        }
+
+        .profile-avatar{
+            width:84px;
+            height:84px;
+            border-radius:50%;
+            background:linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--primary2)
+            );
+            color:#fff;
+            margin:auto;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:30px;
+            font-weight:800;
+            border:4px solid #eeebff;
+            overflow:hidden;
+        }
+
+        .profile-avatar img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+        }
+
+        .profile-header h3{
+            margin:12px 0 4px;
+            font-size:22px;
+            color:var(--text);
+        }
+
+        .profile-role{
+            color:var(--primary);
+            font-size:14px;
+            font-weight:700;
+        }
+
+        .profile-details{
+            padding:0 25px 25px;
+        }
+
+        .profile-detail{
+            display:flex;
+            gap:12px;
+            padding:13px 0;
+            border-bottom:1px solid #eeeef4;
+            font-size:14px;
+        }
+
+        .profile-detail:last-child{
+            border-bottom:none;
+        }
+
+        .modal-actions{
+            display:flex;
+            gap:10px;
+            padding:0 25px 25px;
+        }
+
+        .modal-actions button{
+            flex:1;
+        }
+
+        @keyframes modalOpen{
+            from{
+                opacity:0;
+                transform:translateY(15px);
+            }
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+
+        @media(max-width:1200px){
+
+            #alumniContainer{
+                grid-template-columns:repeat(3,minmax(0,1fr));
+            }
+
+        }
+
+        @media(max-width:900px){
+
+            .sidebar{
+                width:220px;
+            }
+
+            .main{
+                margin-left:220px;
+                padding:98px 22px 35px;
+            }
+
+            .stats{
+                grid-template-columns:1fr 1fr;
+            }
+
+            .filter-row{
+                flex-wrap:wrap;
+            }
+
+            .search-wrapper{
+                min-width:100%;
+            }
+
+            .filter-select{
+                flex:1;
+            }
+
+            .clear-btn{
+                width:110px;
+            }
+
+            #alumniContainer{
+                grid-template-columns:repeat(2,minmax(0,1fr));
+            }
+
+            .navbar{
+                padding:0 18px;
+            }
+
+            .welcome-text{
+                display:none;
+            }
+
+        }
+
+        @media(max-width:650px){
+
+            .navbar{
+                height:64px;
+            }
+
+            .sidebar{
+                top:64px;
+                transform:translateX(-100%);
+                transition:.25s;
+                width:245px;
+            }
+
+            .main{
+                margin-left:0;
+                padding:88px 15px 30px;
+            }
+
+            .page-header{
+                display:block;
+            }
+
+            .user-badge{
+                display:inline-block;
+                margin-top:12px;
+            }
+
+            .hero{
+                padding:24px 22px;
+            }
+
+            .stats{
+                grid-template-columns:1fr;
+            }
+
+            .filter-row{
+                display:grid;
+                grid-template-columns:1fr;
+            }
+
+            .filter-select,
+            .clear-btn{
+                width:100%;
+            }
+
+            #alumniContainer{
+                grid-template-columns:1fr;
+            }
+
+            .page-title{
+                font-size:25px;
+            }
+
         }
 
     </style>
 
 </head>
 
-
-<body class="alumni-shared-theme">
-
-
-<!-- =====================================================
-     NAVBAR
-===================================================== -->
+<body>
 
 <header class="navbar">
 
@@ -1304,17 +879,14 @@
         </div>
 
         <span>
-            Alumni Portal
+            AlumniConnect
         </span>
 
     </div>
 
-
     <div class="navbar-right">
 
-        <div
-                class="welcome-text"
-                id="navbarUser">
+        <div class="welcome-text" id="navbarUser">
             Welcome
         </div>
 
@@ -1324,23 +896,21 @@
             Logout
         </button>
 
+        <div
+                class="shared-user-photo"
+                id="sharedProfilePhoto">
+            U
+        </div>
+
     </div>
 
-
-    <div class="shared-user-photo" id="sharedProfilePhoto" aria-label="Profile photo">U</div>
 </header>
-
-
-<!-- =====================================================
-     SIDEBAR
-===================================================== -->
 
 <aside class="sidebar">
 
     <div class="sidebar-title">
         Navigation
     </div>
-
 
     <a href="/dashboard.html">
 
@@ -1352,6 +922,16 @@
 
     </a>
 
+    <a
+            href="/profile.html">
+
+        <span class="sidebar-icon">
+            👤
+        </span>
+
+        My Profile
+
+    </a>
 
     <a
             href="/alumni.html"
@@ -1361,10 +941,9 @@
             👥
         </span>
 
-        Alumni Directory
+        Alumni Network
 
     </a>
-
 
     <a href="/mentorship.html">
 
@@ -1376,7 +955,6 @@
 
     </a>
 
-
     <a href="/jobs.html">
 
         <span class="sidebar-icon">
@@ -1386,7 +964,6 @@
         Jobs
 
     </a>
-
 
     <a href="/events.html">
 
@@ -1398,7 +975,6 @@
 
     </a>
 
-
     <a href="/messages.html">
 
         <span class="sidebar-icon">
@@ -1409,49 +985,43 @@
 
     </a>
 
+    <a href="/applications.html">
+
+        <span class="sidebar-icon">
+            📄
+        </span>
+
+        My Applications
+
+    </a>
+
 </aside>
-
-
-<!-- =====================================================
-     MAIN
-===================================================== -->
 
 <main class="main">
 
     <div class="page-container">
-
-
-        <!-- PAGE HEADER -->
 
         <div class="page-header">
 
             <div>
 
                 <h1 class="page-title">
-                    Alumni Directory
+                    Alumni Network
                 </h1>
 
                 <div class="page-subtitle">
-                    Discover, connect and build meaningful professional relationships with alumni.
+                    Discover alumni, build professional connections and find mentors.
                 </div>
 
             </div>
 
-
             <div
                     class="user-badge"
                     id="userInfo">
-
                 Loading user...
-
             </div>
 
         </div>
-
-
-        <!-- =================================================
-             HERO
-        ================================================= -->
 
         <section class="hero">
 
@@ -1460,19 +1030,14 @@
             </h2>
 
             <p>
-                Explore alumni from your institution, learn about their professional journeys,
-                connect with experienced professionals and discover opportunities for mentorship.
+                Explore alumni from your institution, learn about their professional
+                journeys, connect with experienced professionals and discover
+                mentorship opportunities.
             </p>
 
         </section>
 
-
-        <!-- =================================================
-             STATISTICS
-        ================================================= -->
-
         <section class="stats">
-
 
             <div class="stat-card">
 
@@ -1483,9 +1048,7 @@
                 <div
                         class="stat-value"
                         id="totalAlumni">
-
                     0
-
                 </div>
 
                 <div class="stat-description">
@@ -1493,7 +1056,6 @@
                 </div>
 
             </div>
-
 
             <div class="stat-card">
 
@@ -1504,9 +1066,7 @@
                 <div
                         class="stat-value"
                         id="connectedCount">
-
                     0
-
                 </div>
 
                 <div class="stat-description">
@@ -1514,7 +1074,6 @@
                 </div>
 
             </div>
-
 
             <div class="stat-card">
 
@@ -1525,9 +1084,7 @@
                 <div
                         class="stat-value"
                         id="pendingCount">
-
                     0
-
                 </div>
 
                 <div class="stat-description">
@@ -1536,13 +1093,7 @@
 
             </div>
 
-
         </section>
-
-
-        <!-- =================================================
-             FILTER
-        ================================================= -->
 
         <section class="filter-card">
 
@@ -1550,15 +1101,13 @@
                 Find Alumni
             </h3>
 
-
             <div class="filter-row">
-
 
                 <div class="search-wrapper">
 
-                    <span class="search-icon">
-                        🔍
-                    </span>
+<span class="search-icon">
+🔍
+</span>
 
                     <input
                             type="text"
@@ -1568,7 +1117,6 @@
                             oninput="filterAlumni()">
 
                 </div>
-
 
                 <select
                         id="searchType"
@@ -1593,7 +1141,6 @@
 
                 </select>
 
-
                 <button
                         class="clear-btn"
                         onclick="clearSearch()">
@@ -1602,15 +1149,9 @@
 
                 </button>
 
-
             </div>
 
         </section>
-
-
-        <!-- =================================================
-             ALUMNI HEADING
-        ================================================= -->
 
         <div class="section-heading">
 
@@ -1621,17 +1162,10 @@
             <div
                     class="result-count"
                     id="resultCount">
-
                 Loading...
-
             </div>
 
         </div>
-
-
-        <!-- =================================================
-             ALUMNI CONTAINER
-        ================================================= -->
 
         <div id="alumniContainer">
 
@@ -1653,30 +1187,17 @@
 
         </div>
 
-
     </div>
 
 </main>
 
-
-<!-- =====================================================
-     MESSAGE
-===================================================== -->
-
 <div id="message"></div>
-
-
-<!-- =====================================================
-     PROFILE MODAL
-===================================================== -->
 
 <div
         class="modal"
         id="profileModal">
 
-
     <div class="modal-content">
-
 
         <div class="modal-header">
 
@@ -1687,65 +1208,41 @@
             <button
                     class="close-btn"
                     onclick="closeProfileModal()">
-
                 ×
-
             </button>
 
         </div>
 
-
         <div
                 class="profile-header"
                 id="profileHeader">
-
         </div>
-
 
         <div
                 class="profile-details"
                 id="profileDetails">
-
         </div>
-
 
         <div
                 class="modal-actions"
                 id="profileActions">
-
         </div>
-
 
     </div>
 
 </div>
 
-
 <script>
 
-
-    /* =====================================================
-       GLOBAL VARIABLES
-    ===================================================== */
-
     let currentUser = null;
-
     let allAlumni = [];
-
     let filteredAlumni = [];
-
     let connectionStatuses = {};
-
     let selectedProfile = null;
 
+    async function initializePage(){
 
-    /* =====================================================
-       INITIALIZE PAGE
-    ===================================================== */
-
-    async function initializePage() {
-
-        try {
+        try{
 
             await loadCurrentUser();
 
@@ -1753,7 +1250,7 @@
 
             await loadAlumni();
 
-        } catch (error) {
+        }catch(error){
 
             console.error(
                 "Page initialization error:",
@@ -1769,331 +1266,173 @@
 
     }
 
+    async function loadCurrentUser(){
 
-    /* =====================================================
-       LOAD CURRENT USER
-    ===================================================== */
-
-    async function loadCurrentUser() {
-
-        try {
+        try{
 
             const response =
-                await fetch("/api/users/me");
+                await fetch(
+                    "/api/users/me",
+                    {
+                        credentials:"include"
+                    }
+                );
 
+            if(!response.ok){
 
-            if (!response.ok) {
-
-                window.location.href =
-                    "/login.html";
-
-                return;
+                throw new Error(
+                    "Unable to load current user"
+                );
 
             }
-
 
             currentUser =
                 await response.json();
 
-
-            document.getElementById(
-                "userInfo"
-            ).innerText =
-                currentUser.name +
-                " • " +
-                currentUser.role;
-
+            const name =
+                currentUser.name || "User";
 
             document.getElementById(
                 "navbarUser"
             ).innerText =
-                "Welcome, " +
-                currentUser.name;
+                "Welcome, " + name;
 
+            document.getElementById(
+                "userInfo"
+            ).innerText =
+                name;
 
-            try {
-
-                sessionStorage.setItem(
-                    "currentUser",
-                    JSON.stringify(currentUser)
-                );
-
-                sessionStorage.setItem(
-                    "loggedInEmail",
-                    currentUser.email
-                );
-
-                localStorage.setItem(
-                    "currentUser",
-                    JSON.stringify(currentUser)
-                );
-
-                localStorage.setItem(
-                    "loggedInEmail",
-                    currentUser.email
-                );
-
-            } catch (storageError) {
-
-                console.warn(
-                    "Unable to save user session:",
-                    storageError
-                );
-
-            }
-
-        } catch (error) {
+        }catch(error){
 
             console.error(
-                "Error loading current user:",
+                "Current user error:",
                 error
             );
-
-            window.location.href =
-                "/login.html";
 
         }
 
     }
 
+    async function loadAlumni(){
 
-    /* =====================================================
-       LOAD ALUMNI
-    ===================================================== */
-
-    async function loadAlumni() {
-
-        const container =
-            document.getElementById(
-                "alumniContainer"
-            );
-
-
-        try {
-
-            container.innerHTML = `
-
-                <div class="empty-state">
-
-                    <div class="empty-icon">
-                        ⏳
-                    </div>
-
-                    <h3>
-                        Loading alumni
-                    </h3>
-
-                    <p>
-                        Please wait...
-                    </p>
-
-                </div>
-
-            `;
-
+        try{
 
             const response =
                 await fetch(
-                    "/api/users/alumni"
+                    "/api/users/alumni",
+                    {
+                        credentials:"include"
+                    }
                 );
 
-
-            if (!response.ok) {
+            if(!response.ok){
 
                 throw new Error(
-                    "Failed to load alumni"
+                    "Unable to load alumni"
                 );
 
             }
 
-
             allAlumni =
                 await response.json();
 
-
             filteredAlumni =
                 [...allAlumni];
-
 
             document.getElementById(
                 "totalAlumni"
             ).innerText =
                 allAlumni.length;
 
-
             displayAlumni(
                 filteredAlumni
             );
 
-
-        } catch (error) {
+        }catch(error){
 
             console.error(
-                "Error loading alumni:",
+                "Alumni loading error:",
                 error
             );
 
+            document.getElementById(
+                "alumniContainer"
+            ).innerHTML = `
 
-            container.innerHTML = `
+            <div class="empty-state">
 
-                <div class="empty-state">
-
-                    <div class="empty-icon">
-                        ⚠️
-                    </div>
-
-                    <h3>
-                        Unable to load alumni
-                    </h3>
-
-                    <p>
-                        Please make sure the backend server is running.
-                    </p>
-
+                <div class="empty-icon">
+                    ⚠️
                 </div>
 
-            `;
+                <h3>
+                    Unable to load alumni
+                </h3>
 
-            document.getElementById(
-                "resultCount"
-            ).innerText =
-                "Unable to load";
+                <p>
+                    Please refresh the page and try again.
+                </p>
+
+            </div>
+
+        `;
 
         }
 
     }
 
+    async function loadConnectionStatuses(){
 
-    /* =====================================================
-       LOAD CONNECTION / MENTORSHIP STATUS
-    ===================================================== */
-
-    async function loadConnectionStatuses() {
-
-        connectionStatuses = {};
-
-
-        if (!currentUser ||
-            !currentUser.id) {
-
+        if(!currentUser){
             return;
-
         }
 
+        try{
 
-        try {
-
-            /*
-             * Requests sent by current user
-             */
-
-            const sentResponse =
+            const response =
                 await fetch(
                     "/api/mentorship/student/" +
-                    currentUser.id
-                );
-
-
-            if (sentResponse.ok) {
-
-                const sentRequests =
-                    await sentResponse.json();
-
-
-                sentRequests.forEach(
-                    request => {
-
-                        if (
-                            request.alumni &&
-                            request.alumni.id
-                        ) {
-
-                            const alumniId =
-                                Number(
-                                    request.alumni.id
-                                );
-
-
-                            connectionStatuses[
-                                alumniId
-                                ] =
-                                request.status;
-
-                        }
-
+                    currentUser.id,
+                    {
+                        credentials:"include"
                     }
                 );
 
+            if(!response.ok){
+                return;
             }
 
+            const requests =
+                await response.json();
 
-            /*
-             * Requests received by current user
-             *
-             * This is useful when the logged-in
-             * user is an alumni.
-             */
+            connectionStatuses = {};
 
-            const receivedResponse =
-                await fetch(
-                    "/api/mentorship/alumni/" +
-                    currentUser.id
-                );
+            requests.forEach(
+                request => {
 
+                    if(
+                        request.alumni &&
+                        request.alumni.id
+                    ){
 
-            if (receivedResponse.ok) {
-
-                const receivedRequests =
-                    await receivedResponse.json();
-
-
-                receivedRequests.forEach(
-                    request => {
-
-                        if (
-                            request.student &&
-                            request.student.id
-                        ) {
-
-                            const studentId =
-                                Number(
-                                    request.student.id
-                                );
-
-
-                            /*
-                             * Do not overwrite an
-                             * already existing status.
-                             */
-
-                            if (
-                                !connectionStatuses[
-                                    studentId
-                                    ]
-                            ) {
-
-                                connectionStatuses[
-                                    studentId
-                                    ] =
-                                    "RECEIVED";
-
-                            }
-
-                        }
+                        connectionStatuses[
+                            Number(
+                                request.alumni.id
+                            )
+                            ] =
+                            request.status;
 
                     }
-                );
 
-            }
-
+                }
+            );
 
             updateConnectionStatistics();
 
-
-        } catch (error) {
+        }catch(error){
 
             console.error(
-                "Unable to load connection statuses:",
+                "Connection status error:",
                 error
             );
 
@@ -2101,44 +1440,31 @@
 
     }
 
-
-    /* =====================================================
-       CONNECTION STATISTICS
-    ===================================================== */
-
-    function updateConnectionStatistics() {
+    function updateConnectionStatistics(){
 
         let connected = 0;
-
         let pending = 0;
-
 
         Object.values(
             connectionStatuses
         ).forEach(
             status => {
 
-                if (status === "ACCEPTED") {
-
+                if(status === "ACCEPTED"){
                     connected++;
-
                 }
 
-                if (status === "PENDING") {
-
+                if(status === "PENDING"){
                     pending++;
-
                 }
 
             }
         );
 
-
         document.getElementById(
             "connectedCount"
         ).innerText =
             connected;
-
 
         document.getElementById(
             "pendingCount"
@@ -2147,162 +1473,152 @@
 
     }
 
-
-    /* =====================================================
-       DISPLAY ALUMNI
-    ===================================================== */
-
-    function displayAlumni(alumniList) {
+    function displayAlumni(alumniList){
 
         const container =
             document.getElementById(
                 "alumniContainer"
             );
 
-
-        container.innerHTML = "";
-
-
-        document.getElementById(
-            "resultCount"
-        ).innerText =
-            alumniList.length +
-            (
-                alumniList.length === 1
-                    ? " alumni"
-                    : " alumni"
+        const resultCount =
+            document.getElementById(
+                "resultCount"
             );
 
+        resultCount.innerText =
+            alumniList.length +
+            " alumni found";
 
-        if (
-            !alumniList ||
-            alumniList.length === 0
-        ) {
+        if(!alumniList.length){
 
             container.innerHTML = `
 
-                <div class="empty-state">
+            <div class="empty-state">
 
-                    <div class="empty-icon">
-                        👥
-                    </div>
-
-                    <h3>
-                        No alumni found
-                    </h3>
-
-                    <p>
-                        Try changing your search criteria.
-                    </p>
-
+                <div class="empty-icon">
+                    🔍
                 </div>
 
-            `;
+                <h3>
+                    No alumni found
+                </h3>
+
+                <p>
+                    Try a different search term.
+                </p>
+
+            </div>
+
+        `;
 
             return;
 
         }
 
-
-        alumniList.forEach(
-            alumni => {
-
-                container.appendChild(
-                    createAlumniCard(alumni)
-                );
-
-            }
-        );
+        container.innerHTML =
+            alumniList
+                .map(
+                    alumni =>
+                        createAlumniCard(
+                            alumni
+                        )
+                )
+                .join("");
 
     }
 
-
-    /* =====================================================
-       CREATE ALUMNI CARD
-    ===================================================== */
-
-    function createAlumniCard(alumni) {
-
-        const card =
-            document.createElement(
-                "div"
-            );
-
-
-        card.className =
-            "alumni-card";
-
+    function createAlumniCard(alumni){
 
         const name =
-            alumni.name ||
-            "Alumni";
-
-
-        const initial =
-            getInitials(name);
-
-
-        const email =
-            alumni.email ||
-            "Not available";
-
-
-        const phone =
-            alumni.phone ||
-            "Not available";
-
-
-        const isCurrentUser =
-            currentUser &&
-            Number(alumni.id) ===
-            Number(currentUser.id);
-
-
-        const connectionButton =
-            createConnectionButton(
-                alumni
+            escapeHtml(
+                alumni.name || "Alumni"
             );
 
+        const email =
+            escapeHtml(
+                alumni.email || "Email not available"
+            );
 
-        card.innerHTML = `
+        const phone =
+            escapeHtml(
+                alumni.phone || "Phone not available"
+            );
+
+        const status =
+            connectionStatuses[
+                Number(alumni.id)
+                ];
+
+        let buttonText =
+            "Connect";
+
+        let buttonClass =
+            "connect-btn";
+
+        let disabled = "";
+
+        if(status === "PENDING"){
+
+            buttonText =
+                "Request Sent";
+
+            buttonClass +=
+                " pending";
+
+            disabled =
+                "disabled";
+
+        }else if(status === "ACCEPTED"){
+
+            buttonText =
+                "Connected";
+
+            buttonClass +=
+                " connected";
+
+            disabled =
+                "disabled";
+
+        }else if(status === "REJECTED"){
+
+            buttonText =
+                "Connect Again";
+
+            buttonClass +=
+                " rejected";
+
+        }
+
+        const initials =
+            getInitials(
+                alumni.name
+            );
+
+        return `
+
+        <article class="alumni-card">
 
             <div class="card-cover">
 
                 <div class="avatar">
 
-                    ${escapeHtml(initial)}
+                    ${initials}
 
                 </div>
 
             </div>
 
-
             <div class="card-body">
 
                 <h3 class="alumni-name">
-
-                    ${escapeHtml(name)}
-
+                    ${name}
                 </h3>
 
-
                 <div class="role">
-
-                    ${
-            alumni.role
-                ? escapeHtml(
-                    formatRole(
-                        alumni.role
-                    )
-                )
-                : "Alumni"
-        }
-
+                    ${formatRole(alumni.role)}
                 </div>
 
-
                 <div class="alumni-info">
-
 
                     <div class="info-row">
 
@@ -2311,11 +1627,10 @@
                         </span>
 
                         <span>
-                            ${escapeHtml(email)}
+                            ${email}
                         </span>
 
                     </div>
-
 
                     <div class="info-row">
 
@@ -2324,46 +1639,29 @@
                         </span>
 
                         <span>
-                            ${escapeHtml(phone)}
+                            ${phone}
                         </span>
 
                     </div>
-
-
-                    ${
-            alumni.id
-                ? `
-                            <div class="info-row">
-
-                                <span class="info-icon">
-                                    🆔
-                                </span>
-
-                                <span>
-                                    Alumni ID: ${escapeHtml(
-                    alumni.id
-                )}
-                                </span>
-
-                            </div>
-                            `
-                : ""
-        }
-
 
                 </div>
 
             </div>
 
-
             <div class="card-actions">
 
-                ${connectionButton}
+                <button
+                    class="action-btn ${buttonClass}"
+                    ${disabled}
+                    onclick="connectWithAlumni(${alumni.id})">
 
+                    ${buttonText}
+
+                </button>
 
                 <button
-                        class="action-btn view-btn"
-                        onclick="viewProfile(${Number(alumni.id)})">
+                    class="action-btn view-btn"
+                    onclick="openProfileModal(${alumni.id})">
 
                     View Profile
 
@@ -2371,184 +1669,15 @@
 
             </div>
 
-        `;
+        </article>
 
-
-        return card;
+    `;
 
     }
 
+    async function connectWithAlumni(alumniId){
 
-    /* =====================================================
-       CONNECTION BUTTON
-    ===================================================== */
-
-    function createConnectionButton(alumni) {
-
-        const alumniId =
-            Number(alumni.id);
-
-
-        /*
-         * Current user
-         */
-
-        if (
-            currentUser &&
-            alumniId ===
-            Number(currentUser.id)
-        ) {
-
-            return `
-
-                <button
-                        class="action-btn connect-btn pending"
-                        disabled>
-
-                    You
-
-                </button>
-
-            `;
-
-        }
-
-
-        const status =
-            connectionStatuses[
-                alumniId
-                ];
-
-
-        /*
-         * No request
-         */
-
-        if (!status) {
-
-            return `
-
-                <button
-                        class="action-btn connect-btn"
-                        onclick="connectWithAlumni(${alumniId})">
-
-                    🤝 Connect
-
-                </button>
-
-            `;
-
-        }
-
-
-        /*
-         * Pending
-         */
-
-        if (status === "PENDING") {
-
-            return `
-
-                <button
-                        class="action-btn connect-btn pending"
-                        disabled>
-
-                    ✓ Request Sent
-
-                </button>
-
-            `;
-
-        }
-
-
-        /*
-         * Accepted
-         */
-
-        if (status === "ACCEPTED") {
-
-            return `
-
-                <button
-                        class="action-btn connect-btn connected"
-                        disabled>
-
-                    ✓ Connected
-
-                </button>
-
-            `;
-
-        }
-
-
-        /*
-         * Received
-         */
-
-        if (status === "RECEIVED") {
-
-            return `
-
-                <button
-                        class="action-btn connect-btn received"
-                        onclick="openMentorshipRequests()">
-
-                    Respond
-
-                </button>
-
-            `;
-
-        }
-
-
-        /*
-         * Rejected
-         */
-
-        if (status === "REJECTED") {
-
-            return `
-
-                <button
-                        class="action-btn connect-btn rejected"
-                        onclick="connectWithAlumni(${alumniId})">
-
-                    Connect Again
-
-                </button>
-
-            `;
-
-        }
-
-
-        return `
-
-            <button
-                    class="action-btn connect-btn"
-                    onclick="connectWithAlumni(${alumniId})">
-
-                🤝 Connect
-
-            </button>
-
-        `;
-
-    }
-
-
-    /* =====================================================
-       CONNECT WITH ALUMNI
-    ===================================================== */
-
-    async function connectWithAlumni(
-        alumniId
-    ) {
-
-        if (!currentUser) {
+        if(!currentUser){
 
             showMessage(
                 "Please login first.",
@@ -2559,11 +1688,10 @@
 
         }
 
-
-        if (
+        if(
             Number(alumniId) ===
             Number(currentUser.id)
-        ) {
+        ){
 
             showMessage(
                 "You cannot connect with yourself.",
@@ -2574,17 +1702,12 @@
 
         }
 
-
         const currentStatus =
             connectionStatuses[
                 Number(alumniId)
                 ];
 
-
-        if (
-            currentStatus ===
-            "PENDING"
-        ) {
+        if(currentStatus === "PENDING"){
 
             showMessage(
                 "You have already sent a request to this alumni.",
@@ -2595,11 +1718,7 @@
 
         }
 
-
-        if (
-            currentStatus ===
-            "ACCEPTED"
-        ) {
+        if(currentStatus === "ACCEPTED"){
 
             showMessage(
                 "You are already connected with this alumni.",
@@ -2610,52 +1729,39 @@
 
         }
 
-
-        /*
-         * Existing backend expects:
-         *
-         * student.id
-         * alumni.id
-         * status
-         */
-
         const requestData = {
 
-            student: {
-
-                id: currentUser.id
-
+            student:{
+                id:currentUser.id
             },
 
-            alumni: {
-
-                id: alumniId
-
+            alumni:{
+                id:alumniId
             },
 
-            status: "PENDING"
+            status:"PENDING"
 
         };
 
-
-        try {
+        try{
 
             showMessage(
                 "Sending connection request...",
                 "info"
             );
 
-
             const response =
                 await fetch(
                     "/api/mentorship/requests",
                     {
-                        method: "POST",
+                        method:"POST",
 
-                        headers: {
+                        headers:{
                             "Content-Type":
                                 "application/json"
                         },
+
+                        credentials:"include",
 
                         body:
                             JSON.stringify(
@@ -2664,42 +1770,32 @@
                     }
                 );
 
-
             const responseText =
                 await response.text();
 
-
-            if (response.ok) {
+            if(response.ok){
 
                 connectionStatuses[
                     Number(alumniId)
                     ] =
                     "PENDING";
 
-
                 updateConnectionStatistics();
-
 
                 displayAlumni(
                     filteredAlumni
                 );
-
 
                 showMessage(
                     "Connection request sent successfully!",
                     "success"
                 );
 
-
                 return;
 
             }
 
-
-            if (
-                response.status ===
-                409
-            ) {
+            if(response.status === 409){
 
                 showMessage(
                     responseText ||
@@ -2707,37 +1803,27 @@
                     "error"
                 );
 
-
-                /*
-                 * Refresh statuses so the
-                 * button is updated correctly.
-                 */
-
                 await loadConnectionStatuses();
 
                 displayAlumni(
                     filteredAlumni
                 );
 
-
                 return;
 
             }
-
 
             showMessage(
                 "Unable to send the connection request.",
                 "error"
             );
 
-
-        } catch (error) {
+        }catch(error){
 
             console.error(
                 "Connection error:",
                 error
             );
-
 
             showMessage(
                 "Server error while sending the connection request.",
@@ -2748,48 +1834,34 @@
 
     }
 
-
-    /* =====================================================
-       OPEN MENTORSHIP PAGE
-    ===================================================== */
-
-    function openMentorshipRequests() {
+    function openMentorshipRequests(){
 
         window.location.href =
             "/mentorship.html";
 
     }
 
-
-    /* =====================================================
-       SEARCH / FILTER
-    ===================================================== */
-
-    function filterAlumni() {
+    function filterAlumni(){
 
         const searchInput =
             document.getElementById(
                 "searchInput"
             );
 
-
         const searchType =
             document.getElementById(
                 "searchType"
             );
-
 
         const keyword =
             searchInput.value
                 .trim()
                 .toLowerCase();
 
-
         const type =
             searchType.value;
 
-
-        if (!keyword) {
+        if(!keyword){
 
             filteredAlumni =
                 [...allAlumni];
@@ -2802,7 +1874,6 @@
 
         }
 
-
         filteredAlumni =
             allAlumni.filter(
                 alumni => {
@@ -2812,99 +1883,55 @@
                             alumni.name || ""
                         ).toLowerCase();
 
-
                     const email =
                         String(
                             alumni.email || ""
                         ).toLowerCase();
-
 
                     const phone =
                         String(
                             alumni.phone || ""
                         ).toLowerCase();
 
-
-                    if (
-                        type ===
-                        "name"
-                    ) {
-
-                        return name.includes(
-                            keyword
-                        );
-
+                    if(type === "name"){
+                        return name.includes(keyword);
                     }
 
-
-                    if (
-                        type ===
-                        "email"
-                    ) {
-
-                        return email.includes(
-                            keyword
-                        );
-
+                    if(type === "email"){
+                        return email.includes(keyword);
                     }
 
-
-                    if (
-                        type ===
-                        "phone"
-                    ) {
-
-                        return phone.includes(
-                            keyword
-                        );
-
+                    if(type === "phone"){
+                        return phone.includes(keyword);
                     }
 
-
-                    return (
-                        name.includes(
-                            keyword
-                        ) ||
-
-                        email.includes(
-                            keyword
-                        ) ||
-
-                        phone.includes(
-                            keyword
-                        )
+                    return(
+                        name.includes(keyword) ||
+                        email.includes(keyword) ||
+                        phone.includes(keyword)
                     );
 
                 }
             );
 
-
         displayAlumni(
             filteredAlumni
         );
 
     }
 
-
-    /* =====================================================
-       CLEAR SEARCH
-    ===================================================== */
-
-    function clearSearch() {
+    function clearSearch(){
 
         document.getElementById(
             "searchInput"
         ).value = "";
 
-
         document.getElementById(
             "searchType"
         ).value = "all";
 
-
         filteredAlumni =
             [...allAlumni];
-
 
         displayAlumni(
             filteredAlumni
@@ -2912,224 +1939,159 @@
 
     }
 
-
-    /* =====================================================
-       VIEW PROFILE
-    ===================================================== */
-
-    function viewProfile(
-        userId
-    ) {
+    async function openProfileModal(alumniId){
 
         const alumni =
             allAlumni.find(
-                user =>
-                    Number(user.id) ===
-                    Number(userId)
+                item =>
+                    Number(item.id) ===
+                    Number(alumniId)
             );
 
-
-        if (!alumni) {
-
-            showMessage(
-                "Alumni profile not found.",
-                "error"
-            );
-
+        if(!alumni){
             return;
-
         }
-
 
         selectedProfile =
             alumni;
 
-
         const name =
-            alumni.name ||
-            "Alumni";
+            escapeHtml(
+                alumni.name || "Alumni"
+            );
 
-
-        const initial =
-            getInitials(name);
-
+        const initials =
+            getInitials(
+                alumni.name
+            );
 
         document.getElementById(
             "profileHeader"
         ).innerHTML = `
 
-            <div class="profile-avatar">
+        <div class="profile-avatar">
 
-                ${escapeHtml(initial)}
+            ${initials}
 
-            </div>
+        </div>
 
+        <h3>
+            ${name}
+        </h3>
 
-            <h3>
+        <div class="profile-role">
+            ${formatRole(alumni.role)}
+        </div>
 
-                ${escapeHtml(name)}
-
-            </h3>
-
-
-            <div class="profile-role">
-
-                ${
-            alumni.role
-                ? escapeHtml(
-                    formatRole(
-                        alumni.role
-                    )
-                )
-                : "Alumni"
-        }
-
-            </div>
-
-        `;
-
+    `;
 
         document.getElementById(
             "profileDetails"
         ).innerHTML = `
 
+        <div class="profile-detail">
 
-            <div class="profile-detail">
+            <strong>
+                📧 Email
+            </strong>
 
-                <div class="detail-label">
-                    Email
-                </div>
-
-                <div class="detail-value">
-
-                    ${escapeHtml(
+            <span>
+                ${escapeHtml(
             alumni.email ||
             "Not available"
         )}
+            </span>
 
-                </div>
+        </div>
 
-            </div>
+        <div class="profile-detail">
 
+            <strong>
+                📱 Phone
+            </strong>
 
-            <div class="profile-detail">
-
-                <div class="detail-label">
-                    Phone
-                </div>
-
-                <div class="detail-value">
-
-                    ${escapeHtml(
+            <span>
+                ${escapeHtml(
             alumni.phone ||
             "Not available"
         )}
+            </span>
 
-                </div>
+        </div>
 
-            </div>
+        <div class="profile-detail">
 
+            <strong>
+                👤 Role
+            </strong>
 
-            <div class="profile-detail">
+            <span>
+                ${formatRole(alumni.role)}
+            </span>
 
-                <div class="detail-label">
-                    Role
-                </div>
+        </div>
 
-                <div class="detail-value">
-
-                    ${escapeHtml(
-            formatRole(
-                alumni.role ||
-                "ALUMNI"
-            )
-        )}
-
-                </div>
-
-            </div>
-
-
-            <div class="profile-detail">
-
-                <div class="detail-label">
-                    Alumni ID
-                </div>
-
-                <div class="detail-value">
-
-                    ${escapeHtml(
-            alumni.id
-        )}
-
-                </div>
-
-            </div>
-
-        `;
-
-
-        const actions =
-            document.getElementById(
-                "profileActions"
-            );
-
+    `;
 
         const status =
             connectionStatuses[
-                Number(alumni.id)
+                Number(alumniId)
                 ];
 
+        let connectText =
+            "Connect";
 
-        if (
-            currentUser &&
-            Number(alumni.id) ===
-            Number(currentUser.id)
-        ) {
+        let connectClass =
+            "action-btn connect-btn";
 
-            actions.innerHTML = `
+        let disabled = "";
 
-                <button
-                        class="modal-action modal-message"
-                        onclick="closeProfileModal()">
+        if(status === "PENDING"){
 
-                    Close
+            connectText =
+                "Request Sent";
 
-                </button>
+            connectClass +=
+                " pending";
 
-            `;
+            disabled =
+                "disabled";
 
-        } else {
+        }else if(status === "ACCEPTED"){
 
-            actions.innerHTML = `
+            connectText =
+                "Connected";
 
-                <button
-                        class="modal-action modal-connect"
-                        onclick="connectFromProfile()">
+            connectClass +=
+                " connected";
 
-                    🤝 ${
-                status === "ACCEPTED"
-                    ? "Connected"
-                    : status === "PENDING"
-                        ? "Request Sent"
-                        : "Connect"
-            }
-
-                </button>
-
-
-                <button
-                        class="modal-action modal-message"
-                        onclick="messageSelectedAlumni()">
-
-                    💬 Message
-
-                </button>
-
-            `;
+            disabled =
+                "disabled";
 
         }
 
+        document.getElementById(
+            "profileActions"
+        ).innerHTML = `
+
+        <button
+            class="${connectClass}"
+            ${disabled}
+            onclick="connectWithAlumni(${alumni.id}); closeProfileModal();">
+
+            ${connectText}
+
+        </button>
+
+        <button
+            class="action-btn view-btn"
+            onclick="closeProfileModal()">
+
+            Close
+
+        </button>
+
+    `;
 
         document.getElementById(
             "profileModal"
@@ -3138,124 +2100,25 @@
 
     }
 
-
-    /* =====================================================
-       CONNECT FROM PROFILE
-    ===================================================== */
-
-    async function connectFromProfile() {
-
-        if (!selectedProfile) {
-
-            return;
-
-        }
-
-
-        const alumniId =
-            Number(
-                selectedProfile.id
-            );
-
-
-        const status =
-            connectionStatuses[
-                alumniId
-                ];
-
-
-        if (status === "ACCEPTED") {
-
-            showMessage(
-                "You are already connected with this alumni.",
-                "info"
-            );
-
-            return;
-
-        }
-
-
-        if (status === "PENDING") {
-
-            showMessage(
-                "Connection request already sent.",
-                "info"
-            );
-
-            return;
-
-        }
-
-
-        await connectWithAlumni(
-            alumniId
-        );
-
-
-        closeProfileModal();
-
-    }
-
-
-    /* =====================================================
-       MESSAGE SELECTED ALUMNI
-    ===================================================== */
-
-    function messageSelectedAlumni() {
-
-        if (!selectedProfile) {
-
-            return;
-
-        }
-
-
-        window.location.href =
-            "/messages.html?userId=" +
-            encodeURIComponent(
-                selectedProfile.id
-            );
-
-    }
-
-
-    /* =====================================================
-       CLOSE PROFILE MODAL
-    ===================================================== */
-
-    function closeProfileModal() {
+    function closeProfileModal(){
 
         document.getElementById(
             "profileModal"
         ).style.display =
             "none";
 
-
-        selectedProfile =
-            null;
-
     }
-
-
-    /* =====================================================
-       CLOSE MODAL WHEN CLICKING OUTSIDE
-    ===================================================== */
 
     window.addEventListener(
         "click",
-        function(event) {
+        function(event){
 
             const modal =
                 document.getElementById(
                     "profileModal"
                 );
 
-
-            if (
-                event.target ===
-                modal
-            ) {
+            if(event.target === modal){
 
                 closeProfileModal();
 
@@ -3264,119 +2127,44 @@
         }
     );
 
-
-    /* =====================================================
-       LOGOUT
-    ===================================================== */
-
-    async function logout() {
-
-        try {
-
-            await fetch(
-                "/logout",
-                {
-                    method: "POST"
-                }
-            );
-
-        } catch (error) {
-
-            console.error(
-                "Logout error:",
-                error
-            );
-
-        }
-
-
-        try {
-
-            sessionStorage.removeItem(
-                "currentUser"
-            );
-
-            sessionStorage.removeItem(
-                "loggedInEmail"
-            );
-
-            localStorage.removeItem(
-                "currentUser"
-            );
-
-            localStorage.removeItem(
-                "loggedInEmail"
-            );
-
-        } catch (storageError) {
-
-            console.warn(
-                storageError
-            );
-
-        }
-
+    function logout(){
 
         window.location.href =
-            "/login.html";
+            "/logout";
 
     }
 
+    function getInitials(name){
 
-    /* =====================================================
-       GET INITIALS
-    ===================================================== */
-
-    function getInitials(
-        name
-    ) {
-
-        if (!name) {
-
+        if(!name){
             return "A";
-
         }
-
 
         const words =
             String(name)
                 .trim()
                 .split(/\s+/);
 
-
-        if (
-            words.length === 1
-        ) {
+        if(words.length === 1){
 
             return words[0]
-                .substring(0, 2)
+                .substring(0,2)
                 .toUpperCase();
 
         }
 
-
-        return (
+        return(
             words[0][0] +
             words[words.length - 1][0]
         ).toUpperCase();
 
     }
 
+    function formatRole(role){
 
-    /* =====================================================
-       FORMAT ROLE
-    ===================================================== */
-
-    function formatRole(
-        role
-    ) {
-
-        if (!role) {
-
+        if(!role){
             return "Alumni";
-
         }
-
 
         return String(role)
             .toLowerCase()
@@ -3388,42 +2176,29 @@
 
     }
 
-
-    /* =====================================================
-       SHOW MESSAGE
-    ===================================================== */
-
-    function showMessage(
-        text,
-        type
-    ) {
+    function showMessage(text,type){
 
         const message =
             document.getElementById(
                 "message"
             );
 
-
         message.innerText =
             text;
-
 
         message.className =
             type || "info";
 
-
         message.style.display =
             "block";
-
 
         clearTimeout(
             window.messageTimer
         );
 
-
         window.messageTimer =
             setTimeout(
-                function() {
+                function(){
 
                     message.style.display =
                         "none";
@@ -3434,73 +2209,60 @@
 
     }
 
+    function escapeHtml(value){
 
-    /* =====================================================
-       HTML ESCAPE
-    ===================================================== */
-
-    function escapeHtml(
-        value
-    ) {
-
-        if (
+        if(
             value === null ||
             value === undefined
-        ) {
-
+        ){
             return "";
-
         }
 
-
         return String(value)
-
-            .replace(
-                /&/g,
-                "&amp;"
-            )
-
-            .replace(
-                /</g,
-                "&lt;"
-            )
-
-            .replace(
-                />/g,
-                "&gt;"
-            )
-
-            .replace(
-                /"/g,
-                "&quot;"
-            )
-
-            .replace(
-                /'/g,
-                "&#039;"
-            );
+            .replace(/&/g,"&amp;")
+            .replace(/</g,"&lt;")
+            .replace(/>/g,"&gt;")
+            .replace(/"/g,"&quot;")
+            .replace(/'/g,"&#039;");
 
     }
 
-
-    /* =====================================================
-       START APPLICATION
-    ===================================================== */
-
     initializePage();
 
-
-
-
-    /* ================= SHARED PROFILE PHOTO ================= */
     async function loadSharedProfilePhoto(){
+
         try{
-            const userResponse = await fetch("/api/users/me", {credentials:"include"});
-            if(!userResponse.ok) return;
-            const user = await userResponse.json();
-            const name = user.name || "User";
-            const initials = name.split(/\s+/).filter(Boolean).slice(0,2)
-                .map(part => part.charAt(0).toUpperCase()).join("") || "U";
+
+            const userResponse =
+                await fetch(
+                    "/api/users/me",
+                    {
+                        credentials:"include"
+                    }
+                );
+
+            if(!userResponse.ok){
+                return;
+            }
+
+            const user =
+                await userResponse.json();
+
+            const name =
+                user.name || "User";
+
+            const initials =
+                name
+                    .split(/\s+/)
+                    .filter(Boolean)
+                    .slice(0,2)
+                    .map(
+                        part =>
+                            part
+                                .charAt(0)
+                                .toUpperCase()
+                    )
+                    .join("") || "U";
 
             const selectors = [
                 "#sharedProfilePhoto",
@@ -3510,49 +2272,149 @@
                 "#sidebarAvatar",
                 "#headerName + .avatar"
             ];
+
             const targets = [];
-            selectors.forEach(selector=>{
-                document.querySelectorAll(selector).forEach(el=>{
-                    if(!targets.includes(el)) targets.push(el);
-                });
-            });
 
-            targets.forEach(el=>{
-                el.innerHTML = '<span class="photo-fallback">'+initials+'</span>';
-                el.title = name;
-            });
+            selectors.forEach(
+                selector => {
 
-            const profileResponse = await fetch(
-                "/api/profiles/user/" + encodeURIComponent(user.id),
-                {credentials:"include"}
+                    document
+                        .querySelectorAll(
+                            selector
+                        )
+                        .forEach(
+                            element => {
+
+                                if(
+                                    !targets.includes(
+                                        element
+                                    )
+                                ){
+
+                                    targets.push(
+                                        element
+                                    );
+
+                                }
+
+                            }
+                        );
+
+                }
             );
-            if(!profileResponse.ok) return;
-            const profile = await profileResponse.json();
-            if(!profile || !profile.id) return;
 
-            const photoUrl = "/api/profiles/" + profile.id + "/photo";
-            targets.forEach(el=>{
-                const img = document.createElement("img");
-                img.alt = name + " profile photo";
-                img.src = photoUrl + "?v=" + Date.now();
-                img.onerror = function(){
-                    this.remove();
-                    if(!el.querySelector(".photo-fallback")){
-                        el.innerHTML = '<span class="photo-fallback">'+initials+'</span>';
+            targets.forEach(
+                element => {
+
+                    element.innerHTML =
+                        '<span class="photo-fallback">' +
+                        initials +
+                        '</span>';
+
+                    element.title =
+                        name;
+
+                }
+            );
+
+            const profileResponse =
+                await fetch(
+                    "/api/profiles/user/" +
+                    encodeURIComponent(
+                        user.id
+                    ),
+                    {
+                        credentials:"include"
                     }
-                };
-                el.innerHTML = "";
-                el.appendChild(img);
-            });
+                );
+
+            if(!profileResponse.ok){
+                return;
+            }
+
+            const profile =
+                await profileResponse.json();
+
+            if(
+                !profile ||
+                !profile.id
+            ){
+                return;
+            }
+
+            const photoUrl =
+                "/api/profiles/" +
+                profile.id +
+                "/photo";
+
+            targets.forEach(
+                element => {
+
+                    const img =
+                        document.createElement(
+                            "img"
+                        );
+
+                    img.alt =
+                        name +
+                        " profile photo";
+
+                    img.src =
+                        photoUrl +
+                        "?v=" +
+                        Date.now();
+
+                    img.onerror =
+                        function(){
+
+                            this.remove();
+
+                            if(
+                                !element.querySelector(
+                                    ".photo-fallback"
+                                )
+                            ){
+
+                                element.innerHTML =
+                                    '<span class="photo-fallback">' +
+                                    initials +
+                                    '</span>';
+
+                            }
+
+                        };
+
+                    element.innerHTML = "";
+
+                    element.appendChild(
+                        img
+                    );
+
+                }
+            );
+
         }catch(error){
-            console.warn("Shared profile photo could not be loaded:", error);
+
+            console.warn(
+                "Shared profile photo could not be loaded:",
+                error
+            );
+
         }
+
     }
 
-    try { loadSharedProfilePhoto(); } catch(e) { console.warn(e); }
+    try{
+
+        loadSharedProfilePhoto();
+
+    }catch(error){
+
+        console.warn(error);
+
+    }
+
 </script>
 
-
 </body>
-
 </html>
