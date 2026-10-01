@@ -143,7 +143,6 @@ public class JobService {
     // =========================================================
     // DELETE JOB
     // =========================================================
-
     @Transactional
     public void deleteJob(Long id) {
 
