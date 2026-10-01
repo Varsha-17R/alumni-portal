@@ -52,6 +52,10 @@ public class JobService {
         // instead of trusting postedBy from frontend
         job.setPostedBy(user);
 
+        // IMPORTANT:
+        // Every newly created job starts as PENDING
+        job.setStatus("PENDING");
+
         return jobRepository.save(job);
     }
 
