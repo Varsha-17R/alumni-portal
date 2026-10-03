@@ -1,3 +1,4 @@
+```
 <!DOCTYPE html>
 <html lang="en">
 
@@ -268,6 +269,39 @@
 
         .btn-success:hover {
             background: #15803d;
+        }
+
+
+        /* ================= LINKEDIN SHARE ================= */
+
+        .linkedin-btn {
+            background: #0a66c2;
+            color: #ffffff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 12px;
+            transition: 0.2s ease;
+        }
+
+        .linkedin-btn:hover {
+            background: #004182;
+            transform: translateY(-1px);
+        }
+
+        .linkedin-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .job-share-note {
+            margin-top: 9px;
+            color: #7180a3;
+            font-size: 11px;
+            line-height: 1.5;
         }
 
         .view-btn {
@@ -2631,13 +2665,29 @@
                 </p>
 
 
-                <button
-                        class="btn btn-danger"
-                        onclick="deleteJob(${job.id})">
+                <div class="job-buttons">
 
-                    🗑️ Delete Job
+                    <button
+                            class="linkedin-btn"
+                            onclick="shareJobOnLinkedIn(${job.id})">
 
-                </button>
+                        in Share on LinkedIn
+
+                    </button>
+
+                    <button
+                            class="btn btn-danger"
+                            onclick="deleteJob(${job.id})">
+
+                        🗑️ Delete Job
+
+                    </button>
+
+                </div>
+
+                <div class="job-share-note">
+                    LinkedIn will open in a new tab. You can review and publish the job post from your LinkedIn account.
+                </div>
 
             `;
 
@@ -2647,6 +2697,130 @@
             );
 
         });
+
+    }
+
+
+    // =========================================================
+    // SHARE JOB ON LINKEDIN
+    // =========================================================
+
+    async function shareJobOnLinkedIn(jobId) {
+
+        try {
+
+            /*
+             * Get the complete job so that we can prepare
+             * useful text for the LinkedIn post.
+             */
+
+            const response =
+                await fetch(`/api/jobs/${jobId}`);
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Unable to load job details."
+                );
+
+            }
+
+
+            const job =
+                await response.json();
+
+
+            /*
+             * The current Jobs page is the public URL
+             * that LinkedIn will share.
+             *
+             * The job ID is included in the URL so that
+             * the shared link identifies the selected job.
+             */
+
+            const jobUrl =
+                `${window.location.origin}/jobs.html?jobId=${encodeURIComponent(job.id)}`;
+
+
+            /*
+             * Prepare suggested post text. LinkedIn's
+             * share dialog does not reliably allow a web
+             * page to pre-fill the post composer text.
+             * Therefore we copy the suggested text to the
+             * clipboard when possible.
+             */
+
+            const postText =
+                `🚀 Job Opportunity: ${job.title || "New Job Opportunity"}\n\n` +
+                `Company: ${job.company || "Not specified"}\n` +
+                `Location: ${job.location || "Not specified"}\n` +
+                `Job Type: ${job.jobType || "Not specified"}\n` +
+                `Skills: ${job.skills || "Not specified"}\n\n` +
+                `${job.description || "Check out this job opportunity."}\n\n` +
+                `View the job on AlumniConnect: ${jobUrl}`;
+
+
+            /*
+             * Copy the suggested text so the user can paste
+             * it into the LinkedIn post composer.
+             */
+
+            try {
+
+                if (navigator.clipboard) {
+
+                    await navigator.clipboard.writeText(postText);
+
+                }
+
+            } catch (clipboardError) {
+
+                console.warn(
+                    "Clipboard copy was not available:",
+                    clipboardError
+                );
+
+            }
+
+
+            /*
+             * LinkedIn Share dialog.
+             * This opens LinkedIn so the logged-in user
+             * can review and publish the post.
+             */
+
+            const linkedInUrl =
+                `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(jobUrl)}`;
+
+
+            window.open(
+                linkedInUrl,
+                "_blank",
+                "noopener,noreferrer,width=800,height=700"
+            );
+
+
+            showMessage(
+                "LinkedIn opened. The suggested job post text has been copied; paste it into LinkedIn and publish. 👍",
+                "success"
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "LinkedIn share error:",
+                error
+            );
+
+
+            showMessage(
+                "Unable to prepare the LinkedIn post.",
+                "error"
+            );
+
+        }
 
     }
 
@@ -2842,3 +3016,4 @@
 </body>
 
 </html>
+```
