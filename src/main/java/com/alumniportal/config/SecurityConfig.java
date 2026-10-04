@@ -91,6 +91,14 @@ public class SecurityConfig {
                         ).permitAll()
 
                         // =========================
+                        // EMAIL OTP VERIFICATION
+                        // =========================
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/verification/email"
+                        ).permitAll()
+
+                        // =========================
                         // PROFILE APIs
                         // =========================
                         .requestMatchers("/api/profiles/**").permitAll()
