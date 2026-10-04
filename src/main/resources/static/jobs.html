@@ -1,5 +1,3 @@
-````
-```
 <!DOCTYPE html>
 <html lang="en">
 
@@ -377,6 +375,62 @@
         .form-group textarea {
             min-height: 110px;
             resize: vertical;
+        }
+
+        .description-note {
+            margin: -7px 0 12px;
+            color: #7180a3;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .resume-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(23,21,63,.55);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .resume-modal.show { display: flex; }
+
+        .resume-modal-card {
+            width: 100%;
+            max-width: 500px;
+            background: #fff;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 20px 60px rgba(23,21,63,.25);
+        }
+
+        .resume-modal-card h2 {
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .resume-modal-card p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 18px;
+        }
+
+        .resume-file {
+            width: 100%;
+            padding: 12px;
+            border: 1px dashed #b8c2dc;
+            border-radius: 10px;
+            background: #f8f9ff;
+        }
+
+        .resume-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 9px;
+            margin-top: 18px;
         }
 
         .form-group input:focus,
@@ -1185,14 +1239,67 @@
 
                 <div class="form-group">
 
-                    <label>
-                        Job Description
-                    </label>
+                    <label>About the Company</label>
+                    <textarea id="aboutCompany"
+                              placeholder="Describe the company, industry and work culture..."
+                              required></textarea>
 
-                    <textarea
-                            id="description"
-                            placeholder="Enter job description"
-                            required></textarea>
+                </div>
+
+                <div class="form-group">
+
+                    <label>About the Role</label>
+                    <textarea id="aboutRole"
+                              placeholder="Describe the role and what the selected candidate will work on..."
+                              required></textarea>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Required Skills</label>
+                    <textarea id="requiredSkills"
+                              placeholder="Mention the technical and professional skills required..."
+                              required></textarea>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Qualifications</label>
+                    <textarea id="qualifications"
+                              placeholder="Example: MCA, BCA, B.Tech or relevant qualification..."
+                              required></textarea>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Experience</label>
+                    <textarea id="experience"
+                              placeholder="Example: Freshers / 1–2 years / 3+ years..."
+                              required></textarea>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Work Mode</label>
+                    <select id="workMode" required>
+                        <option value="">Select Work Mode</option>
+                        <option value="On-site">On-site</option>
+                        <option value="Hybrid">Hybrid</option>
+                        <option value="Remote">Remote</option>
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Benefits</label>
+                    <textarea id="benefits"
+                              placeholder="Mention benefits such as learning opportunities, insurance, flexible work, etc..."
+                              required></textarea>
 
                 </div>
 
@@ -1264,6 +1371,33 @@
 </div>
 
 
+<!-- =====================================================
+     RESUME UPLOAD MODAL
+====================================================== -->
+
+<div class="resume-modal" id="resumeModal">
+    <div class="resume-modal-card">
+        <h2>📄 Upload Resume</h2>
+        <p>Upload your resume for this job application. PDF only, maximum 5 MB.</p>
+
+        <input
+                type="file"
+                id="resumeFile"
+                class="resume-file"
+                accept="application/pdf,.pdf">
+
+        <div class="resume-actions">
+            <button type="button" class="btn btn-secondary" onclick="closeResumeModal()">
+                Cancel
+            </button>
+            <button type="button" class="btn btn-primary" onclick="submitApplicationWithResume()">
+                Submit Application
+            </button>
+        </div>
+    </div>
+</div>
+
+
 <script>
 
 
@@ -1275,8 +1409,7 @@
 
     let myApplications = [];
 
-    // Prevent duplicate submissions while an application is being submitted.
-    const submittingJobIds = new Set();
+    let pendingApplicationJobId = null;
 
 
     // =========================================================
@@ -1838,238 +1971,109 @@
 
 
     // =========================================================
-    // =========================================================
     // APPLY FOR JOB
     // =========================================================
 
     async function applyForJob(jobId) {
 
-        /*
-         * Only students can apply.
-         */
-        if (
-            !currentUser ||
-            !currentUser.role ||
-            currentUser.role.toUpperCase() !== "STUDENT"
-        ) {
+        if (!currentUser || !currentUser.role ||
+            currentUser.role.toUpperCase() !== "STUDENT") {
             alert("Only students can apply for jobs.");
             return;
         }
 
-        /*
-         * Check duplicate application using numeric IDs.
-         */
-        const alreadyApplied =
-            myApplications.some(
-                app =>
-                    app.job &&
-                    Number(app.job.id) === Number(jobId)
-            );
+        const alreadyApplied = myApplications.some(
+            app => app.job && Number(app.job.id) === Number(jobId)
+        );
 
         if (alreadyApplied) {
             alert("You have already applied for this job.");
             return;
         }
 
-        /*
-         * Prevent double-click / duplicate requests while
-         * the resume upload and application are being submitted.
-         */
-        if (submittingJobIds.has(Number(jobId))) {
-            return;
-        }
-
-        submittingJobIds.add(Number(jobId));
-
-        const applyButtons = Array.from(
-            document.querySelectorAll(".apply-btn")
-        ).filter(button =>
-            button.getAttribute("onclick") === `applyForJob(${jobId})`
-        );
-
-        applyButtons.forEach(button => {
-            button.disabled = true;
-            button.dataset.originalText = button.innerHTML;
-            button.innerHTML = "Applying...";
-            button.style.opacity = "0.6";
-            button.style.cursor = "not-allowed";
-        });
-
-        /*
-         * Create a hidden file input so the student can select
-         * a PDF resume without changing the page layout.
-         */
-        const fileInput = document.createElement("input");
-
-        fileInput.type = "file";
-        fileInput.accept = "application/pdf,.pdf";
-        fileInput.style.display = "none";
-
-        document.body.appendChild(fileInput);
-
-        const cleanup = () => {
-            submittingJobIds.delete(Number(jobId));
-
-            applyButtons.forEach(button => {
-                button.disabled = false;
-                button.innerHTML =
-                    button.dataset.originalText || "Apply Now";
-                button.style.opacity = "1";
-                button.style.cursor = "pointer";
-            });
-
-            if (fileInput.parentNode) {
-                fileInput.parentNode.removeChild(fileInput);
-            }
-        };
-
-        fileInput.addEventListener("change", async function () {
-
-            const resume = fileInput.files && fileInput.files[0];
-
-            /*
-             * Student cancelled the file picker.
-             */
-            if (!resume) {
-                cleanup();
-                return;
-            }
-
-            /*
-             * Only PDF resumes are accepted.
-             */
-            const isPdf =
-                resume.type === "application/pdf" ||
-                resume.name.toLowerCase().endsWith(".pdf");
-
-            if (!isPdf) {
-                alert("Only PDF resumes are allowed.");
-                cleanup();
-                return;
-            }
-
-            /*
-             * Maximum resume size: 5 MB.
-             */
-            const maxFileSize = 5 * 1024 * 1024;
-
-            if (resume.size > maxFileSize) {
-                alert("Resume size must not exceed 5 MB.");
-                cleanup();
-                return;
-            }
-
-            const applicationData = {
-                job: {
-                    id: Number(jobId)
-                },
-                student: {
-                    id: Number(currentUser.id)
-                }
-            };
-
-            try {
-
-                /*
-                 * Send the application and resume together.
-                 */
-                const formData = new FormData();
-
-                formData.append(
-                    "application",
-                    JSON.stringify(applicationData)
-                );
-
-                formData.append(
-                    "resume",
-                    resume
-                );
-
-                const response =
-                    await fetch(
-                        "/api/applications/with-resume",
-                        {
-                            method: "POST",
-                            credentials: "include",
-                            body: formData
-                        }
-                    );
-
-                if (!response.ok) {
-
-                    const message =
-                        await response.text();
-
-                    /*
-                     * If the backend says the application already
-                     * exists, refresh the application list so the
-                     * UI immediately shows the correct status.
-                     */
-                    if (response.status === 409) {
-                        await loadMyApplications();
-                        await loadAllJobs();
-
-                        alert(
-                            message ||
-                            "You have already applied for this job."
-                        );
-
-                        cleanup();
-                        return;
-                    }
-
-                    alert(
-                        "Unable to apply: " +
-                        (message || "Please try again.")
-                    );
-
-                    cleanup();
-                    return;
-                }
-
-                const application =
-                    await response.json();
-
-                alert(
-                    "Application submitted successfully! 🎉\n\n" +
-                    "Resume: " +
-                    resume.name +
-                    "\n" +
-                    "Status: " +
-                    (application.status || "PENDING")
-                );
-
-                cleanup();
-
-                /*
-                 * Refresh both application status and job cards.
-                 */
-                await loadMyApplications();
-                await loadAllJobs();
-
-            } catch (error) {
-
-                console.error(
-                    "Application error:",
-                    error
-                );
-
-                alert(
-                    "Something went wrong while applying for the job."
-                );
-
-                cleanup();
-            }
-
-        });
-
-        /*
-         * Open the resume picker.
-         */
-        fileInput.click();
+        pendingApplicationJobId = jobId;
+        document.getElementById("resumeFile").value = "";
+        document.getElementById("resumeModal").classList.add("show");
     }
 
 
+    function closeResumeModal() {
+        pendingApplicationJobId = null;
+        document.getElementById("resumeFile").value = "";
+        document.getElementById("resumeModal").classList.remove("show");
+    }
+
+
+    async function submitApplicationWithResume() {
+
+        if (!pendingApplicationJobId || !currentUser) {
+            alert("Unable to submit the application.");
+            return;
+        }
+
+        const fileInput = document.getElementById("resumeFile");
+        const file = fileInput.files[0];
+
+        if (!file) {
+            alert("Please upload your resume.");
+            return;
+        }
+
+        if (file.type !== "application/pdf" &&
+            !file.name.toLowerCase().endsWith(".pdf")) {
+            alert("Only PDF resumes are allowed.");
+            return;
+        }
+
+        if (file.size > 5 * 1024 * 1024) {
+            alert("Resume size must not exceed 5 MB.");
+            return;
+        }
+
+        const applicationData = {
+            job: { id: pendingApplicationJobId },
+            student: { id: currentUser.id }
+        };
+
+        const formData = new FormData();
+        formData.append(
+            "application",
+            new Blob([JSON.stringify(applicationData)], { type: "application/json" })
+        );
+        formData.append("resume", file);
+
+        try {
+            const response = await fetch("/api/applications/with-resume", {
+                method: "POST",
+                body: formData
+            });
+
+            if (!response.ok) {
+                const message = await response.text();
+                alert("Unable to apply: " + message);
+                return;
+            }
+
+            const application = await response.json();
+
+            closeResumeModal();
+
+            alert(
+                "Application submitted successfully! 🎉\n\n" +
+                "Resume: " + (file.name || "Uploaded") + "\n" +
+                "Status: " + (application.status || "Pending")
+            );
+
+            await loadMyApplications();
+            await loadAllJobs();
+
+        } catch (error) {
+            console.error("Application error:", error);
+            alert("Something went wrong while applying for the job.");
+        }
+    }
+
+    // =========================================================
     // SEARCH JOBS
     // =========================================================
 
@@ -2460,10 +2464,28 @@
                     "location"
                 ).value.trim(),
 
-            description:
-                document.getElementById(
-                    "description"
-                ).value.trim(),
+            description: [
+                "ABOUT THE COMPANY",
+                document.getElementById("aboutCompany").value.trim(),
+                "",
+                "ABOUT THE ROLE",
+                document.getElementById("aboutRole").value.trim(),
+                "",
+                "REQUIRED SKILLS",
+                document.getElementById("requiredSkills").value.trim(),
+                "",
+                "QUALIFICATIONS",
+                document.getElementById("qualifications").value.trim(),
+                "",
+                "EXPERIENCE",
+                document.getElementById("experience").value.trim(),
+                "",
+                "WORK MODE",
+                document.getElementById("workMode").value,
+                "",
+                "BENEFITS",
+                document.getElementById("benefits").value.trim()
+            ].join("\n"),
 
             skills:
                 document.getElementById(
@@ -3112,5 +3134,3 @@
 </body>
 
 </html>
-```
-```
