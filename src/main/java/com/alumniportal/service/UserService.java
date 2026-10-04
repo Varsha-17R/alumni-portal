@@ -4,13 +4,16 @@ import com.alumniportal.entity.Role;
 import com.alumniportal.entity.User;
 import com.alumniportal.repository.UserRepository;
 import com.alumniportal.repository.ProfileRepository;
+import com.alumniportal.repository.JobRepository;
+import com.alumniportal.repository.JobApplicationRepository;
+import com.alumniportal.repository.MessageRepository;
+import com.alumniportal.repository.MentorshipRequestRepository;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
-
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,20 +24,34 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
+    private final JobRepository jobRepository;
+    private final JobApplicationRepository jobApplicationRepository;
+    private final MessageRepository messageRepository;
+    private final MentorshipRequestRepository mentorshipRequestRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
 
     public UserService(
             UserRepository userRepository,
             ProfileRepository profileRepository,
+            JobRepository jobRepository,
+            JobApplicationRepository jobApplicationRepository,
+            MessageRepository messageRepository,
+            MentorshipRequestRepository mentorshipRequestRepository,
             PasswordEncoder passwordEncoder,
             EmailService emailService) {
 
         this.userRepository = userRepository;
         this.profileRepository = profileRepository;
+        this.jobRepository = jobRepository;
+        this.jobApplicationRepository = jobApplicationRepository;
+        this.messageRepository = messageRepository;
+        this.mentorshipRequestRepository =
+                mentorshipRequestRepository;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
     }
+
 
     // =========================================================
     // CREATE USER
@@ -42,21 +59,17 @@ public class UserService implements UserDetailsService {
 
     public User saveUser(User user) {
 
-        // Save original details for email
         String name = user.getName();
         String email = user.getEmail();
         String role = user.getRole().name();
 
-        // Encrypt password before saving
         user.setPassword(
                 passwordEncoder.encode(user.getPassword())
         );
 
-        // Save user to database
         User savedUser =
                 userRepository.save(user);
 
-        // Send welcome email
         emailService.sendWelcomeEmail(
                 email,
                 name,
@@ -65,9 +78,17 @@ public class UserService implements UserDetailsService {
 
         return savedUser;
     }
+
+
+    // =========================================================
+    // UPDATE USER
+    // =========================================================
+
     public User saveUpdatedUser(User user) {
+
         return userRepository.save(user);
     }
+
 
     // =========================================================
     // GET ALL USERS
@@ -77,6 +98,7 @@ public class UserService implements UserDetailsService {
 
         return userRepository.findAll();
     }
+
 
     // =========================================================
     // GET USER BY ID
@@ -90,6 +112,7 @@ public class UserService implements UserDetailsService {
         return user.orElse(null);
     }
 
+
     // =========================================================
     // GET USER BY EMAIL
     // =========================================================
@@ -102,17 +125,120 @@ public class UserService implements UserDetailsService {
         return user.orElse(null);
     }
 
+
     // =========================================================
     // DELETE USER
     // =========================================================
 
     @Transactional
     public void deleteUser(Long id) {
-        profileRepository.findByUserId(id)
+
+        // -----------------------------------------------------
+        // Check whether user exists
+        // -----------------------------------------------------
+
+        User user =
+                userRepository.findById(id)
+                        .orElseThrow(() ->
+                                new IllegalArgumentException(
+                                        "User not found."
+                                )
+                        );
+
+
+        // -----------------------------------------------------
+        // 1. Delete job applications submitted by this user
+        // -----------------------------------------------------
+
+        jobApplicationRepository
+                .findByStudentId(id)
+                .forEach(jobApplicationRepository::delete);
+
+
+        // -----------------------------------------------------
+        // 2. Find jobs posted by this user
+        // -----------------------------------------------------
+
+        var postedJobs =
+                jobRepository.findByPostedById(id);
+
+
+        // -----------------------------------------------------
+        // 3. Delete applications belonging to those jobs
+        // -----------------------------------------------------
+
+        postedJobs.forEach(job -> {
+
+            jobApplicationRepository
+                    .findByJobId(job.getId())
+                    .forEach(jobApplicationRepository::delete);
+
+        });
+
+
+        // -----------------------------------------------------
+        // 4. Delete jobs posted by this user
+        // -----------------------------------------------------
+
+        postedJobs.forEach(jobRepository::delete);
+
+
+        // -----------------------------------------------------
+        // 5. Delete messages sent by this user
+        // -----------------------------------------------------
+
+        messageRepository
+                .findBySenderId(id)
+                .forEach(messageRepository::delete);
+
+
+        // -----------------------------------------------------
+        // 6. Delete messages received by this user
+        // -----------------------------------------------------
+
+        messageRepository
+                .findByReceiverId(id)
+                .forEach(messageRepository::delete);
+
+
+        // -----------------------------------------------------
+        // 7. Delete mentorship requests as student
+        // -----------------------------------------------------
+
+        mentorshipRequestRepository
+                .findByStudentId(id)
+                .forEach(
+                        mentorshipRequestRepository::delete
+                );
+
+
+        // -----------------------------------------------------
+        // 8. Delete mentorship requests as alumni
+        // -----------------------------------------------------
+
+        mentorshipRequestRepository
+                .findByAlumniId(id)
+                .forEach(
+                        mentorshipRequestRepository::delete
+                );
+
+
+        // -----------------------------------------------------
+        // 9. Delete profile
+        // -----------------------------------------------------
+
+        profileRepository
+                .findByUserId(id)
                 .ifPresent(profileRepository::delete);
 
-        userRepository.deleteById(id);
+
+        // -----------------------------------------------------
+        // 10. Finally delete the user
+        // -----------------------------------------------------
+
+        userRepository.delete(user);
     }
+
 
     // =========================================================
     // GET ALL ALUMNI
@@ -122,6 +248,7 @@ public class UserService implements UserDetailsService {
 
         return userRepository.findByRole(Role.ALUMNI);
     }
+
 
     // =========================================================
     // SPRING SECURITY LOGIN
