@@ -30,28 +30,95 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
+
     /*
-     * Verification is controlled by the admin.
+     * =========================================================
+     * ADMIN VERIFICATION
+     * =========================================================
      *
-     * It is READ_ONLY from JSON so registration
-     * cannot send null or modify this value.
+     * This field is used by the Admin to verify alumni.
+     * It is kept separate from email and phone verification.
      */
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(nullable = false)
     private boolean verified = false;
 
+
     /*
-     * Stores the date and time of the user's
-     * most recent successful login.
+     * =========================================================
+     * EMAIL VERIFICATION
+     * =========================================================
      *
-     * Used by Admin Reports & Analytics to
-     * determine whether a user is active or inactive.
+     * emailVerified:
+     * Indicates whether the user's email address has been
+     * successfully verified using OTP.
+     */
+    @Column(nullable = false)
+    private boolean emailVerified = false;
+
+    /*
+     * Stores the email verification OTP.
+     */
+    @Column
+    private String emailVerificationOtp;
+
+    /*
+     * Stores the expiry date and time of the email OTP.
+     */
+    @Column
+    private LocalDateTime emailOtpExpiry;
+
+
+    /*
+     * =========================================================
+     * PHONE VERIFICATION
+     * =========================================================
+     *
+     * phoneVerified:
+     * Indicates whether the user's phone number has been
+     * successfully verified using SMS OTP.
+     */
+    @Column(nullable = false)
+    private boolean phoneVerified = false;
+
+    /*
+     * Stores the phone verification OTP.
+     */
+    @Column
+    private String phoneVerificationOtp;
+
+    /*
+     * Stores the expiry date and time of the phone OTP.
+     */
+    @Column
+    private LocalDateTime phoneOtpExpiry;
+
+
+    /*
+     * =========================================================
+     * LOGIN / ACTIVITY TRACKING
+     * =========================================================
+     *
+     * Stores the date and time of the user's most recent
+     * successful login.
+     *
+     * Used by Admin Reports & Analytics.
      */
     @Column
     private LocalDateTime lastLogin;
 
+
+    // =========================================================
+    // CONSTRUCTOR
+    // =========================================================
+
     public User() {
     }
+
+
+    // =========================================================
+    // GETTERS AND SETTERS
+    // =========================================================
 
     public Long getId() {
         return id;
@@ -61,6 +128,7 @@ public class User {
         this.id = id;
     }
 
+
     public String getName() {
         return name;
     }
@@ -68,6 +136,7 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
+
 
     public String getEmail() {
         return email;
@@ -77,6 +146,7 @@ public class User {
         this.email = email;
     }
 
+
     public String getPassword() {
         return password;
     }
@@ -84,6 +154,7 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     public String getPhone() {
         return phone;
@@ -93,6 +164,7 @@ public class User {
         this.phone = phone;
     }
 
+
     public Role getRole() {
         return role;
     }
@@ -101,6 +173,11 @@ public class User {
         this.role = role;
     }
 
+
+    // =========================================================
+    // ADMIN VERIFICATION
+    // =========================================================
+
     public boolean isVerified() {
         return verified;
     }
@@ -108,6 +185,73 @@ public class User {
     public void setVerified(boolean verified) {
         this.verified = verified;
     }
+
+
+    // =========================================================
+    // EMAIL VERIFICATION
+    // =========================================================
+
+    public boolean isEmailVerified() {
+        return emailVerified;
+    }
+
+    public void setEmailVerified(boolean emailVerified) {
+        this.emailVerified = emailVerified;
+    }
+
+
+    public String getEmailVerificationOtp() {
+        return emailVerificationOtp;
+    }
+
+    public void setEmailVerificationOtp(String emailVerificationOtp) {
+        this.emailVerificationOtp = emailVerificationOtp;
+    }
+
+
+    public LocalDateTime getEmailOtpExpiry() {
+        return emailOtpExpiry;
+    }
+
+    public void setEmailOtpExpiry(LocalDateTime emailOtpExpiry) {
+        this.emailOtpExpiry = emailOtpExpiry;
+    }
+
+
+    // =========================================================
+    // PHONE VERIFICATION
+    // =========================================================
+
+    public boolean isPhoneVerified() {
+        return phoneVerified;
+    }
+
+    public void setPhoneVerified(boolean phoneVerified) {
+        this.phoneVerified = phoneVerified;
+    }
+
+
+    public String getPhoneVerificationOtp() {
+        return phoneVerificationOtp;
+    }
+
+    public void setPhoneVerificationOtp(String phoneVerificationOtp) {
+        this.phoneVerificationOtp = phoneVerificationOtp;
+    }
+
+
+    public LocalDateTime getPhoneOtpExpiry() {
+        return phoneOtpExpiry;
+    }
+
+    public void setPhoneOtpExpiry(LocalDateTime phoneOtpExpiry) {
+        this.phoneOtpExpiry = phoneOtpExpiry;
+    }
+
+
+    // =========================================================
+    // LAST LOGIN
+    // =========================================================
 
     public LocalDateTime getLastLogin() {
         return lastLogin;
