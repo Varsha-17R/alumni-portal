@@ -1,3 +1,4 @@
+````
 ```
 <!DOCTYPE html>
 <html lang="en">
@@ -1007,7 +1008,7 @@
         </h1>
 
         <p class="subtitle">
-            Review and manage applications received for your job postings.
+            Track the jobs you applied for or review applicants for your job postings.
         </p>
 
 
@@ -1113,12 +1114,12 @@
 
                 <div>
 
-                    <h2>
-                        Candidate Applications
+                    <h2 id="applicationsHeading">
+                        Applications
                     </h2>
 
-                    <p>
-                        Review candidates who applied to your jobs.
+                    <p id="applicationsDescription">
+                        View your job applications.
                     </p>
 
                 </div>
@@ -1143,7 +1144,7 @@
                     <input
                             type="text"
                             id="searchInput"
-                            placeholder="Search by applicant, job or company..."
+                            placeholder="Search by job or company..."
                             oninput="applyFilters()"
                     >
 
@@ -1222,72 +1223,43 @@
         const email =
             sessionStorage.getItem("loggedInEmail");
 
-        if (!email) {
-
-            window.location.href = "/login.html";
-
-            return false;
-        }
-
-
         try {
 
-            const response =
-                await fetch("/api/users");
+            // Use the authenticated /me endpoint instead of
+            // requesting the complete users list.
+            const response = await fetch("/api/users/me", {
+                credentials: "include"
+            });
 
             if (!response.ok) {
-
-                throw new Error(
-                    "Unable to load users"
-                );
-            }
-
-
-            const users =
-                await response.json();
-
-
-            currentUser =
-                users.find(user =>
-                    user.email &&
-                    user.email.toLowerCase()
-                    === email.toLowerCase()
-                );
-
-
-            if (!currentUser) {
-
-                document.getElementById(
-                    "userBanner"
-                ).textContent =
-                    "User not found. Please login again.";
-
+                if (email) {
+                    // Keep the existing session-based fallback if needed.
+                    throw new Error("Unable to load current user");
+                }
+                window.location.href = "/login.html";
                 return false;
             }
 
+            currentUser = await response.json();
 
-            document.getElementById(
-                "headerUserName"
-            ).textContent =
-                currentUser.name;
+            if (!currentUser || !currentUser.id) {
+                throw new Error("Current user not found");
+            }
 
+            // Keep the email in sessionStorage for the other portal pages.
+            if (currentUser.email) {
+                sessionStorage.setItem("loggedInEmail", currentUser.email);
+            }
 
-            document.getElementById(
-                "userBanner"
-            ).innerHTML =
+            document.getElementById("headerUserName").textContent =
+                currentUser.name || "User";
 
+            document.getElementById("userBanner").innerHTML =
                 `Logged in as:
-                <strong>
-                    ${escapeHtml(currentUser.name)}
-                </strong>
-
+                <strong>${escapeHtml(currentUser.name || "User")}</strong>
                 &nbsp; | &nbsp;
-
                 Role:
-                <strong>
-                    ${escapeHtml(currentUser.role)}
-                </strong>`;
-
+                <strong>${escapeHtml(currentUser.role || "USER")}</strong>`;
 
             return true;
 
@@ -1295,250 +1267,171 @@
 
             console.error(error);
 
-            document.getElementById(
-                "userBanner"
-            ).textContent =
+            document.getElementById("userBanner").textContent =
                 "Unable to load user information.";
 
             return false;
         }
     }
 
-
     /* ================= LOAD APPLICATIONS ================= */
 
     async function loadApplications() {
 
-        const container =
-            document.getElementById(
-                "applicationsContainer"
-            );
+        const container = document.getElementById("applicationsContainer");
 
-
-        if (!currentUser ||
-            !currentUser.id) {
-
+        if (!currentUser || !currentUser.id) {
             return;
         }
 
+        const role = String(currentUser.role || "").toUpperCase();
 
-        const role =
-            String(currentUser.role || "")
-                .toUpperCase();
+        const heading = document.getElementById("applicationsHeading");
+        const description = document.getElementById("applicationsDescription");
+        const searchInput = document.getElementById("searchInput");
 
+        // ================= STUDENT VIEW =================
+        if (role === "STUDENT") {
 
-        /*
-         * Application management
-         * is available for ALUMNI.
-         */
+            heading.textContent = "My Job Applications";
+            description.textContent = "View all jobs you have applied for and their application status.";
+            searchInput.placeholder = "Search by job or company...";
 
-        if (role !== "ALUMNI") {
-
-            document.getElementById(
-                "applicationCount"
-            ).textContent =
-                "Alumni only";
-
-
-            container.innerHTML = `
-
-                <div class="empty">
-
-                    <div class="empty-icon">
-                        🔒
-                    </div>
-
-                    <strong>
-                        Application management is for alumni.
-                    </strong>
-
-                    <br><br>
-
-                    Students can apply for jobs
-                    from the Jobs page.
-
-                </div>
-            `;
-
-            resetStats();
-
-            return;
-        }
-
-
-        try {
-
-            const jobsResponse =
-                await fetch("/api/jobs");
-
-
-            if (!jobsResponse.ok) {
-
-                throw new Error(
-                    "Unable to load jobs"
-                );
-            }
-
-
-            const jobs =
-                await jobsResponse.json();
-
-
-            /*
-             * Only jobs posted by
-             * the logged-in alumni.
-             */
-
-            const myJobs =
-                jobs.filter(job =>
-
-                    job.postedBy &&
-
-                    Number(job.postedBy.id)
-                    === Number(currentUser.id)
-
+            try {
+                const response = await fetch(
+                    `/api/applications/student/${currentUser.id}`,
+                    { credentials: "include" }
                 );
 
-
-            if (myJobs.length === 0) {
-
-                resetStats();
-
-                document.getElementById(
-                    "applicationCount"
-                ).textContent =
-                    "0 applications";
-
-
-                container.innerHTML = `
-
-                    <div class="empty">
-
-                        <div class="empty-icon">
-                            💼
-                        </div>
-
-                        <strong>
-                            You have not posted any jobs yet.
-                        </strong>
-
-                        <br><br>
-
-                        Applications will appear here
-                        when students apply to your jobs.
-
-                        <br><br>
-
-                        <button
-                            class="action-btn accept-btn"
-                            style="max-width:180px;"
-                            onclick="window.location.href='/jobs.html'"
-                        >
-                            + Post a Job
-                        </button>
-
-                    </div>
-
-                `;
-
-                return;
-            }
-
-
-            allApplications = [];
-
-
-            /*
-             * Load applications for
-             * each job posted by alumni.
-             */
-
-            for (const job of myJobs) {
-
-                try {
-
-                    const response =
-                        await fetch(
-                            `/api/applications/job/${job.id}`
-                        );
-
-
-                    if (!response.ok) {
-                        continue;
-                    }
-
-
-                    const applications =
-                        await response.json();
-
-
-                    applications.forEach(
-                        application => {
-
-                            application.jobData =
-                                job;
-
-                            allApplications.push(
-                                application
-                            );
-
-                        }
-                    );
-
-
-                } catch (error) {
-
-                    console.error(
-                        `Unable to load applications for job ${job.id}`,
-                        error
-                    );
-
+                if (!response.ok) {
+                    throw new Error("Unable to load your applications");
                 }
 
+                allApplications = await response.json();
+
+                updateStatistics(allApplications);
+                applyFilters();
+
+            } catch (error) {
+                console.error(error);
+                resetStats();
+                document.getElementById("applicationCount").textContent = "0 jobs";
+                container.innerHTML = `
+                    <div class="empty">
+                        <div class="empty-icon">⚠️</div>
+                        <strong>Unable to load your applications.</strong>
+                        <br><br>
+                        Please try again later.
+                    </div>
+                `;
             }
 
-
-            updateStatistics(
-                allApplications
-            );
-
-
-            applyFilters();
-
-
-        } catch (error) {
-
-            console.error(error);
-
-            resetStats();
-
-
-            container.innerHTML = `
-
-                <div class="empty">
-
-                    <div class="empty-icon">
-                        ⚠️
-                    </div>
-
-                    <strong>
-                        Unable to load applications.
-                    </strong>
-
-                    <br><br>
-
-                    Please try again later.
-
-                </div>
-
-            `;
+            return;
         }
-    }
 
+        // ================= ALUMNI VIEW =================
+        if (role === "ALUMNI") {
+
+            heading.textContent = "Candidate Applications";
+            description.textContent = "Review candidates who applied to your jobs.";
+            searchInput.placeholder = "Search by applicant, job or company...";
+
+            try {
+                const jobsResponse = await fetch("/api/jobs", { credentials: "include" });
+
+                if (!jobsResponse.ok) {
+                    throw new Error("Unable to load jobs");
+                }
+
+                const jobs = await jobsResponse.json();
+
+                const myJobs = jobs.filter(job =>
+                    job.postedBy &&
+                    Number(job.postedBy.id) === Number(currentUser.id)
+                );
+
+                if (myJobs.length === 0) {
+                    resetStats();
+                    document.getElementById("applicationCount").textContent = "0 applications";
+                    container.innerHTML = `
+                        <div class="empty">
+                            <div class="empty-icon">💼</div>
+                            <strong>You have not posted any jobs yet.</strong>
+                            <br><br>
+                            Applications will appear here when students apply to your jobs.
+                            <br><br>
+                            <button class="action-btn accept-btn" style="max-width:180px;" onclick="window.location.href='/jobs.html'">
+                                + Post a Job
+                            </button>
+                        </div>
+                    `;
+                    return;
+                }
+
+                allApplications = [];
+
+                for (const job of myJobs) {
+                    try {
+                        const response = await fetch(
+                            `/api/applications/job/${job.id}`,
+                            { credentials: "include" }
+                        );
+
+                        if (!response.ok) continue;
+
+                        const applications = await response.json();
+
+                        applications.forEach(application => {
+                            application.jobData = job;
+                            allApplications.push(application);
+                        });
+                    } catch (error) {
+                        console.error(`Unable to load applications for job ${job.id}`, error);
+                    }
+                }
+
+                updateStatistics(allApplications);
+                applyFilters();
+
+            } catch (error) {
+                console.error(error);
+                resetStats();
+                container.innerHTML = `
+                    <div class="empty">
+                        <div class="empty-icon">⚠️</div>
+                        <strong>Unable to load applications.</strong>
+                        <br><br>
+                        Please try again later.
+                    </div>
+                `;
+            }
+
+            return;
+        }
+
+        // ================= OTHER ROLES =================
+        heading.textContent = "Applications";
+        description.textContent = "Application information is not available for this role.";
+        document.getElementById("applicationCount").textContent = "Not available";
+        resetStats();
+        container.innerHTML = `
+            <div class="empty">
+                <div class="empty-icon">🔒</div>
+                <strong>Applications are available for students and alumni.</strong>
+            </div>
+        `;
+    }
 
     /* ================= STATISTICS ================= */
 
     function resetStats() {
+
+        const totalLabel = document.querySelector("#totalCount + .stat-label");
+        if (totalLabel) {
+            totalLabel.textContent = String(currentUser?.role || "").toUpperCase() === "STUDENT"
+                ? "Jobs Applied"
+                : "Total Applications";
+        }
 
         document.getElementById(
             "totalCount"
@@ -1622,83 +1515,29 @@
 
     function applyFilters() {
 
-        const search =
-            document.getElementById(
-                "searchInput"
-            ).value
-                .trim()
-                .toLowerCase();
+        const search = document.getElementById("searchInput").value.trim().toLowerCase();
+        const statusFilter = document.getElementById("statusFilter").value;
+        const role = String(currentUser?.role || "").toUpperCase();
 
+        const filtered = allApplications.filter(application => {
+            const job = application.jobData || application.job || {};
+            const student = application.student || {};
+            const status = String(application.status || "PENDING").toUpperCase();
 
-        const statusFilter =
-            document.getElementById(
-                "statusFilter"
-            ).value;
+            const searchableText = role === "STUDENT"
+                ? [job.title, job.company, job.location, job.jobType]
+                    .filter(Boolean).join(" ").toLowerCase()
+                : [student.name, student.email, job.title, job.company, job.location]
+                    .filter(Boolean).join(" ").toLowerCase();
 
+            const matchesSearch = !search || searchableText.includes(search);
+            const matchesStatus = statusFilter === "ALL" || status === statusFilter;
 
-        const filtered =
-            allApplications.filter(
-                application => {
+            return matchesSearch && matchesStatus;
+        });
 
-                    const job =
-                        application.jobData || {};
-
-                    const student =
-                        application.student || {};
-
-
-                    const status =
-                        String(
-                            application.status ||
-                            "PENDING"
-                        ).toUpperCase();
-
-
-                    const searchableText = [
-
-                        student.name,
-
-                        student.email,
-
-                        job.title,
-
-                        job.company,
-
-                        job.location
-
-                    ]
-                        .filter(Boolean)
-                        .join(" ")
-                        .toLowerCase();
-
-
-                    const matchesSearch =
-                        !search ||
-                        searchableText.includes(
-                            search
-                        );
-
-
-                    const matchesStatus =
-                        statusFilter === "ALL" ||
-                        status === statusFilter;
-
-
-                    return (
-                        matchesSearch &&
-                        matchesStatus
-                    );
-
-                }
-            );
-
-
-        displayApplications(
-            filtered
-        );
-
+        displayApplications(filtered);
     }
-
 
     /* ================= DISPLAY ================= */
 
@@ -1706,301 +1545,130 @@
         applications
     ) {
 
-        const container =
-            document.getElementById(
-                "applicationsContainer"
-            );
+        const container = document.getElementById("applicationsContainer");
+        const count = document.getElementById("applicationCount");
+        const role = String(currentUser?.role || "").toUpperCase();
 
-
-        const count =
-            document.getElementById(
-                "applicationCount"
-            );
-
-
-        count.textContent =
-
-            `${applications.length}
-            application${applications.length === 1 ? "" : "s"}`;
-
+        count.textContent = role === "STUDENT"
+            ? `${applications.length} job${applications.length === 1 ? "" : "s"}`
+            : `${applications.length} application${applications.length === 1 ? "" : "s"}`;
 
         if (applications.length === 0) {
-
             container.innerHTML = `
-
                 <div class="empty">
-
-                    <div class="empty-icon">
-                        📭
-                    </div>
-
-                    <strong>
-                        No applications found.
-                    </strong>
-
+                    <div class="empty-icon">📭</div>
+                    <strong>${role === "STUDENT" ? "You have not applied for any jobs yet." : "No applications found."}</strong>
                     <br><br>
-
-                    Try changing your search
-                    or filter.
-
+                    ${role === "STUDENT" ? "Visit the Jobs page to explore available opportunities." : "Try changing your search or filter."}
                 </div>
-
             `;
-
             return;
         }
 
+        const grid = document.createElement("div");
+        grid.className = "applications-grid";
 
-        const grid =
-            document.createElement(
-                "div"
-            );
+        applications.forEach(application => {
 
+            const job = application.jobData || application.job || {};
+            const student = application.student || {};
+            const status = String(application.status || "PENDING").toUpperCase();
 
-        grid.className =
-            "applications-grid";
+            let statusClass = "status-pending";
+            let statusIcon = "⏳";
 
+            if (status === "ACCEPTED") {
+                statusClass = "status-accepted";
+                statusIcon = "✓";
+            } else if (status === "REJECTED") {
+                statusClass = "status-rejected";
+                statusIcon = "✕";
+            }
 
-        applications.forEach(
-            application => {
+            const applicantName = student.name || "Unknown Applicant";
+            const initials = applicantName.split(" ").filter(Boolean).slice(0, 2)
+                .map(word => word.charAt(0).toUpperCase()).join("");
 
-                const job =
-                    application.jobData || {};
+            const card = document.createElement("article");
+            card.className = "application-card";
 
+            if (role === "STUDENT") {
+                card.innerHTML = `
+                    <div class="job-header">
+                        <div class="company-logo">💼</div>
+                        <div class="job-details">
+                            <div class="job-title">${escapeHtml(job.title || "Job")}</div>
+                            <div class="company">${escapeHtml(job.company || "Company")}</div>
+                        </div>
+                    </div>
 
-                const student =
-                    application.student || {};
+                    <div class="job-info">
+                        📍 ${escapeHtml(job.location || "Location not specified")}<br>
+                        💼 ${escapeHtml(job.jobType || "Job type not specified")}
+                    </div>
 
+                    <div class="applicant-info" style="margin-top:16px;padding-top:14px;border-top:1px solid #edf1f5;">
+                        <strong>Application ID:</strong> #${escapeHtml(application.id)}
+                    </div>
 
-                const status =
-                    String(
-                        application.status ||
-                        "PENDING"
-                    ).toUpperCase();
-
-
-                let statusClass =
-                    "status-pending";
-
-
-                let statusIcon =
-                    "⏳";
-
-
-                if (status === "ACCEPTED") {
-
-                    statusClass =
-                        "status-accepted";
-
-                    statusIcon = "✓";
-
-                } else if (
-                    status === "REJECTED"
-                ) {
-
-                    statusClass =
-                        "status-rejected";
-
-                    statusIcon = "✕";
-                }
-
-
-                /* Applicant initials */
-
-                const applicantName =
-                    student.name ||
-                    "Unknown Applicant";
-
-
-                const initials =
-                    applicantName
-                        .split(" ")
-                        .filter(Boolean)
-                        .slice(0, 2)
-                        .map(
-                            word =>
-                                word.charAt(0)
-                                    .toUpperCase()
-                        )
-                        .join("");
-
-
-                const card =
-                    document.createElement(
-                        "article"
-                    );
-
-
-                card.className =
-                    "application-card";
-
-
+                    <div class="status-row">
+                        <span class="status ${statusClass}">${statusIcon} ${escapeHtml(status)}</span>
+                    </div>
+                `;
+            } else {
                 let buttons = "";
 
-
                 if (status === "PENDING") {
-
                     buttons = `
-
                         <div class="button-row">
-
-                            <button
-                                class="action-btn accept-btn"
-                                onclick="acceptApplication(${application.id})"
-                            >
-                                ✓ Accept Application
-                            </button>
-
-                            <button
-                                class="action-btn reject-btn"
-                                onclick="rejectApplication(${application.id})"
-                            >
-                                ✕ Reject
-                            </button>
-
+                            <button class="action-btn accept-btn" onclick="acceptApplication(${application.id})">✓ Accept Application</button>
+                            <button class="action-btn reject-btn" onclick="rejectApplication(${application.id})">✕ Reject</button>
                         </div>
-
                     `;
                 }
 
-
                 card.innerHTML = `
-
                     <div class="job-header">
-
-                        <div class="company-logo">
-                            🏢
-                        </div>
-
+                        <div class="company-logo">🏢</div>
                         <div class="job-details">
-
-                            <div class="job-title">
-                                ${escapeHtml(
-                    job.title ||
-                    "Job"
-                )}
-                            </div>
-
-                            <div class="company">
-                                ${escapeHtml(
-                    job.company ||
-                    "Company"
-                )}
-                            </div>
-
+                            <div class="job-title">${escapeHtml(job.title || "Job")}</div>
+                            <div class="company">${escapeHtml(job.company || "Company")}</div>
                         </div>
-
                     </div>
-
 
                     <div class="job-info">
-
-                        📍
-                        ${escapeHtml(
-                    job.location ||
-                    "Location not specified"
-                )}
-
-                        <br>
-
-                        💼
-                        ${escapeHtml(
-                    job.jobType ||
-                    "Job type not specified"
-                )}
-
+                        📍 ${escapeHtml(job.location || "Location not specified")}<br>
+                        💼 ${escapeHtml(job.jobType || "Job type not specified")}
                     </div>
-
 
                     <div class="applicant">
-
-                        <div class="applicant-title">
-                            Applicant
-                        </div>
-
-
+                        <div class="applicant-title">Applicant</div>
                         <div class="applicant-profile">
-
-                            <div class="avatar">
-                                ${escapeHtml(
-                    initials ||
-                    "?"
-                )}
-                            </div>
-
-
+                            <div class="avatar">${escapeHtml(initials || "?")}</div>
                             <div>
-
-                                <div class="applicant-name">
-                                    ${escapeHtml(
-                    applicantName
-                )}
-                                </div>
-
-                                <div class="applicant-role">
-                                    ${escapeHtml(
-                    student.role ||
-                    "Student"
-                )}
-                                </div>
-
+                                <div class="applicant-name">${escapeHtml(applicantName)}</div>
+                                <div class="applicant-role">${escapeHtml(student.role || "Student")}</div>
                             </div>
-
                         </div>
-
-
                         <div class="applicant-info">
-
-                            📧
-                            <strong>Email:</strong>
-                            ${escapeHtml(
-                    student.email ||
-                    "Email not available"
-                )}
-
-                            <br>
-
-                            📱
-                            <strong>Phone:</strong>
-                            ${escapeHtml(
-                    student.phone ||
-                    "Phone not available"
-                )}
-
+                            📧 <strong>Email:</strong> ${escapeHtml(student.email || "Email not available")}<br>
+                            📱 <strong>Phone:</strong> ${escapeHtml(student.phone || "Phone not available")}
                         </div>
-
                     </div>
-
 
                     <div class="status-row">
-
-                        <span
-                            class="status ${statusClass}"
-                        >
-                            ${statusIcon}
-                            ${escapeHtml(status)}
-                        </span>
-
+                        <span class="status ${statusClass}">${statusIcon} ${escapeHtml(status)}</span>
                     </div>
-
-
                     ${buttons}
-
                 `;
-
-
-                grid.appendChild(card);
-
             }
-        );
 
+            grid.appendChild(card);
+        });
 
         container.innerHTML = "";
-
         container.appendChild(grid);
-
     }
-
 
     /* ================= ACCEPT ================= */
 
@@ -2164,6 +1832,15 @@
     }
 
 
+    function updateRoleLabels() {
+        const role = String(currentUser?.role || "").toUpperCase();
+        const totalLabel = document.querySelector("#totalCount + .stat-label");
+        if (totalLabel) {
+            totalLabel.textContent = role === "STUDENT" ? "Jobs Applied" : "Total Applications";
+        }
+    }
+
+
     /* ================= INITIALIZE ================= */
 
     (async function initializePage() {
@@ -2174,6 +1851,7 @@
 
         if (userLoaded) {
 
+            updateRoleLabels();
             await loadApplications();
 
         }
@@ -2245,3 +1923,4 @@
 </body>
 </html>
 ```
+````
