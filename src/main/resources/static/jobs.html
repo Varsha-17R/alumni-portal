@@ -1,3 +1,4 @@
+````
 ```
 <!DOCTYPE html>
 <html lang="en">
@@ -493,6 +494,105 @@
             text-align: center;
             padding: 30px 20px;
             color: #718096;
+            font-size: 13px;
+        }
+
+        /* ================= CUSTOM JOB DESCRIPTION ================= */
+
+        .description-help {
+            margin-top: 6px;
+            color: #7180a3;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .description-badge {
+            display: inline-block;
+            margin-bottom: 7px;
+            padding: 4px 9px;
+            border-radius: 999px;
+            background: #eeeaff;
+            color: #5c4bd0;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .job-description-preview {
+            color: #536783;
+            line-height: 1.6;
+            font-size: 13px;
+            margin-top: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .job-details-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(17, 24, 39, .55);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .job-details-modal.show {
+            display: flex;
+        }
+
+        .job-details-box {
+            width: min(760px, 100%);
+            max-height: 88vh;
+            overflow-y: auto;
+            background: #fff;
+            border-radius: 18px;
+            padding: 28px;
+            box-shadow: 0 24px 70px rgba(23, 21, 63, .25);
+        }
+
+        .job-details-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            align-items: flex-start;
+            margin-bottom: 18px;
+        }
+
+        .job-details-header h2 {
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .job-details-close {
+            border: 0;
+            background: #f1f3fb;
+            color: #4b5563;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .job-detail-section {
+            margin-top: 20px;
+            padding-top: 17px;
+            border-top: 1px solid #e8eaf3;
+        }
+
+        .job-detail-section h3 {
+            color: var(--text);
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .job-detail-section p {
+            white-space: pre-line;
+            color: #536783;
+            line-height: 1.7;
             font-size: 13px;
         }
 
@@ -1185,13 +1285,34 @@
                 <div class="form-group">
 
                     <label>
-                        Job Description
+                        Company-Specific Job Description
                     </label>
 
                     <textarea
                             id="description"
-                            placeholder="Enter job description"
+                            placeholder="Example: Describe the role, team, product/domain, and what the selected company expects from the candidate..."
                             required></textarea>
+
+                    <div class="description-help">
+                        ✨ This description belongs only to this job posting. Write it according to the company and role requirements.
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Key Responsibilities & Company Requirements
+                    </label>
+
+                    <textarea
+                            id="requirements"
+                            placeholder="Example: Develop REST APIs, work with SQL, participate in code reviews, 0–2 years experience, strong problem-solving skills..."
+                            required></textarea>
+
+                    <div class="description-help">
+                        Add responsibilities, qualifications, experience, certifications, or any other requirements specific to this company.
+                    </div>
 
                 </div>
 
@@ -1260,6 +1381,30 @@
 
     </div>
 
+</div>
+
+
+<!-- ================= JOB DETAILS MODAL ================= -->
+<div class="job-details-modal" id="jobDetailsModal" onclick="closeJobDetails(event)">
+    <div class="job-details-box" onclick="event.stopPropagation()">
+        <div class="job-details-header">
+            <div>
+                <span class="description-badge">COMPANY-SPECIFIC JOB</span>
+                <h2 id="modalJobTitle">Job Details</h2>
+                <p id="modalJobCompany" class="subtitle" style="margin-bottom:0;"></p>
+            </div>
+            <button class="job-details-close" onclick="closeJobDetails()">×</button>
+        </div>
+        <div id="modalJobMeta"></div>
+        <div class="job-detail-section">
+            <h3>Job Description</h3>
+            <p id="modalJobDescription"></p>
+        </div>
+        <div class="job-detail-section">
+            <h3>Responsibilities & Requirements</h3>
+            <p id="modalJobRequirements"></p>
+        </div>
+    </div>
 </div>
 
 
@@ -1785,10 +1930,12 @@
             }
 
 
-                <p>
-                    <strong>Description:</strong>
-                    ${escapeHtml(job.description)}
-                </p>
+                <div style="margin-top:10px;">
+                    <span class="description-badge">CUSTOMIZED FOR THIS ROLE</span>
+                    <div class="job-description-preview">
+                        ${escapeHtml(job.description || "Company-specific description not provided.")}
+                    </div>
+                </div>
 
 
                 <div class="posted-by">
@@ -2200,97 +2347,56 @@
 
     async function viewJob(jobId) {
 
-
         try {
 
-
-            const response =
-                await fetch(
-                    `/api/jobs/${jobId}`
-                );
-
+            const response = await fetch(`/api/jobs/${jobId}`);
 
             if (!response.ok) {
-
-                throw new Error(
-                    "Unable to load job details."
-                );
-
+                throw new Error("Unable to load job details.");
             }
 
+            const job = await response.json();
 
-            const job =
-                await response.json();
+            document.getElementById("modalJobTitle").textContent =
+                job.title || "Job Details";
 
+            document.getElementById("modalJobCompany").textContent =
+                `${job.company || "Company not specified"} • ${job.location || "Location not specified"}`;
 
-            const postedBy =
-                job.postedBy
-                    ? job.postedBy.name
-                    : "Alumni";
+            document.getElementById("modalJobMeta").innerHTML = `
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;">
+                    <div class="user-info" style="margin:0;padding:11px 13px;">📍 ${escapeHtml(job.location || "Not specified")}</div>
+                    <div class="user-info" style="margin:0;padding:11px 13px;">💼 ${escapeHtml(job.jobType || "Not specified")}</div>
+                    <div class="user-info" style="margin:0;padding:11px 13px;">💰 ${escapeHtml(job.salary || "Not specified")}</div>
+                    <div class="user-info" style="margin:0;padding:11px 13px;">🛠️ ${escapeHtml(job.skills || "Not specified")}</div>
+                </div>`;
 
+            const parts = (job.description || "").split(/\n\nKey Responsibilities & Requirements:\n/i);
 
-            alert(
+            document.getElementById("modalJobDescription").textContent =
+                parts[0] || "Company-specific description not provided.";
 
-                "Job Details\n\n" +
+            document.getElementById("modalJobRequirements").textContent =
+                parts[1] || "Responsibilities and requirements not separately provided.";
 
-                "Title: " +
-                (job.title || "Not specified") +
-
-                "\n\n" +
-
-                "Company: " +
-                (job.company || "Not specified") +
-
-                "\n\n" +
-
-                "Location: " +
-                (job.location || "Not specified") +
-
-                "\n\n" +
-
-                "Salary: " +
-                (job.salary || "Not specified") +
-
-                "\n\n" +
-
-                "Job Type: " +
-                (job.jobType || "Not specified") +
-
-                "\n\n" +
-
-                "Skills: " +
-                (job.skills || "Not specified") +
-
-                "\n\n" +
-
-                "Posted By: " +
-                postedBy +
-
-                "\n\n" +
-
-                "Description: " +
-                (job.description || "Not specified")
-
-            );
-
+            document.getElementById("jobDetailsModal").classList.add("show");
 
         } catch (error) {
 
-
-            console.error(
-                "View job error:",
-                error
-            );
-
-
-            alert(
-                "Unable to load job details."
-            );
+            console.error("View job error:", error);
+            alert("Unable to load job details.");
 
         }
 
     }
 
+
+    function closeJobDetails(event) {
+        if (event && event.target && event.target.id !== "jobDetailsModal") {
+            return;
+        }
+        document.getElementById("jobDetailsModal").classList.remove("show");
+    }
 
     // =========================================================
     // CREATE JOB
@@ -2367,6 +2473,10 @@
             description:
                 document.getElementById(
                     "description"
+                ).value.trim() +
+                "\n\nKey Responsibilities & Requirements:\n" +
+                document.getElementById(
+                    "requirements"
                 ).value.trim(),
 
             skills:
@@ -2659,10 +2769,12 @@
             }
 
 
-                <p>
-                    <strong>Description:</strong>
-                    ${escapeHtml(job.description)}
-                </p>
+                <div style="margin-top:10px;">
+                    <span class="description-badge">CUSTOMIZED FOR THIS ROLE</span>
+                    <div class="job-description-preview">
+                        ${escapeHtml(job.description || "Company-specific description not provided.")}
+                    </div>
+                </div>
 
 
                 <div class="job-buttons">
@@ -3017,3 +3129,4 @@
 
 </html>
 ```
+````
