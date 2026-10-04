@@ -9,6 +9,7 @@ import com.alumniportal.repository.MentorshipRequestRepository;
 import com.alumniportal.repository.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,11 +53,47 @@ public class ReportController {
         long verifiedAlumni =
                 userRepository.findByRole(Role.ALUMNI)
                         .stream()
-                        .filter(user -> user.isVerified())
+                        .filter(User -> User.isVerified())
                         .count();
 
         long pendingAlumni =
                 totalAlumni - verifiedAlumni;
+
+
+        // ================= USER ACTIVITY =================
+
+        LocalDateTime thirtyDaysAgo =
+                LocalDateTime.now().minusDays(30);
+
+        long activeUsers =
+                userRepository.findAll()
+                        .stream()
+                        .filter(user ->
+                                user.getLastLogin() != null &&
+                                        !user.getLastLogin()
+                                                .isBefore(thirtyDaysAgo))
+                        .count();
+
+        long inactiveUsers =
+                userRepository.findAll()
+                        .stream()
+                        .filter(user ->
+                                user.getLastLogin() != null &&
+                                        user.getLastLogin()
+                                                .isBefore(thirtyDaysAgo))
+                        .count();
+
+        long neverLoggedInUsers =
+                userRepository.findAll()
+                        .stream()
+                        .filter(user ->
+                                user.getLastLogin() == null)
+                        .count();
+
+        double activeUserPercentage =
+                totalUsers > 0
+                        ? (activeUsers * 100.0) / totalUsers
+                        : 0.0;
 
 
         // ================= JOBS =================
@@ -160,22 +197,35 @@ public class ReportController {
 
         // ================= ADD TO REPORT =================
 
+        // Users
         report.put("totalUsers", totalUsers);
 
         report.put("totalAlumni", totalAlumni);
         report.put("verifiedAlumni", verifiedAlumni);
         report.put("pendingAlumni", pendingAlumni);
 
+        // User Activity
+        report.put("activeUsers", activeUsers);
+        report.put("inactiveUsers", inactiveUsers);
+        report.put("neverLoggedInUsers", neverLoggedInUsers);
+        report.put(
+                "activeUserPercentage",
+                Math.round(activeUserPercentage * 100.0) / 100.0
+        );
+
+        // Jobs
         report.put("totalJobs", totalJobs);
         report.put("approvedJobs", approvedJobs);
         report.put("pendingJobs", pendingJobs);
         report.put("rejectedJobs", rejectedJobs);
 
+        // Events
         report.put("totalEvents", totalEvents);
         report.put("approvedEvents", approvedEvents);
         report.put("pendingEvents", pendingEvents);
         report.put("rejectedEvents", rejectedEvents);
 
+        // Mentorship
         report.put(
                 "totalMentorshipRequests",
                 totalMentorshipRequests
@@ -196,6 +246,7 @@ public class ReportController {
                 rejectedMentorshipRequests
         );
 
+        // Messages
         report.put("totalMessages", totalMessages);
 
         return report;
