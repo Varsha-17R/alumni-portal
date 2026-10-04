@@ -182,8 +182,8 @@ public class JobApplicationController {
              * }
              */
 
-            com.fasterxml.jackson.databind.ObjectMapper objectMapper =
-                    new com.fasterxml.jackson.databind.ObjectMapper();
+            tools.jackson.databind.ObjectMapper objectMapper =
+                    new tools.jackson.databind.ObjectMapper();
 
             Map<String, Object> data =
                     objectMapper.readValue(
