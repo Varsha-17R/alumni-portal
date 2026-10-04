@@ -3,6 +3,8 @@ package com.alumniportal.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -37,6 +39,16 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(nullable = false)
     private boolean verified = false;
+
+    /*
+     * Stores the date and time of the user's
+     * most recent successful login.
+     *
+     * Used by Admin Reports & Analytics to
+     * determine whether a user is active or inactive.
+     */
+    @Column
+    private LocalDateTime lastLogin;
 
     public User() {
     }
@@ -95,5 +107,13 @@ public class User {
 
     public void setVerified(boolean verified) {
         this.verified = verified;
+    }
+
+    public LocalDateTime getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(LocalDateTime lastLogin) {
+        this.lastLogin = lastLogin;
     }
 }
