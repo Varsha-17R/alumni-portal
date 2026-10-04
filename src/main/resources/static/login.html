@@ -1,3 +1,4 @@
+```
 <!DOCTYPE html>
 <html lang="en">
 
@@ -1190,6 +1191,12 @@
                     method="POST"
                     onsubmit="saveLoginEmail()">
 
+                <input
+                        type="hidden"
+                        id="loginType"
+                        name="loginType"
+                        value="user">
+
 
                 <!-- EMAIL -->
 
@@ -1339,6 +1346,13 @@
     function selectLoginType(type) {
 
         selectedLoginType = type;
+
+        const loginTypeInput =
+            document.getElementById("loginType");
+
+        if (loginTypeInput) {
+            loginTypeInput.value = type;
+        }
 
 
         const userTab =
@@ -1564,6 +1578,20 @@
         ===================================================== */
 
         if (
+            params.get("roleMismatch") ===
+            "true"
+        ) {
+            const errorMessage =
+                document.getElementById("errorMessage");
+
+            if (errorMessage) {
+                errorMessage.textContent =
+                    "This account is not allowed to use this login type.";
+                errorMessage.style.display = "block";
+            }
+        }
+
+        if (
             params.get("error") ===
             "true"
         ) {
@@ -1634,3 +1662,4 @@
 </body>
 
 </html>
+```

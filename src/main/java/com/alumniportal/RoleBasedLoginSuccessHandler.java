@@ -32,32 +32,99 @@ public class RoleBasedLoginSuccessHandler
             Authentication authentication)
             throws IOException, ServletException {
 
-        /*
-         * Update the user's last successful login time.
-         */
         String email = authentication.getName();
 
         User user = userRepository
                 .findByEmail(email)
                 .orElse(null);
 
-        if (user != null) {
-            user.setLastLogin(LocalDateTime.now());
-            userRepository.save(user);
+        if (user == null) {
+            response.sendRedirect("/login.html?error=true");
+            return;
         }
 
-        /*
-         * Redirect the user based on their role.
-         */
-        if (authentication.getAuthorities().stream()
-                .anyMatch(auth ->
-                        auth.getAuthority().equals("ROLE_ADMIN"))) {
+        String loginType =
+                request.getParameter("loginType");
+
+        if (loginType == null ||
+                loginType.trim().isEmpty()) {
+
+            loginType = "user";
+        }
+
+        loginType = loginType.toLowerCase();
+
+        String userRole =
+                user.getRole().name().toUpperCase();
+
+
+        // =====================================================
+        // ADMIN LOGIN
+        // =====================================================
+
+        if ("admin".equals(loginType)) {
+
+            if (!"ADMIN".equals(userRole)) {
+
+                response.sendRedirect(
+                        "/login.html?roleMismatch=true"
+                );
+
+                return;
+            }
+
+            // Update last login only after valid login type
+            user.setLastLogin(LocalDateTime.now());
+            userRepository.save(user);
 
             response.sendRedirect("/admin.html");
 
-        } else {
+            return;
+        }
+
+
+        // =====================================================
+        // USER LOGIN
+        // =====================================================
+
+        if ("user".equals(loginType)) {
+
+            if ("ADMIN".equals(userRole)) {
+
+                response.sendRedirect(
+                        "/login.html?roleMismatch=true"
+                );
+
+                return;
+            }
+
+            // Only STUDENT and ALUMNI can use User Login
+            if (!"STUDENT".equals(userRole) &&
+                    !"ALUMNI".equals(userRole)) {
+
+                response.sendRedirect(
+                        "/login.html?roleMismatch=true"
+                );
+
+                return;
+            }
+
+            // Update last login
+            user.setLastLogin(LocalDateTime.now());
+            userRepository.save(user);
 
             response.sendRedirect("/dashboard.html");
+
+            return;
         }
+
+
+        // =====================================================
+        // INVALID LOGIN TYPE
+        // =====================================================
+
+        response.sendRedirect(
+                "/login.html?roleMismatch=true"
+        );
     }
 }
