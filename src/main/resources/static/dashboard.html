@@ -1,3 +1,4 @@
+```
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -814,6 +815,10 @@
                     Find a Mentor
                 </a>
 
+                <button type="button" class="hero-btn secondary" onclick="sharePortal()">
+                    🔗 Share Portal
+                </button>
+
             </div>
 
         </div>
@@ -1441,6 +1446,39 @@
     }
 
 
+    /* ================= SHARE PORTAL ================= */
+
+    async function sharePortal() {
+
+        const portalUrl = window.location.origin + "/dashboard.html";
+
+        const shareData = {
+            title: "AlumniConnect - Alumni Networking and Mentorship Portal",
+            text: "Connect with alumni, find mentors, discover career opportunities and stay connected with your community.",
+            url: portalUrl
+        };
+
+        try {
+            if (navigator.share) {
+                await navigator.share(shareData);
+            } else {
+                await navigator.clipboard.writeText(portalUrl);
+                alert("Portal link copied successfully!\n\n" + portalUrl);
+            }
+        } catch (error) {
+            if (error.name !== "AbortError") {
+                try {
+                    await navigator.clipboard.writeText(portalUrl);
+                    alert("Portal link copied successfully!\n\n" + portalUrl);
+                } catch (copyError) {
+                    prompt("Copy the AlumniConnect portal link:", portalUrl);
+                }
+            }
+        }
+
+    }
+
+
     /* ================= LOGOUT ================= */
 
     function logout() {
@@ -1493,3 +1531,4 @@
 
 </body>
 </html>
+```
