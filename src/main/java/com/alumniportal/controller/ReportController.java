@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -43,31 +44,65 @@ public class ReportController {
 
         Map<String, Object> report = new HashMap<>();
 
-        // ================= USERS =================
+        // =====================================================
+        // LOAD DATA ONCE
+        // =====================================================
 
-        long totalUsers = userRepository.count();
+        List<com.alumniportal.entity.User> users =
+                userRepository.findAll();
+
+        List<com.alumniportal.entity.Job> jobs =
+                jobRepository.findAll();
+
+        List<com.alumniportal.entity.Event> events =
+                eventRepository.findAll();
+
+        List<com.alumniportal.entity.MentorshipRequest> mentorshipRequests =
+                mentorshipRequestRepository.findAll();
+
+
+        // =====================================================
+        // USERS
+        // =====================================================
+
+        long totalUsers = users.size();
+
+        long totalStudents =
+                users.stream()
+                        .filter(user ->
+                                user.getRole() == Role.STUDENT)
+                        .count();
 
         long totalAlumni =
-                userRepository.findByRole(Role.ALUMNI).size();
+                users.stream()
+                        .filter(user ->
+                                user.getRole() == Role.ALUMNI)
+                        .count();
 
         long verifiedAlumni =
-                userRepository.findByRole(Role.ALUMNI)
-                        .stream()
-                        .filter(User -> User.isVerified())
+                users.stream()
+                        .filter(user ->
+                                user.getRole() == Role.ALUMNI &&
+                                        user.isVerified())
                         .count();
 
         long pendingAlumni =
-                totalAlumni - verifiedAlumni;
+                users.stream()
+                        .filter(user ->
+                                user.getRole() == Role.ALUMNI &&
+                                        !user.isVerified())
+                        .count();
 
 
-        // ================= USER ACTIVITY =================
+        // =====================================================
+        // USER ACTIVITY
+        // =====================================================
 
         LocalDateTime thirtyDaysAgo =
                 LocalDateTime.now().minusDays(30);
 
         long activeUsers =
-                userRepository.findAll()
-                        .stream()
+                users.stream()
                         .filter(user ->
                                 user.getLastLogin() != null &&
                                         !user.getLastLogin()
@@ -75,8 +110,7 @@ public class ReportController {
                         .count();
 
         long inactiveUsers =
-                userRepository.findAll()
-                        .stream()
+                users.stream()
                         .filter(user ->
                                 user.getLastLogin() != null &&
                                         user.getLastLogin()
@@ -84,8 +118,7 @@ public class ReportController {
                         .count();
 
         long neverLoggedInUsers =
-                userRepository.findAll()
-                        .stream()
+                users.stream()
                         .filter(user ->
                                 user.getLastLogin() == null)
                         .count();
@@ -96,136 +129,157 @@ public class ReportController {
                         : 0.0;
 
 
-        // ================= JOBS =================
+        // =====================================================
+        // JOBS
+        // =====================================================
 
-        long totalJobs =
-                jobRepository.count();
+        long totalJobs = jobs.size();
 
         long approvedJobs =
-                jobRepository.findAll()
-                        .stream()
+                jobs.stream()
                         .filter(job ->
                                 "APPROVED".equalsIgnoreCase(
                                         job.getStatus()))
                         .count();
 
         long pendingJobs =
-                jobRepository.findAll()
-                        .stream()
+                jobs.stream()
                         .filter(job ->
                                 "PENDING".equalsIgnoreCase(
                                         job.getStatus()))
                         .count();
 
         long rejectedJobs =
-                jobRepository.findAll()
-                        .stream()
+                jobs.stream()
                         .filter(job ->
                                 "REJECTED".equalsIgnoreCase(
                                         job.getStatus()))
                         .count();
 
 
-        // ================= EVENTS =================
+        // =====================================================
+        // EVENTS
+        // =====================================================
 
-        long totalEvents =
-                eventRepository.count();
+        long totalEvents = events.size();
 
         long approvedEvents =
-                eventRepository.findAll()
-                        .stream()
+                events.stream()
                         .filter(event ->
                                 "APPROVED".equalsIgnoreCase(
                                         event.getStatus()))
                         .count();
 
         long pendingEvents =
-                eventRepository.findAll()
-                        .stream()
+                events.stream()
                         .filter(event ->
                                 "PENDING".equalsIgnoreCase(
                                         event.getStatus()))
                         .count();
 
         long rejectedEvents =
-                eventRepository.findAll()
-                        .stream()
+                events.stream()
                         .filter(event ->
                                 "REJECTED".equalsIgnoreCase(
                                         event.getStatus()))
                         .count();
 
 
-        // ================= MENTORSHIP =================
+        // =====================================================
+        // MENTORSHIP
+        // =====================================================
 
         long totalMentorshipRequests =
-                mentorshipRequestRepository.count();
+                mentorshipRequests.size();
 
         long pendingMentorshipRequests =
-                mentorshipRequestRepository
-                        .findAll()
-                        .stream()
+                mentorshipRequests.stream()
                         .filter(request ->
                                 request.getStatus()
                                         == RequestStatus.PENDING)
                         .count();
 
         long acceptedMentorshipRequests =
-                mentorshipRequestRepository
-                        .findAll()
-                        .stream()
+                mentorshipRequests.stream()
                         .filter(request ->
                                 request.getStatus()
                                         == RequestStatus.ACCEPTED)
                         .count();
 
         long rejectedMentorshipRequests =
-                mentorshipRequestRepository
-                        .findAll()
-                        .stream()
+                mentorshipRequests.stream()
                         .filter(request ->
                                 request.getStatus()
                                         == RequestStatus.REJECTED)
                         .count();
 
 
-        // ================= MESSAGES =================
+        // =====================================================
+        // MESSAGES
+        // =====================================================
 
         long totalMessages =
                 messageRepository.count();
 
 
-        // ================= ADD TO REPORT =================
+        // =====================================================
+        // ADD VALUES TO REPORT
+        // =====================================================
 
-        // Users
+        // ---------- Users ----------
+
         report.put("totalUsers", totalUsers);
 
+        report.put("totalStudents", totalStudents);
+
         report.put("totalAlumni", totalAlumni);
+
         report.put("verifiedAlumni", verifiedAlumni);
+
         report.put("pendingAlumni", pendingAlumni);
 
-        // User Activity
+
+        // ---------- User Activity ----------
+
         report.put("activeUsers", activeUsers);
+
         report.put("inactiveUsers", inactiveUsers);
-        report.put("neverLoggedInUsers", neverLoggedInUsers);
+
+        report.put("neverLoggedInUsers",
+                neverLoggedInUsers);
+
         report.put(
                 "activeUserPercentage",
-                Math.round(activeUserPercentage * 100.0) / 100.0
+                Math.round(
+                        activeUserPercentage * 100.0
+                ) / 100.0
         );
 
-        // Jobs
+
+        // ---------- Jobs ----------
+
         report.put("totalJobs", totalJobs);
+
         report.put("approvedJobs", approvedJobs);
+
         report.put("pendingJobs", pendingJobs);
+
         report.put("rejectedJobs", rejectedJobs);
 
-        // Events
+
+        // ---------- Events ----------
+
         report.put("totalEvents", totalEvents);
+
         report.put("approvedEvents", approvedEvents);
+
         report.put("pendingEvents", pendingEvents);
+
         report.put("rejectedEvents", rejectedEvents);
 
-        // Mentorship
+
+        // ---------- Mentorship ----------
+
         report.put(
                 "totalMentorshipRequests",
                 totalMentorshipRequests
@@ -246,8 +300,14 @@ public class ReportController {
                 rejectedMentorshipRequests
         );
 
-        // Messages
-        report.put("totalMessages", totalMessages);
+
+        // ---------- Messages ----------
+
+        report.put(
+                "totalMessages",
+                totalMessages
+        );
+
 
         return report;
     }

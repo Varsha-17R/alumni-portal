@@ -1,3 +1,4 @@
+```
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -616,17 +617,6 @@
             </div>
         </div>
 
-        <!-- Platform Overview -->
-        <div class="chart-card full">
-            <div class="chart-header">
-                <h3>📊 Platform Overview</h3>
-                <p>Comparison of major AlumniConnect modules</p>
-            </div>
-            <div class="chart-container">
-                <canvas id="overviewChart"></canvas>
-            </div>
-        </div>
-
     </div>
 
     <div id="statusMessage" class="status-message"></div>
@@ -642,7 +632,6 @@
     let eventsChart;
     let alumniChart;
     let mentorshipChart;
-    let overviewChart;
 
     /* ================= LOAD REPORTS ================= */
 
@@ -800,7 +789,6 @@
         if (eventsChart) eventsChart.destroy();
         if (alumniChart) alumniChart.destroy();
         if (mentorshipChart) mentorshipChart.destroy();
-        if (overviewChart) overviewChart.destroy();
 
 
         /* ================= ACTIVE / INACTIVE ================= */
@@ -1074,73 +1062,6 @@
             }
         );
 
-
-        /* ================= PLATFORM OVERVIEW ================= */
-
-        overviewChart = new Chart(
-            document.getElementById("overviewChart"),
-            {
-                type: "bar",
-
-                data: {
-                    labels: [
-                        "Users",
-                        "Students",
-                        "Alumni",
-                        "Jobs",
-                        "Applications",
-                        "Events",
-                        "Mentorship",
-                        "Messages"
-                    ],
-
-                    datasets: [{
-                        label: "Total",
-
-                        data: [
-                            data.totalUsers ?? 0,
-                            totalStudents ?? 0,
-                            data.totalAlumni ?? 0,
-                            data.totalJobs ?? 0,
-                            totalApplications ?? 0,
-                            data.totalEvents ?? 0,
-                            data.totalMentorshipRequests ?? 0,
-                            data.totalMessages ?? 0
-                        ],
-
-                        borderRadius: 10,
-                        borderSkipped: false
-                    }]
-                },
-
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-
-                            ticks: {
-                                precision: 0
-                            }
-                        },
-
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        }
-                    }
-                }
-            }
-        );
     }
 
 
@@ -1168,3 +1089,5 @@
 
 </body>
 </html>
+
+```
