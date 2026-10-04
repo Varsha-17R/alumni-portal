@@ -1976,101 +1976,182 @@
 
     async function applyForJob(jobId) {
 
-        if (!currentUser || !currentUser.role ||
-            currentUser.role.toUpperCase() !== "STUDENT") {
+        /* ===============================
+           ONLY STUDENTS CAN APPLY
+           =============================== */
+
+        if (
+            !currentUser ||
+            !currentUser.role ||
+            currentUser.role.toUpperCase() !== "STUDENT"
+        ) {
             alert("Only students can apply for jobs.");
             return;
         }
 
-        const alreadyApplied = myApplications.some(
-            app => app.job && Number(app.job.id) === Number(jobId)
-        );
+
+        /* ===============================
+           CHECK DUPLICATE APPLICATION
+           =============================== */
+
+        const alreadyApplied =
+            myApplications.some(
+                app =>
+                    app.job &&
+                    Number(app.job.id) === Number(jobId)
+            );
 
         if (alreadyApplied) {
             alert("You have already applied for this job.");
             return;
         }
 
-        pendingApplicationJobId = jobId;
-        document.getElementById("resumeFile").value = "";
-        document.getElementById("resumeModal").classList.add("show");
-    }
+
+        /* ===============================
+           FIND APPLY BUTTON
+           =============================== */
+
+        const buttons =
+            document.querySelectorAll(
+                `.apply-btn[onclick="applyForJob(${jobId})"]`
+            );
+
+        /* Disable immediately to prevent
+           double-click / duplicate requests */
+
+        buttons.forEach(button => {
+            button.disabled = true;
+            button.dataset.originalText = button.innerHTML;
+            button.innerHTML = "Applying...";
+            button.style.opacity = "0.6";
+            button.style.cursor = "not-allowed";
+        });
 
 
-    function closeResumeModal() {
-        pendingApplicationJobId = null;
-        document.getElementById("resumeFile").value = "";
-        document.getElementById("resumeModal").classList.remove("show");
-    }
-
-
-    async function submitApplicationWithResume() {
-
-        if (!pendingApplicationJobId || !currentUser) {
-            alert("Unable to submit the application.");
-            return;
-        }
-
-        const fileInput = document.getElementById("resumeFile");
-        const file = fileInput.files[0];
-
-        if (!file) {
-            alert("Please upload your resume.");
-            return;
-        }
-
-        if (file.type !== "application/pdf" &&
-            !file.name.toLowerCase().endsWith(".pdf")) {
-            alert("Only PDF resumes are allowed.");
-            return;
-        }
-
-        if (file.size > 5 * 1024 * 1024) {
-            alert("Resume size must not exceed 5 MB.");
-            return;
-        }
+        /* ===============================
+           APPLICATION DATA
+           =============================== */
 
         const applicationData = {
-            job: { id: pendingApplicationJobId },
-            student: { id: currentUser.id }
+
+            job: {
+                id: jobId
+            },
+
+            student: {
+                id: currentUser.id
+            }
+
         };
 
-        const formData = new FormData();
-        formData.append(
-            "application",
-            new Blob([JSON.stringify(applicationData)], { type: "application/json" })
-        );
-        formData.append("resume", file);
 
         try {
-            const response = await fetch("/api/applications/with-resume", {
-                method: "POST",
-                body: formData
-            });
+
+            const response =
+                await fetch(
+                    "/api/applications",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(
+                                applicationData
+                            )
+                    }
+                );
+
+
+            /* ===============================
+               SERVER ERROR
+               =============================== */
 
             if (!response.ok) {
-                const message = await response.text();
-                alert("Unable to apply: " + message);
+
+                const message =
+                    await response.text();
+
+                alert(
+                    "Unable to apply: " +
+                    message
+                );
+
+                /* Re-enable button if
+                   application was not submitted */
+
+                buttons.forEach(button => {
+
+                    button.disabled = false;
+
+                    button.innerHTML =
+                        button.dataset.originalText ||
+                        "Apply Now";
+
+                    button.style.opacity = "1";
+                    button.style.cursor = "pointer";
+
+                });
+
                 return;
             }
 
-            const application = await response.json();
 
-            closeResumeModal();
+            /* ===============================
+               SUCCESS
+               =============================== */
+
+            const application =
+                await response.json();
+
 
             alert(
                 "Application submitted successfully! 🎉\n\n" +
-                "Resume: " + (file.name || "Uploaded") + "\n" +
-                "Status: " + (application.status || "Pending")
+                "Status: " +
+                (application.status || "Pending")
             );
 
+
+            /* Reload application information */
+
             await loadMyApplications();
+
             await loadAllJobs();
 
+
         } catch (error) {
-            console.error("Application error:", error);
-            alert("Something went wrong while applying for the job.");
+
+            console.error(
+                "Application error:",
+                error
+            );
+
+
+            alert(
+                "Something went wrong while applying for the job."
+            );
+
+
+            /* Re-enable button if request failed */
+
+            buttons.forEach(button => {
+
+                button.disabled = false;
+
+                button.innerHTML =
+                    button.dataset.originalText ||
+                    "Apply Now";
+
+                button.style.opacity = "1";
+                button.style.cursor = "pointer";
+
+            });
+
         }
+
     }
 
     // =========================================================
