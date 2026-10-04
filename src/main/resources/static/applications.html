@@ -1,3 +1,4 @@
+`````
 ````
 ```
 <!DOCTYPE html>
@@ -1618,6 +1619,18 @@
             } else {
                 let buttons = "";
 
+                const resumeButton = application.resumeFileName
+                    ? `
+                        <div class="button-row">
+                            <button class="action-btn accept-btn"
+                                    style="background:linear-gradient(135deg,#2563eb,#5878e5);"
+                                    onclick="viewResume(${application.id})">
+                                📄 View Resume
+                            </button>
+                        </div>
+                    `
+                    : "";
+
                 if (status === "PENDING") {
                     buttons = `
                         <div class="button-row">
@@ -1659,6 +1672,7 @@
                     <div class="status-row">
                         <span class="status ${statusClass}">${statusIcon} ${escapeHtml(status)}</span>
                     </div>
+                    ${resumeButton}
                     ${buttons}
                 `;
             }
@@ -1787,6 +1801,21 @@
 
         }
 
+    }
+
+
+    /* ================= VIEW RESUME ================= */
+
+    function viewResume(applicationId) {
+        if (!applicationId) {
+            showMessage("Resume is not available.", "error");
+            return;
+        }
+
+        window.open(
+            `/api/applications/${applicationId}/resume`,
+            "_blank"
+        );
     }
 
 
@@ -1924,3 +1953,4 @@
 </html>
 ```
 ````
+`````

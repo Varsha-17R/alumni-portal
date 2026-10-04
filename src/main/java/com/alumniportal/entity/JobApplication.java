@@ -22,6 +22,24 @@ public class JobApplication {
     @Column(nullable = false)
     private ApplicationStatus status;
 
+    // =========================================================
+    // RESUME
+    // =========================================================
+
+    @Lob
+    @Column(name = "resume", columnDefinition = "LONGBLOB")
+    private byte[] resume;
+
+    @Column(name = "resume_file_name")
+    private String resumeFileName;
+
+    @Column(name = "resume_content_type")
+    private String resumeContentType;
+
+    // =========================================================
+    // CONSTRUCTORS
+    // =========================================================
+
     public JobApplication() {
     }
 
@@ -30,6 +48,10 @@ public class JobApplication {
         this.student = student;
         this.status = status;
     }
+
+    // =========================================================
+    // GETTERS AND SETTERS
+    // =========================================================
 
     public Long getId() {
         return id;
@@ -57,5 +79,33 @@ public class JobApplication {
 
     public void setStatus(ApplicationStatus status) {
         this.status = status;
+    }
+
+    // =========================================================
+    // RESUME GETTERS AND SETTERS
+    // =========================================================
+
+    public byte[] getResume() {
+        return resume;
+    }
+
+    public void setResume(byte[] resume) {
+        this.resume = resume;
+    }
+
+    public String getResumeFileName() {
+        return resumeFileName;
+    }
+
+    public void setResumeFileName(String resumeFileName) {
+        this.resumeFileName = resumeFileName;
+    }
+
+    public String getResumeContentType() {
+        return resumeContentType;
+    }
+
+    public void setResumeContentType(String resumeContentType) {
+        this.resumeContentType = resumeContentType;
     }
 }
