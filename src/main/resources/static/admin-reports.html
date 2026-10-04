@@ -19,11 +19,8 @@
 
         body {
             min-height: 100vh;
-            background:
-                    radial-gradient(circle at 10% 20%, rgba(99,102,241,0.14), transparent 28%),
-                    radial-gradient(circle at 90% 80%, rgba(236,72,153,0.12), transparent 30%),
-                    linear-gradient(135deg, #eef4ff, #f8f5ff, #fff4f8);
-            color: #1e293b;
+            background: linear-gradient(135deg, #eef5ff 0%, #f8fbff 52%, #f1f4ff 100%);
+            color: #172554;
         }
 
         /* ================= SIDEBAR ================= */
@@ -34,21 +31,21 @@
             top: 0;
             width: 250px;
             height: 100vh;
-            padding: 25px 16px;
-            background: linear-gradient(180deg, #111827, #172554);
+            padding: 28px 15px 22px;
+            background: linear-gradient(180deg, #111b5c 0%, #16256f 52%, #14266f 100%);
             color: white;
-            box-shadow: 5px 0 25px rgba(15, 23, 42, 0.15);
+            box-shadow: 5px 0 25px rgba(16, 35, 100, 0.18);
             z-index: 10;
         }
 
         .logo {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 34px;
         }
 
         .logo h2 {
-            font-size: 24px;
-            letter-spacing: 0.5px;
+            font-size: 22px;
+            letter-spacing: 0.2px;
         }
 
         .logo p {
@@ -66,9 +63,10 @@
         .menu a {
             text-decoration: none;
             color: #cbd5e1;
-            padding: 13px 15px;
+            padding: 15px 16px;
             border-radius: 12px;
             font-size: 14px;
+            font-weight: 500;
             transition: 0.25s;
         }
 
@@ -79,9 +77,9 @@
         }
 
         .menu a.active {
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            background: linear-gradient(135deg, #635bff, #4d46f2);
             color: white;
-            box-shadow: 0 8px 20px rgba(79,70,229,0.25);
+            box-shadow: 0 8px 20px rgba(79,70,229,0.32);
         }
 
         .logout {
@@ -93,25 +91,35 @@
 
         .main {
             margin-left: 250px;
-            padding: 35px;
+            padding: 28px 32px 40px;
         }
 
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
 
         .header h1 {
             font-size: 30px;
-            color: #0f172a;
+            color: #172554;
+            font-weight: 700;
         }
 
         .header p {
             margin-top: 5px;
             color: #64748b;
             font-size: 14px;
+        }
+
+        .admin-pill {
+            background: rgba(255,255,255,0.92);
+            color: #172554;
+            border-radius: 24px;
+            padding: 11px 18px;
+            font-weight: 600;
+            box-shadow: 0 8px 24px rgba(31, 41, 87, 0.08);
         }
 
         .refresh-btn {
@@ -121,7 +129,7 @@
             color: white;
             font-weight: 600;
             cursor: pointer;
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            background: linear-gradient(135deg, #635bff, #4d46f2);
             box-shadow: 0 8px 20px rgba(79,70,229,0.22);
             transition: 0.2s;
         }
@@ -134,16 +142,16 @@
 
         .summary-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 18px;
             margin-bottom: 25px;
         }
 
         .summary-card {
-            background: rgba(255,255,255,0.88);
-            border: 1px solid rgba(255,255,255,0.7);
-            border-radius: 18px;
-            padding: 22px;
+            background: rgba(255,255,255,0.92);
+            border: 1px solid #e5eaf6;
+            border-radius: 17px;
+            padding: 20px;
             box-shadow: 0 12px 35px rgba(15,23,42,0.08);
             backdrop-filter: blur(10px);
             transition: 0.25s;
@@ -166,21 +174,81 @@
             color: #111827;
         }
 
+        /* ================= ANALYTICS SECTIONS ================= */
+
+        .section-title {
+            margin: 8px 0 15px;
+            color: #0f172a;
+        }
+
+        .section-title h2 {
+            font-size: 19px;
+            margin-bottom: 4px;
+        }
+
+        .section-title p {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 18px;
+            margin-bottom: 26px;
+        }
+
+        .analytics-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 17px;
+            padding: 19px;
+            box-shadow: 0 10px 28px rgba(35, 52, 105, 0.07);
+            border: 1px solid #e5eaf6;
+        }
+
+        .analytics-card .icon {
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .analytics-card .label {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .analytics-card .value {
+            font-size: 27px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .analytics-card .subtext {
+            margin-top: 5px;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .active-card { border-left: 5px solid #16a34a; }
+        .inactive-card { border-left: 5px solid #ef4444; }
+        .never-card { border-left: 5px solid #f59e0b; }
+        .percentage-card { border-left: 5px solid #4f46e5; }
+
         /* ================= CHART GRID ================= */
 
         .chart-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 22px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
         }
 
         .chart-card {
-            background: rgba(255,255,255,0.92);
-            border-radius: 20px;
-            padding: 22px;
-            box-shadow: 0 12px 35px rgba(15,23,42,0.08);
-            border: 1px solid rgba(255,255,255,0.8);
-            min-height: 360px;
+            background: rgba(255,255,255,0.96);
+            border-radius: 17px;
+            padding: 20px;
+            box-shadow: 0 10px 28px rgba(35, 52, 105, 0.07);
+            border: 1px solid #e5eaf6;
+            min-height: 330px;
         }
 
         .chart-card.full {
@@ -204,7 +272,7 @@
 
         .chart-container {
             position: relative;
-            height: 275px;
+            height: 250px;
         }
 
         /* ================= STATUS ================= */
@@ -220,18 +288,49 @@
 
         /* ================= RESPONSIVE ================= */
 
-        @media (max-width: 1100px) {
+        @media (max-width: 1250px) {
 
-            .summary-grid {
+            .summary-grid,
+            .analytics-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .chart-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
 
+            .chart-card.full {
+                grid-column: auto;
+            }
+        }
+
+        @media (max-width: 900px) {
+
+            .summary-grid,
+            .analytics-grid,
             .chart-grid {
                 grid-template-columns: 1fr;
             }
 
             .chart-card.full {
                 grid-column: auto;
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
             }
         }
 
@@ -252,6 +351,10 @@
                 grid-template-columns: 1fr;
             }
 
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+
             .header {
                 flex-direction: column;
                 align-items: flex-start;
@@ -268,8 +371,9 @@
 <div class="sidebar">
 
     <div class="logo">
-        <h2>AlumniConnect</h2>
-        <p>Admin Panel</p>
+        <div style="font-size:34px; margin-bottom:6px;">🎓</div>
+        <h2>Alumni<span style="color:#35b9ff;">Connect</span></h2>
+        <p>Alumni Networking &amp;<br>Mentorship Portal</p>
     </div>
 
     <div class="menu">
@@ -292,14 +396,6 @@
 
         <a href="/admin-events.html">
             📅 Manage Events
-        </a>
-
-        <a href="/admin-mentorship.html">
-            🤝 Mentorship Requests
-        </a>
-
-        <a href="/admin-messages.html">
-            💬 Messages
         </a>
 
         <a href="/admin-reports.html" class="active">
@@ -325,149 +421,213 @@
             <p>Overview of AlumniConnect platform activities</p>
         </div>
 
-        <button class="refresh-btn" onclick="loadReports()">
-            🔄 Refresh Reports
-        </button>
-
-    </div>
-
-
-    <!-- ================= SUMMARY ================= -->
-
-    <div class="summary-grid">
-
-        <div class="summary-card">
-            <div class="summary-title">
-                Total Users
-            </div>
-
-            <div class="summary-value" id="totalUsers">
-                0
-            </div>
-        </div>
-
-
-        <div class="summary-card">
-            <div class="summary-title">
-                Total Alumni
-            </div>
-
-            <div class="summary-value" id="totalAlumni">
-                0
-            </div>
-        </div>
-
-
-        <div class="summary-card">
-            <div class="summary-title">
-                Total Jobs
-            </div>
-
-            <div class="summary-value" id="totalJobs">
-                0
-            </div>
-        </div>
-
-
-        <div class="summary-card">
-            <div class="summary-title">
-                Total Events
-            </div>
-
-            <div class="summary-value" id="totalEvents">
-                0
-            </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+            <button class="refresh-btn" onclick="loadReports()">
+                🔄 Refresh Reports
+            </button>
+            <div class="admin-pill">👤 Admin</div>
         </div>
 
     </div>
 
+
+    <!-- ================= USER ANALYTICS ================= -->
+
+    <div class="section-title">
+        <h2>👥 User Analytics</h2>
+        <p>Overview of registered users and portal activity.</p>
+    </div>
+
+    <div class="analytics-grid">
+
+        <div class="analytics-card">
+            <div class="icon">👥</div>
+            <div class="label">Total Users</div>
+            <div class="value" id="totalUsers">0</div>
+        </div>
+
+        <div class="analytics-card">
+            <div class="icon">🎓</div>
+            <div class="label">Total Students</div>
+            <div class="value" id="totalStudents">0</div>
+        </div>
+
+        <div class="analytics-card">
+            <div class="icon">💼</div>
+            <div class="label">Total Alumni</div>
+            <div class="value" id="totalAlumni">0</div>
+        </div>
+
+        <div class="analytics-card">
+            <div class="icon">✅</div>
+            <div class="label">Verified Alumni</div>
+            <div class="value" id="verifiedAlumni">0</div>
+        </div>
+
+        <div class="analytics-card">
+            <div class="icon">⏳</div>
+            <div class="label">Pending Alumni</div>
+            <div class="value" id="pendingAlumni">0</div>
+        </div>
+
+        <div class="analytics-card active-card">
+            <div class="icon">🟢</div>
+            <div class="label">Active Users</div>
+            <div class="value" id="activeUsers">0</div>
+            <div class="subtext">Logged in within 30 days</div>
+        </div>
+
+        <div class="analytics-card inactive-card">
+            <div class="icon">🔴</div>
+            <div class="label">Inactive Users</div>
+            <div class="value" id="inactiveUsers">0</div>
+            <div class="subtext">No login for more than 30 days</div>
+        </div>
+
+        <div class="analytics-card never-card">
+            <div class="icon">⚪</div>
+            <div class="label">Never Logged In</div>
+            <div class="value" id="neverLoggedInUsers">0</div>
+            <div class="subtext">No successful login recorded</div>
+        </div>
+
+        <div class="analytics-card percentage-card">
+            <div class="icon">📈</div>
+            <div class="label">User Activity</div>
+            <div class="value" id="activeUserPercentage">0%</div>
+            <div class="subtext">Active users percentage</div>
+        </div>
+
+    </div>
+
+    <!-- ================= PORTAL ACTIVITY ================= -->
+
+    <div class="section-title">
+        <h2>📊 Portal Activity</h2>
+        <p>Current activity across the major AlumniConnect modules.</p>
+    </div>
+
+    <div class="analytics-grid">
+
+        <div class="analytics-card">
+            <div class="icon">💼</div>
+            <div class="label">Jobs Posted</div>
+            <div class="value" id="totalJobs">0</div>
+        </div>
+
+        <div class="analytics-card">
+            <div class="icon">📝</div>
+            <div class="label">Job Applications</div>
+            <div class="value" id="totalApplications">0</div>
+        </div>
+
+        <div class="analytics-card">
+            <div class="icon">📅</div>
+            <div class="label">Events</div>
+            <div class="value" id="totalEvents">0</div>
+        </div>
+
+        <div class="analytics-card">
+            <div class="icon">🤝</div>
+            <div class="label">Mentorship Requests</div>
+            <div class="value" id="totalMentorshipRequests">0</div>
+        </div>
+
+        <div class="analytics-card">
+            <div class="icon">💬</div>
+            <div class="label">Messages</div>
+            <div class="value" id="totalMessages">0</div>
+        </div>
+
+    </div>
 
     <!-- ================= CHARTS ================= -->
 
+    <div class="section-title">
+        <h2>📈 Analytics Charts</h2>
+        <p>Visual analysis of users, jobs, applications and events.</p>
+    </div>
+
     <div class="chart-grid">
 
-
-        <!-- Alumni Chart -->
-
+        <!-- Active vs Inactive Users -->
         <div class="chart-card">
-
             <div class="chart-header">
-                <h3>🎓 Alumni Verification</h3>
-                <p>Verified, pending and rejected alumni</p>
+                <h3>🟢 Active vs Inactive Users</h3>
+                <p>Portal login activity during the last 30 days</p>
             </div>
-
             <div class="chart-container">
-                <canvas id="alumniChart"></canvas>
+                <canvas id="activityChart"></canvas>
             </div>
-
         </div>
 
-
-        <!-- Mentorship Chart -->
-
+        <!-- Students vs Alumni -->
         <div class="chart-card">
-
             <div class="chart-header">
-                <h3>🤝 Mentorship Requests</h3>
-                <p>Status of mentorship requests</p>
+                <h3>🎓 Students vs Alumni</h3>
+                <p>Distribution of registered students and alumni</p>
             </div>
-
             <div class="chart-container">
-                <canvas id="mentorshipChart"></canvas>
+                <canvas id="userRoleChart"></canvas>
             </div>
-
         </div>
 
-
-        <!-- Jobs Chart -->
-
+        <!-- Jobs and Applications -->
         <div class="chart-card">
-
             <div class="chart-header">
-                <h3>💼 Job Statistics</h3>
-                <p>Approved, pending and rejected jobs</p>
+                <h3>💼 Jobs and Applications</h3>
+                <p>Comparison of jobs posted and applications received</p>
             </div>
-
             <div class="chart-container">
-                <canvas id="jobsChart"></canvas>
+                <canvas id="jobsApplicationsChart"></canvas>
             </div>
-
         </div>
 
-
-        <!-- Events Chart -->
-
+        <!-- Events -->
         <div class="chart-card">
-
             <div class="chart-header">
                 <h3>📅 Event Statistics</h3>
                 <p>Approved, pending and rejected events</p>
             </div>
-
             <div class="chart-container">
                 <canvas id="eventsChart"></canvas>
             </div>
-
         </div>
 
+        <!-- Alumni Verification -->
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3>🎓 Alumni Verification</h3>
+                <p>Verified and pending alumni</p>
+            </div>
+            <div class="chart-container">
+                <canvas id="alumniChart"></canvas>
+            </div>
+        </div>
 
-        <!-- Overall Chart -->
+        <!-- Mentorship -->
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3>🤝 Mentorship Requests</h3>
+                <p>Status of mentorship requests</p>
+            </div>
+            <div class="chart-container">
+                <canvas id="mentorshipChart"></canvas>
+            </div>
+        </div>
 
+        <!-- Platform Overview -->
         <div class="chart-card full">
-
             <div class="chart-header">
                 <h3>📊 Platform Overview</h3>
                 <p>Comparison of major AlumniConnect modules</p>
             </div>
-
             <div class="chart-container">
                 <canvas id="overviewChart"></canvas>
             </div>
-
         </div>
 
     </div>
-
 
     <div id="statusMessage" class="status-message"></div>
 
@@ -476,12 +636,13 @@
 
 <script>
 
+    let activityChart;
+    let userRoleChart;
+    let jobsApplicationsChart;
+    let eventsChart;
     let alumniChart;
     let mentorshipChart;
-    let jobsChart;
-    let eventsChart;
     let overviewChart;
-
 
     /* ================= LOAD REPORTS ================= */
 
@@ -491,18 +652,70 @@
 
             showStatus("Loading reports...");
 
-            const response = await fetch("/api/reports");
+            /*
+             * Reports endpoint provides the main analytics.
+             * Users and applications are loaded separately so
+             * student count and application count always come
+             * directly from the database.
+             */
+            const [reportResponse, usersResponse, applicationsResponse] =
+                await Promise.all([
+                    fetch("/api/reports", {
+                        credentials: "include"
+                    }),
+                    fetch("/api/users", {
+                        credentials: "include"
+                    }),
+                    fetch("/api/applications", {
+                        credentials: "include"
+                    })
+                ]);
 
-            if (!response.ok) {
+            if (!reportResponse.ok) {
                 throw new Error("Unable to load reports");
             }
 
-            const data = await response.json();
+            if (!usersResponse.ok) {
+                throw new Error("Unable to load users");
+            }
+
+            if (!applicationsResponse.ok) {
+                throw new Error("Unable to load applications");
+            }
+
+            const data = await reportResponse.json();
+            const users = await usersResponse.json();
+            const applications = await applicationsResponse.json();
 
             console.log("Reports:", data);
+            console.log("Users:", users);
+            console.log("Applications:", applications);
 
-            updateSummary(data);
-            createCharts(data);
+            /*
+             * Calculate total students from the actual users list.
+             */
+            const totalStudents = users.filter(user =>
+                String(user.role || "").toUpperCase() === "STUDENT"
+            ).length;
+
+            /*
+             * Total job applications comes from the applications table.
+             */
+            const totalApplications = Array.isArray(applications)
+                ? applications.length
+                : 0;
+
+            updateSummary(
+                data,
+                totalStudents,
+                totalApplications
+            );
+
+            createCharts(
+                data,
+                totalStudents,
+                totalApplications
+            );
 
             showStatus("Reports updated successfully.");
 
@@ -515,76 +728,103 @@
             console.error(error);
 
             showStatus(
-                "Unable to load reports. Please check the backend."
+                "Unable to load reports. Please check the backend and make sure the admin session is active."
             );
-
         }
-
     }
 
 
     /* ================= SUMMARY ================= */
 
-    function updateSummary(data) {
+    function updateSummary(
+        data,
+        totalStudents,
+        totalApplications
+    ) {
 
         document.getElementById("totalUsers").textContent =
             data.totalUsers ?? 0;
 
+        document.getElementById("totalStudents").textContent =
+            totalStudents ?? 0;
+
         document.getElementById("totalAlumni").textContent =
             data.totalAlumni ?? 0;
+
+        document.getElementById("verifiedAlumni").textContent =
+            data.verifiedAlumni ?? 0;
+
+        document.getElementById("pendingAlumni").textContent =
+            data.pendingAlumni ?? 0;
+
+        document.getElementById("activeUsers").textContent =
+            data.activeUsers ?? 0;
+
+        document.getElementById("inactiveUsers").textContent =
+            data.inactiveUsers ?? 0;
+
+        document.getElementById("neverLoggedInUsers").textContent =
+            data.neverLoggedInUsers ?? 0;
+
+        document.getElementById("activeUserPercentage").textContent =
+            (data.activeUserPercentage ?? 0) + "%";
 
         document.getElementById("totalJobs").textContent =
             data.totalJobs ?? 0;
 
+        document.getElementById("totalApplications").textContent =
+            totalApplications ?? 0;
+
         document.getElementById("totalEvents").textContent =
             data.totalEvents ?? 0;
 
+        document.getElementById("totalMentorshipRequests").textContent =
+            data.totalMentorshipRequests ?? 0;
+
+        document.getElementById("totalMessages").textContent =
+            data.totalMessages ?? 0;
     }
 
 
     /* ================= CHARTS ================= */
 
-    function createCharts(data) {
+    function createCharts(
+        data,
+        totalStudents,
+        totalApplications
+    ) {
 
-        /*
-         * Destroy old charts before creating new ones.
-         */
-
+        if (activityChart) activityChart.destroy();
+        if (userRoleChart) userRoleChart.destroy();
+        if (jobsApplicationsChart) jobsApplicationsChart.destroy();
+        if (eventsChart) eventsChart.destroy();
         if (alumniChart) alumniChart.destroy();
         if (mentorshipChart) mentorshipChart.destroy();
-        if (jobsChart) jobsChart.destroy();
-        if (eventsChart) eventsChart.destroy();
         if (overviewChart) overviewChart.destroy();
 
 
-        /* ================= ALUMNI DOUGHNUT ================= */
+        /* ================= ACTIVE / INACTIVE ================= */
 
-        alumniChart = new Chart(
-            document.getElementById("alumniChart"),
+        activityChart = new Chart(
+            document.getElementById("activityChart"),
             {
                 type: "doughnut",
 
                 data: {
                     labels: [
-                        "Verified",
-                        "Pending",
-                        "Rejected"
+                        "Active Users",
+                        "Inactive Users",
+                        "Never Logged In"
                     ],
 
                     datasets: [{
                         data: [
-                            data.verifiedAlumni ?? 0,
-                            data.pendingAlumni ?? 0,
-                            Math.max(
-                                0,
-                                (data.totalAlumni ?? 0)
-                                - (data.verifiedAlumni ?? 0)
-                                - (data.pendingAlumni ?? 0)
-                            )
+                            data.activeUsers ?? 0,
+                            data.inactiveUsers ?? 0,
+                            data.neverLoggedInUsers ?? 0
                         ],
 
                         borderWidth: 3,
-
                         hoverOffset: 8
                     }]
                 },
@@ -592,11 +832,9 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-
-                    cutout: "68%",
+                    cutout: "65%",
 
                     plugins: {
-
                         legend: {
                             position: "bottom"
                         }
@@ -606,7 +844,197 @@
         );
 
 
-        /* ================= MENTORSHIP DOUGHNUT ================= */
+        /* ================= STUDENTS VS ALUMNI ================= */
+
+        userRoleChart = new Chart(
+            document.getElementById("userRoleChart"),
+            {
+                type: "doughnut",
+
+                data: {
+                    labels: [
+                        "Students",
+                        "Alumni"
+                    ],
+
+                    datasets: [{
+                        data: [
+                            totalStudents ?? 0,
+                            data.totalAlumni ?? 0
+                        ],
+
+                        borderWidth: 3,
+                        hoverOffset: 8
+                    }]
+                },
+
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: "65%",
+
+                    plugins: {
+                        legend: {
+                            position: "bottom"
+                        }
+                    }
+                }
+            }
+        );
+
+
+        /* ================= JOBS AND APPLICATIONS ================= */
+
+        jobsApplicationsChart = new Chart(
+            document.getElementById("jobsApplicationsChart"),
+            {
+                type: "bar",
+
+                data: {
+                    labels: [
+                        "Jobs Posted",
+                        "Job Applications"
+                    ],
+
+                    datasets: [{
+                        label: "Count",
+
+                        data: [
+                            data.totalJobs ?? 0,
+                            totalApplications ?? 0
+                        ],
+
+                        borderRadius: 10,
+                        borderSkipped: false
+                    }]
+                },
+
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0
+                            }
+                        },
+
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            }
+        );
+
+
+        /* ================= EVENTS ================= */
+
+        eventsChart = new Chart(
+            document.getElementById("eventsChart"),
+            {
+                type: "bar",
+
+                data: {
+                    labels: [
+                        "Approved",
+                        "Pending",
+                        "Rejected"
+                    ],
+
+                    datasets: [{
+                        label: "Events",
+
+                        data: [
+                            data.approvedEvents ?? 0,
+                            data.pendingEvents ?? 0,
+                            data.rejectedEvents ?? 0
+                        ],
+
+                        borderRadius: 10,
+                        borderSkipped: false
+                    }]
+                },
+
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0
+                            }
+                        },
+
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            }
+        );
+
+
+        /* ================= ALUMNI VERIFICATION ================= */
+
+        alumniChart = new Chart(
+            document.getElementById("alumniChart"),
+            {
+                type: "doughnut",
+
+                data: {
+                    labels: [
+                        "Verified",
+                        "Pending"
+                    ],
+
+                    datasets: [{
+                        data: [
+                            data.verifiedAlumni ?? 0,
+                            data.pendingAlumni ?? 0
+                        ],
+
+                        borderWidth: 3,
+                        hoverOffset: 8
+                    }]
+                },
+
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: "68%",
+
+                    plugins: {
+                        legend: {
+                            position: "bottom"
+                        }
+                    }
+                }
+            }
+        );
+
+
+        /* ================= MENTORSHIP ================= */
 
         mentorshipChart = new Chart(
             document.getElementById("mentorshipChart"),
@@ -614,7 +1042,6 @@
                 type: "doughnut",
 
                 data: {
-
                     labels: [
                         "Pending",
                         "Accepted",
@@ -629,20 +1056,16 @@
                         ],
 
                         borderWidth: 3,
-
                         hoverOffset: 8
                     }]
                 },
 
                 options: {
-
                     responsive: true,
                     maintainAspectRatio: false,
-
                     cutout: "68%",
 
                     plugins: {
-
                         legend: {
                             position: "bottom"
                         }
@@ -652,135 +1075,7 @@
         );
 
 
-        /* ================= JOB BAR ================= */
-
-        jobsChart = new Chart(
-            document.getElementById("jobsChart"),
-            {
-                type: "bar",
-
-                data: {
-
-                    labels: [
-                        "Approved",
-                        "Pending",
-                        "Rejected"
-                    ],
-
-                    datasets: [{
-
-                        label: "Jobs",
-
-                        data: [
-                            data.approvedJobs ?? 0,
-                            data.pendingJobs ?? 0,
-                            data.rejectedJobs ?? 0
-                        ],
-
-                        borderRadius: 10,
-
-                        borderSkipped: false
-                    }]
-                },
-
-                options: {
-
-                    responsive: true,
-                    maintainAspectRatio: false,
-
-                    plugins: {
-
-                        legend: {
-                            display: false
-                        }
-                    },
-
-                    scales: {
-
-                        y: {
-                            beginAtZero: true,
-
-                            ticks: {
-                                precision: 0
-                            }
-                        },
-
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        }
-                    }
-                }
-            }
-        );
-
-
-        /* ================= EVENTS BAR ================= */
-
-        eventsChart = new Chart(
-            document.getElementById("eventsChart"),
-            {
-                type: "bar",
-
-                data: {
-
-                    labels: [
-                        "Approved",
-                        "Pending",
-                        "Rejected"
-                    ],
-
-                    datasets: [{
-
-                        label: "Events",
-
-                        data: [
-                            data.approvedEvents ?? 0,
-                            data.pendingEvents ?? 0,
-                            data.rejectedEvents ?? 0
-                        ],
-
-                        borderRadius: 10,
-
-                        borderSkipped: false
-                    }]
-                },
-
-                options: {
-
-                    responsive: true,
-                    maintainAspectRatio: false,
-
-                    plugins: {
-
-                        legend: {
-                            display: false
-                        }
-                    },
-
-                    scales: {
-
-                        y: {
-                            beginAtZero: true,
-
-                            ticks: {
-                                precision: 0
-                            }
-                        },
-
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        }
-                    }
-                }
-            }
-        );
-
-
-        /* ================= OVERVIEW ================= */
+        /* ================= PLATFORM OVERVIEW ================= */
 
         overviewChart = new Chart(
             document.getElementById("overviewChart"),
@@ -788,83 +1083,64 @@
                 type: "bar",
 
                 data: {
-
                     labels: [
                         "Users",
+                        "Students",
                         "Alumni",
                         "Jobs",
+                        "Applications",
                         "Events",
                         "Mentorship",
                         "Messages"
                     ],
 
                     datasets: [{
-
                         label: "Total",
 
                         data: [
-
                             data.totalUsers ?? 0,
-
+                            totalStudents ?? 0,
                             data.totalAlumni ?? 0,
-
                             data.totalJobs ?? 0,
-
+                            totalApplications ?? 0,
                             data.totalEvents ?? 0,
-
                             data.totalMentorshipRequests ?? 0,
-
                             data.totalMessages ?? 0
-
                         ],
 
                         borderRadius: 10,
-
                         borderSkipped: false
-
                     }]
                 },
 
                 options: {
-
                     responsive: true,
-
                     maintainAspectRatio: false,
 
                     plugins: {
-
                         legend: {
                             display: false
                         }
                     },
 
                     scales: {
-
                         y: {
-
                             beginAtZero: true,
 
                             ticks: {
                                 precision: 0
                             }
-
                         },
 
                         x: {
-
                             grid: {
                                 display: false
                             }
-
                         }
-
                     }
-
                 }
-
             }
         );
-
     }
 
 
@@ -872,12 +1148,12 @@
 
     function showStatus(message) {
 
-        const status = document.getElementById("statusMessage");
+        const status =
+            document.getElementById("statusMessage");
 
         status.textContent = message;
 
         status.style.display = "block";
-
     }
 
 
