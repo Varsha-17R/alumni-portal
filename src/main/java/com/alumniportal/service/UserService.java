@@ -8,6 +8,7 @@ import com.alumniportal.repository.JobRepository;
 import com.alumniportal.repository.JobApplicationRepository;
 import com.alumniportal.repository.MessageRepository;
 import com.alumniportal.repository.MentorshipRequestRepository;
+import com.alumniportal.repository.EventRegistrationRepository;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,6 +31,7 @@ public class UserService implements UserDetailsService {
     private final JobApplicationRepository jobApplicationRepository;
     private final MessageRepository messageRepository;
     private final MentorshipRequestRepository mentorshipRequestRepository;
+    private final EventRegistrationRepository eventRegistrationRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
 
@@ -40,6 +42,7 @@ public class UserService implements UserDetailsService {
             JobApplicationRepository jobApplicationRepository,
             MessageRepository messageRepository,
             MentorshipRequestRepository mentorshipRequestRepository,
+            EventRegistrationRepository eventRegistrationRepository,
             PasswordEncoder passwordEncoder,
             EmailService emailService) {
 
@@ -50,14 +53,11 @@ public class UserService implements UserDetailsService {
         this.messageRepository = messageRepository;
         this.mentorshipRequestRepository =
                 mentorshipRequestRepository;
+        this.eventRegistrationRepository =
+                eventRegistrationRepository;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
     }
-
-
-    // =========================================================
-    // CREATE USER
-    // =========================================================
 
     public User saveUser(User user) {
 
@@ -65,62 +65,34 @@ public class UserService implements UserDetailsService {
         String email = user.getEmail();
         String role = user.getRole().name();
 
-        /*
-         * Encode the user's password before saving.
-         */
         user.setPassword(
                 passwordEncoder.encode(user.getPassword())
         );
 
-        /*
-         * Email verification starts as false.
-         */
         user.setEmailVerified(false);
-
-        /*
-         * Phone verification starts as false.
-         */
         user.setPhoneVerified(false);
 
-        /*
-         * Generate a 6-digit email verification OTP.
-         */
         String emailOtp =
                 String.format(
                         "%06d",
                         new Random().nextInt(1000000)
                 );
 
-        /*
-         * Store the OTP.
-         */
         user.setEmailVerificationOtp(emailOtp);
 
-        /*
-         * OTP will expire after 5 minutes.
-         */
         user.setEmailOtpExpiry(
                 LocalDateTime.now().plusMinutes(5)
         );
 
-        /*
-         * Save the user.
-         */
         User savedUser =
                 userRepository.save(user);
 
-        /*
-         * Send the email verification OTP.
-         */
         emailService.sendEmailVerificationOtp(
                 email,
                 name,
                 emailOtp
         );
 
-        /*
-         * Keep the existing welcome email.
-         */
         emailService.sendWelcomeEmail(
                 email,
                 name,
@@ -130,28 +102,13 @@ public class UserService implements UserDetailsService {
         return savedUser;
     }
 
-
-    // =========================================================
-    // UPDATE USER
-    // =========================================================
-
     public User saveUpdatedUser(User user) {
         return userRepository.save(user);
     }
 
-
-    // =========================================================
-    // GET ALL USERS
-    // =========================================================
-
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-
-
-    // =========================================================
-    // GET USER BY ID
-    // =========================================================
 
     public User getUserById(Long id) {
 
@@ -161,11 +118,6 @@ public class UserService implements UserDetailsService {
         return user.orElse(null);
     }
 
-
-    // =========================================================
-    // GET USER BY EMAIL
-    // =========================================================
-
     public User getUserByEmail(String email) {
 
         Optional<User> user =
@@ -173,11 +125,6 @@ public class UserService implements UserDetailsService {
 
         return user.orElse(null);
     }
-
-
-    // =========================================================
-    // DELETE USER
-    // =========================================================
 
     @Transactional
     public void deleteUser(Long id) {
@@ -191,22 +138,45 @@ public class UserService implements UserDetailsService {
                         );
 
         /*
-         * Delete applications submitted by the user.
+         * =====================================================
+         * DELETE EVENT REGISTRATIONS
+         * =====================================================
+         *
+         * A user's event registrations contain:
+         *
+         * event_registrations.student_id -> users.id
+         *
+         * Therefore registrations must be deleted before
+         * deleting the user.
+         */
+        eventRegistrationRepository
+                .findByStudentId(id)
+                .forEach(eventRegistrationRepository::delete);
+
+
+        /*
+         * =====================================================
+         * DELETE JOB APPLICATIONS
+         * =====================================================
+         *
+         * Applications submitted by the user.
          */
         jobApplicationRepository
                 .findByStudentId(id)
                 .forEach(jobApplicationRepository::delete);
 
+
         /*
-         * Find jobs posted by the user.
+         * =====================================================
+         * DELETE JOBS POSTED BY USER
+         * =====================================================
+         *
+         * First delete applications belonging to those jobs.
+         * Then delete the jobs.
          */
         var postedJobs =
                 jobRepository.findByPostedById(id);
 
-        /*
-         * Delete applications belonging
-         * to the user's posted jobs.
-         */
         postedJobs.forEach(job -> {
 
             jobApplicationRepository
@@ -215,67 +185,75 @@ public class UserService implements UserDetailsService {
 
         });
 
-        /*
-         * Delete posted jobs.
-         */
-        postedJobs.forEach(jobRepository::delete);
+        postedJobs.forEach(
+                jobRepository::delete
+        );
+
 
         /*
-         * Delete messages sent by the user.
+         * =====================================================
+         * DELETE SENT MESSAGES
+         * =====================================================
          */
         messageRepository
                 .findBySenderId(id)
                 .forEach(messageRepository::delete);
 
+
         /*
-         * Delete messages received by the user.
+         * =====================================================
+         * DELETE RECEIVED MESSAGES
+         * =====================================================
          */
         messageRepository
                 .findByReceiverId(id)
                 .forEach(messageRepository::delete);
 
+
         /*
-         * Delete mentorship requests where
-         * the user is the student.
+         * =====================================================
+         * DELETE MENTORSHIP REQUESTS AS STUDENT
+         * =====================================================
          */
         mentorshipRequestRepository
                 .findByStudentId(id)
                 .forEach(mentorshipRequestRepository::delete);
 
+
         /*
-         * Delete mentorship requests where
-         * the user is the alumni.
+         * =====================================================
+         * DELETE MENTORSHIP REQUESTS AS ALUMNI
+         * =====================================================
          */
         mentorshipRequestRepository
                 .findByAlumniId(id)
                 .forEach(mentorshipRequestRepository::delete);
 
+
         /*
-         * Delete the user's profile.
+         * =====================================================
+         * DELETE PROFILE
+         * =====================================================
          */
         profileRepository
                 .findByUserId(id)
                 .ifPresent(profileRepository::delete);
 
+
         /*
-         * Finally delete the user.
+         * =====================================================
+         * FINALLY DELETE USER
+         * =====================================================
          */
         userRepository.delete(user);
     }
 
-
-    // =========================================================
-    // GET ALL ALUMNI
-    // =========================================================
-
     public List<User> getAlumni() {
-        return userRepository.findByRole(Role.ALUMNI);
+
+        return userRepository.findByRole(
+                Role.ALUMNI
+        );
     }
-
-
-    // =========================================================
-    // SPRING SECURITY LOGIN
-    // =========================================================
 
     @Override
     public UserDetails loadUserByUsername(String email)
