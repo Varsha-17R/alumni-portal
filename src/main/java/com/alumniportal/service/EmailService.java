@@ -3,6 +3,7 @@ package com.alumniportal.service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,6 +22,7 @@ public class EmailService {
     // SEND WELCOME EMAIL
     // =========================================================
 
+    @Async
     public void sendWelcomeEmail(
             String toEmail,
             String name,
@@ -79,6 +81,7 @@ public class EmailService {
     // SEND EMAIL VERIFICATION OTP
     // =========================================================
 
+    @Async
     public void sendEmailVerificationOtp(
             String toEmail,
             String name,
